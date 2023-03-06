@@ -1,0 +1,29 @@
+#server:
+#  port: 8080
+#  servlet:
+#    encoding:
+#      force-response: true
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/main034?serverTimezone=Asia/Seoul
+#    username: ${MYSQL_USERNAME}
+#    password: ${MYSQL_PASSWORD}
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    show-sql: true
+#logging:
+#  level:
+#    org:
+#      springframework:
+#      orm:
+#        jpa: DEBUG
+#jwt:
+#  key: ${JWT_SECRET_KEY}
+#  access-token-expiration-minutes: 30
+#  refresh-token-expiration-minutes: 720
+
+#mail:
+#  address:
+#    admin: admin@gmail.com
