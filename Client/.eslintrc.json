@@ -11,7 +11,7 @@
       "plugin:prettier/recommended",
       "prettier"
     ],
-    "plugins": ["@typescript-eslint", "react-hooks"],
+    "plugins": ["@typescript-eslint", "react-hooks","react"],
     "rules": {
       "prettier/prettier": 0
     },
@@ -22,7 +22,7 @@
     },
     "parserOptions": {
         "project": ["tsconfig.json"],
-        "createDefaultProgram": true,
+        "createDefaultProgram": true
       },
     "overrides": [
       {
