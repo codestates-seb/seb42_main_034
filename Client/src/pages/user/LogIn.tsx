@@ -1,5 +1,5 @@
 import React from 'react'
 
 export default function LogIn() {
-  return <div>LogIn test</div>
+  return <div>LogIn tests</div>
 }
