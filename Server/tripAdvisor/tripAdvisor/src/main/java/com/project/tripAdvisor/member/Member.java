@@ -31,13 +31,25 @@ public class Member {
     @Column(nullable = false)
     private String location;
 
+//    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Question> questions = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Answer> answers = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Blog> blogs = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private MemberAnswerLike memberAnswerLike = new MemberAnswerLike;
+
     @Enumerated(value = EnumType.STRING)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     public enum MemberStatus{
-        MEMBER_ACTIVE("활동중");
+        MEMBER_ACTIVE("활동중"),
 //        MEMBER_SLEEP("휴면 상태");
-//        MEMBER_QUIT("탈퇴상태");
+        MEMBER_QUIT("탈퇴상태");
 
         @Getter
         private String status;
