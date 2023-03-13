@@ -52,6 +52,7 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String nickname;
+        private String location;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

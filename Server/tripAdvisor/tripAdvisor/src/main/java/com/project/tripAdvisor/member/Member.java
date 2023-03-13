@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.member;
 
+import com.project.tripAdvisor.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.validation.constraints.Email;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Member {
+public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;

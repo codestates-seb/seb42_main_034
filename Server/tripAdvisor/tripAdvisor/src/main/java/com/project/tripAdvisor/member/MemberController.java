@@ -1,9 +1,11 @@
 package com.project.tripAdvisor.member;
 
 
+import com.project.tripAdvisor.response.MultiResponseDto;
 import com.project.tripAdvisor.response.SingleResponseDto;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Slf4j
 @Validated
 @RestController
+@RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
@@ -52,7 +56,17 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //@GetMapping("{/questions/member-id}")
-    //보안쪽 좀더해서 변경
+    @GetMapping("{/blogs}")//블로그 조회
+    public ResponseEntity getMembers(@PathVariable("/blogs") @Positive long blogId,
+                                    @Positive @RequestParam int page,
+                                     @Positive @RequestParam int size){
+        Page<Member> pageMembers = memberService.getBlogs(page -1, size);
+        List<Member> members = pageMembers.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(
+                        mapper.MembersToMemberResponseDto(members), pageMembers), HttpStatus.OK);
+    }
+
 
 }
