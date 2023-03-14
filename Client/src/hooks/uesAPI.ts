@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { BASE_URL } from "./consts";
 
 const useAPI = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const useAPI = () => {
     })
 
 
-        return axiosWtihAccessToken;
-}
+        return axiosWtihAccessToken; 
+};
 
-export defalut useAPI;
+export default useAPI;
