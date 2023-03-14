@@ -1,5 +1,27 @@
 import React from 'react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components'
+import { useAppSelector } from '../../redux/hooks'
+
+
+
 
 export default function SignUp() {
-  return <div>SignUp</div>
+  // const {isLogin} = useAppSelector(state => state.loginInfo);
+  // const navigate = useNavigate(-1);
+
+  // useEffect(() => {
+  //   isLogin && navigate();
+  // }, []);
+
+
+  return (
+    <>
+    
+
+    
+    </>
+  )
+
 }
