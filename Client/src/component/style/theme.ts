@@ -1,6 +1,5 @@
-import { DefaultTheme, ThemeProviderProps } from 'styled-components';
 import media from './media';
-
+//각 화면마다 어떤 배열 모습으로 보여줄것인지 고민
 const color = {
   main_01: '#B0DBFC',
   main_02: '#66BFFF',
@@ -25,11 +24,6 @@ const fontSize = {
   h1: '34px',
   h2: '30px',
   h3: '26px',
-};
-const screen = {
-  mobile: 580,
-  tablet: 768,
-  desktop: 1284,
 };
 
 export type ColorTypes = typeof color;
