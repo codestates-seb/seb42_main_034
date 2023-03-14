@@ -31,4 +31,3 @@ export default function QuestionPost() {
       <button onClick={handleSubmit}>작성</button>
     </>
   );
-}
