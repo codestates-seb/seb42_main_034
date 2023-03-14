@@ -11,7 +11,6 @@ const sizes: MediaQueryProps = {
   tablet: 768,
   desktop: 1284,
 };
-
 // // Iterate through the sizes and create a media template
 type BackQuoteArgs = string[];
 
