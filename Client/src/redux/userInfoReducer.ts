@@ -9,7 +9,7 @@ interface InitProps {
         longitude: string;
     };
     address: string;
-    totalCount: number:
+    totalCount: number;
     avatarUrl: string;
 }
 

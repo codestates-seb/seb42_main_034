@@ -25,10 +25,10 @@ const rootReducer = combineReducers({
 export const store = configureStore({
     reducer: {
         persistReducer: persistReducer(persistConfig, rootReducer),
-        loginInfo: persistReducer(loginPersistConfig, loginInfoReducer);
+        loginInfo: persistReducer(loginPersistConfig, loginInfoReducer)
     }
 })
 
 export const persistor = persistStore(store);
-export type RootState = ReturnType<typeof StorageEvent.getState>
+export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
