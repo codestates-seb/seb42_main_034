@@ -19,10 +19,10 @@
 #      springframework:
 #      orm:
 #        jpa: DEBUG
-#jwt:
-#  key: ${JWT_SECRET_KEY}
-#  access-token-expiration-minutes: 30
-#  refresh-token-expiration-minutes: 720
+jwt:
+  key: ${JWT_SECRET_KEY} #민감한 정보는 시스템 환경변수에서 로드함
+  access-token-expiration-minutes: 30 #30분
+  refresh-token-expiration-minutes: 420 # 420분
 
 #mail:
 #  address:

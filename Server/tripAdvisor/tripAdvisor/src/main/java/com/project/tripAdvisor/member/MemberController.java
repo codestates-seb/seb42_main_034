@@ -50,6 +50,16 @@ public class MemberController {
                 new SingleResponseDto<>(mapper.MemberToMemberResponseDto(updateMember)),HttpStatus.OK);
     }
 
+    @GetMapping("/{member-id}")
+    public ResponseEntity getMember(
+            @PathVariable("member-id") @Positive long memberId) {
+        Member member = memberService.findMember(memberId);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.MemberToMemberResponseDto(member))
+                , HttpStatus.OK);
+    }
+
+
     @DeleteMapping("{member-id}")
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
         memberService.deleteMember(memberId);

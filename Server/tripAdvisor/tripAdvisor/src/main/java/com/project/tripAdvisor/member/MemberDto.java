@@ -18,6 +18,7 @@ public class MemberDto {
         @Email
         private String email;
 
+        @NotBlank
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[₩~!@#$%^&*()_+,.<>/?:'])[A-Za-z\\d₩~!@#$%^&*()_+,.<>/?:']{8,}$"
                 ,message = "8문자 이상이어야 하며 영어, 숫자, 특수문자(₩~!@#$%^&*()_+,.<>/?:')를 포함해야합니다")
         private String password;
