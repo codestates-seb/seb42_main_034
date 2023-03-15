@@ -24,7 +24,7 @@ public class JwtTokenizer {//JWT 생성기능 구현
     //application.yml 에서 로드
     //JWT 생성 및 검증 시 사용 되는 Secret Key 정보
     @Getter
-    @Value("${jwt.key")
+    @Value("${jwt.key}")
     private String secretKey;
 
     // Access Token에 대한 만료시간 정보
