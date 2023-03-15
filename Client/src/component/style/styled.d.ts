@@ -1,28 +1,8 @@
-import { ColorTypes, FontSizeTypes, Theme } from './theme';
-import { CSSProp } from 'styled-components';
+import 'styled-components';
+
 declare module 'styled-components' {
-  export interface DefaultTheme extends Theme {
-    color: ColorTypes;
-    // mode: {
-    //   title: string;
-    //   toggle: string;
-    //   header: string;
-    //   mainBackground: string;
-    //   subBackground: string;
-    //   imgBackground: string;
-    //   sideBackground: string;
-    //   navLink: string;
-    //   linkText: string;
-    //   listText: string;
-    // };
-    fontSize: FontSizeTypes;
-    // fontWeight: {
-    //   extraBold: number;
-    //   bold: number;
-    //   semiBold: number;
-    //   reguler: number;
-    //   thin: number;
-    // };
+  export interface DefaultTheme {
+    media;
   }
 }
 declare module 'react' {
@@ -30,3 +10,18 @@ declare module 'react' {
     css?: CSSProp | CSSObject;
   }
 }
+
+// import { ColorTypes, FontSizeTypes, Theme } from './theme';
+// import { CSSProp } from 'styled-components';
+// declare module 'styled-components' {
+//   export interface DefaultTheme extends Theme {
+//     color: ColorTypes;
+
+//     fontSize: FontSizeTypes;
+//   }
+// }
+// declare module 'react' {
+//   interface Attributes {
+//     css?: CSSProp | CSSObject;
+//   }
+// }

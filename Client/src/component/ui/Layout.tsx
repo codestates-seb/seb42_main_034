@@ -1,16 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Footer from '../Footer';
-import Nav from '../Nav';
-const LayoutFlex = styled.div`
-  ${({ theme }) => theme.media.desktop`
-    display:flex;
-    flex-direction:column;
-    align-items:start;
-    height:100vh;
-  `}
-`;
+import Nav from '../nav/Nav';
+import { Colors } from '../style/const';
+import { Icon } from './Icon';
 
+// export const Flex = css` 많이 겹치면 사용해보기
+//   display: flex;
+//   flex-direction: column;
+// `;
+const LayoutFlex = styled.div<JSX.Element | any | JSX.Element[] | never>`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+`;
+const NavStyle = styled(Nav)`
+  flex: 1 1 au;
+`;
 interface LayoutProps {
   children: string | JSX.Element | JSX.Element[];
 }
@@ -18,7 +24,8 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <LayoutFlex>
-      <Nav />
+      <Icon />
+      <NavStyle />
       {children}
       <Footer />
     </LayoutFlex>
