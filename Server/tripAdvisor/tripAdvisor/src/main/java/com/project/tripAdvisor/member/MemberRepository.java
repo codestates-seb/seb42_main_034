@@ -12,10 +12,10 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 
-    @Query(value = "SELECT * FROM Blog WHERE member_Id = :memberId")
+/*    @Query(value = "SELECT * FROM Blog WHERE member_Id = :memberId")
     Page<Member> findByBlog(Pageable pageable);
     @Query(value = "SELECT * FROM Question WHERE member_Id = :memberId")
     Page<Member> findByQuestion(Pageable pageable);
     @Query(value = "SELECT * FROM Answer WHERE member_Id = :memberId")
-    Page<Member> findByAnswer(Pageable pageable);
+    Page<Member> findByAnswer(Pageable pageable);*/
 }

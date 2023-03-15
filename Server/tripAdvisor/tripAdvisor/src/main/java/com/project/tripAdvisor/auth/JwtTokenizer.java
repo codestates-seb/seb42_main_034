@@ -29,7 +29,7 @@ public class JwtTokenizer {//JWT 생성기능 구현
 
     // Access Token에 대한 만료시간 정보
     @Getter
-    @Value("${jwt.access-token-expiration-minutes")
+    @Value("${jwt.access-token-expiration-minutes}")
     private int accessTokenExpirationMinutes;
 
     // Refresh Token에 대한 만료시간 정보

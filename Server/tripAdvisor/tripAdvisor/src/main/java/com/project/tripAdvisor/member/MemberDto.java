@@ -54,6 +54,7 @@ public class MemberDto {
         private String email;
         private String nickname;
         private String location;
+        private Member.MemberStatus memberStatus;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

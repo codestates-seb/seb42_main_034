@@ -76,22 +76,22 @@ public class MemberService {
     }
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원 정보에서 블로그 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public Page<Member> getBlogs(int page, int size){
+    /*public Page<Member> getBlogs(int page, int size){
         return memberRepository.findByBlog(PageRequest.of(page, size,
                 Sort.by("createdAt").descending()));
-    } //내가 쓴 블로그 Id 조회
+    } //내가 쓴 블로그 Id 조회*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원 정보에서 질문 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-    public Page<Member> getQuestions(int page, int size){
+    /*public Page<Member> getQuestions(int page, int size){
         return memberRepository.findByQuestion(PageRequest.of(page, size,
                 Sort.by("createdAt").descending()));
-    }
+    }*/
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원정보에서 대댓글 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public Page<Member> getAnswers(int page, int size){
+    /*public Page<Member> getAnswers(int page, int size){
         return memberRepository.findByAnswer(PageRequest.of(page, size,
                 Sort.by("createdAt").descending()));
-    }
+    }*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원정보 삭제ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public void deleteMember(long memberId){

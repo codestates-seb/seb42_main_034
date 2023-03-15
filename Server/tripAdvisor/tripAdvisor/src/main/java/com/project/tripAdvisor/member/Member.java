@@ -25,7 +25,7 @@ public class Member extends Auditable {
     @Column(nullable = false, updatable = false, unique = true)
     private String email;
 
-    @Column(length = 100, nullable = false) //암호화 규칙에 따라서 password 길이는 달라질 수 있다.
+    @Column(nullable = false) //암호화 규칙에 따라서 password 길이는 달라질 수 있다.
     private String password;
 
     @Column(length = 100, nullable = false, unique = true)

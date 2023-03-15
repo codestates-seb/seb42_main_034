@@ -2,7 +2,9 @@ package com.project.tripAdvisor.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,6 +16,12 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfiguration {//여기에 지원하는 인증과 권한부여설정을 하면된다.
+
+    private final JwtTokenizer jwtTokenizer;
+
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer) {
+        this.jwtTokenizer = jwtTokenizer;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -27,6 +35,8 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
                 .formLogin().disable()
                 //기본적인 인증 방법 설정 폼로그인
                 .httpBasic().disable()
+                .apply(new CustomFilterConfigurer())
+                .and()
                 .authorizeHttpRequests(autorize -> autorize
                                 .anyRequest().permitAll()//JWT 적용전 우선 허용
                     /*.antMatchers("/orders/**").hasRole("ADMIN")
@@ -56,5 +66,23 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+
+    //인증처리 로직 우리가 구현한 JwtAuthenticationFilter 등록
+    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity>{
+        @Override
+        public void configure(HttpSecurity builder) throws Exception{
+            //AuthenticationManager객체 얻기, 공유되는 객체
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+
+            //
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,
+                    jwtTokenizer);
+            //default URL인 /login 을 해당 URL로 변경한다.
+            jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login");
+            //addFilter 를 통해 jwtAuthenticationFilter를 Spring Security Filter Chain에 추가한다.
+            builder.addFilter(jwtAuthenticationFilter);
+        }
     }
 }

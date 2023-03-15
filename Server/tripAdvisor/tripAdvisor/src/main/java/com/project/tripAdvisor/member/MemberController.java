@@ -66,7 +66,7 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("{/blogs}")//블로그 조회
+    /*@GetMapping("{/blogs}")//블로그 조회
     public ResponseEntity getMembers(@PathVariable("/blogs") @Positive long blogId,
                                     @Positive @RequestParam int page,
                                      @Positive @RequestParam int size){
@@ -76,7 +76,7 @@ public class MemberController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(
                         mapper.MembersToMemberResponseDto(members), pageMembers), HttpStatus.OK);
-    }
+    }*/
 
 
 }
