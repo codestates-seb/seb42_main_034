@@ -10,7 +10,7 @@ declare module 'react' {
     css?: CSSProp | CSSObject;
   }
 }
-
+declare module '*.svg';
 // import { ColorTypes, FontSizeTypes, Theme } from './theme';
 // import { CSSProp } from 'styled-components';
 // declare module 'styled-components' {

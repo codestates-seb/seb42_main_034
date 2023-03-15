@@ -1,3 +1,5 @@
+import { css } from 'styled-components';
+
 export enum FontSize {
   sm = '14px',
   md = '18px',
@@ -23,7 +25,11 @@ export enum Colors {
   border_003 = '#C8CCD0',
 }
 export enum ImageSize {
-  sm = '5rem',
+  sm = '3rem',
   md = '10rem',
   lg = '20rem',
 }
+export const Flex = css`
+  display: flex;
+  flex-direction: column;
+`;

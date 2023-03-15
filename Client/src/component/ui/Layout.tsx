@@ -1,9 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Footer from '../Footer';
-import Nav from '../nav/Nav';
+import { Nav } from '../header/Nav';
 import { Colors } from '../style/const';
-import { Icon } from './Icon';
 
 // export const Flex = css` 많이 겹치면 사용해보기
 //   display: flex;
@@ -24,7 +23,6 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <LayoutFlex>
-      <Icon />
       <NavStyle />
       {children}
       <Footer />
