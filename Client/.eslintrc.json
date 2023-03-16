@@ -5,12 +5,12 @@
       "node": true
     },
     "extends": [
+      "@typescript-eslint/parser",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:@typescript-eslint/recommended-requiring-type-checking",
       "plugin:prettier/recommended",
-      "prettier",
-      "@typescript-eslint/parser"
+      "prettier"
     ],
     "plugins": ["@typescript-eslint", "react-hooks","react"],
     "rules": {
@@ -25,6 +25,7 @@
         "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
+      
     "overrides": [
       {
         "files": ["*.js", "*.ts", "*.tsx"],

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Form } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../component/ui/Button';
 import Input from '../../component/ui/Input';
-import Layout from '../../component/ui/Layout';
+import { Layout } from '../../component/ui/Layout';
 
-const BlogPost = () => {
+export const BlogPost = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
@@ -20,16 +21,16 @@ const BlogPost = () => {
     e.preventDefault();
   };
 
-return (
-  <>
-    <Layout>
-      <PostContainer>
-        <Form onSubmit={handleSubmit}></Form>
-      </PostContainer>
-    </Layout>
-  </>
-);
-
+  return (
+    <>
+      <Layout>
+        <PostContainer>
+          <Form onSubmit={handleSubmit}></Form>
+        </PostContainer>
+      </Layout>
+    </>
+  );
+};
 const PostContainer = styled.div`
   display: flex;
   align-items: center;

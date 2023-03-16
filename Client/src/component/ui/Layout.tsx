@@ -1,11 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Footer from '../footer/Footer';
-
 import Nav from '../header/Nav';
 import { Colors, ScreenSize } from '../style/const';
 
-const LayoutFlex = styled.div<JSX.Element | any | JSX.Element[] | never>`
+const LayoutFlex = styled.div<React.ReactElement | any | never>`
   display: block;
   flex-direction: column;
   justify-content: center;
@@ -26,7 +25,7 @@ const NavStyle = styled(Nav)<{ className: string }>`
   margin: auto;
 `;
 interface LayoutProps {
-  children: string | JSX.Element | JSX.Element[];
+  children: string | React.ReactElement;
 }
 // theme
 export const Layout = ({ children }: LayoutProps) => {
