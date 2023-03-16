@@ -48,6 +48,7 @@ public class MemberService {
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
+        member.setCreatedAt(LocalDateTime.now());
         Member createMember = memberRepository.save(member);
 
         //추가?

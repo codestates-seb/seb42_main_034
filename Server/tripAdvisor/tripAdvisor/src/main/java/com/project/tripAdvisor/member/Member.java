@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class Member extends Auditable {
 
     @Column(nullable = false)
     private String location;
+
 
     //USER의 권한 정보 테이블과 매핑되는 정보
     @ElementCollection(fetch = FetchType.EAGER)
