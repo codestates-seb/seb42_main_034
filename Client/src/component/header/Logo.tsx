@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 import { ReactComponent as LogoIcon } from '../../image/travel.svg';
-import { Flex, ImageSize } from '../style/const';
 import { Icon } from '../ui/Icon';
 export type Props = {
-  svg: React.ReactNode;
+  svg?: React.ReactNode;
   color?: string;
   width?: string;
   height?: string;
@@ -20,6 +18,7 @@ const LogoImg = styled(Icon)<{ svg: React.ReactNode }>`
   position: relative;
   z-index: 1;
   opacity: 0.4;
+  box-shadow: 1rem;
 `;
 //로고크기 줄이기
 export const Logo: React.FC = () => {

@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-export type ButtonProps = {
-  children: React.ReactNode;
-  styles: string;
+export interface ButtonProps {
+  children?: React.ReactNode;
+  className?: string;
+  text: string;
   disabled?: boolean;
-  onClick?: any;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type: 'submit' | 'button'; //제출버튼과 일반 버튼
-};
+}
 
-export const NavButton = ({ children, styles, onClick, disabled, type }: ButtonProps) => {
-  return <div></div>;
+export const NavButton = ({ children, className, onClick, disabled, type, text }: ButtonProps) => {
+  return (
+    <button className={className} onClick={onClick}>
+      {text}
+    </button>
+  );
 };

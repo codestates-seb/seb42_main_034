@@ -1,11 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { FC } from 'react';
 import { Logo } from './Logo';
+import { Props } from '../header/Logo';
+import UserTab from './UserTab';
 
-export const Nav = () => {
+export default function Nav({ className }: Props) {
   return (
-    <div>
+    <div className={className}>
       <Logo />
+      <UserTab />
     </div>
   );
-};
+}

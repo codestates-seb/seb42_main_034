@@ -1,20 +1,24 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Footer from '../Footer';
-import { Nav } from '../header/Nav';
+import Nav from '../header/Nav';
 import { Colors } from '../style/const';
 
-// export const Flex = css` 많이 겹치면 사용해보기
-//   display: flex;
-//   flex-direction: column;
-// `;
 const LayoutFlex = styled.div<JSX.Element | any | JSX.Element[] | never>`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background: ${Colors.main_01};
 `;
-const NavStyle = styled(Nav)`
-  flex: 1 1 au;
+//Nav스타일 위치 바꿔야될듯 헷갈림ㅠ
+const NavStyle = styled(Nav)<{ className: string }>`
+  background: ${Colors.main_04_white};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
+  padding: 0.2rem;
 `;
 interface LayoutProps {
   children: string | JSX.Element | JSX.Element[];
@@ -23,7 +27,7 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <LayoutFlex>
-      <NavStyle />
+      <NavStyle className=" " />
       {children}
       <Footer />
     </LayoutFlex>

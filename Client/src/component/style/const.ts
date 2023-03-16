@@ -12,6 +12,7 @@ export enum Colors {
   main_01 = '#B0DBFC',
   main_02 = '#66BFFF',
   main_03 = '#62A3F4',
+  main_04_white = '#F3F3F3',
   button_01 = '#62A3F4',
   button_text = '#FDFFEC',
   button_clicked = '#486AC2',
