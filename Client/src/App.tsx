@@ -1,4 +1,5 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 
 import { Outlet } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
@@ -12,6 +13,7 @@ const FixOutletHeight = styled.div`
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
+
       <Layout>
         <FixOutletHeight>
           <Outlet />

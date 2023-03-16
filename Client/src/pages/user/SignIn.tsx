@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
 //components
-import Loginform from '../../component/Sign/LoginForm'
+// import Loginform from '../../component/Sign/LoginForm'
 
 const PageStyled = styled.div`
   width: 100%;
@@ -28,7 +28,7 @@ const SignIn = () => {
   return (
     <PageStyled>
 
-     <Loginform />   
+     {/* <Loginform />    */}
         
     </PageStyled>
   )

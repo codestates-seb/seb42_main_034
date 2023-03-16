@@ -10,11 +10,7 @@
     "jsx": "react",
     "noUnusedLocals": false,
     "removeComments": true,
-<<<<<<< HEAD
-    "noEmitOnError": true,
-=======
     "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/
->>>>>>> 443de845b92b8b7f5f004f0eb1af28993daec7f2
   },
   "compileOnSave": true,
   "include": [
