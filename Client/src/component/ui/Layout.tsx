@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Footer from '../footer/Footer';
-
 import Nav from '../header/Nav';
 import { Colors, ScreenSize } from '../style/const';
 

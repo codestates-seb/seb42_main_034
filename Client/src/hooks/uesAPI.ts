@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { BASE_URL } from './consts';
 import { useAppSelector } from '../redux/hooks';
-import { login } from '../redux/user';
+import { login } from '../redux/userInfo';
 
 const useAPI = () => {
   const dispatch = useDispatch();

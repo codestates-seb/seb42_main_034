@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react'
-import { useAppSelector } from '../../redux/hooks'
-import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { useAppSelector } from '../../redux/hooks';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
+//components
+// import Loginform from '../../component/Sign/LoginForm'
 
 const PageStyled = styled.div`
   width: 100%;
@@ -10,9 +13,8 @@ const PageStyled = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #62A3F4;
-`
-
+  background-color: #62a3f4;
+`;
 
 const SignIn = () => {
   // const { isLogin } = useAppSelector(state => state.loginInfo);
@@ -22,15 +24,6 @@ const SignIn = () => {
   //   isLogin && navigate(-1);
   // }, []);
 
-  return (
-    <div>
-      <div>dfasdf</div>
-        
-        
-    </div>
-  )
-
-
-
-}
+  return <PageStyled>{/* <Loginform /> */}</PageStyled>;
+};
 export default SignIn;

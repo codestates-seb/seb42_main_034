@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 interface InitProps {
   [key: string]: any;
   memberId: number;
+  email: string;
   nickname: string;
   location: {
     latitude: string;
@@ -15,6 +16,7 @@ interface InitProps {
 
 const initialState: InitProps = {
   memberId: 0,
+  email: '',
   nickname: '',
   location: {
     latitude: '',

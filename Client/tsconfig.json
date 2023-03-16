@@ -10,7 +10,7 @@
     "jsx": "react",
     "noUnusedLocals": false,
     "removeComments": true,
-    "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/
+    "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/,
   },
   "compileOnSave": true,
   "include": [

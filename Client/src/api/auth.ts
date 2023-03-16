@@ -1,5 +1,5 @@
-import { axiosInstanceAuth } from './instance';
 import useAPI from '../hooks/uesAPI';
+import { axiosInstanceAuth } from './instance';
 
 export interface loginProps {
   userId: string;
