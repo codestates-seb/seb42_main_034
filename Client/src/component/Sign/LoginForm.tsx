@@ -5,17 +5,22 @@ import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../redux/userInfo";
-import Input from "../ui/Input";
+import LoginInput from "./LoginInput";
 import { useAuthAPI } from "../../api/auth";
-
+import { notifi } from "../../utils/notifi";
 
 const EmailWrapper = styled.div``;
 const PWWrapper = styled.div``;
-const LoginFormStyled = styled.form`
+const LoginFormWrapper = styled.form`
     width: 100%;
     min-width: 22rem;
     display: grid;
     height: 200px;
+`
+const LoginButton = styled.button`  
+    height: 120px;
+    width: 60px;
+    margin: 20px 0px;
 `
 
 
@@ -41,7 +46,7 @@ const Loginform = () => {
                 headers: { authorization },
             } = res;
             dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
-            notify(dispatch, `${data.nickname}님 환영합니다.`);
+            notifi(dispatch, `${data.nickname}님 환영합니다.`);
             navigate(-1);
 
 
@@ -68,14 +73,18 @@ const Loginform = () => {
 
 
     return (
-        <LoginFormStyled>
+        <LoginFormWrapper onSubmit={handleSubmit}>
             <EmailWrapper>
-                <Input label="email" state={email} setState={setEmail}  />
+                <LoginInput label="ID" state={email} setState={setEmail}  />
+                {vaildEmail ? '' : '아이디를 입력 해주세요.'}
             </EmailWrapper>
             <PWWrapper>
-                <Input label="PW" state={password} setState={setPassword} />
+                <LoginInput label="PW" type="password" state={password} setState={setPassword}/>
+                {vaildPW ? '' : '비밀번호를 입력 해주세요.'}
             </PWWrapper>
-        </LoginFormStyled>
+
+            <LoginButton>로그인</LoginButton>
+        </LoginFormWrapper>
     )
 
 }

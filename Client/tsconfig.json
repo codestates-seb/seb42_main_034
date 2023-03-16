@@ -9,6 +9,8 @@
     "outDir":"./dist",
     "jsx": "react",
     "noUnusedLocals": false,
+    "removeComments": true,
+    "noEmitOnError": true,
   },
   "compileOnSave": true,
   "include": [

@@ -26,11 +26,11 @@ const SignIn = () => {
   // }, []);
 
   return (
-    <>
-      <div>dfasdf</div>
+    <PageStyled>
+
      <Loginform />   
         
-    </>
+    </PageStyled>
   )
 
 

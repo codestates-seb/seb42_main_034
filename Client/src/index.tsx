@@ -15,6 +15,9 @@ import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
+import { store } from './redux/store';
+import { Provider } from 'react-redux';
+
 
 const router = createBrowserRouter([
   {
@@ -68,4 +71,9 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById('root') as HTMLElement).render(<RouterProvider router={router} />);
+createRoot(document.getElementById('root') as HTMLElement).render(
+<RouterProvider router={router} />
+
+
+
+);
