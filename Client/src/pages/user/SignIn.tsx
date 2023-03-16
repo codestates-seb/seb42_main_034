@@ -3,6 +3,9 @@ import { useAppSelector } from '../../redux/hooks'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
+//components
+import Loginform from '../../component/Sign/LoginForm'
+
 const PageStyled = styled.div`
   width: 100%;
   height: 100vh;
@@ -23,11 +26,11 @@ const SignIn = () => {
   // }, []);
 
   return (
-    <div>
-      <div>dfasdf</div>
+    <PageStyled>
+
+     <Loginform />   
         
-        
-    </div>
+    </PageStyled>
   )
 
 

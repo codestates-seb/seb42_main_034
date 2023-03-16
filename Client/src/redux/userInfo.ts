@@ -7,6 +7,7 @@ interface InitProps {
     userId?: string;
     accessToken?: string;
     address?: string;
+    email?: string;
 }
 
 const initialState: InitProps = {
