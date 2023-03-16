@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavButton } from '../ui/NavButton';
 import { useNavigate } from 'react-router-dom';
+import { HoverAction } from '../style/cssTemplete';
 const MenuTabBtn = styled(NavButton)<{
   text: string;
   type: string;
@@ -9,11 +10,7 @@ const MenuTabBtn = styled(NavButton)<{
   className: string;
 }>`
   border: none;
-  cursor: pointer;
-  transition: all ease-in 200ms;
-  &:hover {
-    transform: scale(1.1);
-  }
+  ${HoverAction}
 `;
 export default function UserTab() {
   //상태넣을자리

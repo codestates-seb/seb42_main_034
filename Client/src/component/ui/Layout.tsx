@@ -1,14 +1,17 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Footer from '../Footer';
+import Footer from '../footer/Footer';
+
 import Nav from '../header/Nav';
-import { Colors } from '../style/const';
+import { Colors, ScreenSize } from '../style/const';
 
 const LayoutFlex = styled.div<JSX.Element | any | JSX.Element[] | never>`
-  display: flex;
+  display: block;
   flex-direction: column;
-  height: 100vh;
+  justify-content: center;
   background: ${Colors.main_01};
+  min-height: 1400px;
+  margin: auto;
 `;
 //Nav스타일 위치 바꿔야될듯 헷갈림ㅠ
 const NavStyle = styled(Nav)<{ className: string }>`
@@ -18,7 +21,9 @@ const NavStyle = styled(Nav)<{ className: string }>`
   align-items: center;
   border-bottom-left-radius: 0.4rem;
   border-bottom-right-radius: 0.4rem;
-  padding: 0.2rem;
+  padding: 0.4rem;
+  max-width: ${ScreenSize.max_width};
+  margin: auto;
 `;
 interface LayoutProps {
   children: string | JSX.Element | JSX.Element[];

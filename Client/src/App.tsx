@@ -5,15 +5,17 @@ import styled, { ThemeProvider } from 'styled-components';
 import { theme } from './component/style/theme';
 
 import { Layout } from './component/ui/Layout';
-const FixOutletHeight = styled(Outlet)<{ className: string }>`
-  flex: 1 1 auto;
-  color: pink;
+
+const FixOutletHeight = styled.div`
+  min-height: 1300px;
 `;
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <Layout>
-        <FixOutletHeight className="" />
+        <FixOutletHeight>
+          <Outlet />
+        </FixOutletHeight>
       </Layout>
     </ThemeProvider>
   );

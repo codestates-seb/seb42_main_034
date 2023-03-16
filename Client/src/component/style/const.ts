@@ -30,6 +30,12 @@ export enum ImageSize {
   md = '10rem',
   lg = '20rem',
 }
+export enum ScreenSize {
+  max_height = '1300px',
+  middle_height = '900px',
+  footer_height = '200px',
+  max_width = '1284px',
+}
 export const Flex = css`
   display: flex;
   flex-direction: column;
