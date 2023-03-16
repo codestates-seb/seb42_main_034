@@ -24,6 +24,7 @@
         "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
+      
     "overrides": [
       {
         "files": ["*.js", "*.ts", "*.tsx"],
