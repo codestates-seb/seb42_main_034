@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
-//components
-// import Loginform from '../../component/Sign/LoginForm'
+import Loginform from '../../component/Sign/LoginForm';
 
 const PageStyled = styled.div`
   width: 100%;
@@ -17,13 +15,15 @@ const PageStyled = styled.div`
 `;
 
 const SignIn = () => {
-  // const { isLogin } = useAppSelector(state => state.loginInfo);
-  // const navigate = useNavigate();
+  const { isLogin } = useAppSelector(state => state.loginInfo);
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   isLogin && navigate(-1);
-  // }, []);
+  useEffect(() => {
+    isLogin && navigate(-1);
+  }, []);
 
-  return <PageStyled>{/* <Loginform /> */}</PageStyled>;
+  return <PageStyled>
+    <Loginform />
+  </PageStyled>;
 };
 export default SignIn;

@@ -8,8 +8,8 @@ import { useAppSelector } from '../../redux/hooks'
 
 
 export default function SignUp() {
-  // const {isLogin} = useAppSelector(state => state.loginInfo);
-  // const navigate = useNavigate(-1);
+  const {isLogin} = useAppSelector(state => state.loginInfo);
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   isLogin && navigate();

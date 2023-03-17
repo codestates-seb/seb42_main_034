@@ -14,6 +14,11 @@ import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -67,4 +72,10 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById('root') as HTMLElement).render(<RouterProvider router={router} />);
+createRoot(document.getElementById('root') as HTMLElement).render(
+<Provider store={store}>
+  <QueryClientProvider client={queryClient}>
+<RouterProvider router={router} />
+</QueryClientProvider>
+</Provider>
+);

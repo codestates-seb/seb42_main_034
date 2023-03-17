@@ -17,6 +17,7 @@ declare module 'styled-components' {
       border1: string;
       border2: string;
       border3: string;
+      button_clicked: string;
     };
     font: {
       small: string;
