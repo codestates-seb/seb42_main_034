@@ -89,7 +89,7 @@ export const SignUpForm = () => {
     );
 
         return (
-            <MainFormContainer>
+            <MainFormContainer onSubmit={handleSubmit}>
 
 
             </MainFormContainer>
