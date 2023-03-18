@@ -4,7 +4,7 @@ import { Colors } from '../style/const';
 interface InputProps {
     label: string;
     state?: string;
-    setState?: Function;
+    setState?: (value: string) => void;
     type?: string;
     placeholder?: string;
     maxLength?: number;

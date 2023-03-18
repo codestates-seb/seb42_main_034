@@ -2,9 +2,8 @@ import storage from 'redux-persist/lib/storage';
 import { persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/lib/persistReducer';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
-import userInfoReducer from './userInfoReducer';
-import loginInfoReducer from './loginInfoReducer';
+import userInfoReducer from './userInfoSlice'
+import loginInfoReducer from './userSlice'
 
 const persistConfig = {
   key: 'root',

@@ -11,6 +11,9 @@
     "noUnusedLocals": false,
     "removeComments": true,
     "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/,
+    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true,
+    
   },
   "compileOnSave": true,
   "include": [

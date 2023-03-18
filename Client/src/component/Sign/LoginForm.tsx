@@ -4,7 +4,7 @@ import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../redux/userInfo";
+import { login } from "../../redux/userSlice";
 import LoginInput from "./LoginInput";
 import { useAuthAPI } from "../../api/auth";
 import { notifi } from "../../utils/notifi";
@@ -44,6 +44,7 @@ const Loginform = () => {
                 data,
                 headers: { authorization },
             } = res;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
             notifi(dispatch, `${data.nickname}님 환영합니다.`);
             navigate(-1);

@@ -1,6 +1,6 @@
 import useAPI from '../hooks/uesAPI';
 import axios from 'axios';
-import { setUserInfo } from '../redux/userInfoReducer';
+import { setUserInfo } from '../redux/userInfoSlice';
 import { useAppDispatch } from '../redux/hooks';
 
 interface Member {
