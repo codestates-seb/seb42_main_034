@@ -2,14 +2,15 @@ import axios from "axios";
 import styled from "styled-components";
 import Input from "component/ui/Input";
 import { BASE_URL, USERID_REGEX } from "hooks/consts";
-
+import React from "react";
+import SignInput from "component/ui/SignInput";
 interface IdFormProps {
     data: {
         label: string;
         state: string;
         validity: boolean;
-        setState: ()=>void;
-        setValidity: ()=>void;
+        setState: (value:string)=>void;
+        setValidity: (value:string)=>void;
     };
     notifi:(value:string)=>void;
 }
@@ -44,5 +45,24 @@ const IdForm = ({data, notifi}: IdFormProps) => {
                     `${label === '아이디' ? '아이디를' : '닉네임을'} 입력 해주세요.`,
                 );
         }
-    } 
+    };
+    
+    return (
+        <MainContainer>
+            <InputWrapper key={label}>
+                <SignInput label={label} state={state} setState={setState} maxLength={20}/>
+            </InputWrapper>
+        </MainContainer>
+    )
 }
+
+const MainContainer = styled.div`
+    width: 100%;
+    display: grid;
+`
+const InputWrapper = styled.div`
+    width: 100%;
+    flex-wrap: wrap;
+    position: relative;
+    display: flex;
+`
