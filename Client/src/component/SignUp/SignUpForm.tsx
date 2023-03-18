@@ -6,11 +6,13 @@ import useAPI from "../../hooks/uesAPI";
 import styled from "styled-components";
 import { useAppDispatch } from "../../redux/hooks";
 import { SignUpMessages } from "../../utils/SignUpMessages";
+import { useValidate } from "hooks/useVaildDate";
+import React from "react";
 
 export type inputKeys = 'userId' | 'nickname'|'email'|'password'|'passwordCheck';
 
 
-const SignUpForm = () => {
+export const SignUpForm = () => {
     
     const [inputs, setInputs] = useState({
         userId: '',
@@ -50,10 +52,56 @@ const SignUpForm = () => {
                 goNotifi('회원가입에 실패 하였습니다...');
             }
         }
-    }
+    };
+
+    const getSectionProps = (label: string, select: inputKeys) => {
+        const state = inputs[select];
+        const setState = (value: string) => setInputs(
+            pre => {
+                return {
+                    ...pre,
+                    [select]: value,
+                };
+            }
+        );
+        const validity = isValid[select];
+        const setValidity = (value: boolean) =>
+        setIsValid(pre => {
+            return {
+                ...pre,
+                [select]: value,
+            };
+        })
+
+        const type = select; 
+        return { label, state, setState, validity, setValidity, type}; 
+    }; 
+
+    useValidate(
+        inputs.password,
+        inputs.passwordCheck,
+        (input: inputKeys, value: boolean) => setIsValid(pre => {
+            return {
+                ...pre,
+                [input]: value
+            };
+        }),
+    );
+
+        return (
+            <MainFormContainer>
 
 
-
-
+            </MainFormContainer>
+        )
 
 }
+
+const MainFormContainer = styled.form`
+    width: 100%;
+    max-width: 700px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+`
