@@ -47,7 +47,7 @@ const SignUpForm = () => {
                 goNotifi('회원가입이 완료 되었습니다.');
                 navigate('/board/signin');
             } catch {
-                goNotifi('회원가입에 실패 하였습니다.');
+                goNotifi('회원가입에 실패 하였습니다...');
             }
         }
     }
