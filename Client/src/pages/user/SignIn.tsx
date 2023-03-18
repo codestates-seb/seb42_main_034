@@ -15,15 +15,13 @@ const PageStyled = styled.div`
 `;
 
 const SignIn = () => {
-  const { isLogin } = useAppSelector(state => state.loginInfo);
+  const { isLogin } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
 
   useEffect(() => {
     isLogin && navigate(-1);
   }, []);
 
-  return <PageStyled>
-    <Loginform />
-  </PageStyled>;
+  return <Loginform />;
 };
 export default SignIn;

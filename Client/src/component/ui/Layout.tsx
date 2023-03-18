@@ -31,7 +31,7 @@ interface LayoutProps {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <LayoutFlex>
-      <NavStyle className=" " />
+      <NavStyle className="" />
       {children}
       <Footer />
     </LayoutFlex>

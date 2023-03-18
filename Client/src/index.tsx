@@ -73,9 +73,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-<Provider store={store}>
-  <QueryClientProvider client={queryClient}>
-<RouterProvider router={router} />
-</QueryClientProvider>
-</Provider>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </Provider>,
 );

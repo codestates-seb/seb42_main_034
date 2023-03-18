@@ -1,3 +1,5 @@
+import { PayloadAction } from '@reduxjs/toolkit';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { createSlice } from '@reduxjs/toolkit';
 
 interface InitProps {
@@ -11,6 +13,9 @@ interface InitProps {
   address: string;
   totalCount: number;
   avatarUrl: string;
+  avgGrade: number;
+  value: string;
+  key: string;
 }
 
 const initialState: InitProps = {
@@ -24,6 +29,8 @@ const initialState: InitProps = {
   totalCount: 0,
   avatarUrl: '',
   avgGrade: 0,
+  value: '',
+  key: '',
 };
 
 const userInfoSlice = createSlice({
@@ -31,8 +38,9 @@ const userInfoSlice = createSlice({
   initialState,
   reducers: {
     setUserInfo: (_, action) => action.payload,
-    updateUserInfo: (state, action) => {
+    updateUserInfo: (state, action: PayloadAction<InitProps>) => {
       const { key } = action.payload;
+
       state[key] = action.payload.value;
     },
   },
@@ -40,3 +48,17 @@ const userInfoSlice = createSlice({
 
 export const { setUserInfo, updateUserInfo } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
+setUserInfo({
+  memberId: 0,
+  nickname: '',
+  location: {
+    latitude: '',
+    longitude: '',
+  },
+  address: '',
+  totalCount: 0,
+  avatarUrl: '',
+  avgGrade: 0,
+  value: '',
+  key: '',
+});
