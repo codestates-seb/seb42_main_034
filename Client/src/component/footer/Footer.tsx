@@ -11,6 +11,7 @@ const BottomLayout = styled.div`
   max-width: ${ScreenSize.max_width};
   margin: auto;
   padding: 0.5rem;
+  margin-top: 3rem;
 `;
 
 export default function Footer() {

@@ -23,6 +23,7 @@ const NavStyle = styled(Nav)<{ className: string }>`
   padding: 0.4rem;
   max-width: ${ScreenSize.max_width};
   margin: auto;
+  margin-bottom: 4rem;
 `;
 interface LayoutProps {
   children: string | React.ReactElement;
