@@ -1,5 +1,4 @@
-import React, { HTMLInputTypeAttribute } from 'react';
-import { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 export interface SignInputProps {

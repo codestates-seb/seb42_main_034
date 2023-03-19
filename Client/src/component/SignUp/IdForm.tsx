@@ -1,10 +1,11 @@
 import axios from "axios";
 import styled from "styled-components";
-import Input from "component/ui/Input";
 import { BASE_URL, USERID_REGEX } from "hooks/consts";
 import React from "react";
 import SignInput from "component/ui/SignInput";
 import { AxiosResponse } from "axios";
+
+
 interface IdFormProps {
 
     data: {
