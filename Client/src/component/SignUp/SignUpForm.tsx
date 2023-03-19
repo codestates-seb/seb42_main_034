@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../ui/Button";
+import Nbutton from "component/ui/NButton";
 import { notifi } from "../../utils/notifi";
 import useAPI from "../../hooks/uesAPI";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import { SignUpMessages } from "../../utils/SignUpMessages";
 import { useValidate } from "hooks/useVaildDate";
 import React from "react";
 import IdForm from "./IdForm";
+import PasswordForm from "./PasswordForm";
 
 export type inputKeys = 'userId' | 'nickname'|'email'|'password'|'passwordCheck';
 
@@ -91,9 +92,12 @@ export const SignUpForm = () => {
     );
 
         return (
-            <MainFormContainer onSubmit={handleSubmit}>
+            <MainFormContainer onSubmit={handleSubmit} >
                 <IdForm data={getSectionProps('아이디', 'userId')} notifi={goNotifi} />
-
+                <IdForm data={getSectionProps('닉네임', 'nickname')} notifi={goNotifi} />
+                <PasswordForm data={getSectionProps('비밀번호', 'password')}/>
+                <PasswordForm data={getSectionProps('비밀번호 확인', 'passwordCheck')}/>
+                <SubmitButton>회원가입</SubmitButton>
             </MainFormContainer>
         )
 
@@ -106,4 +110,7 @@ const MainFormContainer = styled.form`
     display: flex;
     flex-direction: column;
     gap: 2rem;
+`
+const SubmitButton = styled(Nbutton)`
+    height: 3rem;
 `

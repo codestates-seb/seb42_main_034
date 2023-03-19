@@ -19,7 +19,7 @@ export default function SignUp() {
 
   return (
     <MainContainer>
-    dd
+    
     <SignUpForm />
     
     </MainContainer>

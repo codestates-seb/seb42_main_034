@@ -1,9 +1,11 @@
 import storage from 'redux-persist/lib/storage';
 import { persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/lib/persistReducer';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore,  } from '@reduxjs/toolkit';
 import userInfoReducer from './userInfoSlice'
 import loginInfoReducer from './userSlice'
+import notificationReducer from'./notifiCation'
+
 
 const persistConfig = {
   key: 'root',
@@ -18,6 +20,7 @@ const loginPersistConfig = {
 
 const rootReducer = combineReducers({
   userInfo: userInfoReducer,
+  notification: notificationReducer,
 });
 
 export const store = configureStore({
@@ -25,7 +28,13 @@ export const store = configureStore({
     persistReducer: persistReducer(persistConfig, rootReducer),
     loginInfo: persistReducer(loginPersistConfig, loginInfoReducer),
   },
-});
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+      serializableCheck: false,
+  }),
+})
+
+
 
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;

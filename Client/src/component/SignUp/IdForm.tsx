@@ -57,8 +57,8 @@ const IdForm = ({data, notifi}: IdFormProps) => {
             <InputWrapper key={label}>
                 <SignInput label={label} state={state} setState={setState} maxLength={20}/>
                 
-                <div>
-                    나 적용 잘 되고있니?
+                <div onClick={()=>handleValidateClick(label, state, setValidity)}>
+                    중복확인
                 </div>
             </InputWrapper>
         </MainContainer>
