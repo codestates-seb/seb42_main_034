@@ -18,11 +18,18 @@ export default function SignUp() {
 
 
   return (
-    <>
-    
+    <MainContainer>
+    dd
     <SignUpForm />
     
-    </>
+    </MainContainer>
   )
 
 }
+const MainContainer = styled.div`
+  border: solid 1px red;
+  width: 100%;
+  min-width: 200px;
+  padding: 0 100px;
+  display: flex;
+`

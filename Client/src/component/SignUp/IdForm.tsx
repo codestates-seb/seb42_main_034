@@ -4,16 +4,21 @@ import Input from "component/ui/Input";
 import { BASE_URL, USERID_REGEX } from "hooks/consts";
 import React from "react";
 import SignInput from "component/ui/SignInput";
+import { AxiosResponse } from "axios";
 interface IdFormProps {
+
     data: {
         label: string;
         state: string;
         validity: boolean;
         setState: (value:string)=>void;
-        setValidity: (value:string)=>void;
+        setValidity: (value:any)=>void;
+     
+        
     };
     notifi:(value:string)=>void;
 }
+
 
 
 const IdForm = ({data, notifi}: IdFormProps) => {
@@ -33,13 +38,13 @@ const IdForm = ({data, notifi}: IdFormProps) => {
                     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                     `${BASE_URL}/board/signup/check${endPoint}?${endPoint}=${state}`,
                 )
-                .then(res => {
-                    if(res.data.success) {
+                .then((res:AxiosResponse<IdFormProps>) => {
+                    if(res) {
                         validate(true);
                         notifi(`사용 가능한 ${label} 입니다.`);
-                    } else notifi(res.data.message);
+                    } else notifi('에러');
                 })
-                .catch(e => {
+                .catch((e: Error) => {
                     notifi(e.message);
                 }) : notifi(
                     `${label === '아이디' ? '아이디를' : '닉네임을'} 입력 해주세요.`,
@@ -51,6 +56,10 @@ const IdForm = ({data, notifi}: IdFormProps) => {
         <MainContainer>
             <InputWrapper key={label}>
                 <SignInput label={label} state={state} setState={setState} maxLength={20}/>
+                
+                <div>
+                    나 적용 잘 되고있니?
+                </div>
             </InputWrapper>
         </MainContainer>
     )
@@ -66,3 +75,13 @@ const InputWrapper = styled.div`
     position: relative;
     display: flex;
 `
+
+
+
+
+
+
+
+
+
+export default IdForm;

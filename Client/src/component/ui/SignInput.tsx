@@ -32,17 +32,6 @@ const StyledInput = styled.input<SignInputProps>`
   height: ${({ height }) => height ?? '3rem'};
   margin-bottom: ${({ marginBottom }) => marginBottom ?? '0'};
   border-radius: 4px;
-  background-color: ${(props) => props.theme.colors.white};
-  // border: 0.05rem solid ${(props) => props.theme.colors.border2};
-  outline: 0.4rem solid ${(props) => props.theme.colors.border2};
-  ::placeholder {
-    color: ${(props) => props.theme.colors.grey};
-    letter-spacing: 0.05rem;
-  }
-  :focus {
-    // border: 0.05rem solid ${(props) => props.theme.colors.border3};
-    outline: 0.4rem solid ${(props) => props.theme.colors.border3};
-  }
 `;
 
 export default SignInput;

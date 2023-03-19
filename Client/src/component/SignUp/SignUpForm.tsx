@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { SignUpMessages } from "../../utils/SignUpMessages";
 import { useValidate } from "hooks/useVaildDate";
 import React from "react";
+import IdForm from "./IdForm";
 
 export type inputKeys = 'userId' | 'nickname'|'email'|'password'|'passwordCheck';
 
@@ -35,6 +36,7 @@ export const SignUpForm = () => {
     const navigate = useNavigate();
     const notifiMessages = SignUpMessages(inputs, isValid, isChecked);
     const goNotifi = (message: string) => notifi(dispatch, message);
+
 
     const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -90,7 +92,7 @@ export const SignUpForm = () => {
 
         return (
             <MainFormContainer onSubmit={handleSubmit}>
-
+                <IdForm data={getSectionProps('아이디', 'userId')} notifi={goNotifi} />
 
             </MainFormContainer>
         )
