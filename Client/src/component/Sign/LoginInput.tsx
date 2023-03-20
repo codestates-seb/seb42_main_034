@@ -40,7 +40,7 @@ const StyledInput = styled.input`
   padding: 10px 15px;
   font-size: 20px;
   border-radius: 5px;
-  border: ${Colors.button_blue + ' 1px solid'};
+  border: ${`${Colors.button_blue} 1px solid`};
   :focus {
     outline: none;
     border-color: ${Colors.button_blue};
