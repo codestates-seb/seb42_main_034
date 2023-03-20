@@ -51,6 +51,7 @@ public class AnswerDto {
         private boolean isChecked;
 
         private String location;
+
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.project.tripAdvisor.member;
 
 import com.project.tripAdvisor.audit.Auditable;
+import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,15 +49,15 @@ public class Member extends Auditable {
         }
     }
 
-//    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<Answer> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Answer> answers = new ArrayList<>();
 
-    /*public void setAnswer(Answer answer) {//양방향 연관 관계를 안전하게 매핑하기 위한 solution코드
+    public void setAnswer(Answer answer) {//양방향 연관 관계를 안전하게 매핑하기 위한 solution코드
         this.answers.add(answer);
         if (answer.getMember() != this) {
             answer.setMember(this);
         }
-    }*/
+    }
 
 //    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Blog> blogs = new ArrayList<>();

@@ -47,9 +47,9 @@ public class AnswerCommentDto {
 
         private String content;
 
-        private LocalDateTime createdAt;
-
-        private LocalDateTime modifiedAt;
+//        private LocalDateTime createdAt;
+//
+//        private LocalDateTime modifiedAt;
 
     }
 }

@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.entity;
 
+import com.project.tripAdvisor.audit.Auditable;
 import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.question.TimeStamped;
 import lombok.*;
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Answer extends TimeStamped {
+public class Answer extends Auditable {
 
     @Id
     @Column(name = "answer_id")

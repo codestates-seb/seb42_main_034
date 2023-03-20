@@ -1,10 +1,12 @@
 package com.project.tripAdvisor.question.entity;
 
+import com.project.tripAdvisor.audit.Auditable;
 import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.question.TimeStamped;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -13,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Question extends TimeStamped {
+public class Question extends Auditable {
 
 
     @Id
@@ -36,22 +38,33 @@ public class Question extends TimeStamped {
     @Column(columnDefinition = "integer default 0")
     private int viewCnt; // 질문 글 조회수
 
+    @Column
+    private String writer; // 작성자
 
 
-
+    /** N:1 **/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member; // 멤버 ID
-    public void addMember(Member member){
-        this.member = member;
-    }
 
+    /** 1:N **/
     @Setter(AccessLevel.NONE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true )
-    private List<Answer> Answers; // 질문 글에 달린 답변 리스트
+    private List<Answer> answers = new ArrayList<>(); // 질문 글에 달린 답변(댓글) 리스트
+
+    /** (추가) 태그 기능 구현 **/
+    //private List<QuestionTag>
+    //
+    //
 
 
-
+    /** 양방향 매핑 설정 **/
+    public void setAnswers(Answer answer) {
+        this.answers.add(answer);
+        if(answer.getQuestion() != this) {
+            answer.setQuestion(this);
+        }
+    }
 
 
 

@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.entity;
 
+import com.project.tripAdvisor.audit.Auditable;
 import com.project.tripAdvisor.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class AnswerComment {
+public class AnswerComment extends Auditable {
 
     @Id
     @Column(name = "comment_id")

@@ -1,10 +1,12 @@
 package com.project.tripAdvisor.question.dto;
 
+import com.project.tripAdvisor.member.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 
 public class QuestionDto {
@@ -49,13 +51,20 @@ public class QuestionDto {
 
     @Getter
     @AllArgsConstructor
-    public static class Response { // 질문 상세 조회
-        private int memberId;
+    public static class Response {
+        private Long questionId;
+
         private String title;
-        private String content;
+
         private String tag;
-        // (추가) writer : 질문 작성자
-        // (추가) createdAt : 작성 시간
+
+        private String content;
+
+        private String writer;
+
+//        private MemberDto.Response member;
+
+        private LocalDateTime createdAt;
 
     }
 }

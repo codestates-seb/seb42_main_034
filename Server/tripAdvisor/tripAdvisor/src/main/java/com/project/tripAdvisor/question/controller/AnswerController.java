@@ -35,22 +35,22 @@ public class AnswerController {
 
     @PostMapping("/{question-id}")
     public ResponseEntity postAnswer(@PathVariable("question-id") @Positive Long questionId,
-                                         @RequestBody AnswerDto.Post answerPostDto) {
+                                         @RequestBody AnswerDto.Post requestbody) {
 
-        Answer answer = answerMapper.answerPostToAnswer(answerPostDto);
-        Answer response = answerService.createAnswer(answer, questionId);
+        Answer answer = answerMapper.answerPostToAnswer(requestbody);
+        answer = answerService.createAnswer(answer, questionId);
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(answerMapper.answerToAnswerResponse(response))
+                new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
                 , HttpStatus.OK);
     }
 
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive Long answerId,
-                                      @Valid @RequestBody AnswerDto.Patch answerPatchDto) {
-        answerPatchDto.setAnswerId(answerId);
+                                      @Valid @RequestBody AnswerDto.Patch requestbody) {
+        requestbody.setAnswerId(answerId);
 
-        Answer answer = answerMapper.answerPatchToAnswer(answerPatchDto);
+        Answer answer = answerMapper.answerPatchToAnswer(requestbody);
         answer = answerService.updateAnswer(answer, answer.getMember().getMemberId());
 
         return new ResponseEntity<>(

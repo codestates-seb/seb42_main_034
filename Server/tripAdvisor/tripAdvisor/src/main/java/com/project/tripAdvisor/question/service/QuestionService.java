@@ -37,7 +37,7 @@ public class QuestionService {
 
     /** 질문 수정 **/
 
-    public Question updateQuestion(Question question) {
+    public Question updateQuestion(Question question, Member member) {
         Question updatedQuestion = findVerifiedQuestion(question.getId());
 
         if(updatedQuestion.getMember().getMemberId() != question.getMember().getMemberId()) {
@@ -69,8 +69,12 @@ public class QuestionService {
 
     public Question findQuestion(Long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
+
+        String writer = findQuestion.getMember().getNickname();
         int viewCnt = findQuestion.getViewCnt();
+
         findQuestion.setViewCnt(viewCnt + 1); // 조회수 1 증가
+        findQuestion.setWriter(writer);
 
         return findQuestion;
     }

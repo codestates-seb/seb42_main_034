@@ -37,12 +37,15 @@ public class AnswerService {
     }
     /** 댓글(답변) 생성 **/
     public Answer createAnswer(Answer answer, Long questionId) {
-        Question question = new Question();
-        Member member = new Member();
-        answer.setQuestion(question);
-        answer.setMember(member);
 
-        return answerRepository.save(answer);
+//        Question question = new Question();
+//        question.setId(questionId);
+//        Member member = new Member();
+//
+//        answer.setQuestion(question);
+//        answer.setMember(member);
+        Answer createdAnswer = answerRepository.save(answer);
+        return createdAnswer;
     }
 
     /** 댓글(답변) 수정 **/
