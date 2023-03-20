@@ -5,6 +5,7 @@ import com.project.tripAdvisor.question.TimeStamped;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Getter
@@ -36,20 +37,23 @@ public class Question extends TimeStamped {
     private int viewCnt; // 질문 글 조회수
 
 
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member; // 멤버 ID
-
     public void addMember(Member member){
         this.member = member;
     }
 
-    /* -------------------------------------------------------- */
-/*
+    @Setter(AccessLevel.NONE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true )
     private List<Answer> Answers; // 질문 글에 달린 답변 리스트
 
-*/
+
+
+
+
 
 
 }

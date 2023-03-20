@@ -13,6 +13,8 @@ public enum ExceptionCode {
 
     MEMBER_NOT_MATCH(404, "회원이 일치하지 않습니다."),
 
+    UNAUTHORIZED_USER(403, "인가되지 않은 회원입니다."),
+
     QUESTION_NOT_FOUND(6000, "유효하지 않은 질문입니다."),
     QUESTION_TAG_NOT_FOUND(6001, "유효하지 않은 코멘트입니다."),
     TAG_NOT_FOUND(7000, "유효하지 않은 태그입니다."),

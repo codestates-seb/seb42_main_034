@@ -48,7 +48,7 @@ public class QuestionController {
     /**
      * 질문 수정
      **/
-    @PatchMapping("{question-id")
+    @PatchMapping("/{question-id")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive Long questionId,
                                         @RequestBody QuestionDto.Patch requestBody) {
         requestBody.setQuestionId(questionId);
@@ -64,7 +64,7 @@ public class QuestionController {
     /**
      * 질문 상세 조회
      **/
-    @GetMapping("{question-id")
+    @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") @Positive Long questionId) {
         Question gotQuestion = questionService.findQuestion(questionId);
 
@@ -91,6 +91,7 @@ public class QuestionController {
      * 질문 삭제
      **/
 
+    @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive Long questionId,
                                          @RequestParam Long memberId) {
         questionService.deleteQuestion(questionId, memberId);
