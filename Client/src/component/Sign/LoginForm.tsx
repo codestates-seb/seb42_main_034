@@ -4,7 +4,7 @@ import React from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../redux/userInfo';
+import { login } from '../../redux/userSlice';
 import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
@@ -31,6 +31,7 @@ const Loginform = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postLogin } = useAuthAPI();
+
   const { mutate, data: userData } = useMutation({
     mutationKey: ['loginInfo'],
     mutationFn: () =>

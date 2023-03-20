@@ -1,6 +1,4 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface InitProps {
   [key: string]: any;
@@ -13,9 +11,8 @@ interface InitProps {
   address: string;
   totalCount: number;
   avatarUrl: string;
-  avgGrade: number;
-  value: string;
   key: string;
+  value: string;
 }
 
 const initialState: InitProps = {
@@ -37,7 +34,7 @@ const userInfoSlice = createSlice({
   name: 'userInfo',
   initialState,
   reducers: {
-    setUserInfo: (_, action) => action.payload,
+    setUserInfo: (_, action: PayloadAction<InitProps>) => action.payload,
     updateUserInfo: (state, action: PayloadAction<InitProps>) => {
       const { key } = action.payload;
 

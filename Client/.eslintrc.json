@@ -1,5 +1,6 @@
 {
     "parser": "@typescript-eslint/parser",
+              
     "env": {
       "browser": true,
       "node": true
@@ -17,7 +18,14 @@
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off"
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          "checksVoidReturn": false
+        }
+      ]
+
     },
     "settings": {
       "react": {
@@ -26,7 +34,8 @@
     },
     "parserOptions": {
         "project": ["tsconfig.json"],
-        "createDefaultProgram": true
+        "createDefaultProgram": true,
+        "ecmaVersion": 2020
       },
       
     "overrides": [

@@ -11,7 +11,9 @@
     "noUnusedLocals": false,
     "removeComments": true,
     "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/,
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true,
   },
   "compileOnSave": true,
   "include": [
