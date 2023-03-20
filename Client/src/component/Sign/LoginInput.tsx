@@ -13,10 +13,10 @@ interface InputProps {
 
 const MainDiv = styled.div`
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   @media screen and (max-width: 800px) {
     flex-direction: column;
@@ -40,6 +40,8 @@ const StyledInput = styled.input`
   padding: 10px 15px;
   font-size: 20px;
   border-radius: 5px;
+  justify-content: center;
+  align-items: center;
   border: ${Colors.button_blue + ' 1px solid'};
   :focus {
     outline: none;

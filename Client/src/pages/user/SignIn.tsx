@@ -11,7 +11,6 @@ const PageStyled = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #62a3f4;
 `;
 
 const SignIn = () => {
