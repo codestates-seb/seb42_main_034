@@ -8,7 +8,7 @@ import { ScreenSize } from './component/style/const';
 import { Layout } from './component/ui/Layout';
 
 const FixOutletHeight = styled.div`
-  min-height: ${ScreenSize.max_height};
+  min-height: ${ScreenSize.middle_height};
 `;
 export default function App() {
   return (

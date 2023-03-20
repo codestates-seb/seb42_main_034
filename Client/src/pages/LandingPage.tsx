@@ -1,5 +1,6 @@
-import React from 'react'
+import MapContainer from 'component/Kakao.maps';
+import React from 'react';
 
 export default function LandingPage() {
-  return <div>LandingPage</div>
+  return <MapContainer />;
 }
