@@ -1,9 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface InitProps {
   [key: string]: any;
   memberId: number;
-  email: string;
   nickname: string;
   location: {
     latitude: string;
@@ -12,11 +11,12 @@ interface InitProps {
   address: string;
   totalCount: number;
   avatarUrl: string;
+  key: string;
+  value: string;
 }
 
 const initialState: InitProps = {
   memberId: 0,
-  email: '',
   nickname: '',
   location: {
     latitude: '',
@@ -25,15 +25,19 @@ const initialState: InitProps = {
   address: '',
   totalCount: 0,
   avatarUrl: '',
+  avgGrade: 0,
+  value: '',
+  key: '',
 };
 
 const userInfoSlice = createSlice({
   name: 'userInfo',
   initialState,
   reducers: {
-    setUserInfo: (_, action) => action.payload,
-    updateUserInfo: (state, action) => {
+    setUserInfo: (_, action: PayloadAction<InitProps>) => action.payload,
+    updateUserInfo: (state, action: PayloadAction<InitProps>) => {
       const { key } = action.payload;
+
       state[key] = action.payload.value;
     },
   },

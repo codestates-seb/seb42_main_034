@@ -13,9 +13,10 @@ export enum Colors {
   main_02 = '#66BFFF',
   main_03 = '#62A3F4',
   main_04_white = '#F3F3F3',
-  button_01 = '#62A3F4',
+  button_blue = '#62A3F4',
   button_text = '#FDFFEC',
   button_clicked = '#486AC2',
+  button_hover = '#FDFFEC',
   text_warn = '#FF4848',
   text_black = '#0C0D0E',
   text_grey = '#828282',
@@ -31,7 +32,7 @@ export enum ImageSize {
   lg = '20rem',
 }
 export enum ScreenSize {
-  max_height = '1300px',
+  max_height = '1400px',
   middle_height = '900px',
   footer_height = '200px',
   max_width = '1284px',

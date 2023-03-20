@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from '../../component/ui/Button';
+import { Button } from '../../component/ui/Button';
 import Input from '../../component/ui/Input';
 import { Layout } from '../../component/ui/Layout';
 
