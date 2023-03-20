@@ -37,7 +37,15 @@ export enum ScreenSize {
   footer_height = '200px',
   max_width = '1284px',
 }
-export const Flex = css`
-  display: flex;
-  flex-direction: column;
-`;
+export enum Route {
+  mainPage = '/',
+  home = '/home',
+  blog = '/board/bloglist',
+  blog_detail = '/board/boarddetails/:id',
+  blog_post = '/board/blogpost',
+  question = '/board/questionlist',
+  question_detail = '/board/questiondetails/:id',
+  question_post = '/board/questionpost',
+  signin = '/board/signin',
+  signup = '/board/signup',
+}

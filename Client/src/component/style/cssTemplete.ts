@@ -12,3 +12,25 @@ export const BoxShadow = css`
   -webkit-box-shadow: 11px 10px 27px -2px rgba(0, 0, 0, 0.29);
   -moz-box-shadow: 11px 10px 27px -2px rgba(0, 0, 0, 0.29);
 `;
+export const ButtonTheme = css`
+  width: 110px;
+  height: 105px;
+  font-size: var(--font-size-md);
+  border: none;
+  border-radius: 10px;
+  background-color: var(--button-001);
+  color: var(--button-text);
+  &:active {
+    background-color: var(--button-clicked);
+  }
+`;
+export const Flex = css`
+  display: flex;
+  flex-direction: column;
+`;
+export const Relative = css`
+  position: relative;
+`;
+export const Absolute = css`
+  position: absolute;
+`;
