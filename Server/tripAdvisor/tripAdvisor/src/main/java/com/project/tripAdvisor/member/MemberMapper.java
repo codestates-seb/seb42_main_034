@@ -12,5 +12,8 @@ public interface MemberMapper {
 
     Member MemberPatchToMember(MemberDto.Patch memberPatch);
     MemberDto.Response MemberToMemberResponseDto(Member member);
-    List<MemberDto.Response> MembersToMemberResponseDto(List<Member> members);
+    //예비용
+//    List<MemberDto.Response> MembersToMemberResponseDto(List<Member> members);
+
+
 }

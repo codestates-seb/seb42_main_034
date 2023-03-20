@@ -2,12 +2,15 @@ package com.project.tripAdvisor.member;
 
 
 import com.project.tripAdvisor.auth.CustomAuthorityUtils;
+import com.project.tripAdvisor.question.Question;
+import com.project.tripAdvisor.question.QuestionRepository;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +26,18 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+    private final QuestionRepository questionRepository;
 
     public MemberService(MemberRepository memberRepository,
                          ApplicationEventPublisher publisher,
                          PasswordEncoder passwordEncoder,
-                         CustomAuthorityUtils authorityUtils) {
+                         CustomAuthorityUtils authorityUtils,
+                         QuestionRepository questionRepository) {
         this.memberRepository = memberRepository;
         this.publisher = publisher;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
+        this.questionRepository = questionRepository;
     }
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원가입 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -77,10 +83,12 @@ public class MemberService {
     }
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원 정보에서 블로그 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    /*public Page<Member> getBlogs(int page, int size){
-        return memberRepository.findByBlog(PageRequest.of(page, size,
-                Sort.by("createdAt").descending()));
-    } //내가 쓴 블로그 Id 조회*/
+    /*public Page<Question> getMemberQuestions(int page, int size){
+
+        PageRequest pageRequest = PageRequest.of(page, size,
+                Sort.by("createdAt").descending());
+        return questionRepository.findAll(pageRequest);
+    }*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원 정보에서 질문 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
