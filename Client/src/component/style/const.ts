@@ -32,7 +32,7 @@ export enum ImageSize {
   lg = '20rem',
 }
 export enum ScreenSize {
-  max_height = '1300px',
+  max_height = '1400px',
   middle_height = '900px',
   footer_height = '200px',
   max_width = '1284px',

@@ -7,7 +7,7 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: inherit;
+  min-height: ${ScreenSize.middle_height};
   overflow-y: auto;
   &::-webkit-scrollbar {
     padding: 4rem;
