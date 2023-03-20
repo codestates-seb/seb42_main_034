@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonWrapper } from '../../component/board/Button';
 import Editor from '../../component/board/Editor';
@@ -58,6 +59,7 @@ export default function QuestionPost() {
         <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
         <Editor value={content} onChange={contentHandler} />
         <Button onClick={submitHandler}>작성</Button>
+        <Outlet />
       </PostWrapper>
     </>
   );

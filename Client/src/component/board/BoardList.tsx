@@ -6,7 +6,6 @@ const ListWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 `;
 
 const ListContainer = styled.ul`
@@ -18,13 +17,16 @@ const Item = styled.li`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  margin-bottom: 10px;
+  margin: 20px 0;
   border: 1px solid blue;
 `;
 
 const Title = styled(Link)`
-  font-size: 20px;
+  display: flex;
+  font-size: 22px;
   white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
 `;
 
 const Sub = styled.div`
@@ -45,6 +47,26 @@ export default function BoardList() {
             </Sub>
           </Item>
         ))} */}
+        <Item>
+          memberId
+          <Title to="/board/questiondetails/1">제목1</Title>
+          <Sub>작성자1 | 작성시간</Sub>
+        </Item>
+        <Item>
+          memberId
+          <Title to="/">제목2</Title>
+          <Sub>작성자2 | 작성시간</Sub>
+        </Item>
+        <Item>
+          memberId
+          <Title to="/">제목3</Title>
+          <Sub>작성자3 | 작성시간</Sub>
+        </Item>
+        <Item>
+          memberId
+          <Title to="/">제목4</Title>
+          <Sub>작성자4 | 작성시간</Sub>
+        </Item>
       </ListContainer>
     </ListWrapper>
   );
