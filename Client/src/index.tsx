@@ -14,6 +14,7 @@ import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
+import QuestionList from './pages/question/QuestionList';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
         path: '/board',
         element: <Board />,
         children: [
+          {
+            path: '/board/questionlist/',
+            element: <QuestionList />,
+          },
           {
             path: '/board/boarddetails/:id',
             element: <BlogDetails />,
