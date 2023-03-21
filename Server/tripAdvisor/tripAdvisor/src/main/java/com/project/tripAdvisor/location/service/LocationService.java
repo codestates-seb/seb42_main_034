@@ -1,3 +1,4 @@
+/*
 package com.project.tripAdvisor.location.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,16 +24,20 @@ public class LocationService {
     private final RestTemplate restTemplate;
     private final String naverMapClientId;
     private final String naverMapClientSecret;
-    /**
+    */
+/**
      * 추후 프론트 단에서 넘겨주는 데이터로 하여금 확인이 가능할 때, "서울특별시,경기도" -> 서울/경기로 변경해서 저장하는 등의 로직을
      * 추가 해야합니다. 임시라 일단 부산광역시와 같은 경우도 생각하지않고 넣어둔 상태입니다.
-     */
+     *//*
+
     private final List<String> ALLOWED_REGIONS = Arrays.asList("서울특별시", "경기도", "충청도", "전라도", "경상도", "강원도", "제주도");
 
-    /**
+    */
+/**
      * RestTemplateBuilder을 왜 DI 받는지?
      * -> RestTemplate의 구성 옵션을 쉽게 추가하거나 변경할 수 있다고함.
-     */
+     *//*
+
     public LocationService(RestTemplateBuilder restTemplateBuilder,
                            @Value("${naver.map.client.id}") String naverMapClientId,
                            @Value("${naver.map.client.secret}") String naverMapClientSecret) {
@@ -43,10 +48,12 @@ public class LocationService {
 
 
     public String getLocationName(Double latitude, Double longitude){
-        /**
+        */
+/**
          * ?"%s?coords=%s,%s&output=json"
          * API 요청을 보내기위해 문자열 생성
-         */
+         *//*
+
         String url = String.format("%s?coords=%s,%s&output=json", NAVER_MAP_API_URL, longitude, latitude);
 
         HttpHeaders headers = new HttpHeaders();
@@ -72,3 +79,4 @@ public class LocationService {
         }
     }
 }
+*/

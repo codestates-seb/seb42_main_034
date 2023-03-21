@@ -40,7 +40,7 @@ public class MemberDetailsService implements UserDetailsService { //커스텀 �
         //데이터 베이스에서 조회한 회원정보를 Spring Security의 User 정보로 변환하는 과정과
         //User의 권한 정보를 생성하는 과정을 캡슐화 할 수 있다.
         MemberDetails(Member member){
-            setMemberId(member.getMemberId());
+            setId(member.getId());
             setNickname(member.getNickname());
             setEmail(member.getEmail());
             setPassword(member.getPassword());

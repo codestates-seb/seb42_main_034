@@ -1,10 +1,18 @@
 package com.project.tripAdvisor.auth;
 
+import com.project.tripAdvisor.auth.filter.JwtAuthenticationFilter;
+import com.project.tripAdvisor.auth.filter.JwtVerificationFilter;
+import com.project.tripAdvisor.auth.handler.MemberAccessDeniedHandler;
+import com.project.tripAdvisor.auth.handler.MemberAuthenticationEntryPoint;
+import com.project.tripAdvisor.auth.handler.MemberAuthenticationFailureHandler;
+import com.project.tripAdvisor.auth.handler.MemberAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -12,15 +20,20 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import java.util.Arrays;
 
 @Configuration
 public class SecurityConfiguration {//여기에 지원하는 인증과 권한부여설정을 하면된다.
 
     private final JwtTokenizer jwtTokenizer;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer,
+                                 CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
+        this.authorityUtils = authorityUtils;
     }
 
     @Bean
@@ -31,13 +44,25 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
                 .and()
                 .csrf().disable()
                 //기본적으로 아무설정을 하지 않으면 csrf 공격을 받음 클라이언트로부터 CSRF 토큰을 수신 후 검증
-                .cors().disable()//corsConfigurationSource이름의 bean을 이용함
+                .cors(withDefaults())//corsConfigurationSource이름의 bean을 이용함
+                //세션을사용하지 않도록 설정함
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .formLogin().disable()
                 //기본적인 인증 방법 설정 폼로그인
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .accessDeniedHandler(new MemberAccessDeniedHandler())
+                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(autorize -> autorize
+                                .antMatchers(HttpMethod.POST, "/members").permitAll()
+                                .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
+                                .antMatchers(HttpMethod.GET, "/members").hasRole("ADMIN")
+                                .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")
+                                .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")
                                 .anyRequest().permitAll()//JWT 적용전 우선 허용
                     /*.antMatchers("/orders/**").hasRole("ADMIN")
                     //admin 룰을 부여받은 사용자만 /orders 로 시작하는 모든 URL에 접근가능
@@ -81,8 +106,15 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
                     jwtTokenizer);
             //default URL인 /login 을 해당 URL로 변경한다.
             jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login");
+            //객체 생성시 new 를 사용한이유는 이 핸들러의 경우 다른곳에서 사용이안되고 오직 여기서만 사용되기 때문임
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
+
+            //인스턴스를 생성하면서 해당 필터에서 사용되는 객체들을  DI 받는다.
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
             //addFilter 를 통해 jwtAuthenticationFilter를 Spring Security Filter Chain에 추가한다.
-            builder.addFilter(jwtAuthenticationFilter);
+            builder.addFilter(jwtAuthenticationFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 }

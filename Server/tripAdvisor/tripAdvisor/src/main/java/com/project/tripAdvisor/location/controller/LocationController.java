@@ -1,6 +1,8 @@
+/*
 package com.project.tripAdvisor.location.controller;
 
 import com.project.tripAdvisor.location.service.LocationService;
+import com.project.tripAdvisor.member.Member;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +25,12 @@ public class LocationController {
         //이후 member location 필드에 해당 location 추가후 save
         return ResponseEntity.ok("Location added to member successfully");
     }
-    /**
+    */
+/**
      * patchMapping 과 getMapping의 경우 member 단에서 할지?
      * 안할꺼면 위치 정보만을 업데이트하는 버튼이 최소한 필요할듯
-     */
+     *//*
+
 
     @PatchMapping("/location/{member-id}")
     public ResponseEntity<String> updateLocation(@PathVariable("member-id") Long memberId,
@@ -48,3 +52,4 @@ public class LocationController {
         return ResponseEntity.ok(member.getLocation());
     }
 }
+*/
