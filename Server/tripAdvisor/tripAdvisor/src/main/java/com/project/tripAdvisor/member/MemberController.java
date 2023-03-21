@@ -1,14 +1,18 @@
 package com.project.tripAdvisor.member;
 
+import com.project.tripAdvisor.question.dto.QuestionResponseDto;
 import com.project.tripAdvisor.response.SingleResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Slf4j
 @Validated
@@ -38,11 +42,11 @@ public class MemberController {
     }
 
     @PatchMapping("{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long Id,
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long id,
 
                                       @RequestBody MemberDto.Patch memberPatch){
 
-        memberPatch.setId(Id);
+        memberPatch.setId(id);
 
         Member member = mapper.MemberPatchToMember(memberPatch);
         Member updateMember = memberService.updateMember(member);
@@ -53,8 +57,8 @@ public class MemberController {
 
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(
-            @PathVariable("member-id") @Positive long Id) {
-        Member member = memberService.findMember(Id);
+            @PathVariable("member-id") @Positive long id) {
+        Member member = memberService.findMember(id);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.MemberToMemberResponseDto(member))
                 , HttpStatus.OK);
@@ -62,8 +66,8 @@ public class MemberController {
 
 
     @DeleteMapping("{member-id}")
-    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long Id){
-        memberService.deleteMember(Id);
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long id){
+        memberService.deleteMember(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -97,14 +101,16 @@ public class MemberController {
     }*/
 
 
-    /*//로그인 사용자가 작성한 질문 조회
+    //로그인 사용자가 작성한 질문 조회v1
     @GetMapping("/me/questionsTitle")
-    public ResponseEntity<List<QuestionDto.MemberQuestionResponse>> getMyQuestionsTitle() {
-        Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public ResponseEntity<List<QuestionResponseDto>> getMyQuestionsTitle() {
+       Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         return ResponseEntity.ok(memberService.getMyQuestionsTitle(id));
     }
 
-    @GetMapping("/me/questions")
+
+   /* @GetMapping("/me/questions")
     public ResponseEntity<List<QuestionDto.MemberQuestionResponse>> getMyQuestions() {
         Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(memberService.getMyQuestionsTitle(id));
