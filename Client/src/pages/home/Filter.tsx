@@ -1,5 +1,5 @@
 import { Colors } from 'component/style/variables';
-import { ButtonTheme, HoverAction } from 'component/style/cssTemplete';
+import { BoxShadow, ButtonTheme, HoverAction } from 'component/style/cssTemplete';
 import { NavButton } from 'component/ui/NavButton';
 import { RegionInfo } from 'pages/Home';
 import React from 'react';
@@ -11,10 +11,14 @@ const RegionButton = styled(NavButton)<{
   z-index: 0;
   /* ${ButtonTheme} */
   border: none;
-  background: none;
+  background: ${Colors.main_02};
   color: ${Colors.main_04_white};
   ${HoverAction}
+  ${BoxShadow}
   position: absolute;
+  font-size: 1.3rem;
+  border-radius: 1.7rem;
+  padding: 0.5rem;
 `;
 
 export default function Filter({

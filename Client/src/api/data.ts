@@ -37,7 +37,7 @@ interface Mock {
 export class CRUDdata {
   url = '';
   constructor() {
-    this.url = 'ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members';
+    this.url = encodeURI('ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members');
   }
 
   //Promise<AxiosResponse<ReturnData>>
@@ -53,7 +53,7 @@ export class CRUDdata {
 
       {
         email: 'dlwjddus1sdad@naver.com',
-        password: 'wjd123sadsa56!',
+        password: `wjd123sadsa56!`,
         nickName: 'dddddsfd',
         location: '서울',
       },
