@@ -59,7 +59,7 @@ public class Question extends Auditable {
 
 
     /** 양방향 매핑 설정 **/
-    public void setAnswers(Answer answer) {
+    public void setAnswer(Answer answer) {
         this.answers.add(answer);
         if(answer.getQuestion() != this) {
             answer.setQuestion(this);

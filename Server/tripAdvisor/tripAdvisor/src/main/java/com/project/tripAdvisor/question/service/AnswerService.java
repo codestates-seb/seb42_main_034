@@ -38,14 +38,20 @@ public class AnswerService {
     /** 댓글(답변) 생성 **/
     public Answer createAnswer(Answer answer, Long questionId) {
 
-//        Question question = new Question();
-//        question.setId(questionId);
-//        Member member = new Member();
+        Answer createdAnswer = answerRepository.save(answer);
+        return createdAnswer;
+
+        //ver.2
+//        Question question = questionService.findVerifiedQuestion(questionId);
+//        Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
 //
 //        answer.setQuestion(question);
 //        answer.setMember(member);
-        Answer createdAnswer = answerRepository.save(answer);
-        return createdAnswer;
+//
+//        question.setAnswer(answer);
+//
+//        return answerRepository.save(answer);
+
     }
 
     /** 댓글(답변) 수정 **/

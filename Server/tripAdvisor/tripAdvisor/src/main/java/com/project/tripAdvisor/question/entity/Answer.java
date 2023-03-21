@@ -54,11 +54,11 @@ public class Answer extends Auditable {
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AnswerComment> comments = new ArrayList<>(); // 대댓글
-
-    public void setComments(AnswerComment comment) {
-        this.comments.add(comment);
-        if(comment.getAnswer() != this) {
-            comment.setAnswer(this);
-        }
-    }
+//
+//    public void setComments(AnswerComment comment) {
+//        this.comments.add(comment);
+//        if(comment.getAnswer() != this) {
+//            comment.setAnswer(this);
+//        }
+//    }
 }
