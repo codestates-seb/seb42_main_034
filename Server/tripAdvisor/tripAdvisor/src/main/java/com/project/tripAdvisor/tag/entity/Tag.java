@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -20,4 +22,7 @@ public class Tag {
     public Tag(String name) {
         this.name = name;
     }
+
+    @OneToMany(mappedBy = "tag", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<BlogTag> blogTags=new ArrayList<>();
 }

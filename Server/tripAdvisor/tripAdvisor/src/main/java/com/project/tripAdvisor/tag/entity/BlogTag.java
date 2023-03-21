@@ -1,11 +1,14 @@
 package com.project.tripAdvisor.tag.entity;
 
+import com.project.tripAdvisor.blog.entity.Blog;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@Setter
 public class BlogTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

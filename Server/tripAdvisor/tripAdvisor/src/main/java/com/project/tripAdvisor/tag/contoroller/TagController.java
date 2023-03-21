@@ -1,21 +1,25 @@
 package com.project.tripAdvisor.tag.contoroller;
 
+import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.tag.entity.Tag;
 import com.project.tripAdvisor.tag.repository.BlogTagRepository;
 import com.project.tripAdvisor.tag.repository.QuestionTagRepository;
 import com.project.tripAdvisor.tag.repository.TagRepository;
 import com.project.tripAdvisor.tag.service.TagService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/tags")
+@RestController
+@RequestMapping("/tags")
 public class TagController {
     private final TagRepository tagRepository;
     private final TagService tagService;
@@ -33,7 +37,7 @@ public class TagController {
      */
     //tag를 포함한 블로그 글 조회
     @GetMapping("/blog")
-    public ResponseEntity getBlog(@RequestParam String tagName,
+    public void getBlogByTag(@RequestParam String tagName,
                                   @RequestParam(value="page", required = false,
                                           defaultValue = "1")int page){
         Tag tag = tagRepository.findByName(tagName);
@@ -47,13 +51,13 @@ public class TagController {
     }
 
     //tag를 포함한 질문 글 조회
-    @GetMapping("/question")
-    public ResponseEntity getQuestion(@RequestParam String tagName,
-                                      @RequestParam(value="page", required = false,
-                                              defaultValue = "1")int page){
-        Tag tag = tagRepository.findByName(tagName);
-        List<Question> questions = tagService.getQuestions(tag.getId());
-        Pageable pageable = PageRequest.of(page-1, 15);
-        Page<Question> questionPage = new PageImpl<>(questions,pageable,questions.size());
-    }
+//    @GetMapping("/question")
+//    public ResponseEntity getQuestion(@RequestParam String tagName,
+//                                      @RequestParam(value="page", required = false,
+//                                              defaultValue = "1")int page){
+//        Tag tag = tagRepository.findByName(tagName);
+//        List<Question> questions = tagService.getQuestions(tag.getId());
+//        Pageable pageable = PageRequest.of(page-1, 15);
+//        Page<Question> questionPage = new PageImpl<>(questions,pageable,questions.size());
+//    }
 }
