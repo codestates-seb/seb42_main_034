@@ -1,21 +1,16 @@
 import React from 'react';
 
 import { Outlet } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
-import { ScreenSize } from './component/style/const';
-// import { theme } from './component/style/theme';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './component/style/theme';
 
 import { Layout } from './component/ui/Layout';
-
-const FixOutletHeight = styled.div`
-  min-height: ${ScreenSize.max_height};
-`;
 export default function App() {
   return (
-    <Layout>
-      <FixOutletHeight>
+    <ThemeProvider theme={theme}>
+      <Layout>
         <Outlet />
-      </FixOutletHeight>
-    </Layout>
+      </Layout>
+    </ThemeProvider>
   );
 }

@@ -14,12 +14,7 @@ import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
-import QuestionList from './pages/question/QuestionList';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: '/',
@@ -37,10 +32,6 @@ const router = createBrowserRouter([
         path: '/board',
         element: <Board />,
         children: [
-          {
-            path: '/board/questionlist/',
-            element: <QuestionList />,
-          },
           {
             path: '/board/boarddetails/:id',
             element: <BlogDetails />,
@@ -76,10 +67,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById('root') as HTMLElement).render(
-  <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  </Provider>,
-);
+createRoot(document.getElementById('root') as HTMLElement).render(<RouterProvider router={router} />);
