@@ -19,7 +19,7 @@ import java.util.List;
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long memberId;
+    private long id;
 
     @Email
     @Column(nullable = false, updatable = false, unique = true)
