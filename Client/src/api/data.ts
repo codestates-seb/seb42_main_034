@@ -1,6 +1,11 @@
 import { RegionInfo } from 'pages/Home';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import QuestionList from 'pages/question/QuestionList';
+// const axiosConfig: AxiosRequestConfig = {
+//     baseURL: 'ec2-52-78-1-107.ap-northeast-2.compute.amazonaws.com:8080/login',
+//     headers:
+
+//   }
 interface QuestionList {
   url: string;
   city: string;
@@ -22,16 +27,43 @@ export interface ReturnData {
     toatalPage: string;
   };
 }
+interface Mock {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
 //하나로 여러가지 메소드 실행
-class CRUDdata {
+export class CRUDdata {
   url = '';
-  constructor(url: string) {
-    this.url = url;
+  constructor() {
+    this.url = 'https://1166-1-230-110-132.jp.ngrok.io/members';
   }
+
   //Promise<AxiosResponse<ReturnData>>
-  async getData(url: string, city: string, page: string, sortedBy: string) {
-    try {
-      const data = await axios.get(`${this.url}?category=${city}&page=${page}sortedBy=${sortedBy}`);
-    } catch {}
+  //?category=${city}&page=${page}sortedBy=${sortedBy}`
+  //city: string, page: string, sortedBy: string
+  //   async getData(): Promise<AxiosResponse<Mock>> {
+  //     const response = await axios.post(`${this.url}`, { username: 'dlwjddus16@naver.com', password: 'wjd123456!' });
+  //     return response;
+  //   }
+  async getData(): Promise<AxiosResponse<Mock>> {
+    const response = await axios.post(
+      `${this.url}`,
+
+      {
+        email: 'dlwjddus1sdad@naver.com',
+        password: 'wjd123sadsa56!',
+        nickName: 'dddddsfd',
+        location: '서울',
+      },
+      {
+        headers: { 'Cache-Control': 'no-store', Pragma: 'no-store', Expires: '0' },
+      },
+    );
+    return response;
   }
 }
+// export function useData (){
+
+// }

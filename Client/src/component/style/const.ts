@@ -50,8 +50,8 @@ export enum Route {
   signin = '/board/signin',
   signup = '/board/signup',
 }
-export const cities: Array<Partial<RegionInfo>> = [
-  { city: '서울', x: 40, y: 50 },
+export const cities = [
+  { city: '서울', x: 36.5, y: 15 },
   { city: '부산', x: 46, y: 100 },
   { city: '대전', x: 23, y: 70 },
 ];
