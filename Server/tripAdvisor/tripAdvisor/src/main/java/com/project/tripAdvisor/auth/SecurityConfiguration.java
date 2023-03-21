@@ -39,6 +39,7 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //SecurityFilterChain을 Bean으로 등록해서 HTTP보안설정을 구성한다.
+
         http
                 /*.headers().frameOptions().sameOrigin()
                 .and()*/
@@ -82,7 +83,9 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
 //구체적인 CORS 정책을 설정한다.
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*")); //모든 출처에 대한 허용
+        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowCredentials(true);
+//        configuration.setAllowedOrigins(Arrays.asList("*")); //모든 출처에 대한 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));//해당 메서드허용
 
         //CorsConfigurationSource 인터페이스의 구현클래스임
