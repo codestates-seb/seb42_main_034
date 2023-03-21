@@ -7,7 +7,7 @@ interface QuestionList {
   page: string;
   sortedBy: string;
 }
-interface returnData {
+export interface ReturnData {
   data: {
     questionId: string;
     title: string;
@@ -28,7 +28,10 @@ class CRUDdata {
   constructor(url: string) {
     this.url = url;
   }
-  getData(url: string, city: string, page: string, sortedBy: string) {
-    return axios.get(`${this.url}?category=${city}&page=${page}sortedBy=${sortedBy}`);
+  //Promise<AxiosResponse<ReturnData>>
+  async getData(url: string, city: string, page: string, sortedBy: string) {
+    try {
+      const data = await axios.get(`${this.url}?category=${city}&page=${page}sortedBy=${sortedBy}`);
+    } catch {}
   }
 }

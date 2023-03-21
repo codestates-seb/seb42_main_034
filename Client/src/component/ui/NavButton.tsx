@@ -7,11 +7,12 @@ export interface ButtonProps {
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: 'submit' | 'button'; //제출버튼과 일반 버튼
+  style?: React.CSSProperties; //좌표용
 }
 
-export const NavButton = ({ children, className, onClick, disabled, type, text }: ButtonProps) => {
+export const NavButton = ({ children, className, onClick, disabled, type, text, style }: ButtonProps) => {
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} style={style}>
       {text}
     </button>
   );

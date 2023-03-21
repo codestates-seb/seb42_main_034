@@ -30,7 +30,6 @@ const MapContainer = () => {
           margin: 'auto',
         }}
       />
-      <Filter />
     </MiddleLayout>
   );
 };
