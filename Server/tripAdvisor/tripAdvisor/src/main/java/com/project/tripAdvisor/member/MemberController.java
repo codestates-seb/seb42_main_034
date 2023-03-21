@@ -1,25 +1,14 @@
 package com.project.tripAdvisor.member;
 
-
-import com.project.tripAdvisor.question.Question;
-import com.project.tripAdvisor.question.QuestionMapper;
-import com.project.tripAdvisor.question.QuestionRepository;
-import com.project.tripAdvisor.response.MultiResponseDto;
 import com.project.tripAdvisor.response.SingleResponseDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.security.Principal;
-import java.util.List;
 
 @Slf4j
 @Validated
@@ -30,17 +19,12 @@ public class MemberController {
     private final MemberMapper mapper;
 
     private final MemberRepository memberRepository;
-    private final QuestionRepository questionRepository;
-    private final QuestionMapper questionMapper;
 
     public MemberController(MemberService memberService, MemberMapper mapper,
-                            MemberRepository memberRepository, QuestionRepository questionRepository,
-                            QuestionMapper questionMapper) {
+                            MemberRepository memberRepository) {
         this.memberService = memberService;
         this.mapper = mapper;
         this.memberRepository = memberRepository;
-        this.questionRepository = questionRepository;
-        this.questionMapper = questionMapper;
     }
 
     @PostMapping
@@ -54,9 +38,9 @@ public class MemberController {
     }
 
     @PatchMapping("{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long Id,
                                       @RequestBody MemberDto.Patch memberPatch){
-        memberPatch.setMemberId(memberId);
+        memberPatch.setId(Id);
 
         Member member = mapper.MemberPatchToMember(memberPatch);
         Member updateMember = memberService.updateMember(member);
@@ -67,8 +51,8 @@ public class MemberController {
 
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(
-            @PathVariable("member-id") @Positive long memberId) {
-        Member member = memberService.findMember(memberId);
+            @PathVariable("member-id") @Positive long Id) {
+        Member member = memberService.findMember(Id);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.MemberToMemberResponseDto(member))
                 , HttpStatus.OK);
@@ -76,8 +60,8 @@ public class MemberController {
 
 
     @DeleteMapping("{member-id}")
-    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId){
-        memberService.deleteMember(memberId);
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long Id){
+        memberService.deleteMember(Id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -104,5 +88,24 @@ public class MemberController {
                         questionMapper.MemberQuestionListDto(questions), MemberQuestions), HttpStatus.OK);
     }*/
 
+    /*@GetMapping("/me/logout")
+    public ResponseEntity logout(HttpServletRequest request){
+        memberService.logout(request);
+        return new ResponseEntity("로그아웃 되었습니다", HttpStatus.OK);
+    }*/
+
+
+    /*//로그인 사용자가 작성한 질문 조회
+    @GetMapping("/me/questionsTitle")
+    public ResponseEntity<List<QuestionDto.MemberQuestionResponse>> getMyQuestionsTitle() {
+        Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(memberService.getMyQuestionsTitle(id));
+    }
+
+    @GetMapping("/me/questions")
+    public ResponseEntity<List<QuestionDto.MemberQuestionResponse>> getMyQuestions() {
+        Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(memberService.getMyQuestionsTitle(id));
+    }*/
 
 }

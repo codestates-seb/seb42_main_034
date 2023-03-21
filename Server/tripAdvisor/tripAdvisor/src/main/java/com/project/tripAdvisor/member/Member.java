@@ -1,7 +1,6 @@
 package com.project.tripAdvisor.member;
 
 import com.project.tripAdvisor.audit.Auditable;
-import com.project.tripAdvisor.question.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,8 @@ import java.util.List;
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long memberId;
+    @Column(name = "member_id")
+    private long Id;
 
     @Email
     @Column(nullable = false, updatable = false, unique = true)
@@ -41,14 +40,14 @@ public class Member extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String > roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Question> questions = new ArrayList<>();
-    public void setQuestion(Question question) { //양방향 연관 관계를 안전하게 매핑하기 위한 solution코드
+//    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Question> questions = new ArrayList<>();
+    /*public void setQuestion(Question question) { //양방향 연관 관계를 안전하게 매핑하기 위한 solution코드
         this.questions.add(question);
         if (question.getMember() != this) {
             question.setMember(this);
         }
-    }
+    }*/
 
 //    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Answer> answers = new ArrayList<>();
