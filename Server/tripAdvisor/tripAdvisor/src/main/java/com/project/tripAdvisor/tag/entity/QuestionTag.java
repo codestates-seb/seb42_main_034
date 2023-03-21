@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.tag.entity;
 
+import com.project.tripAdvisor.question.entity.Question;
 import lombok.Getter;
 
 import javax.persistence.*;

@@ -15,8 +15,8 @@ const LinkWrapper = styled(Link)`
 `;
 
 export const ButtonWrapper = styled.button`
-  width: 110px;
-  height: 105px;
+  width: 120px;
+  height: 50px;
   font-size: var(--font-size-md);
   border: none;
   border-radius: 10px;

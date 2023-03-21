@@ -1,6 +1,5 @@
 {
     "parser": "@typescript-eslint/parser",
-              
     "env": {
       "browser": true,
       "node": true
@@ -14,18 +13,7 @@
     ],
     "plugins": ["@typescript-eslint", "react-hooks","react"],
     "rules": {
-      "prettier/prettier": 0,
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/no-misused-promises": [
-        "error",
-        {
-          "checksVoidReturn": false
-        }
-      ]
-
+      "prettier/prettier": 0
     },
     "settings": {
       "react": {
@@ -34,10 +22,8 @@
     },
     "parserOptions": {
         "project": ["tsconfig.json"],
-        "createDefaultProgram": true,
-        "ecmaVersion": 2020
+        "createDefaultProgram": true
       },
-      
     "overrides": [
       {
         "files": ["*.js", "*.ts", "*.tsx"],

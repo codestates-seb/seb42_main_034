@@ -10,18 +10,10 @@
     "jsx": "react",
     "noUnusedLocals": false,
     "removeComments": true,
-    "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/,
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-    "baseUrl": "src",
-    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/
   },
   "compileOnSave": true,
   "include": [
-    "src",
-    "custom.d.ts",
-     "public",
-  ],
-  "types": [
-    "kakao.maps.d.ts"
+    "src"
   ]
 }
