@@ -30,8 +30,8 @@ public class Answer extends Auditable {
     @Column(columnDefinition = "integer default 0")
     private int likeCnt; // 답변 글 좋아요 수
 
-    @Column(nullable = false)
-    private String location; // 지역 구분
+//    @Column(nullable = false)
+//    private String location; // 지역 구분
 
 
 

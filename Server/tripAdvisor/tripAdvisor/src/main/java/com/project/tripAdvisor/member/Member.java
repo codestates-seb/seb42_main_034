@@ -21,7 +21,10 @@ import java.util.List;
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long memberId;
+
+    @Column(name = "member_id")
+    private long Id;
+
 
     @Email
     @Column(nullable = false, updatable = false, unique = true)
@@ -35,6 +38,7 @@ public class Member extends Auditable {
 
     @Column(nullable = false)
     private String location;
+
 
     //USER의 권한 정보 테이블과 매핑되는 정보
     @ElementCollection(fetch = FetchType.EAGER)

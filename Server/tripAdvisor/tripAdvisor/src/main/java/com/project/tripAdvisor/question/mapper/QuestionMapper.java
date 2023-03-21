@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.mapper;
 
+import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.question.dto.QuestionDto;
 import com.project.tripAdvisor.question.entity.Question;
 import org.mapstruct.Mapper;
@@ -12,7 +13,20 @@ import java.util.List;
 public interface QuestionMapper {
 
     Question questionPostToQuestion(QuestionDto.Post requestBody);
-    Question questionPatchToQuestion(QuestionDto.Patch requestBody);
+    default Question questionPatchToQuestion(QuestionDto.Patch requestBody) {
+        if(requestBody == null){
+            return null;
+        }
+        Member member = new Member();
+        member.setId(requestBody.getMemberId());
+
+        Question question = new Question();
+        question.setMember(member);
+        question.setTitle(requestBody.getTitle());
+        question.setContent(requestBody.getContent());
+
+        return question;
+    }
 
     @Mapping(source = "question.id", target = "questionId")
     @Mapping(source = "question.member.nickname", target = "writer")

@@ -5,9 +5,6 @@ import com.project.tripAdvisor.auth.CustomAuthorityUtils;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,8 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+
+    private static final String HEADER_PREFIX = "Bearer";
 
     public MemberService(MemberRepository memberRepository,
                          ApplicationEventPublisher publisher,
@@ -48,6 +47,7 @@ public class MemberService {
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
+        member.setCreatedAt(LocalDateTime.now());
         Member createMember = memberRepository.save(member);
 
         //추가?
@@ -56,7 +56,7 @@ public class MemberService {
     }
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원정보 수정ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public Member updateMember(Member member){
-        Member foundMember = findVerifiedMember(member.getMemberId());
+        Member foundMember = findVerifiedMember(member.getId());
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickname -> foundMember.setNickname(nickname));
         Optional.ofNullable(member.getPassword())
@@ -71,15 +71,17 @@ public class MemberService {
         return updateMember;
     }
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public Member findMember(long memberId) {
-        return findVerifiedMember(memberId);
+    public Member findMember(long Id) {
+        return findVerifiedMember(Id);
     }
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원 정보에서 블로그 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    /*public Page<Member> getBlogs(int page, int size){
-        return memberRepository.findByBlog(PageRequest.of(page, size,
-                Sort.by("createdAt").descending()));
-    } //내가 쓴 블로그 Id 조회*/
+    /*public Page<Question> getMemberQuestions(int page, int size){
+
+        PageRequest pageRequest = PageRequest.of(page, size,
+                Sort.by("createdAt").descending());
+        return questionRepository.findAll(pageRequest);
+    }*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원 정보에서 질문 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -94,18 +96,23 @@ public class MemberService {
     }*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원정보 삭제ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public void deleteMember(long memberId){
-        Member foundMember = findVerifiedMember(memberId);
+    public void deleteMember(long Id){
+        Member foundMember = findVerifiedMember(Id);
         foundMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);//탈퇴한 회원의 상태를 변경하여 탈퇴 회원관리
         memberRepository.save(foundMember);
 //      memberRepository.deleteById(memberId); 로 해도되긴하는데 회원정보가 아예 삭제됨.
     }
 
-
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ로그아웃ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    /*public void logout(HttpServletRequest request){
+        //access token 블랙리스트에 넣기
+        String accessToken = request.getHeader("Authorization");
+        String accessTokenContent = accessToken.substring(HEADER_PREFIX.length();
+    }*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ기타 메서드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public Member findVerifiedMember(long memberId){
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+    public Member findVerifiedMember(long Id){
+        Optional<Member> optionalMember = memberRepository.findById(Id);
         Member foundMember = optionalMember.orElseThrow(()->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_EXISTS));
         return foundMember;
@@ -116,5 +123,31 @@ public class MemberService {
         if(member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
+    /*//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ내가 작성한 게시글 불러오기 title 만ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    public List<QuestionDto.MemberQuestionResponse> getMyQuestionsTitle(Long id) {
+        List<QuestionDto.MemberQuestionResponse> QuestionDtoList = new ArrayList<>();
+        List<Question> questionList = questionRepository.findAllByMemberId(id);
 
+        for (Question question : questionList) {
+            QuestionDtoList.add(
+                    QuestionDto.MemberQuestionResponse.builder()
+                            .title(question.getTitle())
+                            .build());
+        }
+        return QuestionDtoList;
+    }
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ내가 작성한 게시글 불러오기
+    public List<QuestionDto.MemberQuestionResponse> getMyQuestions(Long id) {
+        List<QuestionDto.MemberQuestionResponse> QuestionDtoList = new ArrayList<>();
+        List<Question> questionList = questionRepository.findAllByMemberId(id);
+
+        for (Question question : questionList) {
+            QuestionDtoList.add(
+                    QuestionDto.MemberQuestionResponse.builder()
+                            .title(question.getTitle())
+                            .content(question.getContent())
+                            .build());
+        }
+        return QuestionDtoList;
+    }*/
 }

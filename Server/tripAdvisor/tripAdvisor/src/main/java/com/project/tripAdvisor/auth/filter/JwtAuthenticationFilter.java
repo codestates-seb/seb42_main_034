@@ -1,6 +1,8 @@
-package com.project.tripAdvisor.auth;
+package com.project.tripAdvisor.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.tripAdvisor.auth.JwtTokenizer;
+import com.project.tripAdvisor.auth.LoginDto;
 import com.project.tripAdvisor.member.Member;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -10,8 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +54,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult){
+                                            Authentication authResult) throws ServletException, IOException {
         //authResult로 Member 엔티티 클래스의 객체를 획득
         //위에 있는 AuthenticationManager 내부에서 인증에 성공하면
         //인증된 Authentication 객체가 생성되면서 principal 필드에 Member 객체가 할당 됩니다.
@@ -66,6 +70,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //Access 토큰이 만료될 경우 클라이언트 측이 추가로 발급받기위해 제공 될 수있다.
         //이것을 같이 제공할지는 요구사항에 따라 다름
         response.setHeader("Refresh", refreshToken);
+        //로그인 구현 실패시 failure 메서드가 알아서 호출된다.
+        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ토큰 생성 구체적 로직ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ

@@ -38,19 +38,19 @@ public class AnswerService {
     /** 댓글(답변) 생성 **/
     public Answer createAnswer(Answer answer, Long questionId) {
 
-        Answer createdAnswer = answerRepository.save(answer);
-        return createdAnswer;
+//        Answer createdAnswer = answerRepository.save(answer);
+//        return createdAnswer;
 
         //ver.2
-//        Question question = questionService.findVerifiedQuestion(questionId);
-//        Member member = memberService.findVerifiedMember(answer.getMember().getMemberId());
-//
-//        answer.setQuestion(question);
-//        answer.setMember(member);
-//
-//        question.setAnswer(answer);
-//
-//        return answerRepository.save(answer);
+        Question question = questionService.findVerifiedQuestion(questionId);
+        Member member = memberService.findVerifiedMember(answer.getMember().getId());
+
+        answer.setQuestion(question);
+        answer.setMember(member);
+
+        question.setAnswer(answer);
+
+        return answerRepository.save(answer);
 
     }
 
@@ -100,13 +100,13 @@ public class AnswerService {
     /** 수정, 삭제 시 권한 확인1 **/
 
     public void findAuthorization(Answer answer, Long memberId) {
-        if(!Objects.equals(answer.getMember().getMemberId(), memberId))
+        if(!Objects.equals(answer.getMember().getId(), memberId))
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
     }
 
     /** 수정, 삭제 시 권한 확인2 **/
     public void findAuthorization(AnswerComment answerComment, Long memberId) {
-        if(!Objects.equals(answerComment.getMember().getMemberId(), memberId))
+        if(!Objects.equals(answerComment.getMember().getId(), memberId))
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
     }
 }

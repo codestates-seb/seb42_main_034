@@ -40,7 +40,7 @@ public class QuestionService {
     public Question updateQuestion(Question question, Member member) {
         Question updatedQuestion = findVerifiedQuestion(question.getId());
 
-        if(updatedQuestion.getMember().getMemberId() != question.getMember().getMemberId()) {
+        if(updatedQuestion.getMember().getId() != question.getMember().getId()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_MATCH);
         }
 
@@ -58,7 +58,7 @@ public class QuestionService {
     public void deleteQuestion(Long questionId, Long memberId) {
         Question deletedQuestion = findVerifiedQuestion(questionId);
 
-        if(deletedQuestion.getMember().getMemberId() != memberId) {
+        if(deletedQuestion.getMember().getId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_MATCH);
         }
 

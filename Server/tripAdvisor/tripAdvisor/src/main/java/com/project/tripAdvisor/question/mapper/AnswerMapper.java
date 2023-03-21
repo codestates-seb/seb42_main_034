@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.mapper;
 
+import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.question.dto.AnswerDto;
 import com.project.tripAdvisor.question.entity.Answer;
 import org.mapstruct.Mapper;
@@ -10,13 +11,38 @@ import org.mapstruct.ReportingPolicy;
 public interface AnswerMapper {
 
 
-    Answer answerPostToAnswer(AnswerDto.Post requestBody);
+    default Answer answerPostToAnswer(AnswerDto.Post requestBody) {
+        if(requestBody==null){
+            return null;
+        }
+        Member member = new Member();
+        member.setId(requestBody.getMemberId());
 
-    Answer answerPatchToAnswer(AnswerDto.Patch requestBody);
+        Answer answer = new Answer();
+        answer.setMember(member);
+        answer.setContent(requestBody.getContent());
+
+        return answer;
+    }
+
+    default Answer answerPatchToAnswer(AnswerDto.Patch requestBody) {
+        if(requestBody == null){
+            return null;
+        }
+        Member member = new Member();
+        member.setId(requestBody.getMemberId());
+
+        Answer answer = new Answer();
+        answer.setId(requestBody.getAnswerId());
+        answer.setMember(member);
+        answer.setContent(requestBody.getContent());
+
+        return answer;
+    }
 
     @Mapping(source = "answer.id", target = "answerId")
     @Mapping(source = "question.id", target = "questionId")
-    @Mapping(source = "member.memberId", target = "memberId")
+    @Mapping(source = "member.id", target = "memberId")
     AnswerDto.Response answerToAnswerResponse(Answer answer);
 }
 

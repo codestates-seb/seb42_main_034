@@ -50,34 +50,34 @@ public class AnswerController {
                                          @RequestBody AnswerDto.Post requestbody) {
 
 //ver.1
-//        Answer answer = answerMapper.answerPostToAnswer(requestbody);
-//        answerService.createAnswer(answer, questionId);
-//
-//        return new ResponseEntity<>(
-//                new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
-//                , HttpStatus.OK);
-//
-////        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
-
-
-//ver.2
-//
         Answer answer = answerMapper.answerPostToAnswer(requestbody);
-
-        // 입력받은 questionId 로 question 찾아서 answer 넣기
-        Question findQuestion = questionService.findVerifiedQuestion(questionId);
-        findQuestion.setAnswer(answer);
-
-        // member 넣기
-        Member findMember = memberService.findVerifiedMember(requestbody.getMemberId());
-        answer.setMember(findMember);
-
+        answerService.createAnswer(answer, questionId);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
                 , HttpStatus.OK);
+
+//        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+//ver.2
+////
+//        Answer answer = answerMapper.answerPostToAnswer(requestbody);
+//
+//        // 입력받은 questionId 로 question 찾아서 answer 넣기
+//        Question findQuestion = questionService.findVerifiedQuestion(questionId);
+//        findQuestion.setAnswer(answer);
+//
+//        // member 넣기
+//        Member findMember = memberService.findVerifiedMember(requestbody.getMemberId());
+//        answer.setMember(findMember);
+//
+//
+//        return new ResponseEntity<>(
+//                new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
+//                , HttpStatus.OK);
+//    }
 
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive Long answerId,
@@ -85,7 +85,7 @@ public class AnswerController {
         requestbody.setAnswerId(answerId);
 
         Answer answer = answerMapper.answerPatchToAnswer(requestbody);
-        answer = answerService.updateAnswer(answer, answer.getMember().getMemberId());
+        answer = answerService.updateAnswer(answer, answer.getMember().getId());
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
