@@ -18,11 +18,12 @@ public abstract class Auditable {
 
     @CreatedDate
     @Column(name = "CREATED_AT", updatable = false)
-    @Setter
-    private LocalDateTime createdAt;
+
+    private LocalDateTime createdAt=LocalDateTime.now();
+
 
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_AT")
     @Setter
-    private LocalDateTime modifiedAt;
+    private LocalDateTime modifiedAt=LocalDateTime.now();
 }

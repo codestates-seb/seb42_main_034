@@ -2,15 +2,34 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ButtonWrapper } from './Button';
 
-const FilterWrapper = styled.div`
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 45rem;
+  border-radius: 10px;
+  background: skyblue;
+`;
+
+const FilterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   margin-top: 30px;
   border: 1px solid var(--border-003);
   border-radius: 10px;
   background: var(--main-001);
-  /* margin 나중에 수정 */
 `;
 const FilterContainer = styled.div`
   width: 100%;
@@ -27,14 +46,11 @@ const CustomList = styled.fieldset`
   border: none;
 `;
 
-const ButtonContainer = styled.button`
-  width: 50%;
-  margin-bottom: 10px;
-`;
+const ButtonContainer = styled(ButtonWrapper)``;
 
 export default function SearchFilter() {
   const [filter, setFilter] = useState<boolean>(false);
-  const [filtered, setFiltered] = useState<number>();
+  const [filtered, setFiltered] = useState<number>(0);
 
   const filterHandler = () => {
     setFilter(!filter);
@@ -48,9 +64,16 @@ export default function SearchFilter() {
     }
   };
 
+  const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      setFilter(false);
+    }
+  };
+
   const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(e, '눌리나?');
+    console.log(filtered, '눌리나?');
+    setFilter(!filter);
   };
 
   const options = [
@@ -63,20 +86,24 @@ export default function SearchFilter() {
     <>
       <ButtonWrapper onClick={filterHandler}>Filter</ButtonWrapper>
       {filter ? (
-        <FilterWrapper>
-          <FilterContainer>
-            <CustomList>
-              <h2>sorted</h2>
-              {options.map((el) => (
-                <div key={el.id}>
-                  <label htmlFor={el.id}>{el.label}</label>
-                  <input type="radio" id={el.id} value={el.value} name={el.name} onChange={handleFilterType} />
-                </div>
-              ))}
-            </CustomList>
-          </FilterContainer>
-          <ButtonContainer onClick={clickHandler}>Click</ButtonContainer>
-        </FilterWrapper>
+        <ModalWrapper onClick={closeModal}>
+          <ModalContent>
+            <FilterWrapper>
+              <FilterContainer>
+                <CustomList>
+                  <h2>sorted</h2>
+                  {options.map((el) => (
+                    <div key={el.id}>
+                      <label htmlFor={el.id}>{el.label}</label>
+                      <input type="radio" id={el.id} value={el.value} name={el.name} onChange={handleFilterType} />
+                    </div>
+                  ))}
+                  <ButtonContainer onClick={clickHandler}>Click</ButtonContainer>
+                </CustomList>
+              </FilterContainer>
+            </FilterWrapper>
+          </ModalContent>
+        </ModalWrapper>
       ) : null}
     </>
   );

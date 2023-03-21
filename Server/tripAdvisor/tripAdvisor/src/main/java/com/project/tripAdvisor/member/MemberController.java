@@ -39,6 +39,7 @@ public class MemberController {
 
     @PatchMapping("{member-id}")
     public ResponseEntity patchMember(@PathVariable("member-id") @Positive long Id,
+
                                       @RequestBody MemberDto.Patch memberPatch){
         memberPatch.setId(Id);
 

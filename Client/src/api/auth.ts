@@ -1,38 +1,36 @@
-import { axiosInstanceAuth } from "./instance";
-import useAPI from "../hooks/uesAPI";
+import useAPI from '../hooks/uesAPI';
+import { axiosInstanceAuth } from './instance';
 
 export interface loginProps {
-    userId: string;
-    password: string;
+  userId: string;
+  password: string;
 }
 
 export interface IAccessToken {
-    authorization: string;
+  authorization: string;
 }
 
 export interface userInfo {
-    id: string;
-    email: string;
-    nickname: string;
-    headers?: IAccessToken;
+  id: string;
+  email: string;
+  nickname: string;
+  headers?: IAccessToken;
 }
 
 export interface IAccessTokenRefresh {
-    headers: IAccessToken;
+  headers: IAccessToken;
 }
 
 export const useAuthAPI = () => {
-    const api = useAPI();
+  const api = useAPI();
 
-    const postLogin = async (payload: loginProps) => {
-        return await axiosInstanceAuth.post<userInfo>('/auth/login', payload);
-    };
+  const postLogin = async (payload: loginProps) => {
+    return await axiosInstanceAuth.post<userInfo>('/auth/login', payload);
+  };
 
-    const getAccessTokenRefresh = async () => await api.get<IAccessTokenRefresh>('/reissue')
+  const getAccessTokenRefresh = async () => await api.get<IAccessTokenRefresh>('/reissue');
 
-    const deleteLogout = async() => await api.delete('/logout');
+  const deleteLogout = async () => await api.delete('/logout');
 
-    return { getAccessTokenRefresh, postLogin, deleteLogout}
-
-
-}
+  return { getAccessTokenRefresh, postLogin, deleteLogout };
+};

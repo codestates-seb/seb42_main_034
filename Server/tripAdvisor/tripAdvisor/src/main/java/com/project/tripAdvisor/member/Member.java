@@ -19,8 +19,10 @@ import java.util.List;
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "member_id")
     private long Id;
+
 
     @Email
     @Column(nullable = false, updatable = false, unique = true)
