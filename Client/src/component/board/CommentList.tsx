@@ -1,3 +1,4 @@
+import useConfirm from 'hooks/useConfirm';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ButtonWrapper } from './Button';
@@ -27,9 +28,11 @@ const CommentContent = styled.div`
 export default function CommentList() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
-  const deleteHandler = () => {
-    window.confirm('정말 삭제하시겠습니까?');
-  };
+  const deleteHandler = useConfirm('정말 삭제하시겠습니까?',,'no' )
+
+
+    // window.confirm('정말 삭제하시겠습니까?');
+ 
 
   return (
     <>

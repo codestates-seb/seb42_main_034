@@ -7,12 +7,15 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import styled from 'styled-components'
+import {FiEdit} from 'react-icons/fi'
+import TabLists from 'component/ui/MypageTabs';
+
 
 export default function MyPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [tab, handleChange, curTab] = useTabs(['작성 글', '작성 댓글']);
+  const [tab,  curTab, handleTabChange] = useTabs(['작성 글', '작성 댓글']);
   const {id} = useAppSelector(state => state.loginInfo)
   const {deleteLogout} = useAuthAPI();
   const {mutate: mutateLogout} = useMutation(deleteLogout);
@@ -33,7 +36,6 @@ export default function MyPage() {
   <MainContainer>
     My Page   
     <ProfileContainer>
-      hello
       <img
       className='profileimage'
       src={data?.avatarUrl}
@@ -42,12 +44,21 @@ export default function MyPage() {
       </img>
 
       <UserInfoContainer>
-        <p>닉네임: {data?.name}</p>
+        <p>닉네임: {data?.name ?? '로그인 상태가 아닙니다.'}</p>
         <p>
           도시 : {data?.address ?? '도시가 설정되어 있지 않습니다.'}
         </p>
+        <div className='editprofile'>
+          <p className='editbtn' onClick={linkEditPage}>
+            수정하기
+          </p>
+          <FiEdit className='editbtnImg' onClick={linkEditPage}/>
+        </div>
       </UserInfoContainer>
     </ProfileContainer>
+
+    <TabLists handleChange={handleTabChange} tabs={tab}/>
+
   </MainContainer>
   </>
   )
@@ -73,6 +84,17 @@ const ProfileContainer = styled.div`
     height: 100px;
     border-radius: 500px;
     border: 1px solid grey;
+    box-sizing: border-box;
+  }
+  .editbtn {
+    cursor: pointer;
+  }
+  .editbtnImg {
+    display: grid;
+    position: relative;
+    right: 0;
+    padding-left: 10px;
+    cursor: pointer;
   }
 `
 const UserInfoContainer = styled.div`
@@ -81,4 +103,13 @@ const UserInfoContainer = styled.div`
   justify-content: space-between;
   margin-left: 2rem;
   border: solid 1px black;
+
+  .click {
+    padding-left: 8px;
+    cursor: pointer;
+  }
+  .editprofile {
+    display: flex;
+    color: skyblue;
+  }
 `

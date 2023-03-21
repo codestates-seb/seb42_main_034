@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Colors } from '../style/const';
 
@@ -10,7 +9,7 @@ interface ButtonInterface {
   newLine?: boolean;
 }
 
-const Button = styled.button<ButtonInterface>`
+const LoginButton = styled.button<ButtonInterface>`
   font-size: ${(props) => (props.fontSize === 'small' ? 0.7 : 1.2)}rem;
   color: ${(props) => (props.backgroundColor === 'grey' ? 'black' : 'white')};
   background-color: ${(props) => (props.backgroundColor === 'grey' ? Colors.main_01 : Colors.button_clicked)};
@@ -24,4 +23,4 @@ const Button = styled.button<ButtonInterface>`
   }
 `;
 
-export default Button;
+export default LoginButton;
