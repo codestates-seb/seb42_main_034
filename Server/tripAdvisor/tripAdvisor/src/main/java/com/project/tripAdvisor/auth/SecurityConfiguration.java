@@ -88,6 +88,9 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
 //        configuration.setAllowedOrigins(Arrays.asList("*")); //모든 출처에 대한 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));//해당 메서드허용
 
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
+
         //CorsConfigurationSource 인터페이스의 구현클래스임
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         //앞에서 구현한 CORS 정책 적용
@@ -108,7 +111,7 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,
                     jwtTokenizer);
             //default URL인 /login 을 해당 URL로 변경한다.
-            jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/trip/login");
             //객체 생성시 new 를 사용한이유는 이 핸들러의 경우 다른곳에서 사용이안되고 오직 여기서만 사용되기 때문임
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
