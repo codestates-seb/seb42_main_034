@@ -5,9 +5,9 @@ import { NavButton } from 'component/ui/NavButton';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Colors, ScreenSize } from '../component/style/const';
+import { Colors, ScreenSize } from '../component/style/variables';
 import { Icon } from '../component/ui/Icon';
-import { cities } from '../component/style/const';
+import { cities } from '../component/style/variables';
 import { ReactComponent as MapIcon } from '../image/map.svg';
 import Filter from './home/Filter';
 import { useState } from 'react';
@@ -50,8 +50,8 @@ export default function Home() {
     //맵돌려서 집어넣기
     <RelativeLayout>
       <MapImg svg={<MapIcon />} />
-      {cities.map((region) => (
-        <Filter citys={region} onClick={handleBtnClick} />
+      {cities.map((region, idx) => (
+        <Filter key={idx} citys={region} onClick={handleBtnClick} />
       ))}
       {/* <Filter city="서울" x={36.5} y={15} onClick={handleBtnClick} /> */}
     </RelativeLayout>

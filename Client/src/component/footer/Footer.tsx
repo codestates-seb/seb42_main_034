@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Logo } from '../header/Logo';
-import { Colors, ScreenSize } from '../style/const';
+import { Colors, ScreenSize } from '../style/variables';
 import SiteInfo from './SiteInfo';
 const BottomLayout = styled.div`
   height: 30vh;

@@ -37,7 +37,7 @@ interface Mock {
 export class CRUDdata {
   url = '';
   constructor() {
-    this.url = 'https://1166-1-230-110-132.jp.ngrok.io/members';
+    this.url = 'ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members';
   }
 
   //Promise<AxiosResponse<ReturnData>>
@@ -58,7 +58,7 @@ export class CRUDdata {
         location: '서울',
       },
       {
-        headers: { 'Cache-Control': 'no-store', Pragma: 'no-store', Expires: '0' },
+        headers: { 'Cache-Control': 'no-cache' },
       },
     );
     return response;

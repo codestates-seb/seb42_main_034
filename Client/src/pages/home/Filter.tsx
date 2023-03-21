@@ -1,4 +1,4 @@
-import { Colors } from 'component/style/const';
+import { Colors } from 'component/style/variables';
 import { ButtonTheme, HoverAction } from 'component/style/cssTemplete';
 import { NavButton } from 'component/ui/NavButton';
 import { RegionInfo } from 'pages/Home';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Outlet } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-import { ScreenSize } from './component/style/const';
+import { ScreenSize } from './component/style/variables';
 // import { theme } from './component/style/theme';
 
 import { Layout } from './component/ui/Layout';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Filter from '../pages/home/Filter';
-import { ScreenSize } from './style/const';
+import { ScreenSize } from './style/variables';
 import { MiddleLayout } from './ui/Layout';
 
 declare global {

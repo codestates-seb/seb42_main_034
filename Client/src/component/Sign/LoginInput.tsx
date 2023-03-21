@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 import styled from 'styled-components';
 import React from 'react';
-import { Colors } from '../style/const';
+import { Colors } from '../style/variables';
 interface InputProps {
   label: string;
   state?: string;
