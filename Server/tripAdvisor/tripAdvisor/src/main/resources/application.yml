@@ -34,7 +34,7 @@ logging:
         jpa: DEBUG
 jwt:
   key: GlFU9fJQv7qL6pIcxQQwHZe1WQIeja6Cpt6WKjFEPcYMhKm2LEkj4xbKdA3d
-# key: ${JWT_SECRET_KEY} #민감한 정보는 시스템 환경변수에서 로드함
+  # key: ${JWT_SECRET_KEY} #민감한 정보는 시스템 환경변수에서 로드함
   access-token-expiration-minutes: 30 #30분
   refresh-token-expiration-minutes: 420 # 420분
 
