@@ -83,10 +83,16 @@ public class QuestionService {
     /** 질문 목록 조회 **/
     /** (추가) 정렬 기준 **/
 
-    public Page<Question> findQuestions(int page) {
+    public Page<Question> findQuestions(String category, int page, String sortedBy) {
 
-        return questionRepository.findAll(PageRequest.of(page, 20,
-                Sort.by("createdAt").descending())); // Default : 최신 순
+        sortedBy = sortedBy.toUpperCase();
+
+        if(sortedBy.equals("HOT")) {
+            return questionRepository.findAllByCategory(category, PageRequest.of(page, 15,
+                    Sort.by("viewCnt").descending()));
+        }
+        return questionRepository.findAllByCategory(category, PageRequest.of(page, 15,
+                Sort.by("createdAt").descending()));
     }
 
 
@@ -97,7 +103,7 @@ public class QuestionService {
     public Page<Question> searchQuestion(int page, String keyword) {
         keyword = "%" + keyword + "%";
 
-        return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 20));
+        return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 15));
     }
 
 

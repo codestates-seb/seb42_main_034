@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class QuestionDto {
@@ -66,5 +67,25 @@ public class QuestionDto {
 
         private LocalDateTime createdAt;
 
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class SearchResponse {
+        private Long questionId;
+
+        private String title;
+
+        private int viewCnt;
+
+        private LocalDateTime createdAt;
+
+        private LocalDateTime modifiedAt;
+
+        private int answerCnt;
+
+        private String writer;
+
+        private List<String> tags;
     }
 }

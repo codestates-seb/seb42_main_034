@@ -7,7 +7,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionMapper {
@@ -16,7 +18,7 @@ public interface QuestionMapper {
 
 
     default Question questionPatchToQuestion(QuestionDto.Patch requestBody) {
-        if(requestBody == null){
+        if (requestBody == null) {
             return null;
         }
         Member member = new Member();
@@ -35,6 +37,36 @@ public interface QuestionMapper {
     @Mapping(source = "question.member.nickname", target = "writer")
     QuestionDto.Response QuestionToQuestionResponse(Question question);
 
-    // (추가) 질문 목록
-    List<QuestionDto.Response> questionsToQuestionResponses(List<Question> questions);
+    // 질문 목록 조회
+    @Mapping(source = "question.member.nickname", target = "writer")
+    default QuestionDto.SearchResponse QuestionToQuestionSearchResponse(Question question) {
+        return new QuestionDto.SearchResponse(
+                question.getId(),
+                question.getTitle(),
+                question.getViewCnt(),
+                question.getCreatedAt(),
+                question.getModifiedAt(),
+                question.getAnswerCnt(),
+                question.getMember().getNickname(),
+                QuestionToTagName(question)
+        );
+    }
+
+    default List<QuestionDto.SearchResponse> QuestionToQuestionSearchResponses(List<Question> questions) {
+        if(questions == null) {
+            return null;
+        }
+        List<QuestionDto.SearchResponse> list = new ArrayList<>(questions.size());
+        for(Question question : questions) {
+            list.add(QuestionToQuestionSearchResponse(question));
+        }
+        return list;
+    }
+
+
+    default List<String> QuestionToTagName(Question question) {
+        return question.getQuestionTags().stream()
+                .map(questionTag -> (questionTag.getTag().getName()))
+                .collect(Collectors.toList());
+    }
 }

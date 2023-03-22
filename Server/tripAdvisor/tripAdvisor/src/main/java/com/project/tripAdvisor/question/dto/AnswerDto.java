@@ -54,15 +54,7 @@ public class AnswerDto {
 
     }
 
-    /**
-     * {
-     * answers: [{ answerId:[Number], createdAt:[String], location:,
-     * content:[String], image:이미지경로[String], likeStatus:좋아요상태[Bool likeCnt:좋아요개수[String] }],
-     * writer:[{
-     * memberId:답변 작성 회원 username:작성자이메일아 nickname:작성자닉넴[Strin }],
-     * comments:[{ commentId:댓글 일련번호[ content:내용[String], nickname:
-     * }]
-     */
+
 
 
 //    private int id;

@@ -97,15 +97,18 @@ public class QuestionController {
     /**
      * 질문 목록 조회
      **/
-    public ResponseEntity getQuestions(@RequestParam int page) {
-        Page<Question> pageQuestions = questionService.findQuestions(page - 1);
-        List<Question> questions = pageQuestions.getContent();
+    @GetMapping
+    public ResponseEntity getQuestions(@RequestParam String category,
+                             @Positive @RequestParam int page,
+                             @RequestParam String sortedBy) {
+        Page<Question> pageQuestion = questionService.findQuestions(category,page - 1, sortedBy);
+        List<Question> questions = pageQuestion.getContent();
+
+        List<QuestionDto.SearchResponse> searchResponses = questionMapper.QuestionToQuestionSearchResponses(questions);
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(
-                        questionMapper.questionsToQuestionResponses(questions),
-                        pageQuestions),
-                HttpStatus.OK);
+                new MultiResponseDto<>(searchResponses, pageQuestion), HttpStatus.OK);
+
     }
 
     /**
