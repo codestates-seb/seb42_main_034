@@ -64,13 +64,16 @@ public class QuestionController {
 
         Question question = questionMapper.questionPatchToQuestion(requestBody);
 
-        requestBody.setQuestionId(questionId);
+        question.setId(questionId);
 
         Member member = memberService.findVerifiedMember(requestBody.getMemberId());
 
-        Question updatedQuestion = questionService.updateQuestion(question, member);
+        Question updatedQuestion = questionService.updateQuestion(question, requestBody.getMemberId());
+
+        // 태그 기능 추가
 
 
+        // 채택된 질문 수정 불가
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(updatedQuestion)),

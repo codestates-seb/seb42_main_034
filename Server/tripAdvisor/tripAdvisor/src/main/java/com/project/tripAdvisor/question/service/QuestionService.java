@@ -37,10 +37,11 @@ public class QuestionService {
 
     /** 질문 수정 **/
 
-    public Question updateQuestion(Question question, Member member) {
+    public Question updateQuestion(Question question, Long memberId) {
+
         Question updatedQuestion = findVerifiedQuestion(question.getId());
 
-        if(updatedQuestion.getMember().getId() != question.getMember().getId()) {
+        if(updatedQuestion.getMember().getId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_MATCH);
         }
 
