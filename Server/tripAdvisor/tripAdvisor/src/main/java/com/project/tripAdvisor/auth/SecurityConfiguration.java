@@ -46,10 +46,11 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
                 .and()*/
                 .csrf().disable()
                 //기본적으로 아무설정을 하지 않으면 csrf 공격을 받음 클라이언트로부터 CSRF 토큰을 수신 후 검증
-                .cors(withDefaults())//corsConfigurationSource이름의 bean을 이용함
+                .cors()
+                .and()//corsConfigurationSource이름의 bean을 이용함
                 //세션을사용하지 않도록 설정함
-                /*.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()*/
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .formLogin().disable()
                 //기본적인 인증 방법 설정 폼로그인
                 .httpBasic().disable()
@@ -82,15 +83,20 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
 
     @Bean
 //구체적인 CORS 정책을 설정한다.
-    public CorsConfigurationSource corsConfigurationSource() {
+     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("*");
-        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("*"));
+         configuration.setAllowCredentials(true);
 //        configuration.setAllowedOrigins(Arrays.asList("*")); //모든 출처에 대한 허용
+         configuration.addAllowedHeader("*");
+         configuration.addExposedHeader("*");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));//해당 메서드허용
 
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
+
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
 
         //CorsConfigurationSource 인터페이스의 구현클래스임
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

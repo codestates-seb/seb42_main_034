@@ -17,6 +17,7 @@ import java.util.List;
 @Slf4j
 @Validated
 @RestController
+@CrossOrigin
 @RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;

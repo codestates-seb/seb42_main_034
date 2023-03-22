@@ -19,6 +19,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/blog/answer")
 public class BlogAnswerController {
     private final BlogAnswerMapper blogAnswerMapper;
