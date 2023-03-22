@@ -1,6 +1,5 @@
 import { CRUDdata, ReturnData } from 'api/data';
 import { Relative } from 'component/style/cssTemplete';
-import { NavButton } from 'component/ui/NavButton';
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +13,7 @@ import { useState } from 'react';
 import { type } from '@testing-library/user-event/dist/type';
 //필터컴포넌트를 만들어서 해당 지역에 맞는 위치에 정적으로 만들기
 
-const MapImg = styled(Icon)<{ svg: React.ReactNode }>`
+const MapImg = styled(Icon)`
   margin: auto;
   max-width: ${ScreenSize.max_width};
 `;
@@ -30,21 +29,22 @@ export interface RegionInfo {
 
   y: number;
 }
-type citi = RegionInfo;
 export default function Home() {
-  const [dataa, setData] = useState({});
+  const [data, setData] = useState({});
   const dd = new CRUDdata();
-  dd.getData().then(console.log).catch(console.error);
+  // dd.getData().then(console.log).catch(console.error);
   const navigate = useNavigate();
-  const handleBtnClick = (route: string) => {
+  const handleBtnClick = (route: string, region?: string) => {
     //해당지역으로이동
     dd.getData()
       .then((res) => {
-        navigate(route, { state: { res } });
+        console.log('tjdrhd');
+        console.log(res);
+        setData(res);
+        // navigate(route);
       })
       .catch(console.error);
-
-    //getData(카테고리)
+    navigate(route, { state: { data } });
   };
   return (
     //맵돌려서 집어넣기
@@ -53,7 +53,6 @@ export default function Home() {
       {cities.map((region, idx) => (
         <Filter key={idx} citys={region} onClick={handleBtnClick} />
       ))}
-      {/* <Filter city="서울" x={36.5} y={15} onClick={handleBtnClick} /> */}
     </RelativeLayout>
   );
 }

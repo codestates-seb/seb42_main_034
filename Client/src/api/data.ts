@@ -37,7 +37,7 @@ interface Mock {
 export class CRUDdata {
   url = '';
   constructor() {
-    this.url = encodeURI('ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members');
+    this.url = 'https://jsonplaceholder.typicode.com/todos';
   }
 
   //Promise<AxiosResponse<ReturnData>>
@@ -45,7 +45,7 @@ export class CRUDdata {
   //city: string, page: string, sortedBy: string
   //   async getData(): Promise<AxiosResponse<Mock>> {
   //     const response = await axios.post(`${this.url}`, { username: 'dlwjddus16@naver.com', password: 'wjd123456!' });
-  //     return response;
+  //     return response
   //   }
   async getData(): Promise<AxiosResponse<Mock>> {
     const response = await axios.post(

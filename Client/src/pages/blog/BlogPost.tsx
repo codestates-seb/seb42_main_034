@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Form } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '../../component/ui/Button';
-import Input from '../../component/ui/Input';
+
+import { Input } from '../../component/ui/Input';
 import { Layout } from '../../component/ui/Layout';
 
 export const BlogPost = () => {
@@ -23,11 +23,9 @@ export const BlogPost = () => {
 
   return (
     <>
-      <Layout>
-        <PostContainer>
-          <Form onSubmit={handleSubmit}></Form>
-        </PostContainer>
-      </Layout>
+      <PostContainer>
+        <Form onSubmit={handleSubmit}></Form>
+      </PostContainer>
     </>
   );
 };

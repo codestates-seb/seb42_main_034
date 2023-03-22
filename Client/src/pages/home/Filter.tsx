@@ -1,13 +1,11 @@
 import { Colors } from 'component/style/variables';
 import { BoxShadow, ButtonTheme, HoverAction } from 'component/style/cssTemplete';
-import { NavButton } from 'component/ui/NavButton';
 import { RegionInfo } from 'pages/Home';
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from 'component/ui/Button';
 
-const RegionButton = styled(NavButton)<{
-  className: string;
-}>`
+const RegionButton = styled(Button)`
   z-index: 0;
   /* ${ButtonTheme} */
   border: none;
@@ -19,6 +17,7 @@ const RegionButton = styled(NavButton)<{
   font-size: 1.3rem;
   border-radius: 1.7rem;
   padding: 0.5rem;
+  padding-top: 0.6rem;
 `;
 
 export default function Filter({
@@ -26,15 +25,18 @@ export default function Filter({
   onClick,
 }: {
   citys: RegionInfo;
-  onClick: (route: string) => void | React.MouseEventHandler<HTMLButtonElement>;
-}) {
+  onClick: (route: string, region?: string) => void;
+  region?: string;
+}): JSX.Element {
   console.log(citys);
 
   return (
     <RegionButton
-      text={citys.city}
+      children={citys.city}
       className=""
-      onClick={onClick} //경로랑
+      onClick={() => {
+        onClick(`/board/questionlist`);
+      }} //경로랑
       style={{ left: `${citys.x}em`, top: `${citys.y}em` }}
     />
   );

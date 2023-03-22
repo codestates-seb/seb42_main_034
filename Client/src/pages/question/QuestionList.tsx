@@ -1,7 +1,7 @@
 import React from 'react';
 import BoardList from '../../component/board/BoardList';
 import Searchbar from '../../component/board/Searchbar';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import SearchFilter from '../../component/board/SearchFilter';
 import styled from 'styled-components';
 
@@ -30,6 +30,9 @@ const SearchFilterWrapper = styled.div`
 `;
 
 export default function QuestionList() {
+  const data = useLocation();
+  console.log(data);
+
   return (
     <>
       <Wrapper>

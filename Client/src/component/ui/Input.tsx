@@ -1,38 +1,27 @@
-import React, { HTMLInputTypeAttribute } from 'react';
-import styled from 'styled-components';
+import React, { DetailedHTMLProps, ForwardedRef, forwardRef, HTMLAttributes } from 'react';
+import classNames from 'classnames';
 
-export interface InputProps {
-  type: HTMLInputTypeAttribute;
-  name: string;
-  placeholder?: string;
-  value?: string;
-  width?: string;
-  height?: string;
-  marginBottom?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+export interface IInputProps extends DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+  className?: string;
+  name?: string;
+  type?: string;
+  error?: string;
+  value: string;
+  onChange: any;
 }
 
-function Input({ type, name, placeholder, ...props }: InputProps) {
-  return <StyleInput type={type} name={name} placeholder={placeholder} {...props} />;
-}
-
-const StyleInput = styled.input<InputProps>`
-  padding-left: 1rem;
-  width: ${({ width }) => width ?? '30rem'};
-  height: ${({ height }) => height ?? '3rem'};
-  margin-bottom: ${({ marginBottom }) => marginBottom ?? '0'};
-  border-radius: 4px;
-  background-color: ${(props) => props.theme.colors.white};
-  // border: 0.05rem solid ${(props) => props.theme.colors.border2};
-  outline: 0.4rem solid ${(props) => props.theme.colors.border2};
-  ::placeholder {
-    color: ${(props) => props.theme.colors.grey};
-    letter-spacing: 0.05rem;
-  }
-  :focus {
-    // border: 0.05rem solid ${(props) => props.theme.colors.border3};
-    outline: 0.4rem solid ${(props) => props.theme.colors.border3};
-  }
-`;
-
-export default Input;
+export const Input = forwardRef(
+  ({ className, name, type, error, ...rest }: IInputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element => {
+    return (
+      <>
+        <input
+          className={classNames(className, 'Input', { Input__error: error })}
+          name={name}
+          type={type}
+          ref={ref}
+          {...rest}
+        />
+      </>
+    );
+  },
+);
