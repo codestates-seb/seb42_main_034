@@ -6,6 +6,7 @@ import QuestionList from 'pages/question/QuestionList';
 //     headers:
 
 //   }
+axios.defaults.withCredentials = true;
 interface QuestionList {
   url: string;
   city: string;
@@ -45,25 +46,44 @@ export class CRUDdata {
   //city: string, page: string, sortedBy: string
   //   async getData(): Promise<AxiosResponse<Mock>> {
   //     const response = await axios.post(`${this.url}`, { username: 'dlwjddus16@naver.com', password: 'wjd123456!' });
-  //     return response
+  //     return response;
   //   }
   async getData(): Promise<AxiosResponse<Mock>> {
     const response = await axios.post(
       `${this.url}`,
 
       {
-        email: 'dlwjddus1sdad@naver.com',
-        password: `wjd123sadsa56!`,
-        nickName: 'dddddsfd',
-        location: '서울',
+        username: 'dlwjddus16@naver.com',
+        password: 'wjd123456!',
       },
       {
-        headers: { 'Cache-Control': 'no-cache' },
+        // headers: { 'Cache-Control': 'no-cache' },
+        withCredentials: true,
       },
     );
     return response;
   }
 }
+// axios
+//   .post(
+//     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members',
+//     {
+//       email: 'sdaddss16@naver.com',
+//       password: 'wjd123d456!',
+//       nickname: '뉸누dd',
+//       location: '경주',
+//     },
+//     {
+//       // headers: { 'Cache-Control': 'no-store' },
+//       withCredentials: true,
+//     },
+//   )
+//   .then(function (response) {
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     console.log(error);
+//   });
 // export function useData (){
 
 // }
