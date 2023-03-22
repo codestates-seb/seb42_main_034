@@ -38,7 +38,11 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/questionlist/',
+            path: '/board/questionlist',
+            element: <QuestionList />,
+          },
+          {
+            path: '/board/bloglist',
             element: <QuestionList />,
           },
           {

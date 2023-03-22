@@ -1,5 +1,15 @@
-import React from 'react'
+import MapContainer from 'component/Kakao.maps';
+
+import React, { useState } from 'react';
 
 export default function LandingPage() {
-  return <div>LandingPage</div>
+  const [text, setText] = useState('');
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
+  return (
+    <>
+      <MapContainer />
+    </>
+  );
 }
