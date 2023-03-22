@@ -104,10 +104,24 @@ public class MemberController {
     //로그인 사용자가 작성한 질문 조회v1
     @GetMapping("/me/questionsTitle")
     public ResponseEntity<List<QuestionResponseDto>> getMyQuestionsTitle() {
-       Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       Long id = Long.parseLong((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
         return ResponseEntity.ok(memberService.getMyQuestionsTitle(id));
     }
+
+    /*//로그인 사용자가 작성한 질문 조회 v2
+    @GetMapping("/me/questionsTitle")
+    public ResponseEntity<List<QuestionResponseDto>> getMyQuestionsTitle() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String username = userDetails.getUsername();
+        String password = userDetails.getPassword();
+
+        memberService.validate(username,password);
+        return ResponseEntity.ok();
+    }
+*/
+
 
 
    /* @GetMapping("/me/questions")
