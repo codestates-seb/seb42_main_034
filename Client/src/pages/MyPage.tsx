@@ -9,6 +9,8 @@ import { useAppSelector } from 'redux/hooks';
 import styled from 'styled-components'
 import {FiEdit} from 'react-icons/fi'
 import TabLists from 'component/ui/MypageTabs';
+import Nbutton from 'component/ui/NButton';
+import { logout } from 'redux/userSlice';
 
 
 export default function MyPage() {
@@ -58,6 +60,22 @@ export default function MyPage() {
     </ProfileContainer>
 
     <TabLists handleChange={handleTabChange} tabs={tab}/>
+    {/* {curTab === '작성 글' && <글 리스트 컴포넌트 />}
+    {curTab === '작성 댓글' && <글 리스트 컴포넌트 />} */}
+
+
+    <Nbutton
+    onClick={() => {
+      const confirm = window.confirm('로그아웃을 하시겠습니까?');
+      if(!confirm) return;
+      mutateLogout();
+      dispatch(logout());
+      navigate('/board/signin');
+    }}
+    >
+      로그아웃
+    </Nbutton>
+
 
   </MainContainer>
   </>
@@ -113,3 +131,4 @@ const UserInfoContainer = styled.div`
     color: skyblue;
   }
 `
+

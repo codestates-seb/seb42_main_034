@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import useAPI from '../hooks/uesAPI';
 import axios from 'axios';
 import { setUserInfo } from '../redux/userInfoSlice';
@@ -16,30 +19,18 @@ interface Member {
   avatarUrl: string;
   key: string;
   value: string;
-  // memberId: number;
-  // [key: string]: any;
-  // // value: any;
-  // // nickname: string;
-  // name: string;
-  // location: {
-  //   lat: string | number;
-  //   lon: string | number;
-  // } | null;
-
-  // address: string | null; 
-  // totalCount: number;
-  // avatarUrl: string;
 }
 
-// interface City {
-//   content: {
-//     CityId: number;
-//     location: {
-//       latitude: number | number;
-//       longitude: number | number;
-//     };
-//   }[];
-// }
+interface FixMyInfo {
+  nickname: string;
+  location: {
+    latitude: string|number;
+    longtitude: string|number;
+  }
+  address: string;
+  avatarUrl: string;
+}
+
 export const useMypageAPI = () => {
   const api = useAPI();
   const dispatch = useAppDispatch();
@@ -53,8 +44,16 @@ export const useMypageAPI = () => {
           return res.data;
       });
 
+      const patchFixMyInfo = (data: FixMyInfo) =>
+      api.patch(`/mypage/edit`, data)
+
+      // const aixosAddPhoto = (data:any) => {
+      //   axios.post(`/upload`, data).then(res => console.log(res));
+      // }
+
   return {
       getMemberInfo,
       getMyInfo,
+      patchFixMyInfo,
   }
 };

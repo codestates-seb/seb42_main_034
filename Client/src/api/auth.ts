@@ -2,7 +2,7 @@ import useAPI from '../hooks/uesAPI';
 import { axiosInstanceAuth } from './instance';
 
 export interface loginProps {
-  userId: string;
+  username: string;
   password: string;
 }
 
@@ -12,6 +12,7 @@ export interface IAccessToken {
 
 export interface userInfo {
   id: string;
+  username: string;
   email: string;
   nickname: string;
   headers?: IAccessToken;
@@ -25,7 +26,7 @@ export const useAuthAPI = () => {
   const api = useAPI();
 
   const postLogin = async (payload: loginProps) => {
-    return await axiosInstanceAuth.post<userInfo>('/board/signin', payload);
+    return await axiosInstanceAuth.post<userInfo>('trip/login', payload);
   };
 
   const getAccessTokenRefresh = async () => await api.get<IAccessTokenRefresh>('/reissue');

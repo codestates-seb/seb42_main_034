@@ -37,7 +37,7 @@ const Loginform = () => {
     mutationKey: ['loginInfo'],
     mutationFn: () =>
       postLogin({
-        userId: email,
+        username: email,
         password: password,
       }),
     onSuccess: (res) => {
