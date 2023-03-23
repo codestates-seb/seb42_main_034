@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import {FiEdit} from 'react-icons/fi'
 import TabLists from 'component/ui/MypageTabs';
 import Nbutton from 'component/ui/NButton';
-import { logout } from 'redux/userSlice';
+import { logoutg } from 'redux/userSlice';
 
 
 export default function MyPage() {
