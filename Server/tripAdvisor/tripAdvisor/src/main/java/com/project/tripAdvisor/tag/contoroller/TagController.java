@@ -53,7 +53,7 @@ public class TagController {
 
     //tag를 포함한 질문 글 조회
     @GetMapping("/question")
-    public void getQuestion(@RequestParam String tagName,
+    public void getQuestionByTag(@RequestParam String tagName,
                                       @RequestParam(value="page", required = false,
                                               defaultValue = "1")int page){
         Tag tag = tagRepository.findByName(tagName);

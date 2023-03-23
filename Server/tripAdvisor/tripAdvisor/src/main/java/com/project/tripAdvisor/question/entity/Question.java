@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Question extends Auditable {
 
@@ -65,6 +66,7 @@ public class Question extends Auditable {
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<QuestionTag> questionTags = new ArrayList<>();
+
 
 
     /**

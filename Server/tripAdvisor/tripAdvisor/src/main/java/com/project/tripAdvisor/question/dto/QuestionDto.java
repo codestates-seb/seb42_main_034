@@ -3,6 +3,7 @@ package com.project.tripAdvisor.question.dto;
 import com.project.tripAdvisor.member.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import reactor.util.annotation.Nullable;
 
@@ -36,8 +37,8 @@ public class QuestionDto {
     }
 
     @Getter
-    @Setter
-    @AllArgsConstructor
+    @NoArgsConstructor
+
     public static class Patch {
 
         private Long questionId;

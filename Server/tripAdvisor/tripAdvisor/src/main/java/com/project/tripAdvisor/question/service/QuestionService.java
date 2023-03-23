@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -119,8 +120,17 @@ public class QuestionService {
 
             Tag tag = tagRepository.findByName(keyword);
 
-            List<Long> questionId = tag.getBlogTags().stream()
+            List<Long> questionIds = tag.getQuestionTags().stream()
                     .map(questionTag -> questionTag.getQuestion().getId())
+                    .collect(Collectors.toList());
+
+            return questionRepository.findByIdIn(questionIds, PageRequest.of(page, 15));
+        }
+
+        else {
+            keyword = "%" + keyword + "%";
+
+            return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 15));
         }
     }
 
