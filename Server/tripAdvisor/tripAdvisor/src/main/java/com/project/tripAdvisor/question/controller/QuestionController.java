@@ -98,7 +98,7 @@ public class QuestionController {
         Page<Question> pageQuestions = questionService.findQuestions(page - 1);
         List<Question> questions = pageQuestions.getContent();
 
-        return new ResponseEntity<>(
+        return new ResponseEntity(
                 new MultiResponseDto<>(
                         questionMapper.questionsToQuestionResponses(questions),
                         pageQuestions),

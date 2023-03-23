@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -39,12 +40,15 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //SecurityFilterChain을 Bean으로 등록해서 HTTP보안설정을 구성한다.
+
         http
-                .headers().frameOptions().sameOrigin()
-                .and()
+                //.headers().frameOptions().sameOrigin()
+                //.and()
                 .csrf().disable()
                 //기본적으로 아무설정을 하지 않으면 csrf 공격을 받음 클라이언트로부터 CSRF 토큰을 수신 후 검증
-                .cors(withDefaults())//corsConfigurationSource이름의 bean을 이용함
+                .cors()
+                .and()
+                //corsConfigurationSource이름의 bean을 이용함
                 //세션을사용하지 않도록 설정함
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -58,7 +62,7 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(autorize -> autorize
-                                .antMatchers(HttpMethod.POST, "/members").permitAll()
+//                                .antMatchers(HttpMethod.POST, "/members").permitAll()
                                 .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
                                 .antMatchers(HttpMethod.GET, "/members").hasRole("ADMIN")
                                 .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")
@@ -80,10 +84,20 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
 
     @Bean
 //구체적인 CORS 정책을 설정한다.
-    CorsConfigurationSource corsConfigurationSource() {
+     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*")); //모든 출처에 대한 허용
+        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("*"));
+         configuration.setAllowCredentials(true);
+//        configuration.setAllowedOrigins(Arrays.asList("*")); //모든 출처에 대한 허용
+         configuration.addAllowedHeader("*");
+         configuration.addExposedHeader("*");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));//해당 메서드허용
+
+
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
 
         //CorsConfigurationSource 인터페이스의 구현클래스임
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -105,7 +119,7 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,
                     jwtTokenizer);
             //default URL인 /login 을 해당 URL로 변경한다.
-            jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/trip/login");
             //객체 생성시 new 를 사용한이유는 이 핸들러의 경우 다른곳에서 사용이안되고 오직 여기서만 사용되기 때문임
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());

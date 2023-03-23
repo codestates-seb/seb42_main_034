@@ -1,6 +1,8 @@
 package com.project.tripAdvisor.member;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.tripAdvisor.audit.Auditable;
+import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.Question;
 import lombok.AllArgsConstructor;
@@ -21,9 +23,8 @@ import java.util.List;
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "member_id")
-    private long Id;
+    private long id;
 
 
     @Email
@@ -45,6 +46,7 @@ public class Member extends Auditable {
     private List<String > roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<Question> questions = new ArrayList<>();
     public void setQuestion(Question question) { //양방향 연관 관계를 안전하게 매핑하기 위한 solution코드
         this.questions.add(question);
@@ -63,15 +65,15 @@ public class Member extends Auditable {
         }
     }
 
-//    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<Blog> blogs = new ArrayList<>();
+    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Blog> blogs = new ArrayList<>();
 
-/*    public void setBlog(Blog blog) { //양방향 연관 관계를 안전하게 매핑하기 위한 solution코드
+    public void setBlog(Blog blog) { //양방향 연관 관계를 안전하게 매핑하기 위한 solution코드
         this.blogs.add(blog);
         if (blog.getMember() != this) {
             blog.setMember(this);
         }
-    }*/
+    }
 
 //    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private MemberAnswerLike memberAnswerLike = new MemberAnswerLike;

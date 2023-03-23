@@ -4,11 +4,15 @@ package com.project.tripAdvisor.member;
 import com.project.tripAdvisor.auth.CustomAuthorityUtils;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
+import com.project.tripAdvisor.question.dto.QuestionResponseDto;
+import com.project.tripAdvisor.question.entity.Question;
+import com.project.tripAdvisor.question.repository.QuestionRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,20 +21,22 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final ApplicationEventPublisher publisher;
-
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+    private final QuestionRepository questionRepository;
 
     private static final String HEADER_PREFIX = "Bearer";
 
     public MemberService(MemberRepository memberRepository,
                          ApplicationEventPublisher publisher,
                          PasswordEncoder passwordEncoder,
-                         CustomAuthorityUtils authorityUtils) {
+                         CustomAuthorityUtils authorityUtils,
+                         QuestionRepository questionRepository) {
         this.memberRepository = memberRepository;
         this.publisher = publisher;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
+        this.questionRepository = questionRepository;
     }
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원가입 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -71,8 +77,8 @@ public class MemberService {
         return updateMember;
     }
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public Member findMember(long Id) {
-        return findVerifiedMember(Id);
+    public Member findMember(long id) {
+        return findVerifiedMember(id);
     }
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원 정보에서 블로그 조회ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -96,8 +102,8 @@ public class MemberService {
     }*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원정보 삭제ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public void deleteMember(long Id){
-        Member foundMember = findVerifiedMember(Id);
+    public void deleteMember(long id){
+        Member foundMember = findVerifiedMember(id);
         foundMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);//탈퇴한 회원의 상태를 변경하여 탈퇴 회원관리
         memberRepository.save(foundMember);
 //      memberRepository.deleteById(memberId); 로 해도되긴하는데 회원정보가 아예 삭제됨.
@@ -111,8 +117,8 @@ public class MemberService {
     }*/
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ기타 메서드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public Member findVerifiedMember(long Id){
-        Optional<Member> optionalMember = memberRepository.findById(Id);
+    public Member findVerifiedMember(long id){
+        Optional<Member> optionalMember = memberRepository.findById(id);
         Member foundMember = optionalMember.orElseThrow(()->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_EXISTS));
         return foundMember;
@@ -123,21 +129,21 @@ public class MemberService {
         if(member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
-    /*//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ내가 작성한 게시글 불러오기 title 만ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    public List<QuestionDto.MemberQuestionResponse> getMyQuestionsTitle(Long id) {
-        List<QuestionDto.MemberQuestionResponse> QuestionDtoList = new ArrayList<>();
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ내가 작성한 게시글 불러오기 title 만ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    public List<QuestionResponseDto> getMyQuestionsTitle(Long id) {
+        List<QuestionResponseDto> QuestionDtoList = new ArrayList<>();
         List<Question> questionList = questionRepository.findAllByMemberId(id);
 
         for (Question question : questionList) {
             QuestionDtoList.add(
-                    QuestionDto.MemberQuestionResponse.builder()
+                    QuestionResponseDto.builder()
                             .title(question.getTitle())
                             .build());
         }
         return QuestionDtoList;
     }
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ내가 작성한 게시글 불러오기
-    public List<QuestionDto.MemberQuestionResponse> getMyQuestions(Long id) {
+    /*public List<QuestionDto.MemberQuestionResponse> getMyQuestions(Long id) {
         List<QuestionDto.MemberQuestionResponse> QuestionDtoList = new ArrayList<>();
         List<Question> questionList = questionRepository.findAllByMemberId(id);
 
@@ -150,4 +156,11 @@ public class MemberService {
         }
         return QuestionDtoList;
     }*/
+
+    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ회원정보 검증
+    public Member validate(String email, String password) throws RuntimeException {
+        return memberRepository.findByEmail(email)
+                .filter(member -> passwordEncoder.matches(password, member.getPassword()))
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
 }
