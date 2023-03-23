@@ -1,3 +1,4 @@
+import useConfirm from 'hooks/useConfirm';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ButtonWrapper } from './Button';
@@ -27,9 +28,11 @@ const CommentContent = styled.div`
 export default function CommentList() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
-  const deleteHandler = () => {
-    window.confirm('정말 삭제하시겠습니까?');
-  };
+  // const deleteHandler = useConfirm('정말 삭제하시겠습니까?',,'no' )
+
+
+    // window.confirm('정말 삭제하시겠습니까?');
+ 
 
   return (
     <>
@@ -44,7 +47,7 @@ export default function CommentList() {
           저는 제주도를 여행지로 추천합니다
           <CommentContent>
             작성시간 : 2023.03.19 14:00:00
-            {isLogin ? <button onClick={deleteHandler}>삭제</button> : null}
+            {/* {isLogin ? <button onClick={deleteHandler}>삭제</button> : null} */}
           </CommentContent>
         </CommentItem>
       </CommentContainer>

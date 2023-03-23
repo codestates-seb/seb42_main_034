@@ -8,7 +8,9 @@ import { login } from '../../redux/userSlice';
 import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
+import LoginButton from './LoginButton';
 import { DEFAULT_VERSION } from 'redux-persist';
+
 
 const EmailWrapper = styled.div``;
 const PWWrapper = styled.div``;
@@ -18,12 +20,8 @@ const LoginFormWrapper = styled.form`
   height: 200px;
   padding: 4rem;
   text-align: center;
-`;
-const LoginButton = styled.button`
-  height: 120px;
-  width: 200px;
-  margin: 10px 300px;
-`;
+`
+
 
 const Loginform = () => {
   const [email, setEmail] = useState('');
@@ -80,7 +78,7 @@ const Loginform = () => {
       <LoginInput label="PW" type="password" state={password} setState={setPassword} />
       <div>{vaildPW ? '' : '비밀번호를 입력 해주세요.'}</div>
 
-      <LoginButton>로그인</LoginButton>
+      <LoginButton fontSize='small' backgroundColor='grey'>로그인</LoginButton>
     </LoginFormWrapper>
   );
 };
