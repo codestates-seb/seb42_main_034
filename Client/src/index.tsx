@@ -11,7 +11,7 @@ import MyPage from './pages/MyPage';
 import QuestionPost from './pages/question/QuestionPost';
 import BlogPost from './pages/blog/BlogPost';
 import LandingPage from './pages/LandingPage';
-import BlogDetails from './pages/blog/BlogDetails';
+import BlogMain from './pages/blog/BlogMain';
 import SignIn from './pages/user/SignIn';
 import App from './App';
 
@@ -32,10 +32,10 @@ const router = createBrowserRouter([
         path: '/board',
         element: <Board />,
         children: [
-          {
-            path: '/board/boarddetails/:id',
-            element: <BlogDetails />,
-          },
+          // {
+          //   path: '/board/boarddetails/:id',
+          //   element: <BlogDetails />,
+          // },
           {
             path: '/board/questiondetails/:id',
             element: <QuestionDetails />,
@@ -59,6 +59,10 @@ const router = createBrowserRouter([
           {
             path: '/board/blogpost',
             element: <BlogPost />,
+          },
+          {
+            path: '/board/blogmain',
+            element: <BlogMain />,
           },
         ],
       },

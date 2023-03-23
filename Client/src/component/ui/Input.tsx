@@ -6,7 +6,6 @@ export interface IInputProps extends DetailedHTMLProps<HTMLAttributes<HTMLInputE
   name?: string;
   type?: string;
   error?: string;
-  value: string;
 }
 
 export const Input = forwardRef(
@@ -24,3 +23,5 @@ export const Input = forwardRef(
     );
   },
 );
+
+Input.displayName = 'Input';
