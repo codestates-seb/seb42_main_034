@@ -8,12 +8,14 @@ import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.repository.QuestionRepository;
 import com.project.tripAdvisor.tag.entity.Tag;
+import com.project.tripAdvisor.tag.repository.TagRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -23,9 +25,13 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
 
-    public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper) {
+    private final TagRepository tagRepository;
+
+    public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper,
+                           TagRepository tagRepository) {
         this.questionRepository = questionRepository;
         this.questionMapper = questionMapper;
+        this.tagRepository = tagRepository;
     }
 
     /** 질문 생성 **/
@@ -111,7 +117,10 @@ public class QuestionService {
         else if(type.equals("TAG")) {
             keyword = keyword.toUpperCase();
 
-            Tag tag = tagReposit
+            Tag tag = tagRepository.findByName(keyword);
+
+            List<Long> questionId = tag.getBlogTags().stream()
+                    .map(questionTag -> questionTag.getQuestion().getId())
         }
     }
 

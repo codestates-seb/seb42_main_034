@@ -62,13 +62,11 @@ public class QuestionDto {
 
         private String title;
 
-        private String tag;
+ //       private List<String> tags;
 
         private String content;
 
         private String writer;
-
-//        private MemberDto.Response member;
 
         private LocalDateTime createdAt;
 

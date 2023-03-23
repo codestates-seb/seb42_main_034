@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Question extends Auditable {
