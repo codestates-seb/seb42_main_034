@@ -74,22 +74,27 @@ public class QuestionDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    @Setter
+    @NoArgsConstructor
     public static class SearchResponse {
         private Long questionId;
 
         private String title;
 
-        private int viewCnt;
+//        private int viewCnt;
 
-        private LocalDateTime createdAt;
-
-        private LocalDateTime modifiedAt;
-
-        private int answerCnt;
+        private List<String> tags;
 
         private String writer;
 
-        private List<String> tags;
+        private LocalDateTime createdAt;
+
+//        private LocalDateTime modifiedAt;
+
+//        private int answerCnt;
+
+
+
+
     }
 }

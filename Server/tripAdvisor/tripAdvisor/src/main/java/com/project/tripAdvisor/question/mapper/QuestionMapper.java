@@ -41,16 +41,14 @@ public interface QuestionMapper {
     // 질문 목록 조회
     @Mapping(source = "question.member.nickname", target = "writer")
     default QuestionDto.SearchResponse QuestionToQuestionSearchResponse(Question question) {
-        return new QuestionDto.SearchResponse(
-                question.getId(),
-                question.getTitle(),
-                question.getViewCnt(),
-                question.getCreatedAt(),
-                question.getModifiedAt(),
-                question.getAnswerCnt(),
-                question.getMember().getNickname(),
-                QuestionToTagName(question)
-        );
+
+        QuestionDto.SearchResponse response = new QuestionDto.SearchResponse();
+        response.setQuestionId(question.getId());
+        response.setTitle(question.getTitle());
+        response.setWriter(question.getMember().getNickname());
+        response.setCreatedAt(question.getCreatedAt());
+
+        return response;
     }
 
     default List<QuestionDto.SearchResponse> QuestionToQuestionSearchResponses(List<Question> questions) {

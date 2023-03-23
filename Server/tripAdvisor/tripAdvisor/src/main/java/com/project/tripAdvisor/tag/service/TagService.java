@@ -86,6 +86,7 @@ public class TagService {
 
     public List<QuestionTag> createQuestionTag(List<String> tags, Long questionId){
         List<QuestionTag> questionTags = new ArrayList<>();
+        questionTagRepository.deleteAllByQuestion_Id(questionId);
         for(String tagName : tags){
             Tag tag = tagRepository.findByName(tagName);
             if(tag==null){
@@ -100,6 +101,7 @@ public class TagService {
                             new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
             questionTag.setQuestion(findQuestion);
             questionTag.setTag(tag);
+            questionTagRepository.save(questionTag);
             questionTags.add(questionTag);
         }
         return questionTags;

@@ -35,13 +35,11 @@ public class AnswerService {
         this.memberService = memberService;
         this.questionService = questionService;
     }
+
     /** 댓글(답변) 생성 **/
     public Answer createAnswer(Answer answer, Long questionId) {
 
-//        Answer createdAnswer = answerRepository.save(answer);
-//        return createdAnswer;
 
-        //ver.2
         Question question = questionService.findVerifiedQuestion(questionId);
         Member member = memberService.findVerifiedMember(answer.getMember().getId());
 
@@ -82,10 +80,8 @@ public class AnswerService {
 
 
     /** 댓글(답변) 목록 조회 **/
-    public List<Answer> findAnswers(Long questionId) {
-        return answerRepository.findAllById(
-                questionService.findVerifiedQuestion(questionId),
-                Sort.by("createdAt").descending());
+    public Page<Answer> findAnswers(Long questionId, int page) {
+        return answerRepository.findByQuestionId(questionId, PageRequest.of(page, 15));
     }
 
     public Answer findVerifiedAnswer(Long answerId) {
