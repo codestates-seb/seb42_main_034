@@ -44,6 +44,10 @@ const router = createBrowserRouter([
           },
           {
             path: '/board/bloglist',
+            element: <QuestionList />,
+          },
+          {
+            path: '/board/bloglist',
             element: <BlogList />,
           },
           {

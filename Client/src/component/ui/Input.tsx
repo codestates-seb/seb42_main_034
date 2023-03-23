@@ -11,7 +11,6 @@ export interface IInputProps extends DetailedHTMLProps<HTMLAttributes<HTMLInputE
 }
 
 export const Input = forwardRef(
-  //...rest마우스커서올려보면 그 외 인자도 받음
   ({ className, name, type, error, ...rest }: IInputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element => {
     return (
       <>
