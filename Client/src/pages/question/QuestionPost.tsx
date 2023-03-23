@@ -3,8 +3,9 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonWrapper } from '../../component/board/Button';
 import Editor from '../../component/board/Editor';
+import Tags from '../../component/board/Tags';
+import axios from 'axios';
 
-// css
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -31,6 +32,7 @@ const Input = styled.input`
 export default function QuestionPost() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [tag, setTag] = useState<string[]>([]);
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -38,6 +40,14 @@ export default function QuestionPost() {
 
   const contentHandler = (value: string) => {
     setContent(value);
+  };
+
+  const addTag = (newTag: string) => {
+    setTag((tag) => [...tag, newTag]);
+  };
+
+  const removeTag = (index: number) => {
+    setTag((tag) => [...tag.slice(0, index), ...tag.slice(index + 1)]);
   };
 
   const submitHandler = () => {
@@ -49,8 +59,20 @@ export default function QuestionPost() {
       alert('내용을 입력하세요.');
       return;
     }
-    window.confirm('작성하시겠습니까?');
     // axios
+    //   .post('', {
+    //     memberId: 1,
+    //     title,
+    //     content,
+    //     tag: 'test',
+    //     category: 'test',
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -58,6 +80,7 @@ export default function QuestionPost() {
       <PostWrapper>
         <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
         <Editor value={content} onChange={contentHandler} />
+        <Tags tag={tag} addTag={addTag} removeTag={removeTag} />
         <Button onClick={submitHandler}>작성</Button>
         <Outlet />
       </PostWrapper>
