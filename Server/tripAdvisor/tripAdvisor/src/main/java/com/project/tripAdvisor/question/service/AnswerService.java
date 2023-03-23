@@ -1,5 +1,8 @@
 package com.project.tripAdvisor.question.service;
 
+import com.project.tripAdvisor.blog.entity.Blog;
+import com.project.tripAdvisor.blog.entity.BlogAnswer;
+import com.project.tripAdvisor.blog.entity.BlogAnswerComment;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
@@ -83,6 +86,71 @@ public class AnswerService {
     public Page<Answer> findAnswers(Long questionId, int page) {
         return answerRepository.findByQuestionId(questionId, PageRequest.of(page, 15));
     }
+
+
+    /******************************** 대댓글 *********************************/
+
+    /** 대댓글 작성 **/
+    public AnswerComment createAnswerComment(AnswerComment answerComment,Long answerId){
+
+        Answer answer = findVerifiedAnswer(answerId);
+        answerComment.setAnswer(answer);
+
+        Member member = memberService.findVerifiedMember(answerComment.getMember().getId());
+        answerComment.setMember(member);
+
+        Question question = answer.getQuestion();
+
+        int commentCnt = question.getCommentCnt();
+        question.setCommentCnt(commentCnt+1);
+
+        return answerCommentRepository.save(answerComment);
+    }
+
+    /** 대댓글 수정 **/
+    public AnswerComment updateAnswerComment(AnswerComment answerComment, Long memberId){
+        AnswerComment findAnswerComment = findVerifiedAnswerComment(answerComment.getId());
+        if (answerComment.getMember().getId()!=memberId) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        }
+
+        Optional.ofNullable(answerComment.getContent())
+                .ifPresent(content->findAnswerComment.setContent(content));
+
+        return answerCommentRepository.save(findAnswerComment);
+    }
+
+    /** 대댓글 삭제 **/
+    public void deleteAnswerComment(Long commentId,Long memberId){
+        AnswerComment answerComment = findVerifiedAnswerComment(commentId);
+        if (answerComment.getMember().getId()!=memberId) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        }
+
+        Answer answer = findVerifiedAnswer(answerComment.getAnswer().getId());
+        Question question = answer.getQuestion();
+        int commentCnt = question.getCommentCnt();
+        question.setCommentCnt(commentCnt-1);
+
+        answerCommentRepository.delete(answerComment);
+    }
+
+
+    public AnswerComment findVerifiedAnswerComment(Long commentId){
+        Optional<AnswerComment> optionalAnswerComment =
+                answerCommentRepository.findById(commentId);
+        AnswerComment findAnswerComment=
+                optionalAnswerComment.orElseThrow(()->
+                        new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+        return findAnswerComment;
+    }
+
+
+
+
+
+
+
 
     public Answer findVerifiedAnswer(Long answerId) {
         Optional<Answer> optionalAnswer =

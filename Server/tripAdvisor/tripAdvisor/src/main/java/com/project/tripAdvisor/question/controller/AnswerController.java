@@ -1,9 +1,14 @@
 package com.project.tripAdvisor.question.controller;
 
+import com.project.tripAdvisor.blog.dto.BlogAnswerCommentPatchDto;
+import com.project.tripAdvisor.blog.dto.BlogAnswerCommentPostDto;
+import com.project.tripAdvisor.blog.entity.BlogAnswerComment;
 import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.member.MemberService;
+import com.project.tripAdvisor.question.dto.AnswerCommentDto;
 import com.project.tripAdvisor.question.dto.AnswerDto;
 import com.project.tripAdvisor.question.entity.Answer;
+import com.project.tripAdvisor.question.entity.AnswerComment;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.AnswerCommentMapper;
 import com.project.tripAdvisor.question.mapper.AnswerMapper;
@@ -97,4 +102,35 @@ public class AnswerController {
                         pageAnswer)
                 , HttpStatus.OK);
     }
+
+    /******************************** 대댓글 *********************************/
+
+    @PostMapping("/comments/{answer-id}")
+    public ResponseEntity postAnswerComment(@PathVariable("answer-id")@Positive Long answerId,
+                                            @RequestBody AnswerCommentDto.Post requestBody){
+        AnswerComment answerComment = answerCommentMapper.AnswerCommentPostToAnswerComment(requestBody);
+        answerService.createAnswerComment(answerComment,answerId);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/comments/{comment-id}")
+    public ResponseEntity patchAnswerComment(@PathVariable("comment-id")@Positive Long answerCommentId,
+                                                 @RequestBody AnswerCommentDto.Patch requestBody){
+        requestBody.setCommentId(answerCommentId);
+
+        AnswerComment answerComment = answerCommentMapper.AnswerCommentPatchToAnswerComment(requestBody);
+        answerService.updateAnswerComment(answerComment,answerComment.getMember().getId());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/comments/{comment-id}")
+    public ResponseEntity deleteAnswerComment(@PathVariable("comment-id")@Positive Long answerCommentId,
+                                                  @RequestParam @Positive Long memberId){
+        answerService.deleteAnswerComment(answerCommentId,memberId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

@@ -2,7 +2,6 @@ package com.project.tripAdvisor.question.entity;
 
 import com.project.tripAdvisor.audit.Auditable;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.question.TimeStamped;
 import com.project.tripAdvisor.tag.entity.QuestionTag;
 import lombok.*;
 
@@ -40,7 +39,7 @@ public class Question extends Auditable {
     private int viewCnt; // 질문 글 조회수
 
     @Column(columnDefinition = "integer default 0")
-    private int answerCnt; // 댓글 수
+    private int commentCnt; // 댓글 수
 
     @Column
     private String writer; // 작성자
