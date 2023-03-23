@@ -1,7 +1,7 @@
 import { Colors } from 'component/style/variables';
 import { BoxShadow, ButtonTheme, HoverAction } from 'component/style/cssTemplete';
 import { RegionInfo } from 'pages/Home';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
 import { CRUDdata, ReturnData } from 'api/data';
@@ -24,6 +24,8 @@ const RegionButton = styled(Button)`
 
 export default function Filter({
   citys,
+  setState,
+  filter,
 }: {
   citys: RegionInfo;
   region?: string;
@@ -36,15 +38,16 @@ export default function Filter({
 
   const handleBtnClick = (route: string, region?: string) => {
     //해당지역으로이동
-    dd.getData()
+    setState(citys.city);
+    dd.getData() // 인자로 지역이름 집어넣기
       .then((res) => {
         console.log('tjdrhd');
         console.log(res);
-
-        navigate(route);
+      })
+      .then((res) => {
+        navigate(route, { state: res });
       })
       .catch(console.error);
-    navigate(route, { state: {} });
   };
   return (
     <RegionButton

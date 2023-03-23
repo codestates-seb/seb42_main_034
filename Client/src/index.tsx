@@ -18,6 +18,7 @@ import QuestionList from './pages/question/QuestionList';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import BlogList from 'pages/blog/BlogList';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/board/bloglist',
-            element: <QuestionList />,
+            element: <BlogList />,
           },
           {
             path: '/board/boarddetails/:id',

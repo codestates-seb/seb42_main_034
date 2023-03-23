@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { BASE_URL } from './consts';
 import { useAppSelector } from '../redux/hooks';
 import { login } from '../redux/userSlice';
-
+axios.defaults.withCredentials = true;
 const useAPI = () => {
   const dispatch = useDispatch();
   const { accessToken } = useAppSelector((state) => state.loginInfo);
