@@ -7,6 +7,7 @@ import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.repository.QuestionRepository;
+import com.project.tripAdvisor.tag.entity.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -71,11 +72,11 @@ public class QuestionService {
     public Question findQuestion(Long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
 
-        String writer = findQuestion.getMember().getNickname();
+       // String writer = findQuestion.getMember().getNickname();
         int viewCnt = findQuestion.getViewCnt();
 
         findQuestion.setViewCnt(viewCnt + 1); // 조회수 1 증가
-        findQuestion.setWriter(writer);
+     //   findQuestion.setWriter(writer);
 
         return findQuestion;
     }
@@ -100,10 +101,18 @@ public class QuestionService {
     // Default : 제목 + 내용 으로 검색
     // (추가) user 로 검색
 
-    public Page<Question> searchQuestion(int page, String keyword) {
-        keyword = "%" + keyword + "%";
+    public Page<Question> searchQuestion(int page, String keyword, String type) {
+        type = type.toUpperCase();
 
-        return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 15));
+        if(type.equals("USER")) {
+            Long memberId = Long.valueOf(keyword);
+            return questionRepository.findByMemberId(memberId, PageRequest.of(page, 15));
+        }
+        else if(type.equals("TAG")) {
+            keyword = keyword.toUpperCase();
+
+            Tag tag = tagReposit
+        }
     }
 
 

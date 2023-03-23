@@ -4,7 +4,9 @@ import com.project.tripAdvisor.member.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import reactor.util.annotation.Nullable;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +26,9 @@ public class QuestionDto {
         @NotBlank(message = "내용을 입력하세요.")
         private String content;
 
-        private String tag;
+        @Valid
+        @Nullable
+        private List<String> tags;
 
         @NotBlank
         private String category;
@@ -46,8 +50,9 @@ public class QuestionDto {
         @NotBlank(message = "내용을 입력하세요.")
         private String content;
 
-        private String tag;
-
+        @Valid
+        @Nullable
+        private List<String> tags;
     }
 
     @Getter

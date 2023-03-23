@@ -7,6 +7,8 @@ import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.service.QuestionService;
 import com.project.tripAdvisor.response.*;
+import com.project.tripAdvisor.tag.entity.QuestionTag;
+import com.project.tripAdvisor.tag.service.TagService;
 import lombok.Builder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -27,14 +29,16 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
-
     private final MemberService memberService;
 
+    private final TagService tagService;
+
     public QuestionController(QuestionService questionService, QuestionMapper questionMapper,
-                              MemberService memberService) {
+                              MemberService memberService, TagService tagService) {
         this.questionService = questionService;
         this.questionMapper = questionMapper;
         this.memberService = memberService;
+        this.tagService = tagService;
     }
 
     /**
@@ -49,6 +53,10 @@ public class QuestionController {
         question.setMember(member);
 
         Question createdQuestion = questionService.createQuestion(question);
+
+        if(requestBody.getTags() != null) {
+            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), question.getId());
+        }
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(createdQuestion)),
