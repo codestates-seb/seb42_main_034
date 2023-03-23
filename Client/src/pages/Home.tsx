@@ -1,17 +1,44 @@
-import React from 'react';
+import { Relative } from 'component/style/cssTemplete';
+
+import React, { useEffect, useState } from 'react';
+
 import styled from 'styled-components';
-import Nav from '../component/header/Nav';
-import MapContainer from '../component/Kakao.maps';
-import { ScreenSize } from '../component/style/const';
+import { Colors, ScreenSize } from '../component/style/variables';
 import { Icon } from '../component/ui/Icon';
-import { NavButton } from '../component/ui/NavButton';
+import { cities } from '../component/style/variables';
 import { ReactComponent as MapIcon } from '../image/map.svg';
+import Filter from './home/Filter';
+
+import { type } from '@testing-library/user-event/dist/type';
 //필터컴포넌트를 만들어서 해당 지역에 맞는 위치에 정적으로 만들기
-const MapImg = styled(Icon)<{ svg: React.ReactNode }>`
+
+const MapImg = styled(Icon)`
   margin: auto;
   max-width: ${ScreenSize.max_width};
 `;
+const RelativeLayout = styled.div`
+  ${Relative}
+  max-width: ${ScreenSize.max_width};
+  margin: auto;
+`;
 
+export interface RegionInfo {
+  city: string;
+  x: number;
+
+  y: number;
+}
 export default function Home() {
-  return <MapImg svg={<MapIcon />} />;
+  const [filter, setFilter] = useState('');
+  const [dataa, setData] = useState({});
+
+  return (
+    //맵돌려서 집어넣기
+    <RelativeLayout>
+      <MapImg svg={<MapIcon />} />
+      {cities.map((region, idx) => (
+        <Filter key={idx} citys={region} setState={setFilter} filter={filter} />
+      ))}
+    </RelativeLayout>
+  );
 }

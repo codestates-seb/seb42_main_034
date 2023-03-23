@@ -19,6 +19,8 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
+import BlogList from 'pages/blog/BlogList';
+
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -39,8 +41,16 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/questionlist/',
+            path: '/board/questionlist',
             element: <QuestionList />,
+          },
+          {
+            path: '/board/bloglist',
+            element: <QuestionList />,
+          },
+          {
+            path: '/board/bloglist',
+            element: <BlogList />,
           },
           {
             path: '/board/boarddetails/:id',

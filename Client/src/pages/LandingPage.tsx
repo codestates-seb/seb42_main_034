@@ -1,5 +1,14 @@
-import React from 'react'
+import MapContainer from 'component/Kakao.maps';
+import TopCard from 'component/landingpage/TopCard';
+
+import React, { useState } from 'react';
 
 export default function LandingPage() {
-  return <div>LandingPage</div>
+  const [text, setText] = useState('');
+  return (
+    <>
+      <MapContainer />
+      <TopCard />
+    </>
+  );
 }
