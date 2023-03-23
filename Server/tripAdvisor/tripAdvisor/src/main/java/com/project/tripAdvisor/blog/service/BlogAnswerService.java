@@ -65,7 +65,8 @@ public class BlogAnswerService {
         Optional.ofNullable(blogAnswer.getContent())
                 .ifPresent(content->findBlogAnswer.setContent(content));
 
-        return blogAnswerRepository.save(findBlogAnswer);
+        //return blogAnswerRepository.save(findBlogAnswer); update 에서는 save 하지 않아도 됨
+        return findBlogAnswer;
     }
     @Transactional
     public void deleteBlogAnswer(Long blogAnswerId,Long memberId){
@@ -89,12 +90,10 @@ public class BlogAnswerService {
 
     public BlogAnswer findVerifiedBlogAnswer(Long blogAnswerId){
 
-        Optional<BlogAnswer> optionalBlogAnswer =
-                blogAnswerRepository.findById(blogAnswerId);
-        BlogAnswer findBlogAnswer=
-                optionalBlogAnswer.orElseThrow(()->
-                        new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
-        return findBlogAnswer;
+        return blogAnswerRepository
+                .findById(blogAnswerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+
     }
 
     /**
@@ -122,7 +121,8 @@ public class BlogAnswerService {
         Optional.ofNullable(blogAnswerComment.getContent())
                 .ifPresent(content->findBlogAnswerComment.setContent(content));
 
-        return blogAnswerCommentRepository.save(findBlogAnswerComment);
+        //return blogAnswerCommentRepository.save(findBlogAnswerComment);
+        return findBlogAnswerComment;
     }
 
     public void deleteBlogAnswerComment(Long commentId,Long memberId){
@@ -140,11 +140,9 @@ public class BlogAnswerService {
     }
 
     public BlogAnswerComment findVerifiedBlogAnswerComment(Long commentId){
-        Optional<BlogAnswerComment> optionalAnswerComment =
-                blogAnswerCommentRepository.findById(commentId);
-        BlogAnswerComment findAnswerComment=
-                optionalAnswerComment.orElseThrow(()->
-                        new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
-        return findAnswerComment;
+        return blogAnswerCommentRepository
+                .findById(commentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
     }
+
 }

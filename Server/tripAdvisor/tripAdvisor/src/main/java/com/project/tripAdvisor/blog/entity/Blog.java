@@ -89,4 +89,9 @@ public class Blog extends Auditable {
         }
     }
 
+    public void plusViewCount() {
+        this.viewCnt++;
+    }
+
+
 }
