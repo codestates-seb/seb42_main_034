@@ -38,7 +38,7 @@ const Loginform = () => {
     mutationKey: ['loginInfo'],
     mutationFn: () =>
       postLogin({
-        userId: email,
+        username: email,
         password: password,
       }),
     onSuccess: (res) => {
@@ -60,6 +60,7 @@ const Loginform = () => {
       alert('아이디 혹은 비밀번호를 확인해주세요');
     },
   });
+  console.log(email);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
