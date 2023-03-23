@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.tripAdvisor.audit.Auditable;
 import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.question.TimeStamped;
@@ -45,8 +46,12 @@ public class Question extends Auditable {
     /** N:1 **/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member; // 멤버 ID
 
+    public void addMember(Member member){
+        this.member = member;
+    }
     /** 1:N **/
     @Setter(AccessLevel.NONE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true )

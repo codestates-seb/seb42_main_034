@@ -42,7 +42,7 @@ public class MemberDto {
 
         private String location;
 
-        private long memberId;
+        private long Id;
     }
 
     @Setter
@@ -50,7 +50,7 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
-        private long memberId;
+        private long Id;
         private String email;
         private String nickname;
         private String location;

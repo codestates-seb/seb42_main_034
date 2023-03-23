@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/blog")
 @Validated
 //@CrossOrigin("*") // 좀 더 알아보기
