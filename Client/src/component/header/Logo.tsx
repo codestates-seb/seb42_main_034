@@ -12,6 +12,7 @@ export type Props = {
   height?: string;
   className?: string;
   children?: string;
+  src?: string;
 };
 const LogoLink = styled.div`
   display: flex;

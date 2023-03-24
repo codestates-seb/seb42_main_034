@@ -7,8 +7,8 @@ export default function LandingPage() {
   const [text, setText] = useState('');
   return (
     <>
-      <MapContainer />
       <TopCard />
+      <MapContainer intro={true} latitude={37.49140197082119} longitude={127.01760603543958} />
     </>
   );
 }

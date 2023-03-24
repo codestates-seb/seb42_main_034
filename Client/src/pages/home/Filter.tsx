@@ -7,6 +7,7 @@ import { Button } from 'component/ui/Button';
 import { CRUDdata, ReturnData } from 'api/data';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 const RegionButton = styled(Button)`
   z-index: 0;
   /* ${ButtonTheme} */
@@ -32,30 +33,24 @@ export default function Filter({
   setState: React.Dispatch<React.SetStateAction<string>>;
   filter: string;
 }): JSX.Element {
-  const dd = new CRUDdata();
+  const { isLoading, error, data: city } = useQuery([filter], async () => await new CRUDdata().getData()); //여기에 해당지역넣기
   // dd.getData().then(console.log).catch(console.error);
   const navigate = useNavigate();
-
-  const handleBtnClick = (route: string, region?: string) => {
+  const [data, setData] = useState('');
+  useEffect(() => {
+    setState(filter);
+  }, []);
+  const handleBtnClick = () => {
     //해당지역으로이동
-    setState(citys.city);
-    dd.getData() // 인자로 지역이름 집어넣기
-      .then((res) => {
-        console.log('tjdrhd');
-        console.log(res);
-      })
-      .then((res) => {
-        navigate(route, { state: res });
-      })
-      .catch(console.error);
+    console.log(city);
+    navigate(`/board/questionlist`, { state: citys.city });
   };
+
   return (
     <RegionButton
       children={citys.city}
       className=""
-      onClick={() => {
-        handleBtnClick(`/board/questionlist`);
-      }} //경로랑
+      onClick={handleBtnClick} //경로랑
       style={{ left: `${citys.x}em`, top: `${citys.y}em` }}
     />
   );

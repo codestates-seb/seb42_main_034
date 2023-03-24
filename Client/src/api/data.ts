@@ -49,17 +49,17 @@ export class CRUDdata {
   //     return response;
   //   }
   async getData(): Promise<AxiosResponse<Mock>> {
-    const response = await axios.post(
+    const response = await axios.get(
       `${this.url}`,
 
-      {
-        username: 'dlwjddus16@naver.com',
-        password: 'wjd123456!',
-      },
-      {
-        // headers: { 'Cache-Control': 'no-cache' },
-        withCredentials: true,
-      },
+      // {
+      //   username: 'dlwjddus16@naver.com',
+      //   password: 'wjd123456!',
+      // },
+      // {
+      //   // headers: { 'Cache-Control': 'no-cache' },
+      //   withCredentials: true,
+      // },
     );
     return response;
   }
@@ -105,13 +105,16 @@ export class CRUDdata {
 //     console.log(error);
 //   });
 axios
-  .post('http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions', {
-    memberId: 1,
-    title: 'test',
-    content: 'test123',
-    tag: '테스트',
-    category: 'test',
-  })
+  .get(
+    'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions?category=dd&page=1&sortedBy=default',
+    //  {
+    //   memberId: 1,
+    //   title: '갬성있는 식당 추천해주세요',
+    //   content: '너무 비싸지 않은선에서 추천 부탁드려요 빵맛집이라면 더 좋습니다!',
+    //   tag: '카페',
+    //   category: '부산',
+    // })
+  )
   .then(function (response) {
     console.log(response);
   })

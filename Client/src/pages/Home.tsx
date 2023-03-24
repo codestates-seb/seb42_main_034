@@ -30,7 +30,6 @@ export interface RegionInfo {
 }
 export default function Home() {
   const [filter, setFilter] = useState('');
-  const [dataa, setData] = useState({});
 
   return (
     //맵돌려서 집어넣기
