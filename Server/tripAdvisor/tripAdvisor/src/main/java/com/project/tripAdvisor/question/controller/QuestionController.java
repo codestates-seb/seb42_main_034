@@ -94,6 +94,7 @@ public class QuestionController {
     /**
      * 질문 목록 조회
      **/
+    @GetMapping
     public ResponseEntity getQuestions(@RequestParam int page) {
         Page<Question> pageQuestions = questionService.findQuestions(page - 1);
         List<Question> questions = pageQuestions.getContent();

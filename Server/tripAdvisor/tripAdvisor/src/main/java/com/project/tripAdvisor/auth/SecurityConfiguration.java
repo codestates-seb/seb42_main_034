@@ -6,12 +6,21 @@ import com.project.tripAdvisor.auth.handler.MemberAccessDeniedHandler;
 import com.project.tripAdvisor.auth.handler.MemberAuthenticationEntryPoint;
 import com.project.tripAdvisor.auth.handler.MemberAuthenticationFailureHandler;
 import com.project.tripAdvisor.auth.handler.MemberAuthenticationSuccessHandler;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -25,19 +34,26 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.Arrays;
 
-@Configuration
-public class SecurityConfiguration {//여기에 지원하는 인증과 권한부여설정을 하면된다.
+@Configuration(proxyBeanMethods = false)
+@EnableWebSecurity
+@ConditionalOnDefaultWebSecurity
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+public class SecurityConfiguration{//여기에 지원하는 인증과 권한부여설정을 하면된다.
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+
     }
 
+
     @Bean
+    @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //SecurityFilterChain을 Bean으로 등록해서 HTTP보안설정을 구성한다.
 
@@ -126,9 +142,12 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
 
             //인스턴스를 생성하면서 해당 필터에서 사용되는 객체들을  DI 받는다.
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+
             //addFilter 를 통해 jwtAuthenticationFilter를 Spring Security Filter Chain에 추가한다.
             builder.addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+//                    .addFilterAfter(jwtVerificationFilter, LoginUserFilter.class);
+
         }
     }
 }

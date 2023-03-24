@@ -43,6 +43,7 @@ public class Question extends Auditable {
     private String writer; // 작성자
 
 
+
     /** N:1 **/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

@@ -50,7 +50,7 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
-        private long Id;
+        private long memberId;
         private String email;
         private String nickname;
         private String location;
