@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import reactor.util.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
