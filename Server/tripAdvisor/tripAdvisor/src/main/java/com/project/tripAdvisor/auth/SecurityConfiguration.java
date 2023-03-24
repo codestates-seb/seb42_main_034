@@ -94,11 +94,11 @@ public class SecurityConfiguration{//여기에 지원하는 인증과 권한부�
 //구체적인 CORS 정책을 설정한다.
      CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("*"));//모든 출처에 대한 허용
+//        configuration.setAllowedOrigins(Arrays.asList("*"));//모든 출처에 대한 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));//해당 메서드허용
 //         configuration.addAllowedHeader("*");
 //         configuration.addExposedHeader("*");
