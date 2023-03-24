@@ -10,8 +10,7 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
 //    Member findByEmail(String email);
-    //보안 예비용
-//    User findByUsername(String name);
+
 
     /*@Query(value = "SELECT * FROM QUESTION WHERE member_Id = :memberId")
     Member findByEmailForToken(String email);*/

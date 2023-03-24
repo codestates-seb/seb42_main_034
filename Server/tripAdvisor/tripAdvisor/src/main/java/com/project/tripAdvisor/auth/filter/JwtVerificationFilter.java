@@ -18,7 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpClient;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -56,7 +55,8 @@ public class JwtVerificationFilter extends OncePerRequestFilter {//request당 �
         }
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        memberRepository.findByEmail(email).ifPresent(m-> request.setAttribute("memberId", m.getId()));
+        Optional<Member> member  = memberRepository.findByEmail(email);
+        member.ifPresent(m-> request.setAttribute("memberId", m.getId()));
 
         //위 과정이 성공적으로 수행되면 다음 security filter를 호출한다.
         filterChain.doFilter(request, response);
