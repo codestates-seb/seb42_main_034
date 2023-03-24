@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /*//로그인 인증에 성공한 클라이언트에게 JWT를 생성 및 발급, 클라이언트 요청이 들어올때마다 전달된 JWT 검증함*/
