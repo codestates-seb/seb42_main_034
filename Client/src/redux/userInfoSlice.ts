@@ -4,6 +4,7 @@ interface InitProps {
   [key: string]: any;
   memberId: number;
   nickname: string;
+  username: string;
   location: {
     latitude: string;
     longitude: string;
@@ -17,6 +18,7 @@ interface InitProps {
 
 const initialState: InitProps = {
   memberId: 0,
+  username: '',
   nickname: '',
   location: {
     latitude: '',
@@ -48,6 +50,7 @@ export default userInfoSlice.reducer;
 setUserInfo({
   memberId: 0,
   nickname: '',
+  username: '',
   location: {
     latitude: '',
     longitude: '',

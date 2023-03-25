@@ -8,6 +8,7 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: ${ScreenSize.middle_height};
+  max-height: ${ScreenSize.middle_height};
   overflow-y: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {

@@ -68,9 +68,11 @@ export class CRUDdata {
 //   .post(
 //     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members',
 //     {
+
 //       email: 'fsdassa16@naver.com',
 //       password: 'wdsada123ds456!',
 //       nickname: '뉸누느',
+
 //     },
 //     {
 //       // headers: { 'Cache-Control': 'no-store' },
@@ -103,6 +105,7 @@ export class CRUDdata {
 //   .catch(function (error) {
 //     console.log(error);
 //   });
+
 // axios
 //   .get(
 //     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions?category=dd&page=1&sortedBy=default',

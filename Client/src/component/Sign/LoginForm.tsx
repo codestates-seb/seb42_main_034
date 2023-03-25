@@ -8,22 +8,9 @@ import { login } from '../../redux/userSlice';
 import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
-import { DEFAULT_VERSION } from 'redux-persist';
+import LoginButton from './LoginButton';
+import SignLink from 'component/SignUp/SignLink';
 
-const EmailWrapper = styled.div``;
-const PWWrapper = styled.div``;
-const LoginFormWrapper = styled.form`
-  width: 100%;
-  min-width: 22rem;
-  height: 200px;
-  padding: 4rem;
-  text-align: center;
-`;
-const LoginButton = styled.button`
-  height: 120px;
-  width: 200px;
-  margin: 10px 300px;
-`;
 
 const Loginform = () => {
   const [email, setEmail] = useState('');
@@ -74,15 +61,40 @@ const Loginform = () => {
 
   return (
     <LoginFormWrapper onSubmit={handleSubmit}>
-      <LoginInput label="ID" state={email} setState={setEmail} />
-      <div>{vaildEmail ? '' : '아이디를 입력 해주세요.'}</div>
-
-      <LoginInput label="PW" type="password" state={password} setState={setPassword} />
-      <div>{vaildPW ? '' : '비밀번호를 입력 해주세요.'}</div>
-
-      <LoginButton>로그인</LoginButton>
+      <EmailWrapper>
+        <LoginInput label="ID" state={email} setState={setEmail} />
+        {vaildEmail ? '' : '아이디를 입력 해주세요.'}
+      </EmailWrapper>
+      <PWWrapper>
+        <LoginInput label="PW" type="password" state={password} setState={setPassword} />
+        {vaildPW ? '' : '비밀번호를 입력 해주세요.'}
+      </PWWrapper>
+        
+      <StyledLoginButton fontSize='small' backgroundColor='grey'>로그인</StyledLoginButton>
     </LoginFormWrapper>
   );
 };
 
 export default Loginform;
+
+
+const EmailWrapper = styled.div`
+:focus{
+  box-shadow: 1px 1px 1px black;
+}`;
+const PWWrapper = styled.div``;
+
+const LoginFormWrapper = styled.form`
+  width: 100%;
+  min-width: 22rem;
+  display: grid;
+  height: 200px;
+`;
+
+const StyledLoginButton = styled(LoginButton)`
+  margin: 1.5rem 0;
+  height: 2.5rem;
+  :hover {
+    background-color: blue;
+  }
+`

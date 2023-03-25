@@ -12,9 +12,11 @@ export interface IAccessToken {
 
 export interface userInfo {
   id: string;
+  username: string;
   email: string;
   nickname: string;
   headers?: IAccessToken;
+  location: string;
 }
 
 export interface IAccessTokenRefresh {

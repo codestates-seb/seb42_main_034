@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Colors } from '../style/variables';
 
@@ -10,7 +9,7 @@ interface ButtonInterface {
   newLine?: boolean;
 }
 
-const Button = styled.button<ButtonInterface>`
+const LoginButton = styled.button<ButtonInterface>`
   font-size: ${(props) => (props.fontSize === 'small' ? 0.7 : 1.2)}rem;
   color: ${(props) => (props.backgroundColor === 'grey' ? 'black' : 'white')};
   background-color: ${(props) => (props.backgroundColor === 'grey' ? Colors.main_01 : Colors.button_clicked)};
@@ -20,8 +19,8 @@ const Button = styled.button<ButtonInterface>`
   width: ${(props) => props.newLine && 3.1}rem;
   cursor: ${(props) => (props.backgroundColor === 'grey' ? 'default' : 'pointer')};
   :hover {
-    background-color: ${(props) => (props.backgroundColor === 'grey' ? Colors.main_01 : Colors.button_clicked)};
+    background-color: ${(props) => (props.backgroundColor === 'grey' ? Colors.main_02 : Colors.button_clicked)};
   }
 `;
 
-export default Button;
+export default LoginButton;
