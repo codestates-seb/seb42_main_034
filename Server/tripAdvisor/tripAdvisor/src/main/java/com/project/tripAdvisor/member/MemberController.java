@@ -47,7 +47,7 @@ public class MemberController {
 
                                       @RequestBody MemberDto.Patch memberPatch){
 
-        memberPatch.setMemberId(id);
+        memberPatch.setId(id);
 
         Member member = mapper.MemberPatchToMember(memberPatch);
         Member updateMember = memberService.updateMember(member);
@@ -105,7 +105,7 @@ public class MemberController {
     //로그인 사용자가 작성한 질문 조회v1
     @GetMapping("/me/questionsTitle")
     public ResponseEntity<List<QuestionResponseDto>> getMyQuestionsTitle() {
-       Long id = Long.parseLong((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+       Long id = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return ResponseEntity.ok(memberService.getMyQuestionsTitle(id));
     }

@@ -26,7 +26,7 @@ public class MemberDto {
         @Pattern(regexp = "^.{2,10}$", message = "두글자 이상 10글자 이하로 작성해주세요")
         private String nickname;
 
-        private String location;
+//        private String location;
     }
 
     @Setter
@@ -42,7 +42,7 @@ public class MemberDto {
 
         private String location;
 
-        private long memberId;
+        private long Id;
     }
 
     @Setter

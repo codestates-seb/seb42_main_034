@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.tripAdvisor.audit.Auditable;
 import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.tag.entity.QuestionTag;
@@ -50,11 +51,14 @@ public class Question extends Auditable {
      **/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member; // 멤버 ID
 
-    /**
-     * 1:N
-     **/
+    public void addMember(Member member){
+        this.member = member;
+    }
+    
+    /** 1:N **/
     @Setter(AccessLevel.NONE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>(); // 질문 글에 달린 답변(댓글) 리스트
