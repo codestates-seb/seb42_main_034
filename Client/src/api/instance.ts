@@ -9,7 +9,6 @@ const config = {
 }
 
 const axiosInstance = axios.create(config);
-
 const axiosInstanceAuth = axios.create(config);
 axiosInstanceAuth.defaults.withCredentials = true;
 

@@ -16,6 +16,7 @@ export interface userInfo {
   email: string;
   nickname: string;
   headers?: IAccessToken;
+  location: string;
 }
 
 export interface IAccessTokenRefresh {

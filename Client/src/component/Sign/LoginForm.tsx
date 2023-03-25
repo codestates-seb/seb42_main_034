@@ -9,20 +9,8 @@ import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
 import LoginButton from './LoginButton';
+import SignLink from 'component/SignUp/SignLink';
 
-const EmailWrapper = styled.div``;
-const PWWrapper = styled.div``;
-const LoginFormWrapper = styled.form`
-  width: 100%;
-  min-width: 22rem;
-  display: grid;
-  height: 200px;
-`;
-// const LoginButton = styled.button`
-//   height: 120px;
-//   width: 60px;
-//   margin: 20px 0px;
-// `;
 
 const Loginform = () => {
   const [email, setEmail] = useState('');
@@ -80,10 +68,32 @@ const Loginform = () => {
         <LoginInput label="PW" type="password" state={password} setState={setPassword} />
         {vaildPW ? '' : '비밀번호를 입력 해주세요.'}
       </PWWrapper>
-
-      <LoginButton fontSize='small' backgroundColor='grey'>로그인</LoginButton>
+        
+      <StyledLoginButton fontSize='small' backgroundColor='grey'>로그인</StyledLoginButton>
     </LoginFormWrapper>
   );
 };
 
 export default Loginform;
+
+
+const EmailWrapper = styled.div`
+:focus{
+  box-shadow: 1px 1px 1px black;
+}`;
+const PWWrapper = styled.div``;
+
+const LoginFormWrapper = styled.form`
+  width: 100%;
+  min-width: 22rem;
+  display: grid;
+  height: 200px;
+`;
+
+const StyledLoginButton = styled(LoginButton)`
+  margin: 1.5rem 0;
+  height: 2.5rem;
+  :hover {
+    background-color: blue;
+  }
+`

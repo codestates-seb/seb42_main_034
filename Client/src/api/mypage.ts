@@ -10,6 +10,7 @@ interface Member {
   [key: string]: any;
   memberId: number;
   nickname: string;
+  username: string;
   location: {
     latitude: string;
     longitude: string;
@@ -23,10 +24,11 @@ interface Member {
 
 interface FixMyInfo {
   nickname: string;
+  username: string;
   location: {
     latitude: string|number;
-    longtitude: string|number;
-  }
+    longitude: string|number;
+  } | null;
   address: string;
   avatarUrl: string;
 }
@@ -36,16 +38,16 @@ export const useMypageAPI = () => {
   const dispatch = useAppDispatch();
 
     const getMemberInfo = async (id: string | number) =>
-      await api.get(`/member/${id}`).then((res) => res.data);
+      await api.get(`/members/${id}`).then((res) => res.data);
 
   const getMyInfo = async (id: string | undefined) =>
-      await api.get<Member>(`/member/${id}`).then(res => {
+      await api.get<Member>(`/members/${id}`).then(res => {
           dispatch(setUserInfo(res.data));
           return res.data;
       });
 
       const patchFixMyInfo = (data: FixMyInfo) =>
-      api.patch(`/mypage/edit`, data)
+      api.patch(`/members/edit`, data)
 
       // const aixosAddPhoto = (data:any) => {
       //   axios.post(`/upload`, data).then(res => console.log(res));

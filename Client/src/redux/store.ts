@@ -8,6 +8,8 @@ import notificationReducer from './notifiCation';
 // import logger from 'redux-logger';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
+
+
 const middleware = [...getDefaultMiddleware({ serializableCheck: false }), logger];
 const persistConfig = {
   key: 'root',
@@ -41,3 +43,4 @@ export const store = configureStore({
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+

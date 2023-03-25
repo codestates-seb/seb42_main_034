@@ -4,7 +4,7 @@ interface InitProps {
   isLogin: boolean;
   id?: string;
   nickname?: string;
-  userId?: string;
+  username?: string;
   accessToken?: string;
   address?: string;
   email?: string;
