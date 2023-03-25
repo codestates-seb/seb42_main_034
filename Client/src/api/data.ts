@@ -68,10 +68,9 @@ export class CRUDdata {
 //   .post(
 //     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members',
 //     {
-//       email: 'sdaddss16@naver.com',
-//       password: 'wjd123d456!',
-//       nickname: '뉸누dd',
-//       location: '경주',
+//       email: 'fsdassa16@naver.com',
+//       password: 'wdsada123ds456!',
+//       nickname: '뉸누느',
 //     },
 //     {
 //       // headers: { 'Cache-Control': 'no-store' },
@@ -104,20 +103,20 @@ export class CRUDdata {
 //   .catch(function (error) {
 //     console.log(error);
 //   });
-axios
-  .get(
-    'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions?category=dd&page=1&sortedBy=default',
-    //  {
-    //   memberId: 1,
-    //   title: '갬성있는 식당 추천해주세요',
-    //   content: '너무 비싸지 않은선에서 추천 부탁드려요 빵맛집이라면 더 좋습니다!',
-    //   tag: '카페',
-    //   category: '부산',
-    // })
-  )
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+// axios
+//   .get(
+//     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions?category=dd&page=1&sortedBy=default',
+//     //  {
+//     //   memberId: 1,
+//     //   title: '갬성있는 식당 추천해주세요',
+//     //   content: '너무 비싸지 않은선에서 추천 부탁드려요 빵맛집이라면 더 좋습니다!',
+//     //   tag: '카페',
+//     //   category: '부산',
+//     // })
+//   )
+//   .then(function (response) {
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     console.log(error);
+//   });

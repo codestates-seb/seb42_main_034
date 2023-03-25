@@ -20,7 +20,7 @@ export function currentLocation() {
 
     displayMarker(locPosition, message);
   }
-  return true;
+  return;
 }
 function displayMarker(locPosition: any, message: string) {
   const container = document.getElementById('map'), // 이미지 지도를 표시할 div

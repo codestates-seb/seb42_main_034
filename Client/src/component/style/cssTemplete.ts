@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 export const HoverAction = css`
   cursor: pointer;
   transition: all ease-in 200ms;
@@ -31,6 +31,9 @@ export const Flex = css`
 export const Relative = css`
   position: relative;
 `;
-export const Absolute = css`
+export const Absolute = styled.div`
   position: absolute;
+`;
+export const Border = css`
+  border: 1px solid black;
 `;

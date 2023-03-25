@@ -55,6 +55,7 @@ const MapContainer = ({ intro, latitude, longitude }: MapContent) => {
           height: ScreenSize.middle_height,
           margin: 'auto',
         }}
+        className="topBtn"
       />
     </MiddleLayout>
   );

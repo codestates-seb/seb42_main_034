@@ -1,54 +1,12 @@
-// import React, { useLayoutEffect, useRef } from 'react';
-// import { gsap } from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import MapContainer from 'component/Kakao.maps';
+import React from 'react';
 
-// gsap.registerPlugin(ScrollTrigger);
-// interface Context {
-//   [key: string]: any;
-//   selector?: () => void;
-//   isReverted: boolean;
-//   conditions?: any;
-//   queries?: object;
-//   add(methodName: string, func: () => void, scope?: Element | string | object): () => void;
-//   add(func: () => void, scope?: Element | string | object): void;
-//   ignore(func: () => void): void;
-//   kill(revert?: boolean): void;
-//   revert(config?: object): void;
-//   clear(): void;
-// }
-// export default function Scroll() {
-//   const main = useRef();
-
-//   useLayoutEffect(() => {
-//     const ctx = gsap.context((self: gsap.Context) => {
-//       const boxes: () => void = self.selector('.box');
-//       boxes.forEach((box:any) => {
-//         gsap.to(box, {
-//           x: 150,
-//           scrollTrigger: {
-//             trigger: box,
-//             start: 'bottom bottom',
-//             end: 'top 20%',
-//             scrub: true,
-//           },
-//         });
-//       });
-//     }, main); // <- Scope!
-//     return () => ctx.revert(); // <- Cleanup!
-//   }, []);
-
-//   return (
-//     <div>
-//       <section className="section flex-center column">
-//         <h1>Basic ScrollTrigger with React</h1>
-//         <h2>Scroll down to see the magic happen!!</h2>
-//       </section>
-//       <div className="section flex-center column" ref={main}>
-//         <div className="box">box</div>
-//         <div className="box">box</div>
-//         <div className="box">box</div>
-//       </div>
-//       <section className="section"></section>
-//     </div>
-//   );
-// }
+export default function MiddleCard() {
+  return (
+    <div>
+      <div className="topBtn">다양한 지역에 있는 현지인들과 소통하세요!</div>
+      <div>한번에 다양한 맛집 정보등을 확인 할 수 있습니다</div>
+      <MapContainer intro={true} latitude={37.49140197082119} longitude={127.01760603543958} />
+    </div>
+  );
+}
