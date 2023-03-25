@@ -1,3 +1,4 @@
+import { RegionInfo } from 'pages/Home';
 import { css } from 'styled-components';
 
 export enum FontSize {
@@ -37,7 +38,27 @@ export enum ScreenSize {
   footer_height = '200px',
   max_width = '1284px',
 }
-export const Flex = css`
-  display: flex;
-  flex-direction: column;
-`;
+export enum Route {
+  mainPage = '/',
+  home = '/home',
+  blog = '/board/bloglist',
+  blog_detail = '/board/boarddetails/:id',
+  blog_post = '/board/blogpost',
+  question = '/board/questionlist',
+  question_detail = '/board/questiondetails/:id',
+  question_post = '/board/questionpost',
+  signin = '/board/signin',
+  signup = '/board/signup',
+}
+export const cities = [
+  { city: '서울', x: 22.8, y: 9 },
+  { city: '부산', x: 34, y: 29 },
+  { city: '경상', x: 36, y: 20 },
+  { city: '충청', x: 25, y: 18 },
+  { city: '강원', x: 33, y: 8 },
+  { city: '전라', x: 24, y: 28 },
+  { city: '울산', x: 40, y: 27.5 },
+  { city: '경기', x: 25, y: 12 },
+  { city: '인천', x: 19.5, y: 10.5 },
+  { city: '제주', x: 19.5, y: 44 },
+];

@@ -27,7 +27,8 @@ export const useAuthAPI = () => {
   const api = useAPI();
 
   const postLogin = async (payload: loginProps) => {
-    return await axiosInstanceAuth.post<userInfo>('trip/login', payload);
+
+    return await axiosInstanceAuth.post<userInfo>('/trip/login', payload);
   };
 
   const getAccessTokenRefresh = async () => await api.get<IAccessTokenRefresh>('/reissue');

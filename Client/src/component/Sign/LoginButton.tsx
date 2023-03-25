@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Colors } from '../style/const';
+import { Colors } from '../style/variables';
 
 interface ButtonInterface {
   fontSize?: string;
