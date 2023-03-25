@@ -99,10 +99,9 @@ public class BlogService {
     // 포스트 상세 조회
     public Blog viewBlog(Long blogId) {
         Blog findBlog = findVerifyBlog(blogId);
-        int viewCnt = findBlog.getViewCnt();
-        findBlog.setViewCnt(viewCnt + 1);
-
+        findBlog.plusViewCount();
         return findBlog;
+
     }
 
     // 좋아요
@@ -116,22 +115,34 @@ public class BlogService {
         int likeCnt = blog.getLikeCnt();
 
         if (optionalBlogLike.isEmpty()) {
-            blogLike.setLikeType(true);
-            likeCnt++;
-            blog.setLikeCnt(likeCnt);
-            blogLikeRepository.save(blogLike);
-            blogRepository.save(blog);
+            addBlogLike(blog, blogLike, likeCnt);
         } else {
-            BlogLike findBlogLike = optionalBlogLike.get();
-            boolean likeType = findBlogLike.isLikeType();
-
-            if(!likeType){
-                likeCnt+=1;
-                blog.setLikeCnt(likeCnt);
-                findBlogLike.setLikeType(true);
-                blogRepository.save(blog);
-            }
+            addBlogLikeIfLikeType(blog, optionalBlogLike, likeCnt);
         }
+    }
+
+
+    private void addBlogLikeIfLikeType(Blog blog, Optional<BlogLike> optionalBlogLike, int likeCnt) {
+        BlogLike findBlogLike = optionalBlogLike.get();
+        boolean likeType = findBlogLike.isLikeType();
+
+
+        if(!likeType){
+            likeCnt+=1;
+            blog.setLikeCnt(likeCnt);
+            findBlogLike.setLikeType(true);
+            blogRepository.save(blog);
+        }
+    }
+
+
+    private void addBlogLike(Blog blog, BlogLike blogLike, int likeCnt) {
+        blogLike.setLikeType(true);
+        likeCnt++;
+        blog.setLikeCnt(likeCnt);
+        blogLikeRepository.save(blogLike);
+        blogRepository.save(blog);
+
     }
 
     // 포스트 검색

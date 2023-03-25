@@ -7,6 +7,8 @@ import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.service.QuestionService;
 import com.project.tripAdvisor.response.*;
+import com.project.tripAdvisor.tag.entity.QuestionTag;
+import com.project.tripAdvisor.tag.service.TagService;
 import lombok.Builder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -27,14 +29,16 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
-
     private final MemberService memberService;
 
+    private final TagService tagService;
+
     public QuestionController(QuestionService questionService, QuestionMapper questionMapper,
-                              MemberService memberService) {
+                              MemberService memberService, TagService tagService) {
         this.questionService = questionService;
         this.questionMapper = questionMapper;
         this.memberService = memberService;
+        this.tagService = tagService;
     }
 
     /**
@@ -50,6 +54,10 @@ public class QuestionController {
 
         Question createdQuestion = questionService.createQuestion(question);
 
+        if(requestBody.getTags() != null) {
+            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), question.getId());
+        }
+
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(createdQuestion)),
                 HttpStatus.CREATED);
@@ -64,13 +72,16 @@ public class QuestionController {
 
         Question question = questionMapper.questionPatchToQuestion(requestBody);
 
-        requestBody.setQuestionId(questionId);
+        question.setId(questionId);
 
         Member member = memberService.findVerifiedMember(requestBody.getMemberId());
 
-        Question updatedQuestion = questionService.updateQuestion(question, member);
+        Question updatedQuestion = questionService.updateQuestion(question, requestBody.getMemberId());
+
+        // 태그 기능 추가
 
 
+        // 채택된 질문 수정 불가
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(updatedQuestion)),
@@ -95,15 +106,17 @@ public class QuestionController {
      * 질문 목록 조회
      **/
     @GetMapping
-    public ResponseEntity getQuestions(@RequestParam int page) {
-        Page<Question> pageQuestions = questionService.findQuestions(page - 1);
-        List<Question> questions = pageQuestions.getContent();
+    public ResponseEntity getQuestions(@RequestParam String category,
+                             @Positive @RequestParam int page,
+                             @RequestParam String sortedBy) {
+        Page<Question> pageQuestion = questionService.findQuestions(category,page - 1, sortedBy);
+        List<Question> questions = pageQuestion.getContent();
 
-        return new ResponseEntity(
-                new MultiResponseDto<>(
-                        questionMapper.questionsToQuestionResponses(questions),
-                        pageQuestions),
-                HttpStatus.OK);
+        List<QuestionDto.SearchResponse> searchResponses = questionMapper.QuestionToQuestionSearchResponses(questions);
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(searchResponses, pageQuestion), HttpStatus.OK);
+
     }
 
     /**
@@ -118,5 +131,19 @@ public class QuestionController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * 질문 검색
+     */
+    @GetMapping("/search")
+    public ResponseEntity searchQuestion(@RequestParam String searchText,
+                                         @RequestParam(defaultValue = "none")String type,
+                                         @Positive @RequestParam int page) {
+        Page<Question> pageQuestion = questionService.searchQuestion(page - 1, searchText, type);
+        List<Question> questionList = pageQuestion.getContent();
 
+        List<QuestionDto.SearchResponse> SearchResponses = questionMapper.QuestionToQuestionSearchResponses(questionList);
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(SearchResponses, pageQuestion), HttpStatus.OK);
+    }
 }
