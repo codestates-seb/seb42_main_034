@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.tag.entity;
 
+import com.project.tripAdvisor.question.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,7 @@ public class Tag {
 
     @OneToMany(mappedBy = "tag", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<BlogTag> blogTags=new ArrayList<>();
+
+    @OneToMany(mappedBy = "tag",cascade = {CascadeType.PERSIST, CascadeType.REMOVE} )
+    private List<QuestionTag> questionTags=  new ArrayList<>();
 }

@@ -1,6 +1,7 @@
 package com.project.tripAdvisor.tag.contoroller;
 
 import com.project.tripAdvisor.blog.entity.Blog;
+import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.tag.entity.Tag;
 import com.project.tripAdvisor.tag.repository.BlogTagRepository;
 import com.project.tripAdvisor.tag.repository.QuestionTagRepository;
@@ -51,13 +52,13 @@ public class TagController {
     }
 
     //tag를 포함한 질문 글 조회
-//    @GetMapping("/question")
-//    public ResponseEntity getQuestion(@RequestParam String tagName,
-//                                      @RequestParam(value="page", required = false,
-//                                              defaultValue = "1")int page){
-//        Tag tag = tagRepository.findByName(tagName);
-//        List<Question> questions = tagService.getQuestions(tag.getId());
-//        Pageable pageable = PageRequest.of(page-1, 15);
-//        Page<Question> questionPage = new PageImpl<>(questions,pageable,questions.size());
-//    }
+    @GetMapping("/question")
+    public void getQuestionByTag(@RequestParam String tagName,
+                                      @RequestParam(value="page", required = false,
+                                              defaultValue = "1")int page){
+        Tag tag = tagRepository.findByName(tagName);
+        List<Question> questions = tagService.getQuestions(tag.getId());
+        Pageable pageable = PageRequest.of(page-1, 15);
+        Page<Question> questionPage = new PageImpl<>(questions,pageable,questions.size());
+    }
 }

@@ -47,7 +47,7 @@ public class MemberController {
 
                                       @RequestBody MemberDto.Patch memberPatch){
 
-        memberPatch.setId(id);
+        memberPatch.setMemberId(id);
 
         Member member = mapper.MemberPatchToMember(memberPatch);
         Member updateMember = memberService.updateMember(member);

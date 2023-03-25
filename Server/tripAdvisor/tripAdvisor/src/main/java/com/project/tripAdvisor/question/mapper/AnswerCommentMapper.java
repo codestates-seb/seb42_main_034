@@ -7,11 +7,15 @@ import com.project.tripAdvisor.question.entity.AnswerComment;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AnswerCommentMapper {
-    Answer answerCommentPostToAnswer(AnswerCommentDto.Post requestBody);
+    AnswerComment AnswerCommentPostToAnswerComment(AnswerCommentDto.Post requestBody);
 
-    Answer answerCommentPatchToAnswer(AnswerCommentDto.Patch requestBody);
+    AnswerComment AnswerCommentPatchToAnswerComment(AnswerCommentDto.Patch requestBody);
 
-    AnswerDto.Response AnswerToAnswerCommentResponse(AnswerComment answerComment);
+    AnswerCommentDto.Response AnswerCommentToAnswerCommentResponse(AnswerComment answerComment);
+
+    List<AnswerCommentDto.Response> AnswerCommentsToAnswerCommentResponses(List<AnswerComment> comments);
 }
