@@ -16,7 +16,13 @@ export default function MiddleCard() {
         <div>다양한 지역에 있는 현지인들과 소통하세요!</div>
         <div>한번에 다양한 맛집 정보등을 확인 할 수 있습니다</div>
       </Container>
-      <MapContainer className="middle2" intro={true} latitude={37.49140197082119} longitude={127.01760603543958} />
+      <MapContainer
+        width={1000}
+        className="middle2"
+        intro={true}
+        latitude={37.49140197082119}
+        longitude={127.01760603543958}
+      />
     </div>
   );
 }

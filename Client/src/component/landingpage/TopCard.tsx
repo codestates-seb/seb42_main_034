@@ -6,8 +6,6 @@ import { IconPng } from 'component/ui/Icons';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Message } from '../../image/message.svg';
-import { ReactComponent as Comments } from '../../image/comments.svg';
-import Gsap from './Gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 import { useNavigate } from 'react-router-dom';

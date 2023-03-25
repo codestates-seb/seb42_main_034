@@ -22,12 +22,15 @@ const Line = styled.div`
 const Font = styled.div`
   .h2 {
     color: ${Colors.text_grey};
-    font-size: ${FontSize.h2};
+    font-size: ${FontSize.h1};
+  }
+  .h3 {
+    font-size: ${FontSize.h3};
   }
 `;
 const PointCategory = styled(Absolute)`
   top: 0;
-  right: 45em;
+  right: 70em;
   display: flex;
   align-items: center;
 `;
@@ -42,7 +45,7 @@ export default function ThirdCard() {
       </PointCategory>
       <Font>
         <div className="h2 third2">지역별로 다양한 여행지 정보들을 확인해보세요</div>
-        <div>카테고리를 이용해서 채택이 완료 된 답변들을 검색 할 수 있습니다.</div>
+        <div className="h3">카테고리를 이용해서 채택이 완료 된 답변들을 검색 할 수 있습니다.</div>
       </Font>
     </Div>
   );

@@ -15,8 +15,9 @@ interface MapContent {
   longitude: number; //경도
   latitude: number; //위도
   className?: string;
+  width?: number;
 }
-const MapContainer = ({ intro, latitude, longitude, className }: MapContent) => {
+const MapContainer = ({ intro, latitude, longitude, className, width }: MapContent) => {
   useEffect(() => {
     const container = document.getElementById('map'), // 이미지 지도를 표시할 div
       options = {
@@ -45,7 +46,7 @@ const MapContainer = ({ intro, latitude, longitude, className }: MapContent) => 
 
       infowindow.open(map, marker);
       // // 주소-좌표 변환 객체를 생성합니다
-      const geocoder = new window.kakao.maps.services.Geocoder();
+      // const geocoder = new window.kakao.maps.services.Geocoder();
 
       // // 주소로 좌표를 검색합니다
       // geocoder.addressSearch(
@@ -77,7 +78,7 @@ const MapContainer = ({ intro, latitude, longitude, className }: MapContent) => 
       <div
         id="map"
         style={{
-          width: ScreenSize.max_width,
+          width,
           height: ScreenSize.middle_height,
           margin: 'auto',
         }}

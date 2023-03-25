@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { HoverAction } from '../style/cssTemplete';
@@ -7,6 +7,7 @@ import { useAppSelector } from 'redux/hooks';
 
 const MenuTabBtn = styled(Button)`
   border: none;
+  background: none;
   ${HoverAction}
 `;
 export default function UserTab() {

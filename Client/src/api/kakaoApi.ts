@@ -58,7 +58,8 @@ interface MarkerImage {
   size: number;
   options: any;
 }
-export function createMarkerImage({ src, size, options }: MarkerImage): any {
+
+export function createMarkerImage(src: any, size: string, options: any): any {
   const markerImage = new window.kakao.maps.MarkerImage(src, size, options);
   return markerImage;
 }
@@ -67,7 +68,7 @@ interface AddMarker {
   image: string;
 }
 // 좌표와 마커이미지를 받아 마커를 생성하여 리턴하는 함수입니다
-export function createMarker({ position, image }: AddMarker): any {
+export function createMarker(position: string, image: string): any {
   const marker = new window.kakao.maps.Marker({
     position: position,
     image: image,
@@ -84,4 +85,61 @@ export const coffeePositions = [
   new window.kakao.maps.LatLng(37.49629291770947, 127.02587362608637),
   new window.kakao.maps.LatLng(37.49754540521486, 127.02546694890695),
 ];
-export const coffeeMarkers = [];
+export const coffeeMarkers: never[] = [];
+
+// 커피숍 마커를 생성하고 커피숍 마커 배열에 추가하는 함수입니다
+// function createCoffeeMarkers(marker:never) {
+//     const markerImageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png'
+//     for (let i = 0; i < coffeePositions.length; i++) {
+
+//         const imageSize:any = new window.kakao.maps.Size(22, 26),
+//             imageOptions = {
+//                 spriteOrigin: new window.kakao.maps.Point(10, 0),
+//                 spriteSize: new window.kakao.maps.Size(36, 98)
+//             };
+
+//         // 마커이미지와 마커를 생성합니다
+//         const markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),
+//        marker= createMarker(coffeePositions[i], markerImage);
+
+//         // 생성된 마커를 커피숍 마커 배열에 추가합니다
+//         coffeeMarkers.push(marker);
+//     }
+// }
+// export function changeMarker(type:string){
+
+//     const coffeeMenu = document.getElementById('coffeeMenu') as HTMLElement
+//     const storeMenu  = document.getElementById('storeMenu') as HTMLElement
+//     const carparkMenu   = document.getElementById('carparkMenu') as HTMLElement
+
+//     // 커피숍 카테고리가 클릭됐을 때
+//     if (type === 'coffee') {
+
+//         // 커피숍 카테고리를 선택된 스타일로 변경하고
+//         coffeeMenu.className = 'menu_selected';
+
+//         // 편의점과 주차장 카테고리는 선택되지 않은 스타일로 바꿉니다
+
+//         // 커피숍 마커들만 지도에 표시하도록 설정합니다
+//         setCoffeeMarkers(map);
+
+//     } else if (type === 'store') { // 편의점 카테고리가 클릭됐을 때
+
+//         // 편의점 카테고리를 선택된 스타일로 변경하고
+//         coffeeMenu.className = '';
+//         storeMenu.className = 'menu_selected';
+//         carparkMenu.className = '';
+
+//         // 편의점 마커들만 지도에 표시하도록 설정합니다
+//         setCoffeeMarkers(null);
+
+//     } else if (type === 'carpark') { // 주차장 카테고리가 클릭됐을 때
+
+//         // 주차장 카테고리를 선택된 스타일로 변경하고
+//         coffeeMenu.className = '';
+
+//         // 주차장 마커들만 지도에 표시하도록 설정합니다
+//         setCoffeeMarkers(null);
+
+//     }
+// }
