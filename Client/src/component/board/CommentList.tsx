@@ -28,7 +28,7 @@ const CommentContent = styled.div`
 export default function CommentList() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
-  // const deleteHandler = useConfirm('정말 삭제하시겠습니까?',,'no' )
+  // const deleteHandler = useConfirm('정말 삭제하시겠습니까?','yes','no' )
 
 
     // window.confirm('정말 삭제하시겠습니까?');

@@ -1,6 +1,6 @@
 import { AppDispatch } from "../redux/store";
 import { enqueueNotification, dequeueNotification } from "../redux/notifiCation";
-import { getNotificationPayload } from "./notifiPayload";
+import getNotificationPayload from "../utils/getNotificationPayload";
 
 export const notifi = (dispatch: AppDispatch, message: string) => {
     const payload = getNotificationPayload(message);

@@ -19,7 +19,7 @@ const LoginButton = styled.button<ButtonInterface>`
   width: ${(props) => props.newLine && 3.1}rem;
   cursor: ${(props) => (props.backgroundColor === 'grey' ? 'default' : 'pointer')};
   :hover {
-    background-color: ${(props) => (props.backgroundColor === 'grey' ? Colors.main_01 : Colors.button_clicked)};
+    background-color: ${(props) => (props.backgroundColor === 'grey' ? Colors.main_02 : Colors.button_clicked)};
   }
 `;
 

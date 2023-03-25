@@ -7,3 +7,5 @@ export const USERID_REGEX = /^[a-zA-z0-9]/;
 export const CONFIRM_MESSAGES = {
   delete: '삭제 하시겠습니까?',
 };
+
+export const CITY = '';
