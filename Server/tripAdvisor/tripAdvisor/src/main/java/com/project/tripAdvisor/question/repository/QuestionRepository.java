@@ -8,10 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Page<Question> findByTitleOrContent(String title, String content, Pageable pageable);
 
-    List<Question> findAllByMemberId(Long memberId);
+    Page<Question> findByIdIn(List<Long> ids, Pageable pageable);
+
+    Page<Question> findByMemberId(Long memberId, Pageable pageable);
+
+    Page<Question> findAllByCategory(String category, Pageable pageable);
+
+    List<Question> findAllByMemberId(Long id);
 }

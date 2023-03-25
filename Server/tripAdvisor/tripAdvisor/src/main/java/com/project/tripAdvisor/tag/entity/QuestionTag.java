@@ -2,9 +2,11 @@ package com.project.tripAdvisor.tag.entity;
 
 import com.project.tripAdvisor.question.entity.Question;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Setter
 @Getter
 @Entity
 public class QuestionTag {

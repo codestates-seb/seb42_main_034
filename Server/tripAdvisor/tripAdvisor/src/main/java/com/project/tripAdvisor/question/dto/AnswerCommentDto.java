@@ -25,12 +25,13 @@ public class AnswerCommentDto {
     @NoArgsConstructor
     public static class Patch {
 
-        private Long memberId;
 
         private Long commentId;
 
         @NotBlank(message = "내용을 입력하세요.")
         private String content;
+
+        private String createdAt;
 
     }
 
@@ -39,15 +40,12 @@ public class AnswerCommentDto {
     @NoArgsConstructor
     public static class Response {
 
-        private Long memberId;
-
-        private Long answerId;
 
         private Long commentId;
 
         private String content;
 
-//        private LocalDateTime createdAt;
+        private String createdAt;
 //
 //        private LocalDateTime modifiedAt;
 

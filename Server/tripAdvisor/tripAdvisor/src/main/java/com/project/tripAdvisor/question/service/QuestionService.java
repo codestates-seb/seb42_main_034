@@ -7,13 +7,17 @@ import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.repository.QuestionRepository;
+import com.project.tripAdvisor.tag.entity.Tag;
+import com.project.tripAdvisor.tag.repository.TagRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -21,9 +25,13 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
 
-    public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper) {
+    private final TagRepository tagRepository;
+
+    public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper,
+                           TagRepository tagRepository) {
         this.questionRepository = questionRepository;
         this.questionMapper = questionMapper;
+        this.tagRepository = tagRepository;
     }
 
     /** 질문 생성 **/
@@ -36,10 +44,11 @@ public class QuestionService {
 
     /** 질문 수정 **/
 
-    public Question updateQuestion(Question question, Member member) {
+    public Question updateQuestion(Question question, Long memberId) {
+
         Question updatedQuestion = findVerifiedQuestion(question.getId());
 
-        if(updatedQuestion.getMember().getId() != question.getMember().getId()) {
+        if(updatedQuestion.getMember().getId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_MATCH);
         }
 
@@ -69,11 +78,11 @@ public class QuestionService {
     public Question findQuestion(Long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
 
-        String writer = findQuestion.getMember().getNickname();
+       // String writer = findQuestion.getMember().getNickname();
         int viewCnt = findQuestion.getViewCnt();
 
         findQuestion.setViewCnt(viewCnt + 1); // 조회수 1 증가
-        findQuestion.setWriter(writer);
+     //   findQuestion.setWriter(writer);
 
         return findQuestion;
     }
@@ -81,10 +90,16 @@ public class QuestionService {
     /** 질문 목록 조회 **/
     /** (추가) 정렬 기준 **/
 
-    public Page<Question> findQuestions(int page) {
+    public Page<Question> findQuestions(String category, int page, String sortedBy) {
 
-        return questionRepository.findAll(PageRequest.of(page, 20,
-                Sort.by("createdAt").descending())); // Default : 최신 순
+        sortedBy = sortedBy.toUpperCase();
+
+        if(sortedBy.equals("HOT")) {
+            return questionRepository.findAllByCategory(category, PageRequest.of(page, 15,
+                    Sort.by("viewCnt").descending()));
+        }
+        return questionRepository.findAllByCategory(category, PageRequest.of(page, 15,
+                Sort.by("createdAt").descending()));
     }
 
 
@@ -92,10 +107,30 @@ public class QuestionService {
     // Default : 제목 + 내용 으로 검색
     // (추가) user 로 검색
 
-    public Page<Question> searchQuestion(int page, String keyword) {
-        keyword = "%" + keyword + "%";
+    public Page<Question> searchQuestion(int page, String keyword, String type) {
+        type = type.toUpperCase();
 
-        return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 20));
+        if(type.equals("USER")) {
+            Long memberId = Long.valueOf(keyword);
+            return questionRepository.findByMemberId(memberId, PageRequest.of(page, 15));
+        }
+        else if(type.equals("TAG")) {
+            keyword = keyword.toUpperCase();
+
+            Tag tag = tagRepository.findByName(keyword);
+
+            List<Long> questionIds = tag.getQuestionTags().stream()
+                    .map(questionTag -> questionTag.getQuestion().getId())
+                    .collect(Collectors.toList());
+
+            return questionRepository.findByIdIn(questionIds, PageRequest.of(page, 15));
+        }
+
+        else {
+            keyword = "%" + keyword + "%";
+
+            return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 15));
+        }
     }
 
 
