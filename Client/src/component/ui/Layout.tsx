@@ -15,7 +15,7 @@ const LayoutFlex = styled.div<React.ReactElement | any | never>`
 `;
 //Nav스타일 위치 바꿔야될듯 헷갈림ㅠ
 const NavStyle = styled(Nav)<{ className: string }>`
-  background: ${Colors.main_04_white};
+  background: ${Colors.board_color};
   display: flex;
   justify-content: space-between;
   align-items: center;

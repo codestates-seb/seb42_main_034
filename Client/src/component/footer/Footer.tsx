@@ -5,7 +5,7 @@ import { Colors, ScreenSize } from '../style/variables';
 import SiteInfo from './SiteInfo';
 const BottomLayout = styled.div`
   height: 20vh;
-  background: ${Colors.main_04_white};
+  background: ${Colors.board_color};
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   max-width: ${ScreenSize.max_width};

@@ -17,19 +17,12 @@ const D = styled.div`
     background: pink;
   }
 `;
-const Circle = styled.div<{ ref: React.RefObject<HTMLDivElement> }>`
-  background: pink;
-  /* .circle {
-    background: pink;
-    width: 4rem;
-    height: 4rem;
-  } */
-`;
+
 export default function LandingPage() {
   const [text, setText] = useState('');
   const main = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    gsap.to('dd', {
+    gsap.to('.landingPage', {
       // y: 200,
       // duration: 2,
       // scrollTrigger: {
@@ -47,44 +40,118 @@ export default function LandingPage() {
         toggleActions: 'restart restart restart restart',
         start: '0% 100%',
         end: '50% 0%',
-        markers: true,
+        // markers: true,
       },
     });
-    LandingPageScrollTrigger.from(
-      '.first',
-      {
-        opacity: 0,
-        x: '-31%',
-        duration: 2.2,
-        ease: 'sine.in',
+    const landingPageOnScroll = gsap.timeline({
+      // landingPageOnScroll---------------------
+      scrollTrigger: {
+        trigger: '.landingPage',
+        start: '100% 100%',
+        end: '100% 0%',
+        // markers: "true",
+        scrub: 2.2,
       },
-      0,
-    )
-      .from(
-        '.second',
-        {
-          opacity: 0,
-          x: '40%',
-          duration: 2.2,
-          ease: 'sine.in',
-        },
-        0,
-      )
-      .from(
-        '.topBtn',
-        {
-          opacity: 0,
-          x: '-40%',
-          duration: 2.2,
-          stagger: 0.4,
-          ease: 'sine.inOut',
-        },
-        0.2,
-      );
+    });
 
-    // .from('.landingPage section h1 span', {
-    //     opacity: 0, x: "-22%", duration: 2.2, ease: "sine.inOut",
-    // }, 0.4)
+    // LandingPageScrollTrigger.from(
+    //   '.first',
+    //   {
+    //     opacity: 0,
+    //     x: '-31%',
+    //     duration: 2.2,
+    //     ease: 'sine.in',
+    //   },
+    //   0,
+    // )
+    //   .from(
+    //     '.second',
+    //     {
+    //       opacity: 0,
+    //       x: '40%',
+    //       duration: 2.2,
+    //       ease: 'sine.in',
+    //     },
+    //     0,
+    //   )
+    //   .from(
+    //     '.topBtn',
+    //     {
+    //       opacity: 0,
+    //       x: '-40%',
+    //       duration: 2.2,
+    //       stagger: 0.4,
+    //       ease: 'sine.in',
+    //     },
+    //     0.2,
+    //   );
+    const Silde1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.slide1',
+        toggleActions: 'restart restart restart restart',
+        start: '0% 100%',
+        end: '50% 0%',
+        // markers: true,
+      },
+    });
+    Silde1.from('.top1', {
+      opacity: 0,
+      x: '-22%',
+    })
+      .from('.top2', {
+        opacity: 0,
+        x: '-22%',
+      })
+      .from('.top3', {
+        opacity: 0,
+        x: '-22%',
+      }); // Sli
+
+    //지도
+    const Slide2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.slide2',
+        start: '100% 100%',
+        end: '300% 05%',
+        markers: true,
+        scrub: 2.2,
+        pin: '.slide2',
+      },
+    });
+    Slide2.from('.middle1', {
+      opacity: 0,
+      x: '-22%',
+    })
+      .from('.middle2', {
+        opacity: 0,
+        x: '-22%',
+      })
+      .from('.middle3', {
+        opacity: 0,
+        x: '-22%',
+      }); // Sli
+    const Slide3 = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.slide3',
+        start: '100% 100%',
+        end: '300% 0%',
+        // markers: "true",
+        scrub: 2.2,
+        pin: '.slide3',
+      },
+    });
+    Slide3.from('.third1', {
+      opacity: 0,
+      x: '-22%',
+    })
+      .from('.third2', {
+        opacity: 0,
+        x: '-22%',
+      })
+      .from('.third3', {
+        opacity: 0,
+        x: '-22%',
+      }); // Sli
     // .from('.landingPage #d', {
     //     opacity: 0, x: "22%", duration: 2.2, ease: "sine.inOut",
     // }, 0.4)
@@ -115,11 +182,10 @@ export default function LandingPage() {
   // }, []);
 
   return (
-    <div className="dd">
-      <ThirdCard />
-      <MiddleCard />
-
+    <div className="landingPage">
       <TopCard />
+      <MiddleCard />
+      <ThirdCard />
     </div>
   );
 }
