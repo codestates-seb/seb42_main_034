@@ -11,6 +11,7 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
   children: React.ReactNode | string;
   style?: React.CSSProperties;
   region?: string;
+  setState?: React.Dispatch<React.SetStateAction<string>>;
 }
 export const Button: React.FC<IButtonProps> = ({ className, children, isDisabled, typeButton, onClick, ...rest }) => {
   return (

@@ -1,4 +1,4 @@
-import { Colors } from 'component/style/variables';
+import { Colors, Route } from 'component/style/variables';
 import { BoxShadow, ButtonTheme, HoverAction } from 'component/style/cssTemplete';
 import { RegionInfo } from 'pages/Home';
 import React, { useEffect } from 'react';
@@ -33,7 +33,7 @@ export default function Filter({
   setState: React.Dispatch<React.SetStateAction<string>>;
   filter: string;
 }): JSX.Element {
-  const { isLoading, error, data: city } = useQuery([filter], async () => await new CRUDdata().getData()); //여기에 해당지역넣기
+  // const { isLoading, error, data: city } = useQuery([filter], async () => await new CRUDdata().getData(citys.city)); //여기에 해당지역넣기
   // dd.getData().then(console.log).catch(console.error);
   const navigate = useNavigate();
   const [data, setData] = useState('');
@@ -42,8 +42,8 @@ export default function Filter({
   }, []);
   const handleBtnClick = () => {
     //해당지역으로이동
-    console.log(city);
-    navigate(`/board/questionlist`, { state: citys.city });
+    // console.log(city);
+    navigate(Route.question, { state: citys.city });
   };
 
   return (

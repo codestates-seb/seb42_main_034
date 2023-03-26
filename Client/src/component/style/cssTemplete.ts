@@ -26,7 +26,7 @@ export const ButtonTheme = css`
 `;
 export const Flex = styled.div<{ direction?: string; justify?: string; items?: string }>`
   display: flex;
-  flex-direction: ${(props) => props.direction && 'column'};
+  flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.items};
 `;

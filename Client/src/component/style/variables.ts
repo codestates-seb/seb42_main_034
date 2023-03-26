@@ -48,7 +48,7 @@ export enum Route {
   blog = '/board/bloglist',
   blog_detail = '/board/boarddetails/:id',
   blog_post = '/board/blogpost',
-  question = '/board/questionlist',
+  question = '/board/questionlist/',
   question_detail = '/board/questiondetails/:id',
   question_post = '/board/questionpost',
   signin = '/board/signin',

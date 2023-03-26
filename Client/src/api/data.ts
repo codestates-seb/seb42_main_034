@@ -1,6 +1,6 @@
-import { RegionInfo } from 'pages/Home';
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import QuestionList from 'pages/question/QuestionList';
+import { axiosInstance } from './instance';
+
 // const axiosConfig: AxiosRequestConfig = {
 //     baseURL: 'ec2-52-78-1-107.ap-northeast-2.compute.amazonaws.com:8080/login',
 //     headers:
@@ -13,6 +13,7 @@ interface QuestionList {
   page: string;
   sortedBy: string;
 }
+
 export interface ReturnData {
   data: {
     questionId: string;
@@ -34,13 +35,20 @@ interface Mock {
   title: string;
   completed: boolean;
 }
+interface Argument {
+  region: string;
+  page?: number;
+  sortedBy?: string;
+}
 //하나로 여러가지 메소드 실행
 export class CRUDdata {
   url = '';
   constructor() {
-    this.url = 'https://jsonplaceholder.typicode.com/todos';
+    this.url = process.env.REACT_APP_HOST as string;
   }
-
+  // async getCategoryKeyWord(keyword:string){
+  //   return keyword === 'question' ? this.getQuestion
+  // }
   //Promise<AxiosResponse<ReturnData>>
   //?category=${city}&page=${page}sortedBy=${sortedBy}`
   //city: string, page: string, sortedBy: string
@@ -48,20 +56,17 @@ export class CRUDdata {
   //     const response = await axios.post(`${this.url}`, { username: 'dlwjddus16@naver.com', password: 'wjd123456!' });
   //     return response;
   //   }
-  async getData(): Promise<AxiosResponse<Mock>> {
-    const response = await axios.get(
-      `${this.url}`,
-
-      // {
-      //   username: 'dlwjddus16@naver.com',
-      //   password: 'wjd123456!',
-      // },
-      // {
-      //   // headers: { 'Cache-Control': 'no-cache' },
-      //   withCredentials: true,
-      // },
-    );
+  async getData(region: string, section: string): Promise<AxiosResponse<ReturnData>> {
+    const response = await axiosInstance.get(section, {
+      withCredentials: true,
+      params: {
+        category: region,
+        page: 1,
+        sortedBy: 'default',
+      },
+    });
     return response;
+    // }
   }
 }
 // axios
@@ -106,20 +111,20 @@ export class CRUDdata {
 //     console.log(error);
 //   });
 
-// axios
-//   .get(
-//     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions?category=dd&page=1&sortedBy=default',
-//     //  {
-//     //   memberId: 1,
-//     //   title: '갬성있는 식당 추천해주세요',
-//     //   content: '너무 비싸지 않은선에서 추천 부탁드려요 빵맛집이라면 더 좋습니다!',
-//     //   tag: '카페',
-//     //   category: '부산',
-//     // })
-//   )
-//   .then(function (response) {
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//   });
+axios
+  .get(
+    'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions?category=부산&page=1&sortedBy=default',
+    // {
+    //   memberId: 1,
+    //   title: '갬성있는 식당 추천해주세요',
+    //   content: '너무 비싸지 않은선에서 추천 부탁드려요 빵맛집이라면 더 좋습니다!',
+    //   tag: '카페',
+    //   category: '부산',
+    // },
+    {
+      // headers: { 'Cache-Control': 'no-store' },
+      withCredentials: true,
+    },
+  )
+  //   .then(console.log)
+  .catch(console.error);

@@ -41,19 +41,15 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/questionlist',
-            element: <QuestionList />,
-          },
-          {
-            path: '/board/bloglist',
-            element: <QuestionList />,
-          },
-          {
             path: '/board/bloglist',
             element: <BlogList />,
           },
           {
-            path: '/board/boarddetails/:id',
+            path: '/board/questionlist',
+            element: <QuestionList />,
+          },
+          {
+            path: '/board/boarddetails/:section',
             element: <BlogDetails />,
           },
           {
