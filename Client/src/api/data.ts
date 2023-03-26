@@ -104,17 +104,17 @@ export class CRUDdata {
 //   .catch(function (error) {
 //     console.log(error);
 //   });
-axios
-  .post('http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions', {
-    memberId: 1,
-    title: 'test',
-    content: 'test123',
-    tag: '테스트',
-    category: 'test',
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+// axios
+//   .post('http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions', {
+//     memberId: 1,
+//     title: 'test',
+//     content: 'test123',
+//     tag: '테스트',
+//     category: 'test',
+//   })
+//   .then(function (response) {
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     console.log(error);
+//   });
