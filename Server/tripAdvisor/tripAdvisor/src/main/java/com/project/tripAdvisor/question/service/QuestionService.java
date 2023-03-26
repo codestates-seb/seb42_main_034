@@ -8,6 +8,7 @@ import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.repository.QuestionRepository;
 import com.project.tripAdvisor.tag.entity.Tag;
+import com.project.tripAdvisor.tag.repository.QuestionTagRepository;
 import com.project.tripAdvisor.tag.repository.TagRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,11 +29,15 @@ public class QuestionService {
 
     private final TagRepository tagRepository;
 
+    private final QuestionTagRepository questionTagRepository;
+
+
     public QuestionService(QuestionRepository questionRepository, QuestionMapper questionMapper,
-                           TagRepository tagRepository) {
+                           TagRepository tagRepository, QuestionTagRepository questionTagRepository) {
         this.questionRepository = questionRepository;
         this.questionMapper = questionMapper;
         this.tagRepository = tagRepository;
+        this.questionTagRepository = questionTagRepository;
     }
 
     /** 질문 생성 **/
@@ -79,11 +84,9 @@ public class QuestionService {
     public Question findQuestion(Long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
 
-       // String writer = findQuestion.getMember().getNickname();
         int viewCnt = findQuestion.getViewCnt();
 
         findQuestion.setViewCnt(viewCnt + 1); // 조회수 1 증가
-     //   findQuestion.setWriter(writer);
 
         return findQuestion;
     }

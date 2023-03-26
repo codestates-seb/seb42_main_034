@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,19 +26,18 @@ public class AnswerCommentDto {
     @NoArgsConstructor
     public static class Patch {
 
+        private Long memberId;
 
         private Long commentId;
 
         @NotBlank(message = "내용을 입력하세요.")
         private String content;
 
-        private String createdAt;
-
     }
 
     @Getter
     @Setter
-    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Response {
 
 
@@ -46,6 +46,7 @@ public class AnswerCommentDto {
         private String content;
 
         private String createdAt;
+
 //
 //        private LocalDateTime modifiedAt;
 

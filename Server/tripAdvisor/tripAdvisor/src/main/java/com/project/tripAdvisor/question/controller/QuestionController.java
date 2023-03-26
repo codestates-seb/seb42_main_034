@@ -56,6 +56,7 @@ public class QuestionController {
 
         if(requestBody.getTags() != null) {
             List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), question.getId());
+            question.getQuestionTags().addAll(questionTags);
         }
 
         return new ResponseEntity(
@@ -93,9 +94,8 @@ public class QuestionController {
      **/
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") @Positive Long questionId) {
-        Question gotQuestion = questionService.findQuestion(questionId);
-
-
+        Question gotQuestion = questionService.findVerifiedQuestion(questionId);
+        questionService.findQuestion(gotQuestion.getId());
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(gotQuestion)),
