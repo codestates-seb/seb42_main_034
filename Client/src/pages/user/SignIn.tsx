@@ -25,7 +25,8 @@ const SignIn = () => {
       </Container>
     </PageStyled>
     )}
-  </>)
+  </>
+  )
 };
 export default SignIn;
 
