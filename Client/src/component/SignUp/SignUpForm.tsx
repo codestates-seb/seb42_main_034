@@ -21,7 +21,7 @@ export const SignUpForm = () => {
     password: '',
     passwordCheck: '',
   });
-  const { email, nickname, password } = inputs;
+  const { email, nickname, password, passwordCheck } = inputs;
   const [isValid, setIsValid] = useState({
     email: false,
     nickname: false,
@@ -36,9 +36,29 @@ export const SignUpForm = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    notifiMessages.forEach((message, notifiCase) => {
-      if (notifiCase) goNotifi(message);
-    });
+  
+  notifiMessages.forEach((message, notifiCase) => {
+    if (notifiCase) goNotifi(message);
+  });
+
+ 
+  
+  if (isValid.email && isValid.nickname && isValid.password && isValid.passwordCheck) {
+    const data = { email, nickname, password, passwordCheck }; // passwordCheck 추가
+    try {
+      await api.post('/members', data);
+      goNotifi('회원가입이 완료 되었습니다.');
+      navigate('/board/signin');
+      alert('회원가입 완료')
+    } catch {
+      goNotifi('회원가입에 실패 하였습니다...');
+      alert('가입실패')
+    }
+  }
+  
+    // notifiMessages.forEach((message, notifiCase) => {
+    //   if (notifiCase) goNotifi(message);
+    // });
 
     // const data = { email, nickname, password };
 
@@ -51,17 +71,17 @@ export const SignUpForm = () => {
     //   goNotifi('회원가입에 실패 하였습니다...');
     // }
 
-    if (Object.values(isValid).includes(false)) {
-      const data = { email, nickname, password };
-      try {
-        await api.post('/members', data);
-        goNotifi('회원가입이 완료 되었습니다.');
-        navigate('/board/signin');
-        alert('회원가입 완료')
-      } catch {
-        goNotifi('회원가입에 실패 하였습니다...');
-      }
-    }
+    // if (!Object.values(isValid).includes(false)) {
+    //   const data = { email, nickname, password };
+    //   try {
+    //     await api.post('/members', data);
+    //     goNotifi('회원가입이 완료 되었습니다.');
+    //     navigate('/board/signin');
+    //     alert('회원가입 완료')
+    //   } catch {
+    //     goNotifi('회원가입에 실패 하였습니다...');
+    //   }
+    // }
   };
 
   const getSectionProps = (label: string, select: inputKeys) => {
@@ -86,15 +106,22 @@ export const SignUpForm = () => {
     return { label, state, setState, validity, setValidity, type };
   };
 
-  useValidate(inputs.password, inputs.passwordCheck, (input: inputKeys, value: boolean) =>
-    setIsValid((pre) => {
-      return {
-        ...pre,
-        [input]: value,
-      };
-    }),
-  );
-
+  // useValidate(inputs.password, inputs.passwordCheck, (input: inputKeys, value: boolean) =>
+  //   setIsValid((pre) => {
+  //     return {
+  //       ...pre,
+  //       [input]: value,
+  //     };
+  //   }),
+  // );
+  useValidate(inputs.password, inputs.passwordCheck, (value: boolean) => {
+    setIsValid(prev => ({
+      ...prev,
+      password: value,
+      passwordCheck: value
+    }));
+  });
+  
   
   return (
     <MainFormContainer onSubmit={handleSubmit}>
