@@ -1,5 +1,6 @@
-import React from 'react'
+import { Props } from 'component/header/Logo';
+import React from 'react';
 
-export default function Modal() {
-  return <div></div>
+export default function Modal({ children }: Props) {
+  return <div>{children}</div>;
 }

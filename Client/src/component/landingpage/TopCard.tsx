@@ -17,7 +17,7 @@ const Hover = styled.div`
   /* margin-bottom: 10rem; */
   width: ${ScreenSize.max_width};
   transition: all ease-in 400ms;
-  margin-bottom: 7rem;
+  margin-bottom: 20rem;
   border-radius: 4rem;
   -webkit-box-shadow: 5px 5px 0px 0px #289fed, 10px 10px 0px 0px #5fb8ff, 15px 15px 0px 0px #a1d8ff,
     20px 20px 0px 0px #cae6ff, 25px 25px 0px 0px #e1eeff, 17px 20px 14px 11px rgba(0, 0, 0, 0);

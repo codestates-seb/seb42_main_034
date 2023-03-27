@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../component/Sign/LoginForm';
 import SignLink from 'component/SignUp/SignLink';
 
-
 const SignIn = () => {
   const { isLogin } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
@@ -16,19 +15,18 @@ const SignIn = () => {
 
   return (
     <>
-    {isLogin || (
-    <PageStyled>
-      <Container>
-      <LoginForm />
-      <SignLink message='아직 회원이 아니신가요 ?'  linkText="회원가입 하러가기" link='signup'/>
-      </Container>
-    </PageStyled>
-    )}
-  </>)
+      {isLogin || (
+        <PageStyled>
+          <Container>
+            <LoginForm />
+            <SignLink message="아직 회원이 아니신가요 ?" linkText="회원가입 하러가기" link="signup" />
+          </Container>
+        </PageStyled>
+      )}
+    </>
+  );
 };
 export default SignIn;
-
-
 
 const PageStyled = styled.div`
   width: 100%;
@@ -44,4 +42,4 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  `
+`;

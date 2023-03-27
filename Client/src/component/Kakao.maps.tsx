@@ -16,8 +16,9 @@ interface MapContent {
   latitude: number; //위도
   className?: string;
   width?: number;
+  height?: number;
 }
-const MapContainer = ({ intro, latitude, longitude, className, width }: MapContent) => {
+const MapContainer = ({ intro, latitude, longitude, className, width, height }: MapContent) => {
   useEffect(() => {
     const container = document.getElementById('map'), // 이미지 지도를 표시할 div
       options = {
@@ -79,7 +80,8 @@ const MapContainer = ({ intro, latitude, longitude, className, width }: MapConte
         id="map"
         style={{
           width,
-          height: ScreenSize.middle_height,
+
+          height,
           margin: 'auto',
         }}
         className={className}

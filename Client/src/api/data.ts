@@ -112,19 +112,35 @@ export class CRUDdata {
 //   });
 
 axios
-  .get(
-    'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions?category=부산&page=1&sortedBy=default',
-    // {
-    //   memberId: 1,
-    //   title: '갬성있는 식당 추천해주세요',
-    //   content: '너무 비싸지 않은선에서 추천 부탁드려요 빵맛집이라면 더 좋습니다!',
-    //   tag: '카페',
-    //   category: '부산',
-    // },
+  .post(
+    'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/blog?category=부산&page=1&sortedBy=default',
+    {
+      memberId: 1,
+      title: '갬성있는 식당 추천해주세요',
+      content: '너무 비싸지 않은선에서 추천 부탁드려요 빵맛집이라면 더 좋습니다!',
+      tag: '카페',
+      category: '서울',
+      image: 'fdsfdffff',
+    },
     {
       // headers: { 'Cache-Control': 'no-store' },
       withCredentials: true,
     },
   )
-  //   .then(console.log)
+  .then(console.log)
   .catch(console.error);
+
+function ss() {
+  let num1;
+
+  if (navigator.geolocation) {
+    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    navigator.geolocation.getCurrentPosition(function (position) {
+      const lat = position.coords.latitude, // 위도
+        lon = position.coords.longitude; // 경도
+      num1 = [lat, lon];
+    });
+  }
+  return num1;
+}
+console.log(ss());

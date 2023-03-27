@@ -43,7 +43,7 @@ export default function Filter({
   const handleBtnClick = () => {
     //해당지역으로이동
     // console.log(city);
-    navigate(Route.question, { state: citys.city });
+    navigate('/board/questionlist', { state: citys.city });
   };
 
   return (

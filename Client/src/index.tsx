@@ -21,6 +21,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import BlogList from 'pages/blog/BlogList';
+import Modal from 'component/ui/Modal';
+import DropBox from 'component/ui/DropBox';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
         path: '/board',
         element: <Board />,
         children: [
+          {
+            path: '/board/list/:section',
+            element: <DropBox />,
+          },
+          {
+            path: '/board/bloglist',
+            element: <BlogList />,
+          },
           {
             path: '/board/bloglist',
             element: <BlogList />,

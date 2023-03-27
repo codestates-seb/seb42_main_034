@@ -14,9 +14,14 @@ export type Props = {
   children?: string;
   src?: string;
 };
-const LogoLink = styled.div`
+const LogoLink = styled.div<{ nav?: number }>`
   display: flex;
   align-items: center;
+  font-size: ${(props) => props.nav}rem;
+  .logo {
+    position: absolute;
+    z-index: 0;
+  }
 `;
 const LogoImg = styled(Icon)<{ svg: React.ReactNode }>`
   position: relative;
@@ -24,14 +29,13 @@ const LogoImg = styled(Icon)<{ svg: React.ReactNode }>`
   opacity: 0.4;
   box-shadow: 1rem;
 `;
+
 //로고크기 줄이기
-export const Logo: React.FC = () => {
+export const Logo: React.FC = ({ className }: Props) => {
   return (
-    <Link to="/home">
-      <LogoLink>
-        <LogoImg svg={<LogoIcon />}></LogoImg>
-        <span className="logo">여기 와 봤니?</span>
-      </LogoLink>
-    </Link>
+    <LogoLink className={className}>
+      <LogoImg svg={<LogoIcon className="img" />}></LogoImg>
+      <span className="logo">여기 와 봤니?</span>
+    </LogoLink>
   );
 };

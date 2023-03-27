@@ -11,14 +11,15 @@ const Container = styled.div`
 `;
 export default function MiddleCard() {
   return (
-    <div className="slide2 middle1">
+    <div className="slide2 middle2">
       <Container>
         <div>다양한 지역에 있는 현지인들과 소통하세요!</div>
         <div>한번에 다양한 맛집 정보등을 확인 할 수 있습니다</div>
       </Container>
       <MapContainer
-        width={1000}
-        className="middle2"
+        width={900}
+        height={600}
+        className="middle1"
         intro={true}
         latitude={37.49140197082119}
         longitude={127.01760603543958}
