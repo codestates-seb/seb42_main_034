@@ -1,5 +1,7 @@
 package com.project.tripAdvisor.file.entity;
 
+import com.project.tripAdvisor.blog.entity.Blog;
+import com.project.tripAdvisor.question.entity.Answer;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -29,11 +31,7 @@ public class ImageFile {
 
     private Long fileSize;
 
-    //추후 blog쪽에서 cascade 설정 요망
-//    @ManyToOne
-//    @JoinColumn(name="blog_id")
-//    private Blog blog;
-//
+
 //    public void setBlog(Blog blog) {
 //        this.blog = blog;
 //        if(!blog.getImageFile().contains(this))

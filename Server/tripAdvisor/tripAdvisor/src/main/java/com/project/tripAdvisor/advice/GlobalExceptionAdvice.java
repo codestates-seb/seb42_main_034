@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
+
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
     /**
@@ -29,5 +31,16 @@ public class GlobalExceptionAdvice {
         final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
 
         return response;
+    }
+
+    /**
+     * 이미지 처리에 대한 예외 처리
+     */
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e){
+        String message = "파일이 비어있거나 잘못된 형식입니다.";
+        return ResponseEntity.badRequest().body(message);
     }
 }
