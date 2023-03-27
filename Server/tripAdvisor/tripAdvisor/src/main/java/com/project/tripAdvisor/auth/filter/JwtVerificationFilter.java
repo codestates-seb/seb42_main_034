@@ -2,7 +2,10 @@ package com.project.tripAdvisor.auth.filter;
 
 import com.project.tripAdvisor.auth.CustomAuthorityUtils;
 import com.project.tripAdvisor.auth.JwtTokenizer;
+import com.project.tripAdvisor.member.Member;
+import com.project.tripAdvisor.member.MemberRepository;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,9 +18,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpClient;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 //클라이언트 측에서 JWT를 이용해 자격증명이 필요한 리소스에 대해 request전송 시 헤더를 통해 전달받은 JWT를 서버측에서 검증
 public class JwtVerificationFilter extends OncePerRequestFilter {//request당 한번만 실행되는 시큐리티 필터구현가능
@@ -25,6 +28,12 @@ public class JwtVerificationFilter extends OncePerRequestFilter {//request당 �
     private final JwtTokenizer jwtTokenizer;
     //Authentication 객체에 채울 사용자 권한을 생성하는데 이용
     private final CustomAuthorityUtils authorityUtils;
+
+
+
+    @Autowired
+    private MemberRepository memberRepository;
+
 
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
@@ -44,6 +53,10 @@ public class JwtVerificationFilter extends OncePerRequestFilter {//request당 �
         } catch (Exception e){
             request.setAttribute("exception", e);
         }
+
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<Member> member  = memberRepository.findByEmail(email);
+        member.ifPresent(m-> request.setAttribute("memberId", m.getId()));
 
         //위 과정이 성공적으로 수행되면 다음 security filter를 호출한다.
         filterChain.doFilter(request, response);

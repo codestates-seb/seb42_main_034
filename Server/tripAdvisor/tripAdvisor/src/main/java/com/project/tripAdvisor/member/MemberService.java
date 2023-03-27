@@ -129,6 +129,7 @@ public class MemberService {
         if(member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
+
     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ내가 작성한 게시글 불러오기 title 만ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     public List<QuestionResponseDto> getMyQuestionsTitle(Long id) {
         List<QuestionResponseDto> QuestionDtoList = new ArrayList<>();

@@ -6,12 +6,22 @@ import com.project.tripAdvisor.auth.handler.MemberAccessDeniedHandler;
 import com.project.tripAdvisor.auth.handler.MemberAuthenticationEntryPoint;
 import com.project.tripAdvisor.auth.handler.MemberAuthenticationFailureHandler;
 import com.project.tripAdvisor.auth.handler.MemberAuthenticationSuccessHandler;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -25,19 +35,26 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import java.util.Arrays;
 
-@Configuration
-public class SecurityConfiguration {//여기에 지원하는 인증과 권한부여설정을 하면된다.
+@Configuration(proxyBeanMethods = false)
+@EnableWebSecurity
+@ConditionalOnDefaultWebSecurity
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+public class SecurityConfiguration{//여기에 지원하는 인증과 권한부여설정을 하면된다.
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+
     }
 
+
     @Bean
+    @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //SecurityFilterChain을 Bean으로 등록해서 HTTP보안설정을 구성한다.
 
@@ -48,12 +65,10 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
                 //기본적으로 아무설정을 하지 않으면 csrf 공격을 받음 클라이언트로부터 CSRF 토큰을 수신 후 검증
                 .cors()
                 .and()
-                //corsConfigurationSource이름의 bean을 이용함
                 //세션을사용하지 않도록 설정함
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
-                //기본적인 인증 방법 설정 폼로그인
                 .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
@@ -62,17 +77,11 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(autorize -> autorize
-//                                .antMatchers(HttpMethod.POST, "/members").permitAll()
                                 .antMatchers(HttpMethod.PATCH, "/members/**").hasRole("USER")
                                 .antMatchers(HttpMethod.GET, "/members").hasRole("ADMIN")
                                 .antMatchers(HttpMethod.GET, "/members/**").hasAnyRole("USER", "ADMIN")
                                 .antMatchers(HttpMethod.DELETE, "/members/**").hasRole("USER")
                                 .anyRequest().permitAll()//JWT 적용전 우선 허용
-                    /*.antMatchers("/orders/**").hasRole("ADMIN")
-                    //admin 룰을 부여받은 사용자만 /orders 로 시작하는 모든 URL에 접근가능
-                    .antMatchers("/members/my-page").hasRole("USER")
-                    .antMatchers("/**").permitAll()
-                    //앞에서 말한 URL 외에 모든 것은 접근가능함.*/
                 );//사용자의 Role별로 request URI에 접근권한 부여
         return http.build();
     }
@@ -89,13 +98,11 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
         configuration.addAllowedOriginPattern("*");
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("*"));
-         configuration.setAllowCredentials(true);
-//        configuration.setAllowedOrigins(Arrays.asList("*")); //모든 출처에 대한 허용
-         configuration.addAllowedHeader("*");
-         configuration.addExposedHeader("*");
+        configuration.setAllowCredentials(true);
+//        configuration.setAllowedOrigins(Arrays.asList("*"));//모든 출처에 대한 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));//해당 메서드허용
-
-
+//         configuration.addAllowedHeader("*");
+//         configuration.addExposedHeader("*");
 //        configuration.setAllowedHeaders(Arrays.asList("*"));
 //        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
 
@@ -126,9 +133,12 @@ public class SecurityConfiguration {//여기에 지원하는 인증과 권한부
 
             //인스턴스를 생성하면서 해당 필터에서 사용되는 객체들을  DI 받는다.
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+
             //addFilter 를 통해 jwtAuthenticationFilter를 Spring Security Filter Chain에 추가한다.
             builder.addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+//                    .addFilterAfter(jwtVerificationFilter, LoginUserFilter.class);
+
         }
     }
 }
