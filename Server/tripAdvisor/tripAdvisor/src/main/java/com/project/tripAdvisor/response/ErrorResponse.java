@@ -25,7 +25,6 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    //원래는 보통 public으로 생성한다. 여기서는 특이하게도 private로 이용함.
     private ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors){
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;

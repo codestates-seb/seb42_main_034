@@ -8,7 +8,8 @@ import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
+import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.tag.entity.Tag;
 import com.project.tripAdvisor.tag.repository.BlogTagRepository;
 import com.project.tripAdvisor.tag.repository.TagRepository;
@@ -16,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -179,6 +179,13 @@ public class BlogService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.BLOG_NOT_FOUND));
 
         return findBlog;
+    }
+
+    public Page<Blog> findMemberBlogs(long id, int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size,
+                Sort.by("createdAt").descending());
+        return blogRepository.findAllByMemberId(id, pageRequest);
     }
 
 //    public LikeType getLikeStatus(Long memberId, Long blogId) {

@@ -1,4 +1,4 @@
-package com.project.tripAdvisor.auth;
+package com.project.tripAdvisor.auth.dto;
 
 import lombok.Getter;
 

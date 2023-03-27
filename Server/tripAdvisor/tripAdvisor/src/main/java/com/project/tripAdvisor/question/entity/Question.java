@@ -57,7 +57,7 @@ public class Question extends Auditable {
     public void addMember(Member member){
         this.member = member;
     }
-    
+
     /** 1:N **/
     @Setter(AccessLevel.NONE)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)

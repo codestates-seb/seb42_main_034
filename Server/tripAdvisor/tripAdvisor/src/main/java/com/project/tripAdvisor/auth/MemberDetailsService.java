@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.auth;
 
+import com.project.tripAdvisor.auth.util.CustomAuthorityUtils;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
@@ -30,10 +31,8 @@ public class MemberDetailsService implements UserDetailsService { //커스텀 �
         Optional<Member> optionalMember = memberRepository.findByEmail(username);
         Member findMember = optionalMember.orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
-        /*Collection<? extends GrantedAuthority> authorities = authorityUtils.createdAuthorities(findMember.getEmail());*/
-        //근데왜 GET email을 가져와야하지? 이걸로 판단하니까 --> 아래로 이동
+
         return new MemberDetails(findMember);
-        /*User(findMember.getEmail(), findMember.getPassword(), authorities);*/
     }
 
     private final class MemberDetails extends Member implements UserDetails{
@@ -50,7 +49,7 @@ public class MemberDetailsService implements UserDetailsService { //커스텀 �
         //유저의 권한 정보 생성
         public Collection<? extends GrantedAuthority> getAuthorities(){
             //DB에 저장된 Role 정보로  User 권한 목록 생성
-            return authorityUtils.createdAuthorities(this.getRoles().toString());
+            return authorityUtils.createAuthorities(this.getRoles());
         }
         //스프링 시큐리티 에서 인식할 수 있는 username을 Member클래스의 email 주소로 채우고있다.
         @Override

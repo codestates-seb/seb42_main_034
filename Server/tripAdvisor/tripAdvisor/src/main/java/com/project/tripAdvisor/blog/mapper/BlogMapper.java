@@ -3,11 +3,10 @@ package com.project.tripAdvisor.blog.mapper;
 import com.project.tripAdvisor.blog.dto.BlogDto;
 import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.tag.entity.BlogTag;
+import com.project.tripAdvisor.member.MemberDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface BlogMapper {
+
 
     default Blog blogRequestToBlog(BlogDto.Request requestBody){
         if ( requestBody == null ) {
