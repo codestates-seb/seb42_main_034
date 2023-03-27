@@ -59,20 +59,20 @@ export default function QuestionPost() {
       alert('내용을 입력하세요.');
       return;
     }
-    // axios
-    //   .post('', {
-    //     memberId: 1,
-    //     title,
-    //     content,
-    //     tag: 'test',
-    //     category: 'test',
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    axios
+      .post('http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions', {
+        memberId: 1,
+        title,
+        content,
+        tag,
+        category: 'test',
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
