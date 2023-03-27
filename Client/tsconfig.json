@@ -14,12 +14,17 @@
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "baseUrl": "src",
     "allowSyntheticDefaultImports": true,
+    
   },
+  "files": [
+    "node_modules/gsap/types/index.d.ts"
+  ],
   "compileOnSave": true,
   "include": [
     "src",
     "custom.d.ts",
      "public",
+     
   ],
   "types": [
     "kakao.maps.d.ts"

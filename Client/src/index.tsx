@@ -14,13 +14,11 @@ import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
-import QuestionList from './pages/question/QuestionList';
 import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
-import BlogList from 'pages/blog/BlogList';
-
+import BoardList from 'pages/question/QuestionList';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -41,27 +39,20 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/questionlist',
-            element: <QuestionList />,
+            path: '/board/boardlist',
+            element: <BoardList />,
           },
+
           {
-            path: '/board/bloglist',
-            element: <QuestionList />,
-          },
-          {
-            path: '/board/bloglist',
-            element: <BlogList />,
-          },
-          {
-            path: '/board/boarddetails/:id',
+            path: '/board/boarddetails/:section',
             element: <BlogDetails />,
           },
           {
-            path: '/board/questiondetails/:id',
+            path: '/board/questionsdetails/:id',
             element: <QuestionDetails />,
           },
           {
-            path: '/board/signin/signup',
+            path: '/board/signup',
             element: <SignUp />,
           },
           {
@@ -90,9 +81,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </PersistGate>
   </Provider>,
 );

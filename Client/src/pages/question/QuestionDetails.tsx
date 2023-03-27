@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import BoardDetail from '../../component/board/BoardDetail';
 import CommentList from '../../component/board/CommentList';
 import Editor from '../../component/board/Editor';
@@ -7,6 +7,8 @@ import styled from 'styled-components';
 
 export default function QuestionDetails() {
   const [comment, setComment] = useState<string>('');
+  const data = useLocation().state;
+  console.log(data);
 
   const commentHandler = (value: string) => {
     setComment(value);

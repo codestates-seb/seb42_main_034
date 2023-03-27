@@ -8,7 +8,9 @@ const Layout = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: ${ScreenSize.middle_height};
-  overflow-y: auto;
+  max-height: ${ScreenSize.middle_height};
+  overflow-y: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     padding: 4rem;
     width: 8px;
@@ -24,8 +26,9 @@ const Layout = styled.div`
   border-radius: 3rem;
   max-width: ${ScreenSize.max_width};
   margin: auto;
-  background: ${Colors.border_001};
-  ${BoxShadow}
+  background: ${Colors.board_color};
+  border: 5px solid black;
+  ${BoxShadow};
 `;
 export default function Board() {
   return (
