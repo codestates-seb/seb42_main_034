@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/blog/answer")
+@RequestMapping("/blogs/answer")
 public class BlogAnswerController {
     private final BlogAnswerMapper blogAnswerMapper;
     private final BlogAnswerService blogAnswerService;

@@ -1,10 +1,9 @@
 package com.project.tripAdvisor.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.tripAdvisor.auth.JwtTokenizer;
-import com.project.tripAdvisor.auth.LoginDto;
+import com.project.tripAdvisor.auth.util.JwtTokenizer;
+import com.project.tripAdvisor.auth.dto.LoginDto;
 import com.project.tripAdvisor.member.Member;
-import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

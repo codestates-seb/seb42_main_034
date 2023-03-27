@@ -1,4 +1,4 @@
-package com.project.tripAdvisor.auth;
+package com.project.tripAdvisor.auth.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

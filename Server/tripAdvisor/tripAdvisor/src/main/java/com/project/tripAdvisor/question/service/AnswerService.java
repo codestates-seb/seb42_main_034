@@ -1,12 +1,9 @@
 package com.project.tripAdvisor.question.service;
 
-import com.project.tripAdvisor.blog.entity.Blog;
-import com.project.tripAdvisor.blog.entity.BlogAnswer;
-import com.project.tripAdvisor.blog.entity.BlogAnswerComment;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.AnswerComment;
 import com.project.tripAdvisor.question.entity.Question;
@@ -14,11 +11,9 @@ import com.project.tripAdvisor.question.repository.AnswerCommentRepository;
 import com.project.tripAdvisor.question.repository.AnswerRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 

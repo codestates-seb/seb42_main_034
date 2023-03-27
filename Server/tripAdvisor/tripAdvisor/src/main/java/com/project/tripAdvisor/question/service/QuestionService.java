@@ -141,5 +141,12 @@ public class QuestionService {
 
         return findQuestion;
     }
+
+    public Page<Question> findMemberQuestions(long id, int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size,
+               Sort.by("createdAt").descending());
+        return questionRepository.findAllByMemberId(id, pageRequest);
+    }
 }
 

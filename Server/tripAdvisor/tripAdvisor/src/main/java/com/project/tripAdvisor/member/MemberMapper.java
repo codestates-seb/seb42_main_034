@@ -1,6 +1,8 @@
 package com.project.tripAdvisor.member;
 
 
+import com.project.tripAdvisor.blog.entity.Blog;
+import com.project.tripAdvisor.question.entity.Question;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -12,8 +14,11 @@ public interface MemberMapper {
 
     Member MemberPatchToMember(MemberDto.Patch memberPatch);
     MemberDto.Response MemberToMemberResponseDto(Member member);
-    //예비용
-//    List<MemberDto.Response> MembersToMemberResponseDto(List<Member> members);
+
+    List<MemberDto.MemberQuestionResponse> QuestionsToMemberQuestionsResponseDtos(List<Question> questions);
+
+    List<MemberDto.MemberBlogResponse> BlogsToMemberBlogsResponseDtos(List<Blog> blogs);
+
 
 
 }

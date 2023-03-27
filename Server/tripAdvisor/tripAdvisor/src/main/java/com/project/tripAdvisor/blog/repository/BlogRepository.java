@@ -1,6 +1,7 @@
 package com.project.tripAdvisor.blog.repository;
 
 import com.project.tripAdvisor.blog.entity.Blog;
+import com.project.tripAdvisor.question.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
     Page<Blog> findByMemberId(Long memberId, Pageable pageable);
 
     Page<Blog> findAllByCategory(String category,Pageable pageable);
+
+    Page<Blog> findAllByMemberId(Long memberId, Pageable pageable);
 
 }
