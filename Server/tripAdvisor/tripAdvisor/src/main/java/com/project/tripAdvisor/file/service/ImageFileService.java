@@ -23,10 +23,10 @@ public class ImageFileService {
      */
     private final Path saveLocation=Paths.get("C:\\Users\\ANY\\photo");
 
-    public ImageFile save(MultipartFile file) throws Exception {
+    public ImageFile save(MultipartFile file) {
         try{
             if(file.isEmpty()){
-                throw new Exception("Failed to store empty file "+file.getOriginalFilename());
+                throw new IllegalArgumentException("Failed to store empty file "+file.getOriginalFilename());
             }
             String saveFileName = fileSave(saveLocation.toString(),file);
             ImageFile saveFile = new ImageFile();
@@ -39,7 +39,7 @@ public class ImageFileService {
 
             return saveFile;
         }catch (IOException e){
-            throw new Exception("Failed to store file " + file.getOriginalFilename(), e);
+            throw new RuntimeException("Failed to store file " + file.getOriginalFilename(), e);
         }
     }
 
