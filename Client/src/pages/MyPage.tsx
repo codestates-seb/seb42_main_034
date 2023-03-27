@@ -1,14 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthAPI } from 'api/auth';
 import { useMypageAPI } from 'api/mypage';
-// import useTabs from 'hooks/useTabs';
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import styled from 'styled-components'
 import {FiEdit} from 'react-icons/fi'
-// import TabLists from 'component/ui/MypageTabs';
 import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
 import { useState } from 'react';
@@ -17,7 +15,6 @@ export default function MyPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [tab,  curTab, handleTabChange] = useTabs(['작성 글', '작성 댓글', '작성 질문']);
   const {id} = useAppSelector(state => state.loginInfo)
   const {deleteLogout} = useAuthAPI();
   const {mutate: mutateLogout} = useMutation(deleteLogout);
@@ -41,9 +38,9 @@ export default function MyPage() {
   const renderTabs = () => {
     return (
       <>
-        <TabStyled onClick={() => handleTabClick(0)}>Tab 1</TabStyled>
-        <TabStyled onClick={() => handleTabClick(1)}>Tab 2</TabStyled>
-        <TabStyled onClick={() => handleTabClick(2)}>Tab 3</TabStyled>
+        <TabStyled onClick={() => handleTabClick(0)}>작성한 질문</TabStyled>
+        <TabStyled onClick={() => handleTabClick(1)}>작성한 답변</TabStyled>
+        <TabStyled onClick={() => handleTabClick(2)}>작성한 댓글</TabStyled>
       </>
     );
   };
@@ -86,18 +83,10 @@ export default function MyPage() {
       </UserInfoContainer>
     </ProfileContainer>
 
-    {/* <TabLists/> */}
-    {/* {curTab === '작성 글' && <글 리스트 컴포넌트 />}
-    {curTab === '작성 댓글' && <글 리스트 컴포넌트 />} */}
-{/* 
-    {curTab === '작성 글' && <div>hi</div>}
-    {curTab === '작성 댓글' && <div>hello</div>}
-    {curTab === '작성 질문' && <div>hello</div>} */}
-
     <TabContainer>
       {renderTabs()}
+      </TabContainer>
       {renderTabContent()}
-    </TabContainer>
 
     <Nbutton
     onClick={() => {
@@ -110,7 +99,6 @@ export default function MyPage() {
     >
       로그아웃
     </Nbutton>
-
 
   </MainContainer>
   </>
@@ -170,20 +158,16 @@ const UserInfoContainer = styled.div`
 const TabContainer = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     margin: 1rem 0;
     max-width: 800px;
+    border: solid 1px red;
 `
 
-const TabStyled = styled.div`
-    /* width: 45%;
-    max-width: 380px;
-    height: 2.5rem; */
+const TabStyled = styled.button`
+    width: 120px;
+    height: 2.5rem;
     background-color: skyblue;
-    /* border: none;
-    cursor: pointer;
-    font-size: 10px;
-    display: flex; */
     :hover {
         background-color: #6868fa;
     }

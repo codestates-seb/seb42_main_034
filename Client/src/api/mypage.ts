@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-
 import useAPI from '../hooks/uesAPI';
 import axios from 'axios';
 import { setUserInfo } from '../redux/userInfoSlice';
