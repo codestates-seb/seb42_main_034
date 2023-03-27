@@ -41,6 +41,7 @@ export const SignUpForm = () => {
     });
 
     // const data = { email, nickname, password };
+
     // try {
     //   await api.post('/members', data);
     //   goNotifi('회원가입이 완료 되었습니다.');
@@ -141,3 +142,4 @@ const SubmitButton = styled(Nbutton)`
     box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
   }
 `;
+
