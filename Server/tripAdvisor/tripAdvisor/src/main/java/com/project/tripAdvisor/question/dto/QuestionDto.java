@@ -64,7 +64,7 @@ public class QuestionDto {
 
         private String title;
 
- //       private List<String> tags;
+        private List<String> tags;
 
         private String content;
 

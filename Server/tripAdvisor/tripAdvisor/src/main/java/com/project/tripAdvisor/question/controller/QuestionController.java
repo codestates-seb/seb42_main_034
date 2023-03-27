@@ -51,13 +51,14 @@ public class QuestionController {
 
         Member member = memberService.findVerifiedMember(requestBody.getMemberId());
         question.setMember(member);
-
         Question createdQuestion = questionService.createQuestion(question);
 
+
         if(requestBody.getTags() != null) {
-            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), question.getId());
-            question.getQuestionTags().addAll(questionTags);
+            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), createdQuestion.getId());
+            createdQuestion.getQuestionTags().addAll(questionTags);
         }
+
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(createdQuestion)),
