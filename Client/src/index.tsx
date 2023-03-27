@@ -1,7 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-
 import Error from './pages/Error';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
@@ -15,7 +14,13 @@ import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
+import { Provider } from 'react-redux';
+import { persistor, store } from './redux/store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { PersistGate } from 'redux-persist/integration/react';
+import BoardList from 'pages/question/BoardList';
 
+const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: '/',
@@ -34,11 +39,16 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/boarddetails/:id',
+            path: '/board/boardlist',
+            element: <BoardList />,
+          },
+
+          {
+            path: '/board/boarddetails/:section',
             element: <BlogDetails />,
           },
           {
-            path: '/board/questiondetails/:id',
+            path: '/board/questionsdetails/:id',
             element: <QuestionDetails />,
           },
           {
@@ -68,6 +78,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById('root') as HTMLBaseElement).render(
-  <RouterProvider router={router} />
+createRoot(document.getElementById('root') as HTMLElement).render(
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </PersistGate>
+  </Provider>,
 );

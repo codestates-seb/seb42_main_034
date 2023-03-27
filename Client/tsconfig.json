@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "commonjs",                                /* Specify what module code is generated. */
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "outDir":"./dist",
+    "jsx": "react",
+    "noUnusedLocals": false,
+    "removeComments": true,
+    "noEmitOnError": true /*에러있을 때 컴파일 하지 않음*/,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "baseUrl": "src",
+    "allowSyntheticDefaultImports": true,
+    
+  },
+  "files": [
+    "node_modules/gsap/types/index.d.ts"
+  ],
+  "compileOnSave": true,
+  "include": [
+    "src",
+    "custom.d.ts",
+     "public",
+     
+  ],
+  "types": [
+    "kakao.maps.d.ts"
+  ]
+}

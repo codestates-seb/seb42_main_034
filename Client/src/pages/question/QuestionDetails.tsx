@@ -1,5 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import BoardDetail from '../../component/board/BoardDetail';
+import CommentList from '../../component/board/CommentList';
+import Editor from '../../component/board/Editor';
+import styled from 'styled-components';
 
 export default function QuestionDetails() {
-  return <div>QuestionDetails</div>
+  const [comment, setComment] = useState<string>('');
+  const data = useLocation().state;
+  console.log(data);
+
+  const commentHandler = (value: string) => {
+    setComment(value);
+  };
+
+  const submitHandler = () => {
+    // comment axios
+  };
+
+  return (
+    <>
+      <Outlet />
+      <BoardDetail />
+      <h1>답변내용 ( 답변 수 : )</h1>
+      <CommentList />
+      <p>댓글 작성</p>
+      <Editor value={comment} onChange={commentHandler} />
+      <button onClick={submitHandler}>작성</button>
+    </>
+  );
 }
