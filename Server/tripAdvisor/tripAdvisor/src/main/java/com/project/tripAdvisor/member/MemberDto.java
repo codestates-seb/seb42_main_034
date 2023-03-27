@@ -42,7 +42,7 @@ public class MemberDto {
 
         private String location;
 
-        private long Id;
+        private long memberId;
     }
 
     @Setter

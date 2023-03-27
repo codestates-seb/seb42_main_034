@@ -6,8 +6,10 @@ import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.AnswerComment;
+import com.project.tripAdvisor.question.entity.AnswerLike;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.repository.AnswerCommentRepository;
+import com.project.tripAdvisor.question.repository.AnswerLikeRepository;
 import com.project.tripAdvisor.question.repository.AnswerRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,16 +24,20 @@ import java.util.Optional;
 public class AnswerService {
     private final AnswerRepository answerRepository;
     private final AnswerCommentRepository answerCommentRepository;
+
+    private final AnswerLikeRepository answerLikeRepository;
     private final MemberService memberService;
     private final QuestionService questionService;
 
     public AnswerService(AnswerRepository answerRepository, AnswerCommentRepository answerCommentRepository,
-                         MemberService memberService, QuestionService questionService) {
+                         MemberService memberService, QuestionService questionService,
+                         AnswerLikeRepository answerLikeRepository) {
 
         this.answerRepository = answerRepository;
         this.answerCommentRepository = answerCommentRepository;
         this.memberService = memberService;
         this.questionService = questionService;
+        this.answerLikeRepository = answerLikeRepository;
     }
 
     /** 댓글(답변) 생성 **/
@@ -81,6 +87,53 @@ public class AnswerService {
     public Page<Answer> findAnswers(Long questionId, int page) {
         return answerRepository.findByQuestionId(questionId, PageRequest.of(page, 15));
     }
+
+
+    /** 댓글 좋아요 기능 **/
+
+    public void switchLike(Long answerId, Long memberId) {
+
+        Answer answer = findVerifiedAnswer(answerId);
+        Member member = memberService.findVerifiedMember(memberId);
+
+        AnswerLike answerLike = new AnswerLike();
+
+        answerLike.setMember(member);
+        answerLike.setAnswer(answer);
+        Optional<AnswerLike> optionalAnswerLike = answerLikeRepository.findByMemberAndAnswer(memberId,answerId);
+        int likeCnt = answer.getLikeCnt();
+
+        if (optionalAnswerLike.isEmpty()) {
+            addAnswerLike(answer, answerLike, likeCnt);
+        } else {
+            addAnswerLikeIfLikeType(answer, optionalAnswerLike, likeCnt);
+        }
+    }
+
+
+    private void addAnswerLikeIfLikeType(Answer answer, Optional<AnswerLike> optionalAnswerLike, int likeCnt) {
+        AnswerLike findAnswerLike = optionalAnswerLike.get();
+        boolean likeType = findAnswerLike.isLikeType();
+
+
+        if(!likeType){
+            likeCnt+=1;
+            answer.setLikeCnt(likeCnt);
+            findAnswerLike.setLikeType(true);
+            answerRepository.save(answer);
+        }
+    }
+
+
+    private void addAnswerLike(Answer answer, AnswerLike answerLike, int likeCnt) {
+        answerLike.setLikeType(true);
+        likeCnt++;
+        answer.setLikeCnt(likeCnt);
+        answerLikeRepository.save(answerLike);
+        answerRepository.save(answer);
+
+    }
+
 
 
     /******************************** 대댓글 *********************************/
@@ -139,12 +192,6 @@ public class AnswerService {
                         new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
         return findAnswerComment;
     }
-
-
-
-
-
-
 
 
     public Answer findVerifiedAnswer(Long answerId) {

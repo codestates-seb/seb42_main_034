@@ -57,19 +57,22 @@ public class QuestionDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    @Setter
+    @NoArgsConstructor
     public static class Response {
         private Long questionId;
 
         private String title;
 
- //       private List<String> tags;
+        private List<String> tags;
 
         private String content;
 
         private String writer;
 
         private LocalDateTime createdAt;
+
+        private int viewCnt;
 
     }
 
@@ -81,7 +84,7 @@ public class QuestionDto {
 
         private String title;
 
-//        private int viewCnt;
+        private int viewCnt;
 
         private List<String> tags;
 
@@ -89,7 +92,7 @@ public class QuestionDto {
 
         private LocalDateTime createdAt;
 
-//        private LocalDateTime modifiedAt;
+        private LocalDateTime modifiedAt;
 
 //        private int answerCnt;
 

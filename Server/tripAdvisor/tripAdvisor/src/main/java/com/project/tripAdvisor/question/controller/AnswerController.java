@@ -98,6 +98,17 @@ public class AnswerController {
                 , HttpStatus.OK);
     }
 
+
+    /** 댓글 좋아요 기능 **/
+    @PostMapping("like/{answer-id}")
+    public ResponseEntity postAnswerLike(@Positive @PathVariable("answer-id") Long answerId,
+                                         @Positive @RequestParam Long memberId) {
+
+        answerService.switchLike(answerId, memberId);
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
     /******************************** 대댓글 *********************************/
 
     @PostMapping("/comments/{answer-id}")

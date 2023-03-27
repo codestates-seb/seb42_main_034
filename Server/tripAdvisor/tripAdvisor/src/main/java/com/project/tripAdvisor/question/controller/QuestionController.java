@@ -51,12 +51,14 @@ public class QuestionController {
 
         Member member = memberService.findVerifiedMember(requestBody.getMemberId());
         question.setMember(member);
-
         Question createdQuestion = questionService.createQuestion(question);
 
+
         if(requestBody.getTags() != null) {
-            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), question.getId());
+            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), createdQuestion.getId());
+            createdQuestion.getQuestionTags().addAll(questionTags);
         }
+
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(createdQuestion)),
@@ -93,9 +95,8 @@ public class QuestionController {
      **/
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") @Positive Long questionId) {
-        Question gotQuestion = questionService.findQuestion(questionId);
-
-
+        Question gotQuestion = questionService.findVerifiedQuestion(questionId);
+        questionService.findQuestion(gotQuestion.getId());
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(gotQuestion)),
