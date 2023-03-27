@@ -112,6 +112,7 @@ public class QuestionService {
     // (추가) user 로 검색
 
     public Page<Question> searchQuestion(int page, String keyword, String type) {
+
         type = type.toUpperCase();
 
         if(type.equals("USER")) {
@@ -136,6 +137,7 @@ public class QuestionService {
             return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 15));
         }
     }
+
 
 
     public Question findVerifiedQuestion(Long questionId) {
