@@ -1,89 +1,46 @@
-// /* eslint-disable @typescript-eslint/no-unsafe-return */
-// import { useEffect, useState } from 'react';
-
-// interface Props {
-//     id: number;
-//     name: string;
-//     selected: boolean;
-// }
-
-// type ReturnTypes = [Props[], string, (id: number) => void];
-
-// function useTabs(values: string[]): ReturnTypes {
-//     const [items, setItems] = useState<any[]>([]);
-//     const [curTab, setCurTab] = useState(items[0]?.name);
-
-//     useEffect(() => {
-//         const newItems = values.map((value, i) => {
-//             let item = {};
-//             if (i === 0) {
-//                 item = { id: i, name: value, selected: true };
-//             } else {
-//                 item = { id: i, name: value, selected: false };
-//             }
-//             return item;
-//         });
-//         setItems(newItems);
-//     }, []);
-
-//     useEffect(() => {
-//         const filterTab = items.filter(item => item.selected === true);
-//         setCurTab(filterTab[0]);
-//     }, [items]);
-
-//     const handleTabChange = (id: number) => {
-//         const newItems = items?.map(item =>
-//             item.id === id
-//                 ? { ...item, selected: true }
-//                 : { ...item, selected: false },
-//         );
-//         setItems(newItems);
-//     };
-
-//     return [items, curTab?.name, handleTabChange];
-// }
-
-// export default useTabs;
-
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { useEffect, useState } from 'react';
 
 interface Props {
-  id: number;
-  name: string;
-  selected: boolean;
+    id: number;
+    name: string;
+    selected: boolean;
 }
 
-type ReturnTypes = [Props[], Props | undefined, (id: number) => void];
+type ReturnTypes = [Props[], string, (id: number) => void];
 
 function useTabs(values: string[]): ReturnTypes {
-  const [items, setItems] = useState<Props[]>([]);
-  const [curTab, setCurTab] = useState<Props | undefined>(undefined);
+    const [items, setItems] = useState<any[]>([]);
+    const [curTab, setCurTab] = useState(items[0]?.name);
 
-//   useEffect(() => {
-//     const newItems = values.map((value, i) => ({
-//       id: i,
-//       name: value,
-//       selected: i === 0,
-//     }));
-//     setItems(newItems);
-//   }, [values]);
+    useEffect(() => {
+        const newItems = values.map((value, i) => {
+            let item = {};
+            if (i === 0) {
+                item = { id: i, name: value, selected: true };
+            } else {
+                item = { id: i, name: value, selected: false };
+            }
+            return item;
+        });
+        setItems(newItems);
+    }, []);
 
-//   useEffect(() => {
-//     const filterTab = items.filter((item) => item.selected === true);
-//     setCurTab(filterTab[0]);
-//   }, [items]);
-  useEffect(() => {
-    const filterTab = items.find((item) => item.selected === true);
-    setCurTab(filterTab);
-  }, [items]);
-  const handleTabChange = (id: number) => {
-    const newItems = items.map((item) =>
-      item.id === id ? { ...item, selected: true } : { ...item, selected: false }
-    );
-    setItems(newItems);
-  };
+    useEffect(() => {
+        const filterTab = items.filter(item => item.selected === true);
+        setCurTab(filterTab[0]);
+    }, [items]);
 
-  return [items, curTab, handleTabChange];
+    const handleTabChange = (id: number) => {
+        const newItems = items?.map(item =>
+            item.id === id
+                ? { ...item, selected: true }
+                : { ...item, selected: false },
+        );
+        setItems(newItems);
+    };
+
+    return [items, curTab?.name, handleTabChange];
 }
 
 export default useTabs;

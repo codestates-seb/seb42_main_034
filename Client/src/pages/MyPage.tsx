@@ -11,29 +11,12 @@ import {FiEdit} from 'react-icons/fi'
 import TabLists from 'component/ui/MypageTabs';
 import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
-import { useEffect } from 'react';
-import { useState } from 'react';
-interface Tab {
-  id: number;
-  name: string;
-}
+
 export default function MyPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [tab,  curTab, handleTabChange] = useTabs(['작성 글', '작성 질문', '작성 댓글']);
-  // const values = ['Tab 1', 'Tab 2', 'Tab 3'];
-  // const [tabs, curTab, handleTabChange] = useTabs(values);
-  const [tabs] = useState<Tab[]>([
-    { id: 1, name: 'Tab 1' },
-    { id: 2, name: 'Tab 2' },
-    { id: 3, name: 'Tab 3' },
-  ]);
-
-  const [items, curTab, handleTabChange] = useTabs(tabs.map((tab) => tab.name));
-
-
-
+  const [tab,  curTab, handleTabChange] = useTabs(['작성 글', '작성 댓글']);
   const {id} = useAppSelector(state => state.loginInfo)
   const {deleteLogout} = useAuthAPI();
   const {mutate: mutateLogout} = useMutation(deleteLogout);
@@ -48,9 +31,7 @@ export default function MyPage() {
     queryFn: ()=> getMyInfo(id),
     retry: false,
   });
-  useEffect(() => {
-    console.log('curTab changed: ', curTab);
-  }, [curTab]);
+
 
   return(<> 
   <MainContainer>
@@ -59,13 +40,13 @@ export default function MyPage() {
       <img
       className='profileimage'
       // src={data?.avatarUrl}
-      src="https://lh3.googleusercontent.com/ogw/AAEL6sg-m7ztfOSB36OJ7dQw_VPXqbBiEolmcTY7aii3DA=s64-c-mo"
+      src="https://cdn.discordapp.com/attachments/1049217694601330710/1089858376487411893/2023-03-20_125506.png"
       alt="프로필 이미지 입니다."
       >
       </img>
 
       <UserInfoContainer>
-        <p>닉네임: {data?.nickname ?? '로그인 상태가 아닙니다.'}</p>
+        <p>닉네임: {data?.name ?? '로그인 상태가 아닙니다.'}</p>
         <p>
           도시 : {data?.address ?? '도시가 설정되어 있지 않습니다.'}
         </p>
@@ -78,31 +59,9 @@ export default function MyPage() {
       </UserInfoContainer>
     </ProfileContainer>
 
-    <div>
-      <TabLists tabs={items} handleChange={handleTabChange} />
-      {curTab && <div>{curTab.name} content</div>}
-    </div>
-
-    {/* <div>
-      <h1>My Page</h1>
-      <TabLists
-        tabs={tabs.map((tab, index) => ({ ...tab, selected: items[index].selected }))}
-        handleChange={handleTabChange}
-      />
-      {curTab && <div>{curTab.name} content</div>}
-    </div> */}
-{/* 
-    <TabLists handleChange={handleTabChange} tabs={tabs}/>
-
-<div>
-      {tabs.map((tab) => (
-        <div key={tab.id} onClick={() => handleTabChange(tab.id)}>
-          {tab.name}
-        </div>
-      ))}
-      <div>Selected Tab: {curTab?.name}</div>
-    </div> */}
-
+    <TabLists handleChange={handleTabChange} tabs={tab}/>
+    {/* {curTab === '작성 글' && <글 리스트 컴포넌트 />}
+    {curTab === '작성 댓글' && <글 리스트 컴포넌트 />} */}
 
 
     <Nbutton
@@ -126,12 +85,11 @@ export default function MyPage() {
 
 
 const MainContainer = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  min-width: 90%;
+  border: solid 2px red;
 `
 const ProfileContainer = styled.div`
   width: 90%;
