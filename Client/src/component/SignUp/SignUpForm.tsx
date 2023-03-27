@@ -13,6 +13,7 @@ import PasswordForm from './PasswordForm';
 
 export type inputKeys =  'email' | 'nickname' | 'password' | 'passwordCheck';
 
+
 export const SignUpForm = () => {
   const [inputs, setInputs] = useState({
     email: '',
@@ -97,10 +98,14 @@ export const SignUpForm = () => {
   
   return (
     <MainFormContainer onSubmit={handleSubmit}>
-      <IdForm data={getSectionProps('아이디',  'email')} notifi={goNotifi} />
-      <IdForm data={getSectionProps('닉네임', 'nickname')} notifi={goNotifi} />
+      <FormWrapper>
+      <IdForm data={getSectionProps('아이디',  'email')} notifi={goNotifi}/>
+      <IdForm data={getSectionProps('닉네임', 'nickname')} notifi={goNotifi}/>
+      </FormWrapper>
+      <FormWrapper>
       <PasswordForm data={getSectionProps('비밀번호', 'password')} />
       <PasswordForm data={getSectionProps('비밀번호 확인', 'passwordCheck')} />
+      </FormWrapper>
       <SubmitButton >회원가입</SubmitButton>
     </MainFormContainer >
   );
@@ -108,14 +113,33 @@ export const SignUpForm = () => {
 
 const MainFormContainer = styled.form`
   width: 100%;
-  max-width: 700px;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
-const SubmitButton = styled(Nbutton)`
-  height: 3rem;
+  min-width: 22rem;
+  display: grid;
+  height: 200px;
 `;
 
-//ㅇ 
+const FormWrapper = styled.div`
+  position: relative;
+`
+
+const SubmitButton = styled(Nbutton)`
+  position: relative;
+  display: inline-block;
+  height: 2.5rem;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  overflow: hidden;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  border-radius: 10px;
+  padding: 12px 40px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  &:hover {
+    background: #0583c6;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+  }
+`;

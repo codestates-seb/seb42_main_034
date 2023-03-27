@@ -163,7 +163,7 @@ const StyledLoginButton = styled(LoginButton)`
     left: -100%;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #FF9B54);
+    background: linear-gradient(90deg, transparent, #013ef6);
     animation: ${btnAnim1} 1s linear infinite;
   }
   span:nth-child(2) {
@@ -171,7 +171,7 @@ const StyledLoginButton = styled(LoginButton)`
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(180deg, transparent, #FF9B54);
+    background: linear-gradient(180deg, transparent, #013ef6);
     animation: ${btnAnim2} 1s linear infinite;
     animation-delay: 0.25s;
   }
@@ -180,7 +180,7 @@ const StyledLoginButton = styled(LoginButton)`
     right: -100%;
     width: 100%;
     height: 2px;
-    background: linear-gradient(270deg, transparent, #FF9B54);
+    background: linear-gradient(270deg, transparent, #013ef6);
     animation: ${btnAnim3} 1s linear infinite;
     animation-delay: 0.5s;
   }
@@ -189,7 +189,7 @@ const StyledLoginButton = styled(LoginButton)`
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(360deg, transparent, #FF9B54);
+    background: linear-gradient(360deg, transparent, #013ef6);
     animation: ${btnAnim4} 1s linear infinite;
     animation-delay: 0.75s;
   }

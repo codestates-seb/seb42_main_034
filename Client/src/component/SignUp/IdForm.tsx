@@ -7,7 +7,6 @@ import { AxiosResponse } from "axios";
 
 
 interface IdFormProps {
-
     data: {
         label: string;
         state: string;
@@ -58,32 +57,36 @@ const IdForm = ({data, notifi}: IdFormProps) => {
     
     return (
         <MainContainer>
-            <InputWrapper key={label}>
-                {/* <SignInput label={label} state={state} setState={setState} maxLength={20} /> */}
-                <SignInput label={label} state={state} setState={setState} maxLength={20} />
-                
-                {/* <div onClick={()=>handleValidateClick(label, state, setValidity)}> */}
-                <div onClick={()=>handleValidateClick(label, state)}>
-                    중복확인
-                </div>
-            </InputWrapper>
+            <StyledLabel htmlFor={label}>{label}</StyledLabel>
+            <SignInput label={label} state={state} setState={setState} maxLength={30} />
         </MainContainer>
     )
 }
 
 const MainContainer = styled.div`
-    width: 100%;
-    display: grid;
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    align-items: normal;
+  }
 `
-const InputWrapper = styled.div`
-    width: 100%;
-    flex-wrap: wrap;
-    position: relative;
-    display: flex;
-`
 
-
-
+const StyledLabel = styled.label`
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .6s;
+  width: 10%;
+`;
 
 
 
