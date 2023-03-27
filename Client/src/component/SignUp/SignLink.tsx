@@ -24,6 +24,7 @@ const SignLink = (props: SignLink) => {
 const MainContainer = styled.div`
     text-align: center;
     margin: 1.5rem;
+    padding-top: 100px;
 `
 const SpanStyled = styled.span`
     font-weight: bold;

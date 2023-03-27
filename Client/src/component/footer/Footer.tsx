@@ -8,7 +8,7 @@ const BottomLayout = styled.div`
   background: ${Colors.board_color};
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
-  max-width: 100vw
+  max-width: 100vw;
   margin: auto;
   padding: 0.5rem;
   margin-top: 3rem;

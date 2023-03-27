@@ -18,7 +18,7 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
-import BoardList from 'pages/question/BoardList';
+import BoardList from 'pages/question/QuestionList';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
