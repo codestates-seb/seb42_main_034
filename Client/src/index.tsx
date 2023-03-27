@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
+
 import Error from './pages/Error';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
@@ -67,4 +68,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-createRoot(document.getElementById('root') as HTMLElement).render(<RouterProvider router={router} />);
+createRoot(document.getElementById('root') as HTMLBaseElement).render(
+  <RouterProvider router={router} />
+);
