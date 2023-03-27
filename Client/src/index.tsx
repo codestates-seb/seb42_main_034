@@ -14,15 +14,11 @@ import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
-import QuestionList from './pages/question/QuestionList';
 import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
 import { PersistGate } from 'redux-persist/integration/react';
-import BlogList from 'pages/blog/BlogList';
-import Modal from 'component/ui/Modal';
-import DropBox from 'component/ui/DropBox';
+import BoardList from 'pages/question/BoardList';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -43,27 +39,16 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/list/:section',
-            element: <DropBox />,
+            path: '/board/boardlist',
+            element: <BoardList />,
           },
-          {
-            path: '/board/bloglist',
-            element: <BlogList />,
-          },
-          {
-            path: '/board/bloglist',
-            element: <BlogList />,
-          },
-          {
-            path: '/board/questionlist',
-            element: <QuestionList />,
-          },
+
           {
             path: '/board/boarddetails/:section',
             element: <BlogDetails />,
           },
           {
-            path: '/board/questiondetails/:id',
+            path: '/board/questionsdetails/:id',
             element: <QuestionDetails />,
           },
           {
