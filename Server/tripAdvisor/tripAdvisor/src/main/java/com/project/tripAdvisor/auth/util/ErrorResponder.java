@@ -1,4 +1,4 @@
-package com.project.tripAdvisor.auth;
+package com.project.tripAdvisor.auth.util;
 
 import com.google.gson.Gson;
 import com.project.tripAdvisor.response.ErrorResponse;

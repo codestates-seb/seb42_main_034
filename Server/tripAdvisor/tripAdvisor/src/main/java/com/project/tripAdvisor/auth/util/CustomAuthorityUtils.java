@@ -1,4 +1,4 @@
-package com.project.tripAdvisor.auth;
+package com.project.tripAdvisor.auth.util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,15 +24,6 @@ public class CustomAuthorityUtils {
     private final List<String> ADMIN_ROLES_STRING = List.of("ADMIN", "USER");
     //사용자 role 목록
     private final List<String> USER_ROLES_STRING = List.of("USER");
-
-    //메모리상의 role을 기반으로 권한 정보 생성.(application.yml)
-    public List<GrantedAuthority> createdAuthorities(String email){
-        if(email.equals(adminMailAddress)){//<---- application.yml 파일의 mail.address.admin 프로퍼티에 정의된 관리자용 이메일 주소를 기준으로 관리자 Role을 추가했었음
-            //이제 아래의 DB에 저장된 Role을 이용하면 그러지 않아도 됨.
-            return ADMIN_ROLES;
-        }
-        return USER_ROLES;
-    }
 
     //DB에 저장된 Role을기반으로 권한 정보 생성
     public List<GrantedAuthority> createAuthorities(List<String> roles){

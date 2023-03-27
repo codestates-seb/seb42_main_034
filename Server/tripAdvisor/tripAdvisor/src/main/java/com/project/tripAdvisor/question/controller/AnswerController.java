@@ -1,15 +1,10 @@
 package com.project.tripAdvisor.question.controller;
 
-import com.project.tripAdvisor.blog.dto.BlogAnswerCommentPatchDto;
-import com.project.tripAdvisor.blog.dto.BlogAnswerCommentPostDto;
-import com.project.tripAdvisor.blog.entity.BlogAnswerComment;
-import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.dto.AnswerCommentDto;
 import com.project.tripAdvisor.question.dto.AnswerDto;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.AnswerComment;
-import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.AnswerCommentMapper;
 import com.project.tripAdvisor.question.mapper.AnswerMapper;
 import com.project.tripAdvisor.question.service.AnswerService;
@@ -29,7 +24,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @Validated
-@RequestMapping("/answers")
+@RequestMapping("/questions/answer")
 public class AnswerController {
 
     private final AnswerMapper answerMapper;

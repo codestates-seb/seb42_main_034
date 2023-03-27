@@ -59,5 +59,19 @@ public class MemberDto {
         private LocalDateTime modifiedAt;
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class MemberQuestionResponse{
+        private String title;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class MemberBlogResponse{
+        private String title;
+    }
+
 
 }

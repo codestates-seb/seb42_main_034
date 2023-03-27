@@ -53,6 +53,7 @@ public class BlogDto {
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Response {
         private Long blogId;

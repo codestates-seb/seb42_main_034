@@ -1,15 +1,13 @@
 package com.project.tripAdvisor.auth.filter;
 
-import com.project.tripAdvisor.auth.CustomAuthorityUtils;
-import com.project.tripAdvisor.auth.JwtTokenizer;
-import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.MemberRepository;
+import com.project.tripAdvisor.auth.util.CustomAuthorityUtils;
+import com.project.tripAdvisor.auth.util.JwtTokenizer;
 import io.jsonwebtoken.ExpiredJwtException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.security.SignatureException;
@@ -20,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
+@Component
 //클라이언트 측에서 JWT를 이용해 자격증명이 필요한 리소스에 대해 request전송 시 헤더를 통해 전달받은 JWT를 서버측에서 검증
 public class JwtVerificationFilter extends OncePerRequestFilter {//request당 한번만 실행되는 시큐리티 필터구현가능
     //JWT를 검증하고, Claims(토큰에 포함된 정보)를 얻는데 사용
@@ -29,10 +27,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {//request당 �
     //Authentication 객체에 채울 사용자 권한을 생성하는데 이용
     private final CustomAuthorityUtils authorityUtils;
 
-
-
-    @Autowired
-    private MemberRepository memberRepository;
+//    private final MemberRepository memberRepository;
 
 
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
@@ -43,6 +38,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {//request당 �
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                  FilterChain filterChain) throws ServletException, IOException {
+
         try {
             Map<String, Object> claims = verifyJws(request);//서버에서 전송한 JWT를 request 헤터에서 얻음
             setAuthenticationToContext(claims);//Authentication 객체를 SecurityContext에 저장하기 위한 메서드
@@ -54,11 +50,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {//request당 �
             request.setAttribute("exception", e);
         }
 
-        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<Member> member  = memberRepository.findByEmail(email);
-        member.ifPresent(m-> request.setAttribute("memberId", m.getId()));
-
-        //위 과정이 성공적으로 수행되면 다음 security filter를 호출한다.
         filterChain.doFilter(request, response);
     }
 

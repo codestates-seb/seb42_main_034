@@ -1,6 +1,6 @@
 /*package com.project.tripAdvisor.member;
 
-import com.project.tripAdvisor.auth.JwtTokenizer;
+import com.project.tripAdvisor.auth.util.JwtTokenizer;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

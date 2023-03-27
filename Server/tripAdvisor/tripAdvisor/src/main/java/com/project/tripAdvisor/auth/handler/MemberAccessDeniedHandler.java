@@ -1,7 +1,7 @@
 package com.project.tripAdvisor.auth.handler;
 
 
-import com.project.tripAdvisor.auth.ErrorResponder;
+import com.project.tripAdvisor.auth.util.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

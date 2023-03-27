@@ -7,7 +7,7 @@ import com.project.tripAdvisor.blog.mapper.BlogMapper;
 import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.blog.service.BlogService;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.response.MultiResponseDto;
 import com.project.tripAdvisor.response.SingleResponseDto;
 import com.project.tripAdvisor.tag.entity.BlogTag;
@@ -76,7 +76,7 @@ public class BlogController {
 
     @PatchMapping("/{blog-id}")
     public ResponseEntity patchBlog(@PathVariable("blog-id") @Positive Long blogId,
-                                        @Valid @RequestBody BlogDto.Patch requestBody) {
+                                    @Valid @RequestBody BlogDto.Patch requestBody) {
 
         Blog blog = mapper.blogPatchDtoToBlog(requestBody);
         blog.setId(blogId);
@@ -94,7 +94,7 @@ public class BlogController {
 
     @DeleteMapping("{blog-id}")
     public ResponseEntity deleteBlog(@PathVariable("blog-id") @Positive Long blogId,
-                                         @Positive @RequestParam Long memberId) {
+                                     @Positive @RequestParam Long memberId) {
         blogService.deleteBlog(blogId, memberId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -113,8 +113,8 @@ public class BlogController {
 //    @CrossOrigin("*")
     @GetMapping
     public ResponseEntity getBlogs(@RequestParam String category,
-                                       @Positive @RequestParam int page,
-                                       @RequestParam String sortedBy) {
+                                   @Positive @RequestParam int page,
+                                   @RequestParam String sortedBy) {
         Page<Blog> pageBlog = blogService.findBlog(category,page - 1, sortedBy);
         List<Blog> blogList = pageBlog.getContent();
 
@@ -154,7 +154,7 @@ public class BlogController {
     }
     @PostMapping("/like/{blog-id}")
     public ResponseEntity postBlogLike(@Positive @PathVariable("blog-id") Long blogId,
-                                           @Positive @RequestParam Long memberId) {
+                                       @Positive @RequestParam Long memberId) {
 
         blogService.switchLike(blogId, memberId);
 
@@ -167,4 +167,3 @@ public class BlogController {
     }
 
 }
-
