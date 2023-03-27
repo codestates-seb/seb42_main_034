@@ -5,7 +5,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userInfoReducer from './userInfoSlice';
 import loginInfoReducer from './userSlice';
 import notificationReducer from './notifiCation';
-// import logger from 'redux-logger';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
@@ -33,11 +32,6 @@ export const store = configureStore({
     loginInfo: persistReducer(loginPersistConfig, loginInfoReducer),
   },
   middleware,
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-  // middleware: getDefaultMiddleware =>
-  // getDefaultMiddleware({
-  //     serializableCheck: false,
-  // }),
 });
 
 export const persistor = persistStore(store);

@@ -10,9 +10,9 @@ import { useValidate } from 'hooks/useVaildDate';
 import React from 'react';
 import IdForm from './IdForm';
 import PasswordForm from './PasswordForm';
+import CurrentPosition from './CurrentPosition';
 
 export type inputKeys =  'email' | 'nickname' | 'password' | 'passwordCheck';
-
 
 export const SignUpForm = () => {
   const [inputs, setInputs] = useState({
@@ -28,11 +28,10 @@ export const SignUpForm = () => {
     password: false,
     passwordCheck: false,
   });
-  // const [isChecked, setIsChecked] = useState(false);
   const api = useAPI();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const notifiMessages = SignUpMessages(inputs, isValid);
+  const notifiMessages = SignUpMessages(inputs);
   const goNotifi = (message: string) => notifi(dispatch, message);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -40,27 +39,28 @@ export const SignUpForm = () => {
     notifiMessages.forEach((message, notifiCase) => {
       if (notifiCase) goNotifi(message);
     });
-    const data = { email, nickname, password }
-    try {
-      await api.post('/members', data);
+
+    // const data = { email, nickname, password };
+    // try {
+    //   await api.post('/members', data);
+    //   goNotifi('회원가입이 완료 되었습니다.');
+    //   navigate('/board/signin');
+    //   alert('회원가입 완료')
+    // } catch {
+    //   goNotifi('회원가입에 실패 하였습니다...');
+    // }
+
+    if (Object.values(isValid).includes(false)) {
+      const data = { email, nickname, password };
+      try {
+        await api.post('/members', data);
         goNotifi('회원가입이 완료 되었습니다.');
         navigate('/board/signin');
         alert('회원가입 완료')
-  } catch {
-    goNotifi('가입실패');
-  }
-  
-    // if (!Object.values(isValid).includes(false)) {
-    //   const data = { email, nickname, password };
-    //   try {
-    //     await api.post('/members', data);
-    //     goNotifi('회원가입이 완료 되었습니다.');
-    //     navigate('/board/signin');
-    //     alert('회원가입 완료')
-    //   } catch {
-    //     goNotifi('회원가입에 실패 하였습니다...');
-    //   }
-    // }
+      } catch {
+        goNotifi('회원가입에 실패 하였습니다...');
+      }
+    }
   };
 
   const getSectionProps = (label: string, select: inputKeys) => {
@@ -94,17 +94,15 @@ export const SignUpForm = () => {
     }),
   );
 
-
   
   return (
     <MainFormContainer onSubmit={handleSubmit}>
       <FormWrapper>
       <IdForm data={getSectionProps('아이디',  'email')} notifi={goNotifi}/>
       <IdForm data={getSectionProps('닉네임', 'nickname')} notifi={goNotifi}/>
-      </FormWrapper>
-      <FormWrapper>
       <PasswordForm data={getSectionProps('비밀번호', 'password')} />
       <PasswordForm data={getSectionProps('비밀번호 확인', 'passwordCheck')} />
+      <CurrentPosition />
       </FormWrapper>
       <SubmitButton >회원가입</SubmitButton>
     </MainFormContainer >

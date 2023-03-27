@@ -12,7 +12,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isLogin && navigate(-1);
+    isLogin && navigate('/');
   }, []);
 
 

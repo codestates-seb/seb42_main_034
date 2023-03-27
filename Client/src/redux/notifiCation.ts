@@ -14,8 +14,6 @@ export type payloadType = {
     dismissTime?: number;
 };
 
-
-
 const initialState: notificationType = { messages: [] };
 const notificationSlice = createSlice({
     name: 'notification',

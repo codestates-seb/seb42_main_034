@@ -14,22 +14,24 @@ interface TabProps {
 }
 
 const TabLists = (props: TabListsProps) => {
+    
     const { tabs, handleChange } = props;
     return (
         <Container>
-            {tabs.map(tab => {
-                const { id, name, selected } = tab;
-                return (
-                    <Tab
-                        key={id}
-                        selected={selected}
-                        onClick={() => {
-                            handleChange(id);
-                        }}>
-                        <span>{name}</span>
-                    </Tab>
-                );
-            })}
+      {tabs.map((tab) => {
+        const { id, name, selected } = tab;
+        return (
+          <Tab
+            key={id}
+            selected={selected}
+            onClick={() => {
+              handleChange(id);
+            }}
+          >
+            <span>{name}</span>
+          </Tab>
+        );
+      })}
         </Container>
     );
 };
@@ -44,7 +46,7 @@ const Container = styled.div`
     max-width: 800px;
 `
 
-const Tab = styled.button<TabProps>`
+const Tab = styled.button<{ selected: boolean }>`
     width: 45%;
     max-width: 380px;
     height: 2.5rem;
