@@ -1,22 +1,23 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthAPI } from 'api/auth';
 import { useMypageAPI } from 'api/mypage';
-import useTabs from 'hooks/useTabs';
+// import useTabs from 'hooks/useTabs';
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import styled from 'styled-components'
 import {FiEdit} from 'react-icons/fi'
-import TabLists from 'component/ui/MypageTabs';
+// import TabLists from 'component/ui/MypageTabs';
 import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
+import { useState } from 'react';
 
 export default function MyPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [tab,  curTab, handleTabChange] = useTabs(['작성 글', '작성 댓글']);
+  // const [tab,  curTab, handleTabChange] = useTabs(['작성 글', '작성 댓글', '작성 질문']);
   const {id} = useAppSelector(state => state.loginInfo)
   const {deleteLogout} = useAuthAPI();
   const {mutate: mutateLogout} = useMutation(deleteLogout);
@@ -31,7 +32,33 @@ export default function MyPage() {
     queryFn: ()=> getMyInfo(id),
     retry: false,
   });
-
+  
+  
+  const [activeTab, setActiveTab] = useState<number>(0);
+  const handleTabClick = (index: number) => {
+    setActiveTab(index);
+  };
+  const renderTabs = () => {
+    return (
+      <>
+        <TabStyled onClick={() => handleTabClick(0)}>Tab 1</TabStyled>
+        <TabStyled onClick={() => handleTabClick(1)}>Tab 2</TabStyled>
+        <TabStyled onClick={() => handleTabClick(2)}>Tab 3</TabStyled>
+      </>
+    );
+  };
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 0:
+        return <div>가나다라</div>;
+      case 1:
+        return <div>1234</div>;
+      case 2:
+        return <div>ABCD</div>;
+      default:
+        return null;
+    }
+  };
 
   return(<> 
   <MainContainer>
@@ -46,7 +73,7 @@ export default function MyPage() {
       </img>
 
       <UserInfoContainer>
-        <p>닉네임: {data?.name ?? '로그인 상태가 아닙니다.'}</p>
+        <p>닉네임: {data?.nickname ?? '로그인 상태가 아닙니다.'}</p>
         <p>
           도시 : {data?.address ?? '도시가 설정되어 있지 않습니다.'}
         </p>
@@ -59,10 +86,18 @@ export default function MyPage() {
       </UserInfoContainer>
     </ProfileContainer>
 
-    <TabLists handleChange={handleTabChange} tabs={tab}/>
+    {/* <TabLists/> */}
     {/* {curTab === '작성 글' && <글 리스트 컴포넌트 />}
     {curTab === '작성 댓글' && <글 리스트 컴포넌트 />} */}
+{/* 
+    {curTab === '작성 글' && <div>hi</div>}
+    {curTab === '작성 댓글' && <div>hello</div>}
+    {curTab === '작성 질문' && <div>hello</div>} */}
 
+    <TabContainer>
+      {renderTabs()}
+      {renderTabContent()}
+    </TabContainer>
 
     <Nbutton
     onClick={() => {
@@ -132,3 +167,24 @@ const UserInfoContainer = styled.div`
   }
 `
 
+const TabContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1rem 0;
+    max-width: 800px;
+`
+
+const TabStyled = styled.div`
+    /* width: 45%;
+    max-width: 380px;
+    height: 2.5rem; */
+    background-color: skyblue;
+    /* border: none;
+    cursor: pointer;
+    font-size: 10px;
+    display: flex; */
+    :hover {
+        background-color: #6868fa;
+    }
+`
