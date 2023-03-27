@@ -8,7 +8,7 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
   isDisabled?: boolean;
   typeButton?: ButtonType;
   onClick?: any;
-  children: React.ReactNode | string;
+  children: React.ReactNode | string | number;
   style?: React.CSSProperties;
   region?: string;
   setState?: React.Dispatch<React.SetStateAction<string>>;

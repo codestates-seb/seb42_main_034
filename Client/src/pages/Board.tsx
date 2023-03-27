@@ -22,7 +22,7 @@ const Layout = styled.div`
     background: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
   }
-  padding: 2rem;
+  padding: 0.6rem;
   border-radius: 3rem;
   max-width: ${ScreenSize.max_width};
   margin: auto;

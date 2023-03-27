@@ -8,6 +8,7 @@ const Card = styled.li`
   background: ${Colors.main_04_white};
   margin: 2rem;
   list-style: none;
+  height: 5rem;
 `;
 
 export default function QuestionCard({ city, filter }: { city: ReturnData; filter: string }) {

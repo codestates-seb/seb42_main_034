@@ -24,11 +24,12 @@ export const ButtonTheme = css`
     background-color: var(--button-clicked);
   }
 `;
-export const Flex = styled.div<{ direction?: string; justify?: string; items?: string }>`
+export const Flex = styled.div<{ width?: string; direction?: string; justify?: string; items?: string }>`
   display: flex;
   flex-direction: ${(props) => props.direction};
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.items};
+  width: ${(props) => props.width};
 `;
 export const Relative = css`
   position: relative;

@@ -17,17 +17,17 @@ interface QuestionList {
 export interface ReturnData {
   [key: string]: any;
   data: {
-    questionId: string;
+    questionId: number;
     title: string;
     tag: string;
     writer: string;
     createdAt: string;
   };
   pageInfo: {
-    totalCnt: string;
-    size: string;
-    page: string;
-    toatalPage: string;
+    totalElements: number;
+    size: number;
+    page: number;
+    toatalPages: number;
   };
 }
 interface Mock {
@@ -112,22 +112,20 @@ export class CRUDdata {
 //     console.log(error);
 //   });
 
-// axios
-//   .get(
-//     encodeURI(
-//       `http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/blog?category=부산&page=1&sortedBy=hot`,
-//     ),
-//     // {
-//     //   memberId: '1',
-//     //   category: '바다',
-//     //   title: '안녕하세요ㅠㅠㅠㅠ',
-//     //   content: '돼주라 제발!',
-//     //   tags: ['바다', '산'],
-//     // },
-//     {
-//       headers: { 'Accept-Encoding': 'deflate, br' },
-//       withCredentials: true,
-//     },
-//   )
-//   .then(console.log)
-//   .catch(console.error);
+axios
+  .get(
+    `http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions/answer/1?page=1`,
+
+    // {
+    //   memberId: '1',
+    //   category: '바다',
+    //   title: '안녕하세요ㅠㅠㅠㅠ',
+    //   content: '돼주라 제발!',
+    //   tags: ['바다', '산'],
+    // },
+    {
+      withCredentials: true,
+    },
+  )
+  .then(console.log)
+  .catch(console.error);
