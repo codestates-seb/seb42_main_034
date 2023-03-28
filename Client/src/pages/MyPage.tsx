@@ -36,7 +36,7 @@ export default function MyPage() {
 
   return(<> 
   <MainContainer>
-    My Page   
+    My Page!
     <ProfileContainer>
       <img
       className='profileimage'
