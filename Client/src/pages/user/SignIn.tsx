@@ -20,7 +20,7 @@ const SignIn = () => {
           <Container>
             <Title>로그인</Title>
             <LoginForm />
-            <SignLink message="아직 회원이 아니신가요 ?" linkText="회원가입 하러가기" link="signup" />
+            <SignLink message="아직 회원이 아니신가요 ?" linkText="회원가입 하러가기" link="/board/signup" />
           </Container>
         </PageStyled>
       )}

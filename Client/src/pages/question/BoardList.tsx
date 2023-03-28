@@ -7,7 +7,7 @@ import { Button, IButtonProps } from 'component/ui/Button';
 import QuestionCard from './QuestionCard';
 import styled from 'styled-components';
 import { Colors } from 'component/style/variables';
-import Searchbar from 'component/board/Searchbar';
+// import Searchbar from 'component/board/Searchbar';
 import Page from 'component/Page';
 export const StyledCategoryBtn = styled(Button)`
   background: none;
@@ -44,7 +44,7 @@ export default function BoardList() {
   // 블로그 버튼을 누르면 해당 블로그로 데이터 get 함 -> 필터를 바꿔야 useEffect로 다시 받아올수있음
   return (
     <Flex direction="column" width="100%" height="900px">
-      <Searchbar />
+      {/* <Searchbar /> */}
       <Flex items="center" justify="space-between">
         {city &&
           section.map((filter, idx) => (
