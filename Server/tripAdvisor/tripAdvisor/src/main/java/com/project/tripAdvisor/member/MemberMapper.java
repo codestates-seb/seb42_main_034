@@ -19,6 +19,7 @@ public interface MemberMapper {
 
     List<MemberDto.MemberBlogResponse> BlogsToMemberBlogsResponseDtos(List<Blog> blogs);
 
+    MemberDto.MemberInfo MemberToMemberInfoDto(Member member);
 
 
 }

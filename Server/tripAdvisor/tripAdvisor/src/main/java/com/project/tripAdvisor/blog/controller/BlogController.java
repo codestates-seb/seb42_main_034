@@ -7,11 +7,10 @@ import com.project.tripAdvisor.blog.mapper.BlogMapper;
 import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.blog.service.BlogService;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.service.MemberService;
+import com.project.tripAdvisor.member.sevice.MemberService;
 import com.project.tripAdvisor.response.MultiResponseDto;
 import com.project.tripAdvisor.response.SingleResponseDto;
 import com.project.tripAdvisor.tag.entity.BlogTag;
-import com.project.tripAdvisor.tag.entity.Tag;
 import com.project.tripAdvisor.tag.service.TagService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin

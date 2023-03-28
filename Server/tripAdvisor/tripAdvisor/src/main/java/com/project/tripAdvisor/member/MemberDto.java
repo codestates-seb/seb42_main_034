@@ -73,5 +73,12 @@ public class MemberDto {
         private String title;
     }
 
-
+    @Getter
+    @AllArgsConstructor
+    public static class MemberInfo{
+        private String email;
+        private String nickname;
+        private String location;
+        private LocalDateTime createdAt;
+    }
 }
