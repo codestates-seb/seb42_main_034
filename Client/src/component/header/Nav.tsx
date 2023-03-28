@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Logo } from './Logo';
 import { Props } from '../header/Logo';
 import UserTab from './UserTab';
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Colors } from 'component/style/variables';
 import { Flex } from 'component/style/cssTemplete';
 import Search from 'component/ui/Search';
+import { useAppSelector } from 'redux/hooks';
 const LogoStyle = styled(Logo)`
   transform: scale(1.6);
   width: 10rem;
@@ -15,6 +16,10 @@ const LogoStyle = styled(Logo)`
   color: ${Colors.text_black};
 `;
 export default function Nav({ className }: Props) {
+  const { isLogin } = useAppSelector((state) => state.loginInfo);
+  useEffect(() => {
+    console.log();
+  }, [isLogin]);
   return (
     <div className={className}>
       <Link to="/home">

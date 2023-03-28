@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,6 @@ import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
 import LoginButton from './LoginButton';
-
 
 const Loginform = () => {
   const [email, setEmail] = useState('');
@@ -35,7 +34,8 @@ const Loginform = () => {
       dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
       notifi(dispatch, `${data.nickname}님 환영합니다.`);
       navigate(-1);
-      console.log(res)
+      console.log(res);
+
       setTimeout(() => {
         dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
       }, 1000 * 60 * 29);
@@ -45,7 +45,6 @@ const Loginform = () => {
       alert('아이디 혹은 비밀번호를 확인해주세요');
     },
   });
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,27 +66,25 @@ const Loginform = () => {
         <LoginInput label="PW" type="password" state={password} setState={setPassword} />
         {vaildPW ? '' : '비밀번호를 입력 해주세요.'}
       </PWWrapper>
-        
-      <StyledLoginButton fontSize='small' backgroundColor='grey'>
+
+      <StyledLoginButton fontSize="small" backgroundColor="grey">
         <span></span>
         <span></span>
         <span></span>
         <span></span>
         로그인
-        
-        </StyledLoginButton>
+      </StyledLoginButton>
     </LoginFormWrapper>
   );
 };
 
 export default Loginform;
 
-
 const EmailWrapper = styled.div`
-position: relative;
+  position: relative;
 `;
 const PWWrapper = styled.div`
-position: relative;
+  position: relative;
 `;
 
 const LoginFormWrapper = styled.form`
@@ -146,7 +143,7 @@ const StyledLoginButton = styled(LoginButton)`
   transition: 0.5s;
   border-radius: 10px;
   padding: 12px 40px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   &:hover {
     background: #0583c6;
     color: #fff;
@@ -162,7 +159,9 @@ const StyledLoginButton = styled(LoginButton)`
     left: -100%;
     width: 100%;
     height: 2px;
+
     background: linear-gradient(90deg, transparent, #013ef6);
+
     animation: ${btnAnim1} 1s linear infinite;
   }
   span:nth-child(2) {
@@ -170,7 +169,9 @@ const StyledLoginButton = styled(LoginButton)`
     right: 0;
     width: 2px;
     height: 100%;
+
     background: linear-gradient(180deg, transparent, #013ef6);
+
     animation: ${btnAnim2} 1s linear infinite;
     animation-delay: 0.25s;
   }
@@ -179,7 +180,9 @@ const StyledLoginButton = styled(LoginButton)`
     right: -100%;
     width: 100%;
     height: 2px;
+
     background: linear-gradient(270deg, transparent, #013ef6);
+
     animation: ${btnAnim3} 1s linear infinite;
     animation-delay: 0.5s;
   }
@@ -188,7 +191,9 @@ const StyledLoginButton = styled(LoginButton)`
     left: 0;
     width: 2px;
     height: 100%;
+
     background: linear-gradient(360deg, transparent, #013ef6);
+
     animation: ${btnAnim4} 1s linear infinite;
     animation-delay: 0.75s;
   }

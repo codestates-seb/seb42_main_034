@@ -3,8 +3,6 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { Colors, ScreenSize } from '../component/style/variables';
 import { BoxShadow } from '../component/style/cssTemplete';
-
-
 const Layout = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,11 +22,11 @@ const Layout = styled.div`
     background: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
   }
-  padding: 2rem;
+  padding: 0.6rem;
   border-radius: 3rem;
   max-width: ${ScreenSize.max_width};
   margin: auto;
-  background: ${Colors.board_color};
+  background: ${Colors.boardlist_color};
   border: 5px solid black;
   ${BoxShadow};
 `;

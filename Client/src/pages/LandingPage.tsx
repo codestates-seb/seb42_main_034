@@ -17,27 +17,27 @@ export default function LandingPage() {
       duration: 0,
     });
 
-    // const Silde1 = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: '.slide1',
-    //     toggleActions: 'restart restart restart restart',
-    //     start: '0% 100%',
-    //     end: '50% 0%',
-    //     // markers: true,
-    //   },
-    // });
-    // Silde1.from('.top1', {
-    //   opacity: 0,
-    //   x: '-22%',
-    // })
-    //   .from('.top2', {
-    //     opacity: 0,
-    //     x: '-22%',
-    //   })
-    //   .from('.top3', {
-    //     opacity: 0,
-    //     x: '-22%',
-    //   }); // Sli
+    const Silde1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.slide1',
+        toggleActions: 'restart restart restart restart',
+        start: '0% 100%',
+        end: '50% 0%',
+        // markers: true,
+      },
+    });
+    Silde1.from('.top1', {
+      opacity: 0,
+      x: '-22%',
+    })
+      .from('.top2', {
+        opacity: 0,
+        x: '-22%',
+      })
+      .from('.top3', {
+        opacity: 0,
+        x: '-22%',
+      }); // Sli
 
     //지도
     const Slide2 = gsap.timeline({
@@ -45,7 +45,7 @@ export default function LandingPage() {
         trigger: '.slide2',
         start: '110% 110%',
         end: '100% 20%%',
-        markers: true,
+        // markers: true,
         scrub: 2.2,
         pin: '.slide2',
       },
@@ -62,6 +62,7 @@ export default function LandingPage() {
         opacity: 0,
         x: '-22%',
       }); // Sli
+
     //   const Slide3 = gsap.timeline({
     //     scrollTrigger: {
     //       trigger: '.slide3',

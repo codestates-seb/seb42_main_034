@@ -18,9 +18,10 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
+
 import BlogList from 'pages/blog/BlogList';
 import NotificationCenter from 'component/ui/NotifiCationCenter';
-
+import BoardList from 'pages/question/BoardList';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -83,10 +84,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <NotificationCenter />
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <NotificationCenter />
+      </QueryClientProvider>
     </PersistGate>
   </Provider>,
 );

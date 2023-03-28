@@ -1,6 +1,5 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import QuestionList from 'pages/question/QuestionList';
-
+import { axiosInstance } from './instance';
 
 axios.defaults.withCredentials = true;
 interface QuestionList {
@@ -66,4 +65,3 @@ export class CRUDdata {
     // }
   }
 }
-

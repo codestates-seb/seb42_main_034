@@ -6,6 +6,8 @@ import Editor from '../../component/board/Editor';
 import Tags from '../../component/board/Tags';
 import axios from 'axios';
 
+import useAPI from '../../hooks/uesAPI';
+import { useAppSelector } from 'redux/hooks';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -33,7 +35,8 @@ export default function QuestionPost() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [tag, setTag] = useState<string[]>([]);
-
+  const api = useAPI();
+  const { accessToken } = useAppSelector((state) => state.loginInfo);
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -59,14 +62,24 @@ export default function QuestionPost() {
       alert('내용을 입력하세요.');
       return;
     }
+    console.log(accessToken);
+
     axios
-      .post('http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions', {
-        memberId: 1,
-        title,
-        content,
-        tag,
-        category: 'test',
-      })
+      .post(
+        'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions',
+        {
+          memberId: 1,
+          title,
+          content,
+          tag,
+          category: 'test',
+        },
+        {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      )
       .then(function (response) {
         console.log(response);
       })
