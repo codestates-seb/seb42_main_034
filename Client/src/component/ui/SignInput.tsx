@@ -17,20 +17,32 @@ const SignInput = (props: SignInputProps) => {
     setState?.(e.target.value);
   };
   return (
-    <Wrapper>
+    <>
         <StyledInput label={label} type={type} value={state} onChange={handleChange} placeholder={placeholder} maxLength={maxLength}/> 
-    </Wrapper>
+    </>
   )
 }
-const Wrapper = styled.div`
-    
-`
+
 const StyledInput = styled.input<SignInputProps>`
-  padding-left: 1rem;
-  width: ${({ width }) => width ?? '30rem'};
-  height: ${({ height }) => height ?? '3rem'};
-  margin-bottom: ${({ marginBottom }) => marginBottom ?? '0'};
-  border-radius: 4px;
+width: 100%;
+padding: 10px 0;
+font-size: 16px;
+color: #fff;
+border: none;
+margin-bottom: 30px;
+border-bottom: 1px solid #fff;
+outline: none;
+background: transparent;
+&:focus ~ label,
+&:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size:12px;
+}
 `;
+
+
+
 
 export default SignInput;

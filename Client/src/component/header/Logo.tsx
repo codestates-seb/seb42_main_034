@@ -33,7 +33,6 @@ const LogoImg = styled(Icon)<{ svg: React.ReactNode }>`
 
 //로고크기 줄이기
 export const Logo: React.FC = ({ className }: Props) => {
-  useAPI();
   return (
     <LogoLink className={className}>
       <LogoImg svg={<LogoIcon className="img" />}></LogoImg>

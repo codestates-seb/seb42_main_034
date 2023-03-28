@@ -11,8 +11,8 @@ const ScrollTop1 = styled(Button)`
   width: 4rem;
   height: 4rem;
   font-size: 1.3rem;
-  padding: 1rem;
-  padding-right: 1.4rem;
+  padding-left: 0.6rem;
+  padding-right: 1rem;
   position: fixed;
   bottom: 2rem;
   right: 2%;

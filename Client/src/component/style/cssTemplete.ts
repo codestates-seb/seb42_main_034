@@ -30,6 +30,7 @@ export const Flex = styled.div<{
   direction?: string;
   justify?: string;
   items?: string;
+  gap?: string;
 }>`
   display: flex;
   flex-direction: ${(props) => props.direction};
@@ -37,6 +38,7 @@ export const Flex = styled.div<{
   align-items: ${(props) => props.items};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  gap: ${(props) => props.gap};
 `;
 export const Relative = styled.div<{ width?: string; height?: string; pb?: string }>`
   position: relative;

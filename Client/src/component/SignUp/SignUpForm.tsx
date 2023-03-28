@@ -10,8 +10,9 @@ import { useValidate } from 'hooks/useVaildDate';
 import React from 'react';
 import IdForm from './IdForm';
 import PasswordForm from './PasswordForm';
+import CurrentPosition from './CurrentPosition';
 
-export type inputKeys =  'email' | 'nickname' | 'password' | 'passwordCheck';
+export type inputKeys = 'email' | 'nickname' | 'password' | 'passwordCheck';
 
 export const SignUpForm = () => {
   const [inputs, setInputs] = useState({
@@ -27,39 +28,34 @@ export const SignUpForm = () => {
     password: false,
     passwordCheck: false,
   });
-  // const [isChecked, setIsChecked] = useState(false);
   const api = useAPI();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const notifiMessages = SignUpMessages(inputs, isValid);
+  const notifiMessages = SignUpMessages(inputs);
   const goNotifi = (message: string) => notifi(dispatch, message);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    const notifiMessages = SignUpMessages(inputs);
+    let allConditionsSatisfied = true;
     notifiMessages.forEach((message, notifiCase) => {
-      if (notifiCase) goNotifi(message);
+      if (notifiCase) {
+        allConditionsSatisfied = false;
+        goNotifi(message);
+      }
     });
-    const data = { email, nickname, password }
-    try {
-      await api.post('/members', data);
+
+    if (allConditionsSatisfied) {
+      const data = { email, nickname, password };
+      try {
+        await api.post('/members', data);
         goNotifi('회원가입이 완료 되었습니다.');
         navigate('/board/signin');
-        alert('회원가입 완료')
-  } catch {
-    goNotifi('가입실패');
-  }
-  
-    // if (!Object.values(isValid).includes(false)) {
-    //   const data = { email, nickname, password };
-    //   try {
-    //     await api.post('/members', data);
-    //     goNotifi('회원가입이 완료 되었습니다.');
-    //     navigate('/board/signin');
-    //     alert('회원가입 완료')
-    //   } catch {
-    //     goNotifi('회원가입에 실패 하였습니다...');
-    //   }
-    // }
+        alert('회원가입 완료');
+      } catch {
+        goNotifi('회원가입에 실패 하였습니다...');
+      }
+    }
   };
 
   const getSectionProps = (label: string, select: inputKeys) => {
@@ -93,29 +89,49 @@ export const SignUpForm = () => {
     }),
   );
 
-
-  
   return (
     <MainFormContainer onSubmit={handleSubmit}>
-      <IdForm data={getSectionProps('아이디',  'email')} notifi={goNotifi} />
-      <IdForm data={getSectionProps('닉네임', 'nickname')} notifi={goNotifi} />
-      <PasswordForm data={getSectionProps('비밀번호', 'password')} />
-      <PasswordForm data={getSectionProps('비밀번호 확인', 'passwordCheck')} />
-      <SubmitButton >회원가입</SubmitButton>
-    </MainFormContainer >
+      <FormWrapper>
+        <IdForm data={getSectionProps('아이디', 'email')} notifi={goNotifi} />
+        <IdForm data={getSectionProps('닉네임', 'nickname')} notifi={goNotifi} />
+        <PasswordForm data={getSectionProps('비밀번호', 'password')} />
+        <PasswordForm data={getSectionProps('비밀번호 확인', 'passwordCheck')} />
+        <CurrentPosition />
+      </FormWrapper>
+      <SubmitButton>회원가입</SubmitButton>
+    </MainFormContainer>
   );
 };
 
 const MainFormContainer = styled.form`
   width: 100%;
-  max-width: 700px;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-`;
-const SubmitButton = styled(Nbutton)`
-  height: 3rem;
+  min-width: 22rem;
+  display: grid;
+  height: 200px;
 `;
 
-//ㅇ 
+const FormWrapper = styled.div`
+  position: relative;
+`;
+
+const SubmitButton = styled(Nbutton)`
+  position: relative;
+  display: inline-block;
+  height: 2.5rem;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  overflow: hidden;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  border-radius: 10px;
+  padding: 12px 40px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  &:hover {
+    background: #0583c6;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+  }
+`;

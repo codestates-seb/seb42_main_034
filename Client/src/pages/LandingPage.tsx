@@ -45,7 +45,7 @@ export default function LandingPage() {
         trigger: '.slide2',
         start: '110% 110%',
         end: '100% 20%%',
-        markers: true,
+        // markers: true,
         scrub: 2.2,
         pin: '.slide2',
       },
@@ -62,28 +62,29 @@ export default function LandingPage() {
         opacity: 0,
         x: '-22%',
       }); // Sli
-    const Slide3 = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.slide3',
-        start: '200% 100%',
-        end: '300% 0%',
-        // markers: "true",
-        scrub: 2.2,
-        // pin: '.slide3',
-      },
-    });
-    Slide3.from('.third1', {
-      opacity: 0,
-      x: '-22%',
-    })
-      .from('.third2', {
-        opacity: 0,
-        x: '-22%',
-      })
-      .from('.third3', {
-        opacity: 0,
-        x: '-22%',
-      });
+
+    //   const Slide3 = gsap.timeline({
+    //     scrollTrigger: {
+    //       trigger: '.slide3',
+    //       start: '200% 100%',
+    //       end: '300% 0%',
+    //       // markers: "true",
+    //       scrub: 2.2,
+    //       // pin: '.slide3',
+    //     },
+    //   });
+    //   Slide3.from('.third1', {
+    //     opacity: 0,
+    //     x: '-22%',
+    //   })
+    //     .from('.third2', {
+    //       opacity: 0,
+    //       x: '-22%',
+    //     })
+    //     .from('.third3', {
+    //       opacity: 0,
+    //       x: '-22%',
+    //     });
   }, []);
 
   return (
