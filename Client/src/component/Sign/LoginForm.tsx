@@ -32,11 +32,10 @@ const Loginform = () => {
         data,
         headers: { authorization },
       } = res;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
       notifi(dispatch, `${data.nickname}님 환영합니다.`);
       navigate(-1);
-
+      console.log(res)
       setTimeout(() => {
         dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
       }, 1000 * 60 * 29);

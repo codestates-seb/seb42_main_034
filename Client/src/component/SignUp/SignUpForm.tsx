@@ -40,28 +40,28 @@ export const SignUpForm = () => {
       if (notifiCase) goNotifi(message);
     });
 
-    const data = { email, nickname, password };
+    // const data = { email, nickname, password };
 
-    try {
-      await api.post('/members', data);
-      goNotifi('회원가입이 완료 되었습니다.');
-      navigate('/board/signin');
-      alert('회원가입 완료')
-    } catch {
-      goNotifi('회원가입에 실패 하였습니다...');
-    }
-
-    // if (Object.values(isValid).includes(false)) {
-    //   const data = { email, nickname, password };
-    //   try {
-    //     await api.post('/members', data);
-    //     goNotifi('회원가입이 완료 되었습니다.');
-    //     navigate('/board/signin');
-    //     alert('회원가입 완료')
-    //   } catch {
-    //     goNotifi('회원가입에 실패 하였습니다...');
-    //   }
+    // try {
+    //   await api.post('/members', data);
+    //   goNotifi('회원가입이 완료 되었습니다.');
+    //   navigate('/board/signin');
+    //   alert('회원가입 완료')
+    // } catch {
+    //   goNotifi('회원가입에 실패 하였습니다...');
     // }
+
+    if (Object.values(isValid).includes(false)) {
+      const data = { email, nickname, password };
+      try {
+        await api.post('/members', data);
+        goNotifi('회원가입이 완료 되었습니다.');
+        navigate('/board/signin');
+        alert('회원가입 완료')
+      } catch {
+        goNotifi('회원가입에 실패 하였습니다...');
+      }
+    }
   };
 
   const getSectionProps = (label: string, select: inputKeys) => {
@@ -144,4 +144,3 @@ const SubmitButton = styled(Nbutton)`
 `;
 
 
-// qwer1234!@#  back@front.end

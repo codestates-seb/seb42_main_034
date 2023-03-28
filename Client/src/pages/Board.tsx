@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { Colors, ScreenSize } from '../component/style/variables';
 import { BoxShadow } from '../component/style/cssTemplete';
+
+
 const Layout = styled.div`
   display: flex;
   flex-direction: column;

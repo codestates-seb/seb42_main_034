@@ -70,7 +70,7 @@ export default function MyPage() {
       </img>
 
       <UserInfoContainer>
-        <p>닉네임: {data?.nickname ?? '로그인 상태가 아닙니다.'}</p>
+        <p>닉네임: {data?.nickname ?? '로그인 정보를 불러오지 못했습니다.'}</p>
         <p>
           도시 : {data?.address ?? '도시가 설정되어 있지 않습니다.'}
         </p>

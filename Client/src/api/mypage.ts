@@ -36,11 +36,11 @@ export const useMypageAPI = () => {
   const api = useAPI();
   const dispatch = useAppDispatch();
 
-    const getMemberInfo = async (id: string | number) =>
-      await api.get(`/members/${id}`).then((res) => res.data);
+    const getMemberInfo = async (id: string | undefined) =>
+      await api.get(`/members/me`).then((res) => res.data);
 
   const getMyInfo = async (id: string | undefined) =>
-      await api.get<Member>(`/members/${id}`).then(res => {
+      await api.get<Member>(`/members/me`).then(res => {
           dispatch(setUserInfo(res.data));
           return res.data;
       });
