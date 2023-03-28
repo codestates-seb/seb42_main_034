@@ -46,6 +46,7 @@ public class MemberController {
         this.memberFindService = memberFindService;
     }
 
+    //회원가입
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPost){
         Member member = mapper.MemberPostToMember(memberPost); //MemberDto ---> 이제 우리는 Member로 로직처리
