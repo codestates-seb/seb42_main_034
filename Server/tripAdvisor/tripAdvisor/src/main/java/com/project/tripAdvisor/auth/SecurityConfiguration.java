@@ -103,7 +103,7 @@ public class SecurityConfiguration{//여기에 지원하는 인증과 권한부�
 //         configuration.addAllowedHeader("*");
 //         configuration.addExposedHeader("*");
 //        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
 
         //CorsConfigurationSource 인터페이스의 구현클래스임
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
