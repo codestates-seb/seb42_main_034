@@ -11,13 +11,21 @@ import javax.validation.constraints.NotBlank;
 public class AnswerDto {
 
     @Getter
-    @AllArgsConstructor
+    @Setter
     public static class Post{
 
-        private Long memberId;
+
 
         @NotBlank(message = "내용을 입력하세요.")
         private String content;
+
+        public Post(String content) {
+            this.content = content;
+        }
+
+        public Post(){}
+
+
     }
 
     @Getter
@@ -25,7 +33,7 @@ public class AnswerDto {
     @NoArgsConstructor
     public static class Patch{
 
-        private Long memberId;
+//        private Long memberId;
 
         private Long answerId;
 
@@ -38,7 +46,7 @@ public class AnswerDto {
     @NoArgsConstructor
     public static class Response{
 
-        private Long memberId;
+//        private Long memberId;
 
         private Long questionId;
 
@@ -53,19 +61,4 @@ public class AnswerDto {
         private String location;
 
     }
-
-
-
-
-//    private int id;
-//
-//    private String Content;
-//
-//    private boolean isChecked;
-//
-//    private int member_id;
-//
-//    private int question_id;
-//
-//    private String location;
 }

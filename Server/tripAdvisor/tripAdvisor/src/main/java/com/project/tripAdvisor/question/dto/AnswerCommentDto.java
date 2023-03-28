@@ -14,7 +14,7 @@ public class AnswerCommentDto {
     @NoArgsConstructor
     public static class Post{
 
-        private Long memberId;
+//        private Long memberId;
 
         @NotBlank(message = "내용을 입력하세요.")
         private String content;
@@ -26,7 +26,7 @@ public class AnswerCommentDto {
     @NoArgsConstructor
     public static class Patch {
 
-        private Long memberId;
+//        private Long memberId;
 
         private Long commentId;
 
@@ -47,8 +47,7 @@ public class AnswerCommentDto {
 
         private String createdAt;
 
-//
-//        private LocalDateTime modifiedAt;
+
 
     }
 }

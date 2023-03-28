@@ -13,11 +13,13 @@ import lombok.Builder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -45,11 +47,12 @@ public class QuestionController {
      * 질문 생성
      **/
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody){
+    public ResponseEntity postQuestion(Principal principal,
+            @Valid @RequestBody QuestionDto.Post requestBody){
 
         Question question = questionMapper.questionPostToQuestion(requestBody);
+        Member member = memberService.findMemberByEmail(principal.getName());
 
-        Member member = memberService.findVerifiedMember(requestBody.getMemberId());
         question.setMember(member);
         Question createdQuestion = questionService.createQuestion(question);
 
@@ -70,20 +73,26 @@ public class QuestionController {
      **/
     @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive Long questionId,
-                                        @RequestBody QuestionDto.Patch requestBody) {
+                                        @RequestBody QuestionDto.Patch requestBody,
+                                        Principal principal) {
 
         Question question = questionMapper.questionPatchToQuestion(requestBody);
-
         question.setId(questionId);
 
-        Member member = memberService.findVerifiedMember(requestBody.getMemberId());
+//        Member member = memberService.findVerifiedMember(requestBody.getMemberId());
 
-        Question updatedQuestion = questionService.updateQuestion(question, requestBody.getMemberId());
+        Member member = memberService.findMemberByEmail(principal.getName());
+        question.setMember(member);
+        Long memberId = member.getId();
+
+        Question updatedQuestion = questionService.updateQuestion(question, memberId);
 
         // 태그 기능 추가
+        if(requestBody.getTags() != null) {
+            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), updatedQuestion.getId());
+            updatedQuestion.getQuestionTags().addAll(questionTags);
+        }
 
-
-        // 채택된 질문 수정 불가
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(updatedQuestion)),
@@ -95,6 +104,7 @@ public class QuestionController {
      **/
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") @Positive Long questionId) {
+
         Question gotQuestion = questionService.findVerifiedQuestion(questionId);
         questionService.findQuestion(gotQuestion.getId());
 
@@ -110,6 +120,7 @@ public class QuestionController {
     public ResponseEntity getQuestions(@RequestParam String category,
                              @Positive @RequestParam int page,
                              @RequestParam String sortedBy) {
+
         Page<Question> pageQuestion = questionService.findQuestions(category,page - 1, sortedBy);
         List<Question> questions = pageQuestion.getContent();
 
@@ -126,7 +137,11 @@ public class QuestionController {
 
     @DeleteMapping("/{question-id}")
     public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive Long questionId,
-                                         @RequestParam Long memberId) {
+                                         Principal principal) {
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
         questionService.deleteQuestion(questionId, memberId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

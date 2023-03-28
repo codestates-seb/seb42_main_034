@@ -18,11 +18,11 @@ public interface AnswerMapper {
         if(requestBody==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         Answer answer = new Answer();
-        answer.setMember(member);
+//        answer.setMember(member);
         answer.setContent(requestBody.getContent());
 
         return answer;
@@ -32,12 +32,12 @@ public interface AnswerMapper {
         if(requestBody == null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         Answer answer = new Answer();
         answer.setId(requestBody.getAnswerId());
-        answer.setMember(member);
+//        answer.setMember(member);
         answer.setContent(requestBody.getContent());
 
         return answer;
@@ -45,7 +45,7 @@ public interface AnswerMapper {
 
     @Mapping(source = "answer.id", target = "answerId")
     @Mapping(source = "question.id", target = "questionId")
-    @Mapping(source = "member.id", target = "memberId")
+//    @Mapping(source = "member.id", target = "memberId")
     AnswerDto.Response answerToAnswerResponse(Answer answer);
 
     List<AnswerDto.Response> AnswersToAnswerResponses(List<Answer> answers);

@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,8 @@ public interface QuestionMapper {
             return null;
         }
 
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         Question question = new Question();
         question.setTitle(requestBody.getTitle());
@@ -42,11 +43,12 @@ public interface QuestionMapper {
         if (requestBody == null) {
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.get
 
         Question question = new Question();
-        question.setMember(member);
+//        question.setMember(member);
+        question.setId(requestBody.getQuestionId());
         question.setTitle(requestBody.getTitle());
         question.setContent(requestBody.getContent());
 
@@ -68,6 +70,8 @@ public interface QuestionMapper {
         response.setViewCnt(question.getViewCnt());
         response.setCreatedAt(question.getCreatedAt());
         response.setWriter(question.getMember().getNickname());
+        response.setTags(QuestionToTagName(question));
+
 
         return response;
     }
@@ -80,6 +84,8 @@ public interface QuestionMapper {
         response.setTitle(question.getTitle());
         response.setWriter(question.getMember().getNickname());
         response.setCreatedAt(question.getCreatedAt());
+        response.setViewCnt(question.getViewCnt());
+        response.setTags(QuestionToTagName(question));
 
         return response;
     }

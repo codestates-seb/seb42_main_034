@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,7 +41,9 @@ public class QuestionService {
         this.questionTagRepository = questionTagRepository;
     }
 
-    /** 질문 생성 **/
+    /**
+     * 질문 생성
+     **/
     public Question createQuestion(Question question) {
 
         Question createdQuestion = questionRepository.save(question);
@@ -48,17 +51,18 @@ public class QuestionService {
         return createdQuestion;
     }
 
-    /** 질문 수정 **/
+    /**
+     * 질문 수정
+     **/
 
     public Question updateQuestion(Question question, Long memberId) {
 
         Question updatedQuestion = findVerifiedQuestion(question.getId());
 
-        if(updatedQuestion.getMember().getId() != memberId) {
+        if (updatedQuestion.getMember().getId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_MATCH);
         }
 
-        // (추가) 채택 된 질문인 경우 수정 불가
 
         updatedQuestion.setTitle(question.getTitle());
         updatedQuestion.setContent(question.getContent());
@@ -67,19 +71,23 @@ public class QuestionService {
 
     }
 
-    /** 질문 삭제 **/
+    /**
+     * 질문 삭제
+     **/
 
     public void deleteQuestion(Long questionId, Long memberId) {
         Question deletedQuestion = findVerifiedQuestion(questionId);
 
-        if(deletedQuestion.getMember().getId() != memberId) {
+        if (deletedQuestion.getMember().getId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_MATCH);
         }
 
         questionRepository.deleteById(questionId);
     }
 
-    /** 질문 상세 조회 **/
+    /**
+     * 질문 상세 조회
+     **/
 
     public Question findQuestion(Long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
@@ -92,13 +100,15 @@ public class QuestionService {
     }
 
     /** 질문 목록 조회 **/
-    /** (추가) 정렬 기준 **/
+    /**
+     * (추가) 정렬 기준
+     **/
 
     public Page<Question> findQuestions(String category, int page, String sortedBy) {
 
         sortedBy = sortedBy.toUpperCase();
 
-        if(sortedBy.equals("HOT")) {
+        if (sortedBy.equals("HOT")) {
             return questionRepository.findAllByCategory(category, PageRequest.of(page, 15,
                     Sort.by("viewCnt").descending()));
         }
@@ -107,19 +117,19 @@ public class QuestionService {
     }
 
 
-    /** 질문 검색 **/
+    /**
+     * 질문 검색
+     **/
     // Default : 제목 + 내용 으로 검색
     // (추가) user 로 검색
-
     public Page<Question> searchQuestion(int page, String keyword, String type) {
 
         type = type.toUpperCase();
 
-        if(type.equals("USER")) {
+        if (type.equals("USER")) {
             Long memberId = Long.valueOf(keyword);
             return questionRepository.findByMemberId(memberId, PageRequest.of(page, 15));
-        }
-        else if(type.equals("TAG")) {
+        } else if (type.equals("TAG")) {
             keyword = keyword.toUpperCase();
 
             Tag tag = tagRepository.findByName(keyword);
@@ -129,15 +139,12 @@ public class QuestionService {
                     .collect(Collectors.toList());
 
             return questionRepository.findByIdIn(questionIds, PageRequest.of(page, 15));
-        }
-
-        else {
+        } else {
             keyword = "%" + keyword + "%";
 
             return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 15));
         }
     }
-
 
 
     public Question findVerifiedQuestion(Long questionId) {
@@ -151,8 +158,8 @@ public class QuestionService {
     public Page<Question> findMemberQuestions(long id, int page, int size) {
 
         PageRequest pageRequest = PageRequest.of(page, size,
-               Sort.by("createdAt").descending());
+                Sort.by("createdAt").descending());
         return questionRepository.findAllByMemberId(id, pageRequest);
     }
-}
 
+}

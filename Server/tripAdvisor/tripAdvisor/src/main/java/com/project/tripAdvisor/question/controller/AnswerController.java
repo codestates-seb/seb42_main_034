@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.question.controller;
 
+import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.dto.AnswerCommentDto;
 import com.project.tripAdvisor.question.dto.AnswerDto;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -48,11 +50,19 @@ public class AnswerController {
         this.memberService = memberService;
     }
 
+    /**
+     * 댓글 작성
+     **/
     @PostMapping("/{question-id}")
     public ResponseEntity postAnswer(@PathVariable("question-id") @Positive Long questionId,
-                                         @RequestBody AnswerDto.Post requestbody) {
+                                     @RequestBody AnswerDto.Post requestBody,
+                                     Principal principal) {
 
-        Answer answer = answerMapper.answerPostToAnswer(requestbody);
+        Answer answer = answerMapper.answerPostToAnswer(requestBody);
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        answer.setMember(member);
+
         answerService.createAnswer(answer, questionId);
 
         return new ResponseEntity<>(
@@ -60,23 +70,38 @@ public class AnswerController {
                 , HttpStatus.OK);
     }
 
-
+    /**
+     * 댓글 수정
+     **/
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive Long answerId,
-                                      @Valid @RequestBody AnswerDto.Patch requestbody) {
-        requestbody.setAnswerId(answerId);
+                                      @Valid @RequestBody AnswerDto.Patch requestbody,
+                                      Principal principal) {
 
+
+        requestbody.setAnswerId(answerId);
         Answer answer = answerMapper.answerPatchToAnswer(requestbody);
-        answer = answerService.updateAnswer(answer, answer.getMember().getId());
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        answer.setMember(member);
+        Long memberId = member.getId();
+
+        answer = answerService.updateAnswer(answer, memberId);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
                 , HttpStatus.OK);
     }
 
+    /**
+     * 댓글 삭제
+     **/
     @DeleteMapping("/{answer-id}")
     public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive Long answerId,
-                                       @RequestParam @Positive Long memberId) {
+                                       Principal principal) {
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
 
         answerService.deleteAnswer(answerId, memberId);
 
@@ -84,7 +109,7 @@ public class AnswerController {
     }
 
     /**
-     * 질문_댓글 조회
+     * 댓글 조회
      */
     @GetMapping("/{question-id}")
     public ResponseEntity findAnswer(@PathVariable("question-id") @Positive Long questionId,
@@ -102,7 +127,10 @@ public class AnswerController {
     /** 댓글 좋아요 기능 **/
     @PostMapping("like/{answer-id}")
     public ResponseEntity postAnswerLike(@Positive @PathVariable("answer-id") Long answerId,
-                                         @Positive @RequestParam Long memberId) {
+                                         Principal principal) {
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
 
         answerService.switchLike(answerId, memberId);
 
@@ -113,8 +141,14 @@ public class AnswerController {
 
     @PostMapping("/comments/{answer-id}")
     public ResponseEntity postAnswerComment(@PathVariable("answer-id")@Positive Long answerId,
-                                            @RequestBody AnswerCommentDto.Post requestBody){
+                                            @RequestBody AnswerCommentDto.Post requestBody,
+                                            Principal principal){
+
         AnswerComment answerComment = answerCommentMapper.AnswerCommentPostToAnswerComment(requestBody);
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        answerComment.setMember(member);
+
         answerService.createAnswerComment(answerComment,answerId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -122,19 +156,29 @@ public class AnswerController {
 
     @PatchMapping("/comments/{comment-id}")
     public ResponseEntity patchAnswerComment(@PathVariable("comment-id")@Positive Long answerCommentId,
-                                                 @RequestBody AnswerCommentDto.Patch requestBody){
-        requestBody.setCommentId(answerCommentId);
+                                             @RequestBody AnswerCommentDto.Patch requestBody,
+                                             Principal principal){
 
+        requestBody.setCommentId(answerCommentId);
         AnswerComment answerComment = answerCommentMapper.AnswerCommentPatchToAnswerComment(requestBody);
-        answerService.updateAnswerComment(answerComment,answerComment.getMember().getId());
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        answerComment.setMember(member);
+        Long memberId = member.getId();
+
+        answerService.updateAnswerComment(answerComment,memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/comments/{comment-id}")
     public ResponseEntity deleteAnswerComment(@PathVariable("comment-id")@Positive Long answerCommentId,
-                                                  @RequestParam @Positive Long memberId){
-        answerService.deleteAnswerComment(answerCommentId,memberId);
+                                              Principal principal){
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
+        answerService.deleteAnswerComment(answerCommentId, memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -45,10 +45,8 @@ public class AnswerService {
 
 
         Question question = questionService.findVerifiedQuestion(questionId);
-        Member member = memberService.findVerifiedMember(answer.getMember().getId());
 
         answer.setQuestion(question);
-        answer.setMember(member);
 
         question.setAnswer(answer);
 
@@ -153,6 +151,7 @@ public class AnswerService {
         question.setCommentCnt(commentCnt+1);
 
         return answerCommentRepository.save(answerComment);
+
     }
 
     /** 대댓글 수정 **/
@@ -170,17 +169,18 @@ public class AnswerService {
 
     /** 대댓글 삭제 **/
     public void deleteAnswerComment(Long commentId,Long memberId){
+
         AnswerComment answerComment = findVerifiedAnswerComment(commentId);
-        if (answerComment.getMember().getId()!=memberId) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
-        }
 
         Answer answer = findVerifiedAnswer(answerComment.getAnswer().getId());
         Question question = answer.getQuestion();
         int commentCnt = question.getCommentCnt();
         question.setCommentCnt(commentCnt-1);
 
-        answerCommentRepository.delete(answerComment);
+//        findAuthorization2(answerComment, memberId);
+
+        answerCommentRepository.deleteById(commentId);
+
     }
 
 
@@ -211,7 +211,7 @@ public class AnswerService {
     }
 
     /** 수정, 삭제 시 권한 확인2 **/
-    public void findAuthorization(AnswerComment answerComment, Long memberId) {
+    public void findAuthorization2(AnswerComment answerComment, Long memberId) {
         if(!Objects.equals(answerComment.getMember().getId(), memberId))
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
     }
