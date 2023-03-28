@@ -1,4 +1,4 @@
-package com.project.tripAdvisor.member.service;
+package com.project.tripAdvisor.member.sevice;
 
 import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.blog.service.BlogService;
@@ -49,5 +49,10 @@ public class MemberFindService {
     public Page<Blog> findMyBlogs(String email, int page, int size){
         Member member = memberService.findMemberByEmail(email);
         return blogService.findMemberBlogs(member.getId(), page -1 ,size);
+    }
+
+    public Member findMyProfile(String email){
+        Member member = memberService.findMemberByEmail(email);
+        return memberService.findMember(member.getId());
     }
 }

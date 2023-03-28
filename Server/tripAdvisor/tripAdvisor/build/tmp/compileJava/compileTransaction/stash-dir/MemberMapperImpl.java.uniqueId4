@@ -2,13 +2,11 @@ package com.project.tripAdvisor.member;
 
 import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.member.MemberDto.MemberBlogResponse;
-import com.project.tripAdvisor.member.MemberDto.MemberInfo;
 import com.project.tripAdvisor.member.MemberDto.MemberQuestionResponse;
 import com.project.tripAdvisor.member.MemberDto.Patch;
 import com.project.tripAdvisor.member.MemberDto.Post;
 import com.project.tripAdvisor.member.MemberDto.Response;
 import com.project.tripAdvisor.question.entity.Question;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-28T14:06:33+0900",
+    date = "2023-03-28T11:35:10+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.1.jar, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -96,27 +94,6 @@ public class MemberMapperImpl implements MemberMapper {
         }
 
         return list;
-    }
-
-    @Override
-    public MemberInfo MemberToMemberInfoDto(Member member) {
-        if ( member == null ) {
-            return null;
-        }
-
-        String email = null;
-        String nickname = null;
-        String location = null;
-        LocalDateTime createdAt = null;
-
-        email = member.getEmail();
-        nickname = member.getNickname();
-        location = member.getLocation();
-        createdAt = member.getCreatedAt();
-
-        MemberInfo memberInfo = new MemberInfo( email, nickname, location, createdAt );
-
-        return memberInfo;
     }
 
     protected MemberQuestionResponse questionToMemberQuestionResponse(Question question) {

@@ -1,8 +1,8 @@
 package com.project.tripAdvisor.member;
 
 import com.project.tripAdvisor.blog.entity.Blog;
-import com.project.tripAdvisor.member.service.MemberFindService;
-import com.project.tripAdvisor.member.service.MemberService;
+import com.project.tripAdvisor.member.sevice.MemberFindService;
+import com.project.tripAdvisor.member.sevice.MemberService;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.response.MultiResponseDto;
 import com.project.tripAdvisor.response.SingleResponseDto;
@@ -62,6 +62,7 @@ public class MemberController {
 
         Member member = mapper.MemberPatchToMember(memberPatch);
         Member updateMember = memberFindService.updateMember(member, principal.getName());
+        /*Member updateMember = memberService.updateMember(member);*/
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.MemberToMemberResponseDto(updateMember)),HttpStatus.OK);
@@ -160,4 +161,11 @@ public class MemberController {
                 new MultiResponseDto<>(responses, blogPage), HttpStatus.OK);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity findMe(Principal principal){
+        Member member = memberFindService.findMyProfile(principal.getName());
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.MemberToMemberInfoDto(member)), HttpStatus.OK);
+    }
 }
