@@ -9,6 +9,8 @@ const Card = styled.li`
   margin: 2rem;
   list-style: none;
   height: 5rem;
+  border-radius: 1rem;
+  padding: 0.2rem;
 `;
 
 export default function QuestionCard({ city, filter }: { city: ReturnData; filter: string }) {

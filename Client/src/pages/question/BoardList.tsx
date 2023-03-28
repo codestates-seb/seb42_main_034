@@ -27,7 +27,7 @@ export default function BoardList() {
     isLoading,
     error,
     data: city,
-  } = useQuery([filter, 'region'] as const, async () => await new CRUDdata().getData(data.state, filter), {
+  } = useQuery([filter, 'region'] as const, async () => await new CRUDdata().getData('project', filter), {
     staleTime: 1000 * 15,
   }); //여기에 해당지역넣기
   const [pageNation, setPageNation] = useState({
@@ -43,27 +43,31 @@ export default function BoardList() {
   }, [filter]);
   // 블로그 버튼을 누르면 해당 블로그로 데이터 get 함 -> 필터를 바꿔야 useEffect로 다시 받아올수있음
   return (
-    <Flex direction="column" width="100%">
+    <Flex direction="column" width="100%" height="900px">
       <Searchbar />
       <Flex items="center" justify="space-between">
-        <ul>
-          {city &&
-            section.map((filter, idx) => (
-              <StyledCategoryBtn
-                key={idx}
-                children={filter}
-                onClick={() => {
-                  handleClick(filter);
-                }}
-              />
-            ))}
-        </ul>
-        <div>{filter === 'questions' ? '질문' : '블로그'}을(를) 작성하고 목록을 확인할수있는 곳 입니다</div>
+        {city &&
+          section.map((filter, idx) => (
+            <StyledCategoryBtn
+              key={idx}
+              children={filter}
+              onClick={() => {
+                handleClick(filter);
+              }}
+            />
+          ))}
       </Flex>
-      {city?.data.map((city: ReturnData, idx: number) => (
-        <QuestionCard key={idx} city={city} filter={filter} />
-      ))}
-      {/* <Page pages={pageNation} onPage={setPageNation} /> */}
+      <div>{filter === 'questions' ? '질문' : '블로그'}을(를) 작성하고 목록을 확인할수있는 곳 입니다</div>
+
+      <MainBoard>
+        {city?.data.map((city: ReturnData, idx: number) => (
+          <QuestionCard key={idx} city={city} filter={filter} />
+        ))}
+      </MainBoard>
+      <Page pages={pageNation} onPage={setPageNation} />
     </Flex>
   );
 }
+const MainBoard = styled.ul`
+  flex: 1 1 auto;
+`;

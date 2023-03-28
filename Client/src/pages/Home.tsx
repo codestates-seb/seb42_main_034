@@ -17,7 +17,7 @@ const MapImg = styled(Icon)`
   max-width: ${ScreenSize.max_width};
 `;
 const RelativeLayout = styled.div`
-  ${Relative}
+  position: relative;
   max-width: ${ScreenSize.max_width};
   margin: auto;
 `;

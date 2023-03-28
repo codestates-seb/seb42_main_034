@@ -8,11 +8,11 @@ const ScrollTop1 = styled(Button)`
   border: none;
   ${BoxShadow};
   ${HoverAction}
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   font-size: 1.3rem;
   padding: 1rem;
-  padding-right: 2rem;
+  padding-right: 1.4rem;
   position: fixed;
   bottom: 2rem;
   right: 2%;

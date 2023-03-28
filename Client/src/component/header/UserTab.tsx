@@ -6,7 +6,9 @@ import { Button } from 'component/ui/Button';
 import { useAppSelector } from 'redux/hooks';
 import { logout } from 'redux/userSlice';
 import { FontSize } from 'component/style/variables';
-
+import { useAuthAPI } from 'api/auth';
+import { useMutation } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 const MenuTabBtn = styled(Button)`
   border: none;
   background: none;
@@ -19,10 +21,18 @@ export default function UserTab() {
   const { isLogin } = useAppSelector((state) => state.loginInfo);
   const [login, setLogin] = useState(isLogin);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleClick = (route: string) => {
     navigate(route);
   };
-
+  const { deleteLogout } = useAuthAPI();
+  const { mutate: mutateLogout } = useMutation(deleteLogout);
+  const handleLogOut = () => {
+    const confirm = window.confirm('로그아웃을 하시겠습니까?');
+    if (!confirm) return;
+    mutateLogout();
+    dispatch(logout());
+  };
   return (
     <>
       {login || (
@@ -45,7 +55,7 @@ export default function UserTab() {
       )}
       {login && (
         <div>
-          <MenuTabBtn children="로그아웃" onClick={() => logout()} className="" />
+          <MenuTabBtn children="로그아웃" onClick={handleLogOut} className="" />
           <MenuTabBtn children="마이페이지" onClick={() => handleClick('/board/mypage')} className="" />
         </div>
       )}
