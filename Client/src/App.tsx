@@ -1,11 +1,7 @@
-import ScrollTop from 'component/ui/ScrollTop';
-import React, { useEffect, useState } from 'react';
-
-import { Outlet, useLocation } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
-import { Colors, ScreenSize } from './component/style/variables';
-// import { theme } from './component/style/theme';
-
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+import { ScreenSize } from './component/style/variables';
 import { Layout } from './component/ui/Layout';
 
 const FixOutletHeight = styled.div<{ landingPage?: string }>`

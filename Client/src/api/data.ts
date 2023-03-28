@@ -1,11 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import { axiosInstance } from './instance';
+import QuestionList from 'pages/question/QuestionList';
 
-// const axiosConfig: AxiosRequestConfig = {
-//     baseURL: 'ec2-52-78-1-107.ap-northeast-2.compute.amazonaws.com:8080/login',
-//     headers:
 
-//   }
 axios.defaults.withCredentials = true;
 interface QuestionList {
   url: string;
@@ -70,64 +66,4 @@ export class CRUDdata {
     // }
   }
 }
-// axios
-//   .post(
-//     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/members',
-//     {
 
-//       email: 'fsdassa16@naver.com',
-//       password: 'wdsada123ds456!',
-//       nickname: '뉸누느',
-
-//     },
-//     {
-//       // headers: { 'Cache-Control': 'no-store' },
-//       withCredentials: true,
-//     },
-//   )
-//   .then(function (response) {
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//   });
-// export function useData (){
-
-// axios
-//   .post(
-//     'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/trip/login',
-//     {
-//       email: 'ddd@naver.com',
-//       password: 'wjd2222!',
-//     },
-//     {
-//       // headers: { 'Cache-Control': 'no-store' },
-//       withCredentials: true,
-//     },
-//   )
-//   .then(function (response) {
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//   });
-
-// axios
-//   .get(
-//     encodeURI(
-//       `http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/blog?category=부산&page=1&sortedBy=hot`,
-//     ),
-//     // {
-//     //   memberId: '1',
-//     //   category: '바다',
-//     //   title: '안녕하세요ㅠㅠㅠㅠ',
-//     //   content: '돼주라 제발!',
-//     //   tags: ['바다', '산'],
-//     // },
-//     {
-//       headers: { 'Accept-Encoding': 'deflate, br' },
-//       withCredentials: true,
-//     },
-//   )
-//   .then(console.log)
-//   .catch(console.error);

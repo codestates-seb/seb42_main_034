@@ -12,16 +12,16 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isLogin && navigate(-1);
+    isLogin && navigate('/');
   }, []);
 
 
 
   return (
     <MainContainer>
-      <Title>여기 와봤니? 회원가입</Title>
       <FormWrapper>
-        <SignUpForm />
+      <Title>회원가입</Title>
+        <SignUpForm/>
       </FormWrapper>
     </MainContainer>
   );
@@ -30,31 +30,30 @@ export default function SignUp() {
 
 
 const MainContainer = styled.div`
-  border: solid 1px red;
   width: 100%;
-  min-width: 200px;
-  padding: 0 100px;
+  height: 100vh;
   display: flex;
-  align-items: center;
   flex-direction: column;
-  background-color: #62a3f4;
+  align-items: center;
+  justify-content: center;
 `;
 
-const Title = styled.p`
-  font-size: 30px;
-  font-weight: bold;
-  color: black;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-right: 250px;
+const Title = styled.h2`
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center; 
 `
 
 const FormWrapper = styled.div`
-  width: 80%;
-  max-width: 800px;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: absolute;
+  width: 40%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  padding:40px;
+  background: rgba(31, 113, 243, 0.5);
+  box-shadow: 0 15px 25px rgba(31, 113, 243, .6);
+  border-radius: 8px;
+  height: 60%;
 `

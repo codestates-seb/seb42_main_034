@@ -10,3 +10,19 @@ export const useValidate = (input: string, input2: string, setValidity: (...args
     else setValidity('passwordCheck', false);
   }, [input, input2]);
 };
+
+// export const useValidate = (input: string, input2: string, setValidity: (value: boolean) => void) => {
+//   useEffect(() => {
+//     if (input && PASSWORDREGEX.test(input)) {
+//       setValidity(true);
+//     } else {
+//       setValidity(false);
+//     }
+
+//     if (input === input2) {
+//       setValidity(true);
+//     } else {
+//       setValidity(false);
+//     }
+//   }, [input, input2]);
+// };
