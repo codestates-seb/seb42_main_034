@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -44,16 +45,18 @@ public class BlogAnswerService {
          * 4. blog에서 조회할 수 있도록 (양방향 매핑 편의를 위해) blog.setBlogAnswer(blog);
          */
         Blog blog = blogService.findVerifyBlog(blogId);
-        Member member = memberService.findVerifiedMember(blogAnswer.getMember().getId());
+        //Member member = memberService.findVerifiedMember(blogAnswer.getMember().getId());
         int commentCnt = blog.getCommentCnt();
-        blogAnswer.setMember(member);
+        //blogAnswer.setMember(member);
         blogAnswer.setBlog(blog);
         blog.setBlogAnswer(blogAnswer);
         blog.setCommentCnt(commentCnt+1);
         return blogAnswerRepository.save(blogAnswer);
     }
-    public BlogAnswer updateBlogAnswer(BlogAnswer blogAnswer, Long memberId){
+    public BlogAnswer updateBlogAnswer(BlogAnswer blogAnswer, Principal principal){
         BlogAnswer findBlogAnswer = findVerifiedBlogAnswer(blogAnswer.getId());
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
         /**
          * memberId와 answer이 동일한 사람인지 확인
          * ->verifiedAuthorization(findBlogAnswer, memberId);
@@ -68,7 +71,7 @@ public class BlogAnswerService {
         return findBlogAnswer;
     }
     @Transactional
-    public void deleteBlogAnswer(Long blogAnswerId,Long memberId){
+    public void deleteBlogAnswer(Long blogAnswerId,Principal principal){
         BlogAnswer blogAnswer = findVerifiedBlogAnswer(blogAnswerId);
         Blog blog = blogService.findVerifyBlog(blogAnswer.getBlog().getId());
         int commentCnt = blog.getCommentCnt();
@@ -77,6 +80,9 @@ public class BlogAnswerService {
          * memberId와 answer이 동일한 사람인지 확인
          * ->verifiedAuthorization(findBlogAnswer, memberId);
          */
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
         if (blogAnswer.getMember().getId()!=memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
         }
@@ -111,8 +117,11 @@ public class BlogAnswerService {
         return blogAnswerCommentRepository.save(blogAnswerComment);
     }
 
-    public BlogAnswerComment updateBlogAnswerComment(BlogAnswerComment blogAnswerComment, Long memberId){
+    public BlogAnswerComment updateBlogAnswerComment(BlogAnswerComment blogAnswerComment, Principal principal){
         BlogAnswerComment findBlogAnswerComment = findVerifiedBlogAnswerComment(blogAnswerComment.getId());
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
         if (blogAnswerComment.getMember().getId()!=memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
         }
@@ -124,8 +133,11 @@ public class BlogAnswerService {
         return findBlogAnswerComment;
     }
 
-    public void deleteBlogAnswerComment(Long commentId,Long memberId){
+    public void deleteBlogAnswerComment(Long commentId,Principal principal){
         BlogAnswerComment blogAnswerComment = findVerifiedBlogAnswerComment(commentId);
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
         if (blogAnswerComment.getMember().getId()!=memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
         }

@@ -22,7 +22,7 @@ public class BlogDto {
     @NoArgsConstructor
     public static class Request {
         @Positive
-        private Long memberId;
+        //private Long memberId;
 
         /**
          * 위치 정보에 대한 처리가 완료되면 카테고리 규격화 할듯?
@@ -46,7 +46,7 @@ public class BlogDto {
     public static class Patch{
         @NotNull
         @Positive
-        private Long memberId;
+        //private Long memberId;
         private String title;
         private String content;
         private List<String> tags;

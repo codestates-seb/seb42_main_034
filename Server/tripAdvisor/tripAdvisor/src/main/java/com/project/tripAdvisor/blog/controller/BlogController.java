@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -55,13 +56,20 @@ public class BlogController {
      */
 
     @PostMapping
-    public ResponseEntity postBlog(@Valid @RequestBody BlogDto.Request requestBody) {
+    public ResponseEntity postBlog(Principal principal,
+                                   @Valid @RequestBody BlogDto.Request requestBody) {
+
+        //이 부분 이해가 안되네...
 
         Blog blog = mapper.blogRequestToBlog(requestBody);
+        Member member =memberService.findMemberByEmail(principal.getName());
 
         // 검증된 member 찾아서 넣기
-        addMemberToBlog(requestBody, blog);
-        blogService.createBlog(blog);
+        // addMemberToBlog(requestBody, blog);
+        // blogService.createBlog(blog);
+
+        blog.setMember(member);
+        Blog createdBlog = blogService.createBlog(blog);
 
         if(requestBody.getTags()!=null){
             List<BlogTag> blogTags=tagService.createBlogTag(requestBody.getTags(),blog.getId());
@@ -74,12 +82,19 @@ public class BlogController {
 
     @PatchMapping("/{blog-id}")
     public ResponseEntity patchBlog(@PathVariable("blog-id") @Positive Long blogId,
-                                    @Valid @RequestBody BlogDto.Patch requestBody) {
+                                    @Valid @RequestBody BlogDto.Patch requestBody, Principal principal) {
 
         Blog blog = mapper.blogPatchDtoToBlog(requestBody);
         blog.setId(blogId);
 
-        Blog updatedBlog = blogService.updateBlog(blog, requestBody.getMemberId());
+        // Blog updatedBlog = blogService.updateBlog(blog, requestBody.getMemberId());
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        blog.setMember(member);
+        Long memberId = member.getId();
+
+        Blog updatedBlog = blogService.updateBlog(blog, principal);
+
         if(requestBody.getTags()!=null)
         {
             List<BlogTag> blogTags = tagService.updateBlogTag(requestBody.getTags(),updatedBlog.getId());
@@ -92,7 +107,10 @@ public class BlogController {
 
     @DeleteMapping("{blog-id}")
     public ResponseEntity deleteBlog(@PathVariable("blog-id") @Positive Long blogId,
-                                     @Positive @RequestParam Long memberId) {
+                                     Principal principal) {
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
         blogService.deleteBlog(blogId, memberId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -152,16 +170,16 @@ public class BlogController {
     }
     @PostMapping("/like/{blog-id}")
     public ResponseEntity postBlogLike(@Positive @PathVariable("blog-id") Long blogId,
-                                       @Positive @RequestParam Long memberId) {
+                                       Principal principal) {
 
-        blogService.switchLike(blogId, memberId);
+        blogService.switchLike(blogId, principal);
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    private void addMemberToBlog(BlogDto.Request requestBody, Blog blog) {
-        Member member = memberService.findVerifiedMember(requestBody.getMemberId());
-        blog.setMember(member);
-    }
+    //private void addMemberToBlog(BlogDto.Request requestBody, Blog blog) {
+        //Member member = memberService.findVerifiedMember(requestBody.getMemberId());
+        //blog.setMember(member);
+    //}
 
 }

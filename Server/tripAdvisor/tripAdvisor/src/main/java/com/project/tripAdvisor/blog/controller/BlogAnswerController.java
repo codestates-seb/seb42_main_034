@@ -3,19 +3,21 @@ package com.project.tripAdvisor.blog.controller;
 import com.project.tripAdvisor.blog.dto.BlogAnswerCommentPatchDto;
 import com.project.tripAdvisor.blog.dto.BlogAnswerCommentPostDto;
 import com.project.tripAdvisor.blog.dto.BlogAnswerDto;
-import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.blog.entity.BlogAnswer;
 import com.project.tripAdvisor.blog.entity.BlogAnswerComment;
 import com.project.tripAdvisor.blog.mapper.BlogAnswerCommentMapper;
 import com.project.tripAdvisor.blog.mapper.BlogAnswerMapper;
 import com.project.tripAdvisor.blog.service.BlogAnswerService;
+import com.project.tripAdvisor.blog.service.BlogService;
+import com.project.tripAdvisor.member.Member;
+import com.project.tripAdvisor.member.sevice.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,17 +27,24 @@ public class BlogAnswerController {
     private final BlogAnswerMapper blogAnswerMapper;
     private final BlogAnswerService blogAnswerService;
     private final BlogAnswerCommentMapper blogAnswerCommentMapper;
+    private final MemberService memberService;
+    private final BlogService blogService;
 
-    public BlogAnswerController(BlogAnswerMapper blogAnswerMapper, BlogAnswerService blogAnswerService, BlogAnswerCommentMapper blogAnswerCommentMapper) {
+    public BlogAnswerController(BlogAnswerMapper blogAnswerMapper, BlogAnswerService blogAnswerService, BlogAnswerCommentMapper blogAnswerCommentMapper, MemberService memberService, BlogService blogService) {
         this.blogAnswerMapper = blogAnswerMapper;
         this.blogAnswerService = blogAnswerService;
         this.blogAnswerCommentMapper = blogAnswerCommentMapper;
+        this.memberService = memberService;
+        this.blogService = blogService;
     }
 
     @PostMapping("/{blog-id}")
     public ResponseEntity postBlogAnswer(@PathVariable("blog-id")@Positive Long blogId,
-                                         @RequestBody BlogAnswerDto.Post requestBody){
+                                         @RequestBody BlogAnswerDto.Post requestBody, Principal principal){
         BlogAnswer blogAnswer = blogAnswerMapper.blogAnswerPostToBlogAnswer(requestBody);
+        Member member = memberService.findMemberByEmail(principal.getName());
+        blogAnswer.setMember(member);
+
         blogAnswerService.createBlogAnswer(blogAnswer,blogId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -43,19 +52,26 @@ public class BlogAnswerController {
 
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchBlogAnswer(@PathVariable("answer-id")@Positive Long blogAnswerId,
-                                          @RequestBody BlogAnswerDto.Patch requestBody){
+                                          @RequestBody BlogAnswerDto.Patch requestBody, Principal principal){
         requestBody.setBlogAnswerId(blogAnswerId);
 
         BlogAnswer blogAnswer = blogAnswerMapper.blogAnswerPatchToBlogAnswer(requestBody);
-        blogAnswerService.updateBlogAnswer(blogAnswer,blogAnswer.getMember().getId());
+        Member member = memberService.findMemberByEmail(principal.getName());
+        blogAnswer.setMember(member);
+        Long memberId = member.getId();
+        blogAnswerService.updateBlogAnswer(blogAnswer,principal);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")
     public ResponseEntity deleteBlogAnswer(@PathVariable("answer-id")@Positive Long blogAnswerId,
-                                           @RequestParam Long memberId){
-        blogAnswerService.deleteBlogAnswer(blogAnswerId,memberId);
+                                           Principal principal){
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
+        blogAnswerService.deleteBlogAnswer(blogAnswerId,principal);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -73,8 +89,11 @@ public class BlogAnswerController {
      */
     @PostMapping("/comments/{answer-id}")
     public ResponseEntity postBlogAnswerComment(@PathVariable("answer-id")@Positive Long blogAnswerId,
-                                                @RequestBody BlogAnswerCommentPostDto requestBody){
+                                                @RequestBody BlogAnswerCommentPostDto requestBody, Principal principal){
         BlogAnswerComment blogAnswerComment = blogAnswerCommentMapper.blogAnswerCommentPostDtoToBlogAnswerComment(requestBody);
+        Member member = memberService.findMemberByEmail(principal.getName());
+        blogAnswerComment.setMember(member);
+
         blogAnswerService.createBlogAnswerComment(blogAnswerComment,blogAnswerId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -82,19 +101,27 @@ public class BlogAnswerController {
 
     @PatchMapping("/comments/{comment-id}")
     public ResponseEntity patchBlogAnswerComment(@PathVariable("comment-id")@Positive Long blogAnswerCommentId,
-                                                 @RequestBody BlogAnswerCommentPatchDto requestBody){
+                                                 @RequestBody BlogAnswerCommentPatchDto requestBody, Principal principal){
         requestBody.setCommentId(blogAnswerCommentId);
 
         BlogAnswerComment blogAnswerComment = blogAnswerCommentMapper.blogAnswerCommentPatchDtoToBlogAnswerComment(requestBody);
-        blogAnswerService.updateBlogAnswerComment(blogAnswerComment,blogAnswerComment.getMember().getId());
+        Member member = memberService.findMemberByEmail(principal.getName());
+        blogAnswerComment.setMember(member);
+        Long memberId = member.getId();
+
+        blogAnswerService.updateBlogAnswerComment(blogAnswerComment,principal);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/comments/{comment-id}")
     public ResponseEntity deleteBlogAnswerComment(@PathVariable("comment-id")@Positive Long blogAnswerCommentId,
-                                                  @RequestParam @Positive Long memberId){
-        blogAnswerService.deleteBlogAnswerComment(blogAnswerCommentId,memberId);
+                                                  Principal principal){
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+
+        blogAnswerService.deleteBlogAnswerComment(blogAnswerCommentId,principal);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

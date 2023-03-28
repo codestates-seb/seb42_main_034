@@ -12,7 +12,7 @@ import javax.validation.constraints.Positive;
 public class BlogAnswerCommentPatchDto {
     @NotNull
     @Positive
-    private Long memberId;
+    //private Long memberId;
     private Long commentId;
     @NotBlank(message = "댓글 내용은 공백이 아니어야 합니다.")
     private String content;

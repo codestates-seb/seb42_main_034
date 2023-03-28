@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,9 +53,11 @@ public class BlogService {
     }
 
     // 포스트 수정
-    public Blog updateBlog(Blog blog,Long memberId) {
+    public Blog updateBlog(Blog blog, Principal principal) {
 
         Blog findBlog = findVerifyBlog(blog.getId());
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
 
         if (findBlog.getMember().getId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
@@ -69,8 +72,10 @@ public class BlogService {
     }
 
     //포스트 삭제
-    public void deleteBlog(Long blogId, Long memberId) {
+    public void deleteBlog(Long blogId, Principal principal) {
         Blog findBlog = findVerifyBlog(blogId);
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
 
         if (findBlog.getMember().getId()!=memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
@@ -104,9 +109,12 @@ public class BlogService {
     }
 
     // 좋아요
-    public void switchLike(Long blogId, Long memberId) {
+    public void switchLike(Long blogId, Principal principal) {
         Blog blog = findVerifyBlog(blogId);
-        Member member = memberService.findVerifiedMember(memberId);
+
+        Member member = memberService.findMemberByEmail(principal.getName());
+        Long memberId = member.getId();
+        // Member member = memberService.findVerifiedMember(memberId);
         BlogLike blogLike = new BlogLike();
         blogLike.setMember(member);
         blogLike.setBlog(blog);

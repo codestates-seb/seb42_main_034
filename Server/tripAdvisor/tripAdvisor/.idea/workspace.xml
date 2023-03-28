@@ -5,58 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e9b770c-3d18-4182-ae80-2b58bb112ed9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/blog/controller/BlogController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/blog/controller/BlogController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/blog/service/BlogAnswerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/blog/service/BlogAnswerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/blog/service/BlogService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/blog/service/BlogService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberMapperImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/MemberMapperImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/service/MemberFindService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/member/service/MemberService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/controller/AnswerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/controller/AnswerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/controller/QuestionController$QuestionControllerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/controller/QuestionController$QuestionControllerBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/controller/QuestionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/controller/QuestionController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/service/AnswerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/project/tripAdvisor/question/service/AnswerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/com/project/tripAdvisor/member/MemberMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/com/project/tripAdvisor/member/MemberMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/BlogController.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/controller/BlogAnswerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/controller/BlogAnswerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/controller/BlogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/controller/BlogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogAnswerCommentPatchDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogAnswerCommentPatchDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogAnswerCommentPostDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogAnswerCommentPostDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogAnswerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogAnswerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/dto/BlogDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/mapper/BlogAnswerCommentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/mapper/BlogAnswerCommentMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/mapper/BlogAnswerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/mapper/BlogAnswerMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/mapper/BlogMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/mapper/BlogMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/service/BlogAnswerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/service/BlogAnswerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/service/BlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/blog/service/BlogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/MemberDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/MemberDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/MemberMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/MemberMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/sevice/MemberFindService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/sevice/MemberFindService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/sevice/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/member/sevice/MemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/TimeStamped.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/controller/AnswerController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/controller/QuestionController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/dto/AnswerCommentDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/dto/AnswerDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/dto/QuestionDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/entity/Answer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/entity/AnswerComment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/entity/AnswerLike.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/entity/Question.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/mapper/AnswerCommentMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/mapper/AnswerMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/mapper/QuestionMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/repository/AnswerCommentRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/repository/AnswerLikeRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/repository/AnswerRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/repository/QuestionRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/service/AnswerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/project/tripAdvisor/question/service/QuestionService.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,17 +53,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/skarn/seb42_main_034/Server/tripAdvisor/tripAdvisor"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/skarn/seb42_main_034/Server/tripAdvisor/tripAdvisor&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.project.tripAdvisor.member" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TripAdvisorApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.project.tripAdvisor.TripAdvisorApplication" />
+      <module name="tripAdvisor.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.project.tripAdvisor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="애플리케이션.TripAdvisorApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

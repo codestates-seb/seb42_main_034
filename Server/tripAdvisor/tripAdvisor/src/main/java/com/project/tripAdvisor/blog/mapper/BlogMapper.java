@@ -53,11 +53,11 @@ public interface BlogMapper {
         if(requestbody==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestbody.getMemberId());
+        //Member member = new Member();
+        //member.setId(requestbody.getMemberId());
 
         Blog blog = new Blog();
-        blog.setMember(member);
+        //blog.setMember(member);
         blog.setTitle(requestbody.getTitle());
         blog.setContent(requestbody.getContent());
 

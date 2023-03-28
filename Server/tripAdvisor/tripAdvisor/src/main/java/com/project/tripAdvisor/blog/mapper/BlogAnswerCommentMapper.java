@@ -19,11 +19,11 @@ public interface BlogAnswerCommentMapper {
             return null;
         }
 
-        Member member = new Member();
-        member.setId(blogAnswerCommentPostDto.getMemberId());
+        //Member member = new Member();
+        //member.setId(blogAnswerCommentPostDto.getMemberId());
 
         BlogAnswerComment blogAnswerComment = new BlogAnswerComment();
-        blogAnswerComment.setMember(member);
+        //blogAnswerComment.setMember(member);
         blogAnswerComment.setContent(blogAnswerCommentPostDto.getContent());
 
         return blogAnswerComment;
@@ -32,12 +32,12 @@ public interface BlogAnswerCommentMapper {
         if(blogAnswerCommentPatchDto==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(blogAnswerCommentPatchDto.getMemberId());
+        //Member member = new Member();
+        //member.setId(blogAnswerCommentPatchDto.getMemberId());
 
         BlogAnswerComment blogAnswerComment = new BlogAnswerComment();
         blogAnswerComment.setId(blogAnswerCommentPatchDto.getCommentId());
-        blogAnswerComment.setMember(member);
+        //blogAnswerComment.setMember(member);
         blogAnswerComment.setContent(blogAnswerCommentPatchDto.getContent());
 
         return blogAnswerComment;

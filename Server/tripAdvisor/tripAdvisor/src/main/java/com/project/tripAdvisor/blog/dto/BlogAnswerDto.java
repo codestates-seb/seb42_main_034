@@ -12,12 +12,16 @@ import java.util.List;
 
 public class BlogAnswerDto {
     @Getter
-    @AllArgsConstructor
-    @NoArgsConstructor
+    @Setter
     public static class Post {
 
-        private Long memberId;
+        //private Long memberId;
         private String content;
+        public Post(String content) {
+            this.content = content;
+        }
+
+        public Post(){}
 
     }
 
@@ -26,7 +30,7 @@ public class BlogAnswerDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Patch{
-        private Long memberId;
+        //private Long memberId;
         private Long blogAnswerId;
         private String content;
     }
