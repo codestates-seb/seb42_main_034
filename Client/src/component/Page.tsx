@@ -24,7 +24,6 @@ export default function Page({
     if (page === 1) return;
     onPage({ ...page, page: page - 1 });
   };
-  console.log(page);
 
   const handleRightPage = () => {
     if (page === totalPages) return;

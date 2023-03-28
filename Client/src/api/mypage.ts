@@ -42,7 +42,7 @@ export const useMypageAPI = () => {
   const getMyInfo = async (id: string | undefined) =>
       await api.get<Member>(`/members/me`).then(res => {
           dispatch(setUserInfo(res.data));
-          return res.data;
+          return res.data.data;
       });
 
       const patchFixMyInfo = (data: FixMyInfo) =>

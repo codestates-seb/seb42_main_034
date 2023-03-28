@@ -10,6 +10,8 @@ import {FiEdit} from 'react-icons/fi'
 import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
 import { useState } from 'react';
+import PostList from 'component/mypage/getPostlist';
+
 
 export default function MyPage() {
 
@@ -25,11 +27,10 @@ export default function MyPage() {
   const { getMyInfo } = useMypageAPI();
 
   const {data} = useQuery({
-    queryKey: ['myprofile'],
+    queryKey: ['me'],
     queryFn: ()=> getMyInfo(id),
     retry: false,
   });
-  
   
   const [activeTab, setActiveTab] = useState<number>(0);
   const handleTabClick = (index: number) => {
@@ -47,7 +48,9 @@ export default function MyPage() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
-        return <div>가나다라</div>;
+        return <div>가나다라
+          <PostList />
+        </div>;
       case 1:
         return <div>1234</div>;
       case 2:
@@ -88,7 +91,8 @@ export default function MyPage() {
       </TabContainer>
       {renderTabContent()}
 
-    <Nbutton
+
+    <LogOuttbutton
     onClick={() => {
       const confirm = window.confirm('로그아웃을 하시겠습니까?');
       if(!confirm) return;
@@ -98,8 +102,7 @@ export default function MyPage() {
     }}
     >
       로그아웃
-    </Nbutton>
-
+    </LogOuttbutton>
   </MainContainer>
   </>
   )
@@ -112,7 +115,6 @@ const MainContainer = styled.div`
   align-items: center;
   flex-direction: column;
   min-width: 90%;
-  border: solid 2px red;
 `
 const ProfileContainer = styled.div`
   width: 90%;
@@ -158,17 +160,41 @@ const UserInfoContainer = styled.div`
 const TabContainer = styled.div`
     width: 100%;
     display: flex;
-    /* justify-content: space-evenly; */
+    justify-content: space-evenly;
     margin: 1rem 0;
     max-width: 800px;
-    border: solid 1px red;
 `
 
 const TabStyled = styled.button`
-    width: 120px;
+    width: 200px;
     height: 2.5rem;
-    background-color: skyblue;
-    :hover {
-        background-color: #6868fa;
-    }
+    position: relative;
+  display: inline-block;
+  height: 2.5rem;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  overflow: hidden;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  border-radius: 10px;
+  padding: 12px 40px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  &:hover {
+    background: #0583c6;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+  }
+`
+
+const LogOuttbutton = styled(Nbutton)`
+  margin-top: 300px;
+  &:hover {
+    background: #0583c6;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+  }
 `
