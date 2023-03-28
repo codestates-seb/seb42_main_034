@@ -7,6 +7,7 @@ import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.service.QuestionService;
 import com.project.tripAdvisor.response.*;
+import com.project.tripAdvisor.tag.entity.BlogTag;
 import com.project.tripAdvisor.tag.entity.QuestionTag;
 import com.project.tripAdvisor.tag.service.TagService;
 import lombok.Builder;
@@ -89,7 +90,7 @@ public class QuestionController {
 
         // 태그 기능 추가
         if(requestBody.getTags() != null) {
-            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), updatedQuestion.getId());
+            List<QuestionTag> questionTags = tagService.updateQuestionTag(requestBody.getTags(), updatedQuestion.getId());
             updatedQuestion.getQuestionTags().addAll(questionTags);
         }
 

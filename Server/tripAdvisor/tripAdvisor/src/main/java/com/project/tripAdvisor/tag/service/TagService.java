@@ -110,6 +110,29 @@ public class TagService {
          */
     }
 
+    public List<QuestionTag> updateQuestionTag(List<String> tags, Long questionId){
+        List<QuestionTag> questionTags = new ArrayList<>();
+        questionTagRepository.deleteAllByQuestion_Id(questionId);
+        for(String tagName : tags){
+            Tag tag = tagRepository.findByName(tagName);
+            if(tag==null){
+                tag=new Tag(tagName);
+                tagRepository.save(tag);
+            }
+            QuestionTag questionTag = new QuestionTag();
+            Optional<Question> optionalQuestion =
+                    questionRepository.findById(questionId);
+            Question findQuestion=
+                    optionalQuestion.orElseThrow(()->
+                            new BusinessLogicException(ExceptionCode.BLOG_NOT_FOUND));
+            questionTag.setQuestion(findQuestion);
+            questionTag.setTag(tag);
+            questionTagRepository.save(questionTag);
+            questionTags.add(questionTag);
+        }
+        return questionTags;
+    }
+
 
     public List<Blog> getBlogs(Long tagId){
         List<BlogTag> blogTags = blogTagRepository.findByTag_Id(tagId);
