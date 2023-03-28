@@ -15,12 +15,10 @@
   }
 body {
   margin: 0;
+  background: #B0DBFC;
  
 }
-.logo{
-  position:absolute;
-  z-index: 0;
-}
+
 
 @font-face {
   font-family: 'GmarketSansMedium';

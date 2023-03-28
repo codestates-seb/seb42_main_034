@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../component/Sign/LoginForm';
 import SignLink from 'component/SignUp/SignLink';
 
-
 const SignIn = () => {
   const { isLogin } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
@@ -44,15 +43,15 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  padding:40px;
+  padding: 40px;
   background: rgba(31, 113, 243, 0.5);
-  box-shadow: 0 15px 25px rgba(31, 113, 243, .6);
+  box-shadow: 0 15px 25px rgba(31, 113, 243, 0.6);
   border-radius: 8px;
   height: 40%;
-  `
-  const Title = styled.h2`
-    margin: 0 0 30px;
-    padding: 0;
-    color: #fff;
-    text-align: center;
-  `
+`;
+const Title = styled.h2`
+  margin: 0 0 30px;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+`;

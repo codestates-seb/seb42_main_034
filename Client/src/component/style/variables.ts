@@ -26,6 +26,10 @@ export enum Colors {
   border_001 = '#E3E6E8',
   border_002 = '#D6D9DC',
   border_003 = '#C8CCD0',
+  board_color = '#FAFAFA',
+}
+export enum DarkMode {
+  borad_background = 'rgba(25, 25, 25, 0.5)',
 }
 export enum ImageSize {
   sm = '3rem',
@@ -44,7 +48,7 @@ export enum Route {
   blog = '/board/bloglist',
   blog_detail = '/board/boarddetails/:id',
   blog_post = '/board/blogpost',
-  question = '/board/questionlist',
+  question = '/board/questionlist/',
   question_detail = '/board/questiondetails/:id',
   question_post = '/board/questionpost',
   signin = '/board/signin',

@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 export const HoverAction = css`
   cursor: pointer;
   transition: all ease-in 200ms;
@@ -24,13 +24,22 @@ export const ButtonTheme = css`
     background-color: var(--button-clicked);
   }
 `;
-export const Flex = css`
+export const Flex = styled.div<{ direction?: string; justify?: string; items?: string }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => props.direction};
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.items};
 `;
 export const Relative = css`
   position: relative;
 `;
-export const Absolute = css`
+export const Absolute = styled.div<{ top?: number; left?: number; right?: number }>`
   position: absolute;
+  top: ${(props) => props.top}rem;
+  left: ${(props) => props.left}rem;
+  right: ${(props) => props.right}rem;
 `;
+export const Border = css`
+  border: 1px solid black;
+`;
+export const MaxWidthDiv = styled.div``;
