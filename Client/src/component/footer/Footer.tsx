@@ -4,7 +4,7 @@ import { Logo } from '../header/Logo';
 import { Colors, ScreenSize } from '../style/variables';
 import SiteInfo from './SiteInfo';
 const BottomLayout = styled.div`
-  height: 20vh;
+  /* height: 40vh; */
   background: ${Colors.board_color};
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;

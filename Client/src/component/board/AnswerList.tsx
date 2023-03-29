@@ -1,17 +1,17 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { BoardData, useGetData } from 'api/data';
+import { AxiosResponse } from 'axios';
+import { Flex } from 'component/style/cssTemplete';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const AnswerWrapper = styled.div`
   margin-top: 50px;
 `;
 
-const Title = styled.div`
-  font-size: 18px;
-  margin-bottom: 10px;
-`;
-
 const AnswerContainer = styled.ul`
   list-style: none;
+  width: 70em;
 `;
 
 const AnswerItem = styled.li`
@@ -24,22 +24,31 @@ const AnswerContent = styled.div`
   margin-top: 10px;
 `;
 
-export default function AnswerList() {
+export default function AnswerList({ questionId }: { questionId: number | string }) {
+  const { getAnswerData } = useGetData();
+  const {
+    isLoading,
+    error,
+    data: answer,
+  } = useQuery(['answer'] as const, async () => await getAnswerData(questionId), {
+    staleTime: 1000 * 15,
+  });
 
-
+  console.log(answer);
+  const isAnswerArray = Array.isArray(answer);
   return (
     <AnswerWrapper>
+      <h3>답변내용 ( 답변 수 : {isAnswerArray && answer.length} )</h3>
       <AnswerContainer>
-        {/* {answers.map((answer) => (
-          <AnswerItem key={answer.id}>
-            <div>{answer.content}</div>
-            <AnswerContent>{answer.createAt}</AnswerContent>
-          </AnswerItem>
-        ))} */}
-        <AnswerItem>
-          답변 내용~
-          <AnswerContainer>작성 시간</AnswerContainer>
-        </AnswerItem>
+        {Array.isArray(answer) &&
+          answer.map((answer, idx) => (
+            <AnswerItem key={idx}>
+              <Flex>
+                <div>{answer.content}</div>
+              </Flex>
+              <AnswerContent>{answer.createAt}</AnswerContent>
+            </AnswerItem>
+          ))}
       </AnswerContainer>
     </AnswerWrapper>
   );

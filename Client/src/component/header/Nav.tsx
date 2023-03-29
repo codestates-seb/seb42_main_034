@@ -8,6 +8,7 @@ import { Colors } from 'component/style/variables';
 import { Flex } from 'component/style/cssTemplete';
 import Search from 'component/ui/Search';
 import { useAppSelector } from 'redux/hooks';
+import Searchbar from 'component/board/Searchbar';
 const LogoStyle = styled(Logo)`
   transform: scale(1.6);
   width: 10rem;
@@ -25,7 +26,7 @@ export default function Nav({ className }: Props) {
       <Link to="/home">
         <LogoStyle />
       </Link>
-      <Search />
+      <Searchbar />
       <UserTab />
     </div>
   );

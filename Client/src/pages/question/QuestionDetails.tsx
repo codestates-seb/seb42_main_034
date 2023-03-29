@@ -1,32 +1,41 @@
-import React, { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import BoardDetail from '../../component/board/BoardDetail';
-import CommentList from '../../component/board/CommentList';
-import Editor from '../../component/board/Editor';
-import styled from 'styled-components';
 
+import { BoardData, CRUDdata, useGetData } from 'api/data';
+import { useQuery } from '@tanstack/react-query';
+
+import { useAppSelector } from 'redux/hooks';
+
+import Answer from 'component/Answer';
+import { MoveBtn } from './BoardList';
+import { Flex } from 'component/style/cssTemplete';
 export default function QuestionDetails() {
-  const [comment, setComment] = useState<string>('');
-  const data = useLocation().state;
-  console.log(data);
+  const data: BoardData = useLocation().state;
+  const { memberId } = useAppSelector((state) => state.loginInfo);
+  const navigate = useNavigate();
+  const { deleteBoardData } = useGetData();
 
-  const commentHandler = (value: string) => {
-    setComment(value);
-  };
-
-  const submitHandler = () => {
-    // comment axios
-  };
+  console.log(memberId);
 
   return (
     <>
-      <Outlet />
-      <BoardDetail />
-      <h1>답변내용 ( 답변 수 : )</h1>
-      <CommentList />
-      <p>댓글 작성</p>
-      <Editor value={comment} onChange={commentHandler} />
-      <button onClick={submitHandler}>작성</button>
+      <Flex justify="end" width="90%" gap="2rem">
+        <MoveBtn
+          children="수정"
+          onClick={() => {
+            navigate(`/board/putboard/${data.questionId}`, { state: data.questionId });
+          }}
+        />
+        <MoveBtn
+          children="삭제"
+          onClick={() => {
+            deleteBoardData(data.questionId, memberId).catch(console.error);
+          }}
+        />
+      </Flex>
+      <BoardDetail data={data} />
+      <Answer questionId={data.questionId} />
     </>
   );
 }

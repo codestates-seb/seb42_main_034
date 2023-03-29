@@ -26,7 +26,7 @@ const Layout = styled.div`
   border-radius: 3rem;
   max-width: ${ScreenSize.max_width};
   margin: auto;
-  background: ${Colors.boardlist_color};
+  background: rgba(255, 255, 255, 0.4);
   border: 5px solid black;
   ${BoxShadow};
 `;

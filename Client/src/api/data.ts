@@ -1,5 +1,6 @@
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios';
 import { axiosInstance } from './instance';
+import useAPI from 'hooks/uesAPI';
 
 axios.defaults.withCredentials = true;
 interface QuestionList {
@@ -25,33 +26,27 @@ export interface ReturnData {
     toatalPage: string;
   };
 }
-interface Mock {
-  userId: number;
-  id: number;
+export interface BoardData {
+  createdAt: string;
+  modifiedAt: string;
+  questionId: string | number;
+  tags: string;
   title: string;
-  completed: boolean;
+  viewCnt: number;
+  writer: string;
+  content?: string;
 }
 interface Argument {
   region: string;
   page?: number;
   sortedBy?: string;
 }
+interface AnswerRequestBody {
+  memberId: number | string;
+  content: string;
+}
 //하나로 여러가지 메소드 실행
 export class CRUDdata {
-  url = '';
-  constructor() {
-    this.url = process.env.REACT_APP_HOST as string;
-  }
-  // async getCategoryKeyWord(keyword:string){
-  //   return keyword === 'question' ? this.getQuestion
-  // }
-  //Promise<AxiosResponse<ReturnData>>
-  //?category=${city}&page=${page}sortedBy=${sortedBy}`
-  //city: string, page: string, sortedBy: string
-  //   async getData(): Promise<AxiosResponse<Mock>> {
-  //     const response = await axios.post(`${this.url}`, { username: 'dlwjddus16@naver.com', password: 'wjd123456!' });
-  //     return response;
-  //   }
   async getData(region: string, section: string): Promise<AxiosResponse<ReturnData>> {
     const response = await axiosInstance.get(section, {
       withCredentials: true,
@@ -62,6 +57,35 @@ export class CRUDdata {
       },
     });
     return response.data;
-    // }
   }
+}
+export const useGetData = () => {
+  const api = useAPI();
+  const getBoardData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
+    await api.get(`/questions/${questionId}`).then((res) => res.data);
+  const deleteBoardData = async (
+    questionId: number | string,
+    memberId: number | string,
+  ): Promise<AxiosResponse<BoardData>> =>
+    await api.delete(`/questions/${questionId}?memberId=${memberId}`).then((res) => res.data);
+
+  const getAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
+    await api.get(`/questions/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
+  const postAnswerData = async (
+    questionId: number | string,
+    body: AnswerRequestBody,
+  ): Promise<AxiosResponse<BoardData>> =>
+    await api.post(`/questions/answer/${questionId}`, body).then((res) => res.data.data);
+  const putAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
+    await api.patch(`/questions/answer/${questionId}`).then((res) => res.data.data);
+  const deleteAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
+    await api.delete(`/questions/answer/${questionId}`);
+
+  const putBoardData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
+    await api.patch(`/questions/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
+  return { getBoardData, deleteBoardData, getAnswerData, deleteAnswerData, putAnswerData, postAnswerData };
+};
+export function getDate(date: string) {
+  const formatDate = new Date(date);
+  return formatDate;
 }

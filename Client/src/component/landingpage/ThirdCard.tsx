@@ -2,6 +2,7 @@ import { Absolute } from 'component/style/cssTemplete';
 import { Colors, FontSize, Route } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
 import { Icon } from 'component/ui/Icon';
+import { MoveBtn } from 'pages/question/BoardList';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -28,6 +29,10 @@ const Font = styled.div`
   }
   .h3 {
     font-size: ${FontSize.h3};
+    margin-bottom: 2rem;
+  }
+  .font {
+    font-size: 2rem;
   }
 `;
 const PointCategory = styled(Absolute)`
@@ -53,7 +58,8 @@ export default function ThirdCard() {
       <Font>
         <div className="h2 third2">지역별로 다양한 여행지 정보들을 확인해보세요</div>
         <div className="h3">카테고리를 이용해서 채택이 완료 된 답변들을 검색 할 수 있습니다.</div>
-        <Button
+        <MoveBtn
+          className="font"
           children="지금가입하고 이용 해보세요!"
           onClick={() => {
             handleClick();

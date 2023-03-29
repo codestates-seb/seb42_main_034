@@ -1,31 +1,69 @@
+import { useQuery } from '@tanstack/react-query';
+import { BoardData, useGetData } from 'api/data';
+import { Colors, FontSize } from 'component/style/variables';
 import React from 'react';
 import styled from 'styled-components';
 
+export default function BoardDetail({ data }: { data: BoardData }) {
+  const { getBoardData, getAnswerData } = useGetData();
+  const {
+    isLoading,
+    error,
+    data: post,
+  } = useQuery(['region'] as const, async () => await getBoardData(data.questionId), {
+    staleTime: 1000 * 15,
+  });
+
+  return (
+    <>
+      <ListWrapper>
+        <Item>
+          <Title className="title">{data.title}</Title>
+          <div className="divide_title">
+            조회수:{data.viewCnt} | 작성시간: {data.createdAt}{' '}
+          </div>
+        </Item>
+
+        <div className="flex"> {post?.data.content}</div>
+      </ListWrapper>
+    </>
+  );
+}
 const ListWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 50vh;
-`;
-
-const ListContainer = styled.ul`
   width: 60rem;
+  height: 50vh;
+  .flex {
+    flex: 1 1 auto;
+    font-size: ${FontSize.h3};
+    width: 38em;
+    height: 28em;
+    border: 1px solid ${Colors.text_black};
+    padding: 2rem;
+  }
 `;
 
-const Item = styled.li`
-  display: flex;
-  flex-direction: column; /* 수정된 부분 */
-  align-items: center;
-  padding: 20px;
-  margin: 20px 0;
+const Item = styled.div`
   border: 1px solid blue;
-`;
-
-const TitleWrapper = styled.div`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 65em;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  height: 8rem;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.8rem;
+  .divide_title {
+    display: flex;
+    justify-content: end;
+  }
+  .title {
+    font-size: ${FontSize.h2};
+    font-weight: bold;
+  }
 `;
 
 const Title = styled.div`
@@ -34,27 +72,3 @@ const Title = styled.div`
   text-align: center;
   text-decoration: none;
 `;
-
-const Sub = styled.div`
-  font-size: 20x;
-`;
-
-export default function BoardDetail() {
-  return (
-    <>
-      <ListWrapper>
-        <ListContainer>
-          <Item>
-            <TitleWrapper>
-              <Title>여름 여행지로 제주 어떤가요?</Title>
-              <Sub>조회수: 0 | 작성시간: 23.03.19 14:00:00 </Sub>
-            </TitleWrapper>
-          </Item>
-          <div>
-            <Sub>제주도를 가고싶은데 갈지말지 아직 못정해서 어떻게 생각하시는지 조언좀 듣고싶어요</Sub>
-          </div>
-        </ListContainer>
-      </ListWrapper>
-    </>
-  );
-}

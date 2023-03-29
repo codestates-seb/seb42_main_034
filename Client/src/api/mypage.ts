@@ -25,8 +25,8 @@ interface FixMyInfo {
   nickname: string;
   username: string;
   location: {
-    latitude: string|number;
-    longitude: string|number;
+    latitude: string | number;
+    longitude: string | number;
   } | null;
   address: string;
   avatarUrl: string;
@@ -36,25 +36,23 @@ export const useMypageAPI = () => {
   const api = useAPI();
   const dispatch = useAppDispatch();
 
-    const getMemberInfo = async (id: string | undefined) =>
-      await api.get(`/members/me`).then((res) => res.data);
+  const getMemberInfo = async (id: string | undefined) => await api.get(`/members/me`).then((res) => res.data.data);
 
-  const getMyInfo = async (id: string | undefined) =>
-      await api.get<Member>(`/members/me`).then(res => {
-          dispatch(setUserInfo(res.data));
-          return res.data;
-      });
+  const getMyInfo = async (id?: string | undefined) =>
+    await api.get<Member>(`/members/me`).then((res) => {
+      dispatch(setUserInfo(res.data));
+      return res.data.data;
+    });
 
-      const patchFixMyInfo = (data: FixMyInfo) =>
-      api.patch(`/members/edit`, data)
+  const patchFixMyInfo = (data: FixMyInfo) => api.patch(`/members/edit`, data);
 
-      // const aixosAddPhoto = (data:any) => {
-      //   axios.post(`/upload`, data).then(res => console.log(res));
-      // }
+  // const aixosAddPhoto = (data:any) => {
+  //   axios.post(`/upload`, data).then(res => console.log(res));
+  // }
 
   return {
-      getMemberInfo,
-      getMyInfo,
-      patchFixMyInfo,
-  }
+    getMemberInfo,
+    getMyInfo,
+    patchFixMyInfo,
+  };
 };

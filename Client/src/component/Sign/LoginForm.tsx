@@ -32,13 +32,12 @@ const Loginform = () => {
         headers: { authorization },
       } = res;
       dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
-      notifi(dispatch, `${data.nickname}님 환영합니다.`);
+      notifi(dispatch, `${res.data.nickname}님 환영합니다.`);
       navigate(-1);
-      console.log(res);
 
-      setTimeout(() => {
-        dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
-      }, 1000 * 60 * 29);
+      // setTimeout(() => {
+      //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
+      // }, 1000 * 60 * 29);
     },
     onError: (res) => {
       console.log('login failed: ', res);

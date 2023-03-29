@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface InitProps {
   isLogin: boolean;
-  id?: string;
+  memberId?: any;
   nickname?: string;
   username?: string;
   accessToken?: string;

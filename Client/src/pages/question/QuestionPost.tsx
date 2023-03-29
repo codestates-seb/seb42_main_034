@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonWrapper } from '../../component/board/Button';
 import Editor from '../../component/board/Editor';
@@ -8,12 +8,14 @@ import axios from 'axios';
 
 import useAPI from '../../hooks/uesAPI';
 import { useAppSelector } from 'redux/hooks';
+import { MoveBtn, StyledCategoryBtn } from './BoardList';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100vh;
   justify-content: center;
   flex-direction: column;
+  padding: 10rem;
 `;
 
 const Button = styled(ButtonWrapper)`
@@ -36,7 +38,8 @@ export default function QuestionPost() {
   const [content, setContent] = useState<string>('');
   const [tag, setTag] = useState<string[]>([]);
   const api = useAPI();
-  const { accessToken } = useAppSelector((state) => state.loginInfo);
+  const navigate = useNavigate();
+  const { accessToken, memberId } = useAppSelector((state) => state.loginInfo);
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -62,17 +65,16 @@ export default function QuestionPost() {
       alert('내용을 입력하세요.');
       return;
     }
-    console.log(accessToken);
 
-    axios
+    api
       .post(
-        'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions',
+        '/questions',
         {
-          memberId: 1,
+          memberId,
           title,
           content,
           tag,
-          category: 'test',
+          category: 'project',
         },
         {
           headers: {
@@ -81,7 +83,7 @@ export default function QuestionPost() {
         },
       )
       .then(function (response) {
-        console.log(response);
+        navigate(-1);
       })
       .catch(function (error) {
         console.log(error);
@@ -94,7 +96,7 @@ export default function QuestionPost() {
         <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
         <Editor value={content} onChange={contentHandler} />
         <Tags tag={tag} addTag={addTag} removeTag={removeTag} />
-        <Button onClick={submitHandler}>작성</Button>
+        <MoveBtn onClick={submitHandler}>작성</MoveBtn>
         <Outlet />
       </PostWrapper>
     </>

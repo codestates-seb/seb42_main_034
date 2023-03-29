@@ -25,6 +25,9 @@ export default function UserTab() {
   const handleClick = (route: string) => {
     navigate(route);
   };
+  useEffect(() => {
+    console.log('s');
+  }, [login]);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
   const handleLogOut = () => {
@@ -33,6 +36,8 @@ export default function UserTab() {
     mutateLogout();
     dispatch(logout());
   };
+  console.log(isLogin);
+
   return (
     <>
       {login || (

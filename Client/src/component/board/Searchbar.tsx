@@ -1,4 +1,5 @@
 import { Relative } from 'component/style/cssTemplete';
+import { Colors } from 'component/style/variables';
 import { Icon } from 'component/ui/Icon';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -11,7 +12,7 @@ const SearchWrapper = styled.form`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 5em;
+  top: 3rem;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
@@ -20,8 +21,8 @@ const SearchInput = styled.input`
   font-size: var(--font-size-md);
   padding: 10px;
   width: 40rem;
-  border-radius: 5px;
-  border: 1px solid gray;
+  border-radius: 1rem;
+  border: 5px solid ${Colors.main_02};
 `;
 const ResizedIcon = styled(SearchIcon)`
   width: 1.5rem;
@@ -29,8 +30,8 @@ const ResizedIcon = styled(SearchIcon)`
 `;
 const SearchBar = styled(Icon)`
   position: absolute;
-  top: 0;
-  left: 0;
+
+  right: 39em;
 `;
 export default function Searchbar() {
   const [searchData, setSearchData] = useState('');
@@ -48,7 +49,6 @@ export default function Searchbar() {
       <SearchInput type="text" value={searchData} onChange={searchInputHandler} />
       <Relative height="1rem" pb="0.4rem">
         <SearchBar svg={<ResizedIcon />} />
-        <ResizedIcon />
       </Relative>
     </SearchWrapper>
   );
