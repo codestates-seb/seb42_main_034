@@ -31,6 +31,14 @@ interface FixMyInfo {
   address: string;
   avatarUrl: string;
 }
+interface GetPost {
+  content: {
+    [x: string]: any;
+    title: string;
+    page:number;
+    size:number;
+  }
+}
 
 export const useMypageAPI = () => {
   const api = useAPI();
@@ -48,13 +56,13 @@ export const useMypageAPI = () => {
       const patchFixMyInfo = (data: FixMyInfo) =>
       api.patch(`/members/edit`, data)
 
-      // const aixosAddPhoto = (data:any) => {
-      //   axios.post(`/upload`, data).then(res => console.log(res));
-      // }
+      const getPostList = (id?: number) =>
+      api.get<GetPost>(`/members/me/qeustionsTitle?page=1&size=10`).then(res => res.data);
 
   return {
       getMemberInfo,
       getMyInfo,
       patchFixMyInfo,
+      getPostList,
   }
 };

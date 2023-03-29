@@ -10,7 +10,7 @@ import {FiEdit} from 'react-icons/fi'
 import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
 import { useState } from 'react';
-import PostList from 'component/mypage/getPostlist';
+// import PostList from 'component/mypage/getPostlist';
 
 
 export default function MyPage() {
@@ -48,13 +48,13 @@ export default function MyPage() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
-        return <div>가나다라
-          <PostList />
+        return <div>작성한 글을 찾을 수  없습니다.
+          {/* <PostList /> */}
         </div>;
       case 1:
-        return <div>1234</div>;
+        return <div>작성한 답변을 찾을 수  없습니다.</div>;
       case 2:
-        return <div>ABCD</div>;
+        return <div>작성한 댓글을 찾을 수  없습니다.</div>;
       default:
         return null;
     }
