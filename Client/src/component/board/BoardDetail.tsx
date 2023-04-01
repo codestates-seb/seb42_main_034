@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { BoardData, useGetData } from 'api/data';
 import { Colors, FontSize } from 'component/style/variables';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function BoardDetail({ data }: { data: BoardData }) {
@@ -10,7 +10,7 @@ export default function BoardDetail({ data }: { data: BoardData }) {
     isLoading,
     error,
     data: post,
-  } = useQuery(['region'] as const, async () => await getBoardData(data.questionId), {
+  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId), {
     staleTime: 1000 * 15,
   });
 
@@ -20,7 +20,7 @@ export default function BoardDetail({ data }: { data: BoardData }) {
         <Item>
           <Title className="title">{data.title}</Title>
           <div className="divide_title">
-            조회수:{data.viewCnt} | 작성시간: {data.createdAt}{' '}
+            조회수:{data.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
           </div>
         </Item>
 

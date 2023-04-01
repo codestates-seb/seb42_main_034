@@ -36,7 +36,7 @@ export default function QuestionCard({ city, filter }: { city: ReturnData; filte
       <div className="title">{city.title}</div>
 
       <Flex gap="2rem" direction="column">
-        <div>{city.createdAt}</div>
+        <div>{city.createdAt.split('T')[0]}</div>
         <div>{city.writer}</div>
       </Flex>
     </Card>

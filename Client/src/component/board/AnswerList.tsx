@@ -30,7 +30,7 @@ export default function AnswerList({ questionId }: { questionId: number | string
     isLoading,
     error,
     data: answer,
-  } = useQuery(['answer'] as const, async () => await getAnswerData(questionId), {
+  } = useQuery(['answer', questionId] as const, async () => await getAnswerData(questionId), {
     staleTime: 1000 * 15,
   });
 
