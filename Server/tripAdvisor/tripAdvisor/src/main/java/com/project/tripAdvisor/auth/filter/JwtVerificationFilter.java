@@ -27,6 +27,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {//request당 �
     //Authentication 객체에 채울 사용자 권한을 생성하는데 이용
     private final CustomAuthorityUtils authorityUtils;
 
+//    private final MemberRepository memberRepository;
 
 
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
