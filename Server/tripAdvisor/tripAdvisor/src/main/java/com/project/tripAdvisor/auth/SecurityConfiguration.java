@@ -35,16 +35,11 @@ public class SecurityConfiguration{//여기에 지원하는 인증과 권한부�
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-    private final MemberRepository memberRepository;
-
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer,
-                                 CustomAuthorityUtils authorityUtils,
-                                 MemberRepository memberRepository) {
+                                 CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
-        this.memberRepository = memberRepository;
-
     }
 
 
@@ -131,7 +126,8 @@ public class SecurityConfiguration{//여기에 지원하는 인증과 권한부�
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
             //인스턴스를 생성하면서 해당 필터에서 사용되는 객체들을  DI 받는다.
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter =
+                    new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             //addFilter 를 통해 jwtAuthenticationFilter를 Spring Security Filter Chain에 추가한다.
             builder.addFilter(jwtAuthenticationFilter)

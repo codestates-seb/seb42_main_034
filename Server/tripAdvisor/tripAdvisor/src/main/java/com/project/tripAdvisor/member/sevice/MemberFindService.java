@@ -33,10 +33,6 @@ public class MemberFindService {
     public Page<Question> findMyQuestions(String email, int page, int size){
         Member member = memberService.findMemberByEmail(email);
 
-
-//        PageRequest pageRequest = PageRequest.of(page, size,
-//                Sort.by("createdAt").descending());
-
         return questionService.findMemberQuestions(member.getId(), page-1, size);
     }
 
