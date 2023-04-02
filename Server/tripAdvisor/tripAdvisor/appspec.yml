@@ -10,7 +10,7 @@ permissions:
     pattern: "**"
     owner: ubuntu
     group: ubuntu
-
+#경로
 hooks:
   ApplicationStart:
     - location: scripts/trip.sh
