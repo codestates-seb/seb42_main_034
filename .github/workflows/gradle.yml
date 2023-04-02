@@ -51,3 +51,12 @@ jobs:
     # 압축한 프로젝트를 S3로 전송합니다.
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./tripAdvisor.zip s3://jungyeon222/tripAdvisor.zip
+      
+      
+    # CodeDeploy에게 배포 명령을 내립니다.
+    - name: Code Deploy
+      run: >
+        aws deploy create-deployment --application-name project034
+        --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name project034-group
+        --s3-location bucket=jungyeon222,bundleType=zip,key=tripAdvisor.zip
