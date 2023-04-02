@@ -8,7 +8,7 @@ import notificationReducer from './notifiCation';
 // import { getDefaultMiddleware } from '@reduxjs/toolkit';
 // import logger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-
+import boardDetalReducer from './boardDetails';
 // const middleware = [...getDefaultMiddleware({ serializableCheck: false }), logger];
 const persistConfig = {
   key: 'root',
@@ -30,6 +30,7 @@ export const store = configureStore({
   reducer: {
     persistReducer: persistReducer(persistConfig, rootReducer),
     loginInfo: persistReducer(loginPersistConfig, loginInfoReducer),
+    boardDetail: boardDetalReducer,
   },
   middleware: [thunkMiddleware],
 });
@@ -37,4 +38,3 @@ export const store = configureStore({
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-

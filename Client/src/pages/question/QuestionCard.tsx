@@ -4,6 +4,7 @@ import { Flex, HoverAction } from 'component/style/cssTemplete';
 import { Colors, FontSize } from 'component/style/variables';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ListData } from 'redux/boardDetails';
 import styled from 'styled-components';
 const Card = styled.li`
   background: ${Colors.main_04_white};
@@ -23,7 +24,7 @@ const Card = styled.li`
   }
 `;
 
-export default function QuestionCard({ city, filter }: { city: ReturnData; filter: string }) {
+export default function QuestionCard({ city, filter }: { city: ListData; filter: string }) {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/board/${filter}details/${city.questionId}`, { state: city });

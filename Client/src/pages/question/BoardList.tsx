@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { CRUDdata, ReturnData } from 'api/data';
+import { CRUDdata, ReturnData, useGetData } from 'api/data';
 import { Flex, HoverAction, Relative } from 'component/style/cssTemplete';
 import { Button, IButtonProps } from 'component/ui/Button';
 import QuestionCard from './QuestionCard';
@@ -9,20 +9,27 @@ import styled from 'styled-components';
 import { Colors } from 'component/style/variables';
 import Searchbar from 'component/board/Searchbar';
 import Page from 'component/Page';
-import { StyeldButton } from 'component/ui/styledButton';
+
+import useAPI from 'hooks/uesAPI';
+import { getEnvironmentData } from 'worker_threads';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { ListData, setBoardDetails } from 'redux/boardDetails';
 
 export default function BoardList() {
   const section: string[] = ['questions', 'blogs'];
   const data = useLocation();
+  const api = useAPI();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const city = useAppSelector((state) => state.boardDetail);
   const [filter, setFilter] = useState('questions');
-  const {
-    isLoading,
-    error,
-    data: city,
-  } = useQuery([filter, 'region'] as const, async () => await new CRUDdata().getData('project', filter), {
-    staleTime: 1000 * 15,
-  }); //여기에 해당지역넣기
+  // const {
+  //   isLoading,
+  //   error,
+  //   data: city,
+  // } = useQuery([filter, 'region'] as const, async () => await new CRUDdata().getData('project', filter), {
+  //   staleTime: 1000 * 15,
+  // }); //여기에 해당지역넣기
   const [pageNation, setPageNation] = useState({
     page: 1,
     totalElements: 0,
@@ -32,8 +39,22 @@ export default function BoardList() {
     setFilter(section);
   };
   useEffect(() => {
-    console.log(city);
+    const getData = async () => {
+      const response = await api.get(filter, {
+        params: {
+          category: 'project',
+          page: 1,
+          sortedBy: 'default',
+        },
+      });
+      console.log(response.data.data);
+
+      dispatch(setBoardDetails(response.data));
+    };
+    getData().catch(console.error);
   }, [filter]);
+  console.log(city);
+
   // 블로그 버튼을 누르면 해당 블로그로 데이터 get 함 -> 필터를 바꿔야 useEffect로 다시 받아올수있음
   return (
     <Flex direction="column" width="100%" height="900px">
@@ -58,9 +79,7 @@ export default function BoardList() {
 
       <div>{filter === 'questions' ? '질문' : '블로그'}을(를) 작성하고 목록을 확인할수있는 곳 입니다</div>
       <MainBoard>
-        {city?.data.map((city: ReturnData, idx: number) => (
-          <QuestionCard key={idx} city={city} filter={filter} />
-        ))}
+        {city && city.data.map((city: ListData, idx: number) => <QuestionCard key={idx} city={city} filter={filter} />)}
       </MainBoard>
       <Page pages={pageNation} onPage={setPageNation} />
     </Flex>

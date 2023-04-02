@@ -22,7 +22,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import BlogList from 'pages/blog/BlogList';
 import NotificationCenter from 'component/ui/NotifiCationCenter';
 import BoardList from 'pages/question/BoardList';
-import ModifyBoard from 'pages/question/ModifyBoard';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -51,10 +50,7 @@ const router = createBrowserRouter([
             path: '/board/boarddetails/:section',
             element: <BlogDetails />,
           },
-          {
-            path: '/board/putboard/:id',
-            element: <ModifyBoard />,
-          },
+
           {
             path: '/board/questionsdetails/:id',
             element: <QuestionDetails />,
