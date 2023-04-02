@@ -16,18 +16,19 @@ export default function Page({
       page: number;
       totalElements: number;
       totalPages: number;
+      size: number;
     }>
   >;
 }) {
-  const { page, totalElements, totalPages } = pages;
+  const { page, totalElements, totalPages, size } = pages;
   const handleLeftPage = () => {
     if (page === 1) return;
     onPage({ ...page, page: page - 1 });
   };
-  console.log(totalPages);
+  const total: number = Math.ceil(totalElements / size);
 
   const handleRightPage = () => {
-    if (page === totalPages) return;
+    if (page === total) return;
     onPage({ ...page, page: page + 1 });
   };
   return (
@@ -35,7 +36,7 @@ export default function Page({
       <Ul>
         <StyledBtn children="<" onClick={handleLeftPage} />
 
-        {Array(totalPages)
+        {Array(total)
           .fill('d')
           .map((page, idx) => (
             <li key={idx} onClick={() => onPage({ ...page, page: idx + 1 })}>

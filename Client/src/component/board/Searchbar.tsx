@@ -12,15 +12,17 @@ const SearchWrapper = styled.form`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 3rem;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 30%;
+  width: 40%;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const SearchInput = styled.input`
   font-size: var(--font-size-md);
   padding: 10px;
-  width: 40rem;
+  width: 100%;
   border-radius: 1rem;
   border: 5px solid ${Colors.main_02};
 `;
@@ -31,8 +33,9 @@ const ResizedIcon = styled(SearchIcon)`
 const SearchBar = styled(Icon)`
   position: absolute;
 
-  right: 39em;
+  right: 1em;
 `;
+
 export default function Searchbar() {
   const [searchData, setSearchData] = useState('');
 

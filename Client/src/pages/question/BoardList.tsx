@@ -34,6 +34,7 @@ export default function BoardList() {
     page: 1,
     totalElements: 0,
     totalPages: 0,
+    size: 15,
   });
   const handleClick = (section: string) => {
     setFilter(section);
@@ -43,14 +44,13 @@ export default function BoardList() {
       const response = await api.get(filter, {
         params: {
           category: 'project',
-          page: 1,
+          page: pageNation.page,
           sortedBy: 'default',
         },
       });
-      console.log(response.data.data);
-
       dispatch(setBoardDetails(response.data));
     };
+    setPageNation(city.pageInfo);
     getData().catch(console.error);
   }, [filter]);
   console.log(city);
