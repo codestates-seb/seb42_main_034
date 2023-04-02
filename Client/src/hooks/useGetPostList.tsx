@@ -3,20 +3,20 @@ import { useMypageAPI } from "api/mypage"
 
 
 
-export const useGetPostList = () => {
+// export const useGetPostList = () => {
 
-    const {getPostList} = useMypageAPI();
+//     const {getPostList} = useMypageAPI();
 
-    const {
-        data: getPost,
-    } = useInfiniteQuery({
-        queryKey: ['getPost'],
-        queryFn: ({pageParam = undefined}) => getPostList(pageParam),
-        getNextPageParam: lastPage => {
-            return lastPage?.content?.slice(-1)[0]?.postId;
-        }
-    });
-    return {
-        getPost
-    }
-} 
+//     const {
+//         data: getPost,
+//     } = useInfiniteQuery({
+//         queryKey: ['getPost'],
+//         queryFn: ({pageParam = undefined}) => getPostList(pageParam),
+//         getNextPageParam: lastPage => {
+//             return lastPage?.content?.slice(-1)[0]?.postId;
+//         }
+//     });
+//     return {
+//         getPost
+//     }
+// } 

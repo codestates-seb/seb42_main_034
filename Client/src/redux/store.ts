@@ -5,11 +5,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userInfoReducer from './userInfoSlice';
 import loginInfoReducer from './userSlice';
 import notificationReducer from './notifiCation';
-// import { getDefaultMiddleware } from '@reduxjs/toolkit';
-// import logger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 
-// const middleware = [...getDefaultMiddleware({ serializableCheck: false }), logger];
 const persistConfig = {
   key: 'root',
   version: 1,

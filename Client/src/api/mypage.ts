@@ -56,8 +56,22 @@ export const useMypageAPI = () => {
       const patchFixMyInfo = (data: FixMyInfo) =>
       api.patch(`/members/edit`, data)
 
-      const getPostList = (id?: number) =>
-      api.get<GetPost>(`/members/me/qeustionsTitle?page=1&size=10`).then(res => res.data);
+      // const getPostList = (
+      //   id: string|undefined,
+      //   index?: string|undefined,
+      // ) => {
+      //   if(index) {
+      //     return api
+      //       .get(`members/${id}/questionTitle`, {params: {index} })
+      //       .then(res => res.data);
+      //   } else {
+      //     return api.get(`/members/${id}/questionTitle`).then(res => res.data);
+      //   }
+      // }
+      const getPostList = async () => {
+        await api.get(`members/questionTitle`).then(res=>res.data)
+      }
+
 
   return {
       getMemberInfo,
