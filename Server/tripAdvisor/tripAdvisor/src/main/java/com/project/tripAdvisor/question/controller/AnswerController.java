@@ -1,10 +1,15 @@
 package com.project.tripAdvisor.question.controller;
 
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.exception.BusinessLogicException;
+import com.project.tripAdvisor.exception.ExceptionCode;
+import com.project.tripAdvisor.member.Member;
+import com.project.tripAdvisor.member.service.MemberFindService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.dto.AnswerCommentDto;
 import com.project.tripAdvisor.question.dto.AnswerDto;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.AnswerComment;
+import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.AnswerCommentMapper;
 import com.project.tripAdvisor.question.mapper.AnswerMapper;
 import com.project.tripAdvisor.question.service.AnswerService;
@@ -19,7 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin
 @RestController
@@ -37,15 +44,19 @@ public class AnswerController {
 
     private final MemberService memberService;
 
+    private final MemberFindService memberFindService;
+
     public AnswerController(AnswerMapper answerMapper, AnswerService answerService,
                             AnswerCommentMapper answerCommentMapper,
                             QuestionService questionService,
-                            MemberService memberService) {
+                            MemberService memberService,
+                            MemberFindService memberFindService) {
         this.answerMapper = answerMapper;
         this.answerService = answerService;
         this.answerCommentMapper = answerCommentMapper;
         this.questionService = questionService;
         this.memberService = memberService;
+        this.memberFindService = memberFindService;
     }
 
     @PostMapping("/{question-id}")
@@ -139,4 +150,32 @@ public class AnswerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * 박형빈
+     */
+
+//    @PostMapping("/check/{answer-id}")
+//    public ResponseEntity checkAnswer(@PathVariable("answer-id")@Positive Long answerId,
+//                                      Principal principal)
+//    {
+//        Member member = memberFindService.findMyProfile(principal.getName());
+//        Answer answer = answerService.findVerifiedAnswer(answerId);
+//        /**
+//         * 이부분도 서비스단에서 repo를 이용해 찾게끔 수정하셔야 할듯 합니다.
+//         */
+//        Question question = answer.getQuestion();
+//        /**
+//         * 채택 요청을 한 MemberId와 해당 answer를 보유한 question의 MemberId와 비교하여 권한 체크
+//         * 추후 서비스단에서 하도록 처리해주세요 전체 로직 볼 수 있게 그냥 임의로 적은 코드입니다.
+//         */
+//        if(!Objects.equals(answer.getQuestion().getMember().getId(), member.getId()))
+//        {
+//            return new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED));
+//        }
+//
+//        answer.setChecked(true);
+//        question.setChecked(true);
+//
+//        return ResponseEntity.ok().build();
+//    }
 }

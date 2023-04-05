@@ -1,5 +1,6 @@
 package com.project.tripAdvisor.tag.service;
 
+import com.project.tripAdvisor.blog.dto.BlogDto;
 import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.exception.BusinessLogicException;
@@ -13,6 +14,7 @@ import com.project.tripAdvisor.tag.repository.BlogTagRepository;
 import com.project.tripAdvisor.tag.repository.QuestionTagRepository;
 import com.project.tripAdvisor.tag.repository.TagRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,5 +131,20 @@ public class TagService {
             questions.add(question);
         }
         return questions;
+    }
+    @Transactional
+    public void setTags(BlogDto.Request requestBody,Blog blog){
+        if(requestBody.getTags()!=null){
+            List<BlogTag> blogTags=createBlogTag(requestBody.getTags(),blog.getId());
+            blog.getBlogTags().addAll(blogTags);
+        }
+    }
+    @Transactional
+    public void setTags(BlogDto.Patch requestBody,Blog blog){
+        if(requestBody.getTags()!=null)
+        {
+            List<BlogTag> blogTags=updateBlogTag(requestBody.getTags(),blog.getId());
+            blog.getBlogTags().addAll(blogTags);
+        }
     }
 }

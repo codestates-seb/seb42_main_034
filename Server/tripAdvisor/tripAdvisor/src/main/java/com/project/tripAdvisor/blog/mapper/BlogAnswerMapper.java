@@ -18,11 +18,8 @@ public interface BlogAnswerMapper {
         if(requestBody==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
 
         BlogAnswer blogAnswer = new BlogAnswer();
-        blogAnswer.setMember(member);
         blogAnswer.setContent(requestBody.getContent());
 
         return blogAnswer;
@@ -32,12 +29,12 @@ public interface BlogAnswerMapper {
         if(requestBody==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         BlogAnswer blogAnswer = new BlogAnswer();
         blogAnswer.setId(requestBody.getBlogAnswerId());
-        blogAnswer.setMember(member);
+//        blogAnswer.setMember(member);
         blogAnswer.setContent(requestBody.getContent());
 
         return blogAnswer;

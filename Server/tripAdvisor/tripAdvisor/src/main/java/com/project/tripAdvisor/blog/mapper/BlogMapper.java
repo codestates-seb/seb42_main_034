@@ -39,13 +39,15 @@ public interface BlogMapper {
         Long blogId = blog.getId();
         String title = blog.getTitle();
         String content = blog.getContent();
+        List<String> tags = blogToTagName(blog);
+        String writer = blog.getMember().getNickname();
         int viewCnt = blog.getViewCnt();
         int likeCnt = blog.getLikeCnt();
         String createdAt = blog.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         String modifiedAt = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm" ).format( blog.getModifiedAt());
         String image = blog.getImage_path();
 
-        BlogDto.Response response = new BlogDto.Response( blogId, title, content, image, viewCnt, likeCnt, createdAt, modifiedAt );
+        BlogDto.Response response = new BlogDto.Response( blogId, title, content,tags, image,writer, viewCnt, likeCnt, createdAt, modifiedAt );
 
         return response;
     }
@@ -53,11 +55,7 @@ public interface BlogMapper {
         if(requestbody==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestbody.getMemberId());
-
         Blog blog = new Blog();
-        blog.setMember(member);
         blog.setTitle(requestbody.getTitle());
         blog.setContent(requestbody.getContent());
 
