@@ -44,28 +44,3 @@
 #mail:
 #  address:
 #    admin: admin@gmail.com
-server:
-  servlet:
-    encoding:
-      force-response: 'true'
-spring:
-  jpa:
-    database: mysql
-    show-sql: 'true'
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-  datasource:
-    password: '{RDS Mysql Admin password}'
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: '{RDS Mysql Admin id}'
-    url:
-jwt:
-  key: '{JWT_SECRET_KEY}'
-  refresh-token-expiration-minutes: '420'
-  access-token-expiration-minutes: '30'
-config:
-  domain: '{AWS S3 Endpoint}'
-mail:
-  address:
-    admin: admin@gmail.com
