@@ -1,12 +1,13 @@
 package com.project.tripAdvisor.question.controller;
 
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.dto.QuestionDto;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.service.QuestionService;
-import com.project.tripAdvisor.response.*;
+import com.project.tripAdvisor.response.MultiResponseDto;
+import com.project.tripAdvisor.response.SingleResponseDto;
 import com.project.tripAdvisor.tag.entity.QuestionTag;
 import com.project.tripAdvisor.tag.service.TagService;
 import lombok.Builder;
@@ -147,4 +148,5 @@ public class QuestionController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(SearchResponses, pageQuestion), HttpStatus.OK);
     }
+
 }
