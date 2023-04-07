@@ -11,6 +11,7 @@ permissions:
   
 env:
   S3_BUCKET_NAME: jungyeon222
+  RESOURCE_PATH: ./Server/tripAdvisor/tripAdvisor/src/main/resources/application.yml
 
 jobs:
   build:
@@ -24,6 +25,17 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        
+    - name: Set yml file 
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: ${{ env.RESOURCE_PATH }} 
+      env:
+        spring.datasource.url: ${{ secrets.RDS_HOST }} 
+        spring.datasource.username: ${{ secrets.RDS_USERNAME }} 
+        spring.datasource.password: ${{ secrets.RDS_PASSWORD }} 
+        jwt.key: ${{ secrets.JWT_KEY }}
+        
     - name: Add permission
       run: chmod +x gradlew
       working-directory: ./Server/tripAdvisor/tripAdvisor
