@@ -4,9 +4,6 @@ spring:
     url: ${rds.host}
     username: ${rds.username}
     password: ${rds.password}
-#    url: jdbc:mysql://database-1.cegnzsjxp7j9.ap-northeast-2.rds.amazonaws.com:3306/project034?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-#    username: admin
-#    password: 15665726
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -29,7 +26,6 @@ logging:
         jpa: DEBUG
 jwt:
   key: ${jwt.key}
-#  key: GlFU9fJQv7qL6pIcxQQwHZe1WQIeja6Cpt6WKjFEPcYMhKm2LEkj4xbKdA3d
   # key: ${JWT_SECRET_KEY} #민감한 정보는 시스템 환경변수에서 로드함
   access-token-expiration-minutes: 30 #30분
   refresh-token-expiration-minutes: 420 # 420분
