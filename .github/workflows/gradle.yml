@@ -35,6 +35,8 @@ jobs:
         spring.datasource.username: ${{ secrets.RDS_USERNAME }} 
         spring.datasource.password: ${{ secrets.RDS_PASSWORD }} 
         jwt.key: ${{ secrets.JWT_KEY }}
+        naver.map.client.id: ${{ secrets.NAVER_CLIENT_ID }}
+        naver.map.client.secret: ${{ secrets.NAVER_CLIENT_SECRET }}
         
     - name: Add permission
       run: chmod +x gradlew
