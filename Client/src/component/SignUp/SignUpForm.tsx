@@ -37,6 +37,7 @@ export const SignUpForm = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    console.log(isValid)
     const notifiMessages = SignUpMessages(inputs);
     let allConditionsSatisfied = true;
     notifiMessages.forEach((message, notifiCase) => {
