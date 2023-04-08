@@ -33,3 +33,9 @@ jwt:
 mail:
   address:
     admin: admin@gmail.com
+
+naver:
+  map:
+    client:
+      id: ${NAVER_CLIENT_ID}
+      secret: ${NAVER_CLIENT_SECRET}
