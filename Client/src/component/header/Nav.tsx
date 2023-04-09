@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Logo } from './Logo';
 import { Props } from '../header/Logo';
 import UserTab from './UserTab';
@@ -18,9 +18,10 @@ const LogoStyle = styled(Logo)`
 `;
 export default function Nav({ className }: Props) {
   const { isLogin } = useAppSelector((state) => state.loginInfo);
+  const [login, setLogin] = useState(isLogin);
   useEffect(() => {
-    console.log();
-  }, [isLogin]);
+    setLogin(isLogin);
+  }, [login]);
   return (
     <div className={className}>
       <Link to="/home">

@@ -36,7 +36,7 @@ const userInfoSlice = createSlice({
   name: 'userInfo',
   initialState,
   reducers: {
-    setUserInfo: (_, action: PayloadAction<InitProps>) => action.payload,
+    setUserInfo: (state, action: PayloadAction<InitProps>) => action.payload,
     updateUserInfo: (state, action: PayloadAction<InitProps>) => {
       const { key } = action.payload;
 
@@ -47,18 +47,18 @@ const userInfoSlice = createSlice({
 
 export const { setUserInfo, updateUserInfo } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
-setUserInfo({
-  memberId: 0,
-  nickname: '',
-  username: '',
-  location: {
-    latitude: '',
-    longitude: '',
-  },
-  address: '',
-  totalCount: 0,
-  avatarUrl: '',
-  avgGrade: 0,
-  value: '',
-  key: '',
-});
+// setUserInfo({
+//   memberId: 0,
+//   nickname: '',
+//   username: '',
+//   location: {
+//     latitude: '',
+//     longitude: '',
+//   },
+//   address: '',
+//   totalCount: 0,
+//   avatarUrl: '',
+//   avgGrade: 0,
+//   value: '',
+//   key: '',
+// });

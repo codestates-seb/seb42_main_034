@@ -1,6 +1,5 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
 import Error from './pages/Error';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
@@ -18,10 +17,10 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
-
-import BlogList from 'pages/blog/BlogList';
 import NotificationCenter from 'component/ui/NotifiCationCenter';
 import BoardList from 'pages/question/BoardList';
+import { GlobalStyle } from 'component/style/globalStyle';
+import ModifyQuestion from 'pages/question/ModifyQuestion';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -75,6 +74,10 @@ const router = createBrowserRouter([
             path: '/board/blogpost',
             element: <BlogPost />,
           },
+          {
+            path: '/board/modify/:id',
+            element: <ModifyQuestion />,
+          },
         ],
       },
     ],
@@ -87,6 +90,7 @@ createRoot(document.getElementById('root') as HTMLElement).render(
     <PersistGate persistor={persistor}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <GlobalStyle />
         <NotificationCenter />
       </QueryClientProvider>
     </PersistGate>

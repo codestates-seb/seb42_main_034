@@ -1,27 +1,35 @@
-import React, { DetailedHTMLProps, ForwardedRef, forwardRef, HTMLAttributes } from 'react';
-import classNames from 'classnames';
+import React, { DOMAttributes, SetStateAction } from 'react';
+import { Dispatch } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 
-export interface IInputProps extends DetailedHTMLProps<HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+export interface InputProps {
   className?: string;
-  name?: string;
-  type?: string;
-  error?: string;
-  value: string;
-  onChange: any;
+  placeholder?: string;
+  setState: Dispatch<SetStateAction<string>>;
+  value?: string;
+  disabled?: boolean;
+  type: string;
 }
 
-export const Input = forwardRef(
-  ({ className, name, type, error, ...rest }: IInputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element => {
-    return (
-      <>
-        <input
-          className={classNames(className, 'Input', { Input__error: error })}
-          name={name}
-          type={type}
-          ref={ref}
-          {...rest}
-        />
-      </>
-    );
-  },
-);
+function TextInput({ type, className, placeholder, setState, value = '', disabled = false }: InputProps) {
+  const [text, setText] = useState(value);
+
+  const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    const { value } = ev.target;
+    setText(value);
+    setState?.(value);
+  };
+
+  return (
+    <input
+      type={type}
+      value={text}
+      className={className}
+      placeholder={placeholder}
+      onChange={handleChange}
+      disabled={disabled}
+    />
+  );
+}
+
+export default TextInput;

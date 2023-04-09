@@ -9,6 +9,7 @@ import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
 import LoginButton from './LoginButton';
+import { useAppSelector } from 'redux/hooks';
 
 const Loginform = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ const Loginform = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postLogin } = useAuthAPI();
-
+  const data1 = useAppSelector((state) => state.persistReducer.userInfo);
   const { mutate, data: userData } = useMutation({
     mutationKey: ['loginInfo'],
     mutationFn: () =>
@@ -34,6 +35,7 @@ const Loginform = () => {
       dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
       notifi(dispatch, `${res.data.nickname}님 환영합니다.`);
       navigate(-1);
+      console.log(data1);
 
       // setTimeout(() => {
       //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));

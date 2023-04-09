@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { Form } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Input } from '../../component/ui/Input';
-import { Layout } from '../../component/ui/Layout';
-
 export const BlogPost = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');

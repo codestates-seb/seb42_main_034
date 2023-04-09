@@ -9,6 +9,7 @@ import notificationReducer from './notifiCation';
 // import logger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import boardDetalReducer from './boardDetails';
+import answerReducer from './answer/answerslice';
 // const middleware = [...getDefaultMiddleware({ serializableCheck: false }), logger];
 const persistConfig = {
   key: 'root',
@@ -31,6 +32,7 @@ export const store = configureStore({
     persistReducer: persistReducer(persistConfig, rootReducer),
     loginInfo: persistReducer(loginPersistConfig, loginInfoReducer),
     boardDetail: boardDetalReducer,
+    answer: answerReducer,
   },
   middleware: [thunkMiddleware],
 });

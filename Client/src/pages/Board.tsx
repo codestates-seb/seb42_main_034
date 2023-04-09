@@ -27,7 +27,6 @@ const Layout = styled.div`
   max-width: ${ScreenSize.max_width};
   margin: auto;
   background: rgba(255, 255, 255, 0.4);
-  border: 5px solid black;
   ${BoxShadow};
 `;
 export default function Board() {

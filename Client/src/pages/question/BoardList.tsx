@@ -48,6 +48,8 @@ export default function BoardList() {
           sortedBy: 'default',
         },
       });
+      console.log(response);
+
       dispatch(setBoardDetails(response.data));
     };
     setPageNation(city.pageInfo);

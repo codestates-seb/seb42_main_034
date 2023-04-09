@@ -16,7 +16,7 @@ export default function QuestionDetails() {
   const navigate = useNavigate();
   const { deleteBoardData } = useGetData();
 
-  console.log(memberId);
+  console.log(memberId, data);
 
   return (
     <>
@@ -24,13 +24,17 @@ export default function QuestionDetails() {
         <MoveBtn
           children="수정"
           onClick={() => {
-            navigate(`/board/putboard/${data.questionId}`, { state: data.questionId });
+            navigate(`/board/modify/${data.questionId}`, { state: data.questionId });
           }}
         />
         <MoveBtn
           children="삭제"
           onClick={() => {
-            deleteBoardData(data.questionId, memberId).catch(console.error);
+            deleteBoardData(data.questionId, memberId)
+              .then((res) => {
+                navigate(-1);
+              })
+              .catch(console.error);
           }}
         />
       </Flex>
