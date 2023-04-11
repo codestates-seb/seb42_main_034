@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import React from "react";
 import SignInput from "component/ui/SignInput";
+import { USERID_REGEX } from "hooks/consts";
+import { notifi } from "utils/notifi";
 
 
 interface IdFormProps {
@@ -8,17 +10,31 @@ interface IdFormProps {
         label: string;
         state: string;
         setState: (value:string)=>void;
+        setValidity: (value:any)=>void;
     };
     notifi:(value:string)=>void;
 }
 
-const IdForm = ({data}: IdFormProps) => {
-    const {label, state, setState} = data; 
+const IdForm = ({data, notifi}: IdFormProps) => {
+    const {label, state, setState, setValidity} = data;
+    
+    const handleValidate = (
+      label: string,
+      state: string,
+      validate: (value:string)=>void,
+    ) => {
+      if(label === '아이디' && !USERID_REGEX.test(state)) {
+        notifi('아이디는 영문과 숫자로 입력해야 합니다.');
+      } else {
+        notifi(`${label === '아이디' ? '아이디를' : '닉네임을'} 입력 해주세요.`)
+      }
+    }
     
     return (
         <MainContainer>
             <StyledLabel htmlFor={label}>{label}</StyledLabel>
             <SignInput label={label} state={state} setState={setState} maxLength={25} />
+            <div onClick={() => handleValidate(label, state, setValidity)}>중복확인</div>
         </MainContainer>
     )
 }
