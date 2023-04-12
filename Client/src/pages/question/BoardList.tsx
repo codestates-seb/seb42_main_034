@@ -15,7 +15,7 @@ import { getEnvironmentData } from 'worker_threads';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { ListData, setBoardDetails } from 'redux/boardDetails';
 
-export default function BoardList() {
+export default function QuestionBoardList() {
   const section: string[] = ['questions', 'blogs'];
   const data = useLocation();
   const api = useAPI();

@@ -10,7 +10,6 @@ import Search from 'component/ui/Search';
 import { useAppSelector } from 'redux/hooks';
 import Searchbar from 'component/board/Searchbar';
 const LogoStyle = styled(Logo)`
-  transform: scale(1.6);
   width: 10rem;
   margin-left: 3rem;
   padding: 1rem;

@@ -9,7 +9,7 @@ import Board from './pages/Board';
 import MyPage from './pages/MyPage';
 import QuestionPost from './pages/question/QuestionPost';
 import BlogPost from './pages/blog/BlogPost';
-import LandingPage from './pages/LandingPage';
+import LandingPage from './pages/LandingPage/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
 import SignIn from './pages/user/SignIn';
 import App from './App';
@@ -21,7 +21,8 @@ import NotificationCenter from 'component/ui/NotifiCationCenter';
 import BoardList from 'pages/question/BoardList';
 import { GlobalStyle } from 'component/style/globalStyle';
 import ModifyQuestion from 'pages/question/ModifyQuestion';
-
+import QuestionBoardList from 'pages/question/BoardList';
+import BlogBoardList from './pages/blog/BlogList';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -41,8 +42,12 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/boardlist',
-            element: <BoardList />,
+            path: '/board/boardlist/questions',
+            element: <QuestionBoardList />,
+          },
+          {
+            path: '/board/boardlist/blogs',
+            element: <BlogBoardList />,
           },
 
           {

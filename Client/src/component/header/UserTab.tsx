@@ -13,7 +13,7 @@ const MenuTabBtn = styled(Button)`
   border: none;
   background: none;
   ${HoverAction}
-  font-size: ${FontSize.lg};
+  font-size: ${FontSize.sm};
 `;
 export default function UserTab() {
   //상태넣을자리

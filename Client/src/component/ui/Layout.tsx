@@ -9,13 +9,12 @@ const LayoutFlex = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  background: ${Colors.main_01};
+  background: ${Colors.main_04_white};
   max-height: ${ScreenSize.max_height};
   margin: auto;
 `;
 //Nav스타일 위치 바꿔야될듯 헷갈림ㅠ
 const NavStyle = styled(Nav)`
-  background: ${Colors.board_color};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,7 +22,7 @@ const NavStyle = styled(Nav)`
   border-bottom-right-radius: 0.4rem;
   padding: 0.4rem;
   max-width: 100vw;
-  height: 8vh;
+
   margin: auto;
   margin-bottom: 4rem;
 `;
@@ -38,10 +37,10 @@ interface LayoutProps {
 // theme
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <LayoutFlex>
+    <>
       <NavStyle />
       {children}
       <Footer />
-    </LayoutFlex>
+    </>
   );
 };

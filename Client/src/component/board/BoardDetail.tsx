@@ -4,27 +4,20 @@ import { Colors, FontSize } from 'component/style/variables';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-export default function BoardDetail({ data }: { data: BoardData }) {
-  const { getBoardData, getAnswerData } = useGetData();
-  const {
-    isLoading,
-    error,
-    data: post,
-  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId), {
-    staleTime: 1000 * 15,
-  });
+export default function BoardDetail({ data, detail }: { data: BoardData; detail: BoardData }) {
+  console.log(detail);
 
   return (
     <>
       <ListWrapper>
         <Item>
-          <Title className="title">{data.title}</Title>
+          <Title className="title">{detail.title}</Title>
           <div className="divide_title">
-            조회수:{data.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
+            조회수:{detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
           </div>
         </Item>
 
-        <div className="flex"> {post?.data.content}</div>
+        <div className="flex"> {detail.content}</div>
       </ListWrapper>
     </>
   );

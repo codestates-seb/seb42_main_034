@@ -1,5 +1,5 @@
 import { Absolute, BoxShadow, HoverAction } from 'component/style/cssTemplete';
-import { Colors, Route, ScreenSize } from 'component/style/variables';
+import { Colors, FontSize, Route, ScreenSize } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
 import { Icon } from 'component/ui/Icon';
 import { IconPng } from 'component/ui/Icons';
@@ -28,7 +28,7 @@ const StyledBtn = styled(Button)`
   position: absolute;
   bottom: 9rem;
   right: 26rem;
-  font-size: xx-large;
+  font-size: ${FontSize.h3};
   background: ${Colors.button_blue};
   border: none;
   padding: 2rem;
@@ -39,7 +39,7 @@ const StyledBtn = styled(Button)`
 const LandingFrame = styled.div`
   /* background: ${Colors.main_02}; */
   display: inline-block;
-  font-size: 2rem;
+  font-size: ${FontSize.h2};
   font-weight: bold;
   color: ${Colors.text_black};
 `;

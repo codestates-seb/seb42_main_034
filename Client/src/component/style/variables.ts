@@ -5,9 +5,10 @@ export enum FontSize {
   sm = '14px',
   md = '18px',
   lg = '22px',
-  h1 = '34px',
-  h2 = '30px',
+  h1 = '33px',
+  h2 = '29px',
   h3 = '26px',
+  main = '40px',
 }
 export enum Colors {
   main_01 = '#B0DBFC',

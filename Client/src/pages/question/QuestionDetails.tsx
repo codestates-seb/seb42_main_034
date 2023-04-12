@@ -15,8 +15,15 @@ export default function QuestionDetails() {
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
   const { deleteBoardData } = useGetData();
-
-  console.log(memberId, data);
+  const { getBoardData, getAnswerData } = useGetData();
+  const {
+    isLoading,
+    error,
+    data: detail,
+  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId), {
+    staleTime: 1000 * 15,
+  });
+  console.log(memberId, detail);
 
   return (
     <>
@@ -24,7 +31,7 @@ export default function QuestionDetails() {
         <MoveBtn
           children="수정"
           onClick={() => {
-            navigate(`/board/modify/${data.questionId}`, { state: data.questionId });
+            navigate(`/board/modify/${data.questionId}`, { state: { data, detail } });
           }}
         />
         <MoveBtn
@@ -38,8 +45,13 @@ export default function QuestionDetails() {
           }}
         />
       </Flex>
-      <BoardDetail data={data} />
-      <Answer questionId={data.questionId} />
+      {isLoading && <div>로딩중..</div>}
+      {data && detail && (
+        <>
+          <BoardDetail data={data} detail={detail} />
+          <Answer questionId={data.questionId} />
+        </>
+      )}
     </>
   );
 }

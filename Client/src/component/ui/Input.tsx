@@ -1,4 +1,4 @@
-import React, { DOMAttributes, SetStateAction } from 'react';
+import React, { DOMAttributes, SetStateAction, useCallback, useMemo } from 'react';
 import { Dispatch } from 'react';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 
@@ -13,10 +13,10 @@ export interface InputProps {
 
 function TextInput({ type, className, placeholder, setState, value = '', disabled = false }: InputProps) {
   const [text, setText] = useState(value);
-
+  const input = useCallback((e: React.SetStateAction<string>) => setText(e), []);
   const handleChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const { value } = ev.target;
-    setText(value);
+    input(value);
     setState?.(value);
   };
 

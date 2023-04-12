@@ -9,7 +9,7 @@ import { Colors, ScreenSize } from './component/style/variables';
 import { Layout } from './component/ui/Layout';
 
 const FixOutletHeight = styled.div<{ landingPage?: string }>`
-  min-height: ${ScreenSize.middle_height};
+  min-height: 100%;
 `;
 export default function App() {
   const [showButton, setShowButton] = useState(false);

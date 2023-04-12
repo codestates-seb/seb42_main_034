@@ -16,16 +16,18 @@ export interface ReturnData {
   data: ListData[] | [];
   pageInfo: PageProps;
 }
+
 export interface BoardData {
   createdAt: string;
-  modifiedAt: string;
+  modifiedAt?: string;
   questionId: string | number;
-  tags: string;
+  tags: string | null;
   title: string;
   viewCnt: number;
   writer: string;
   content?: string;
 }
+
 interface Argument {
   region: string;
   page?: number;
@@ -49,6 +51,11 @@ export class CRUDdata {
     return response.data;
   }
 }
+interface PatchBody {
+  title: string;
+  tags: string | null;
+  content: string;
+}
 export const useGetData = () => {
   const api = useAPI();
   const getData = async (region: string, section: string): Promise<AxiosResponse<ReturnData>> => {
@@ -62,15 +69,15 @@ export const useGetData = () => {
     });
     return response;
   };
-  const getBoardData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
-    await api.get(`/questions/${questionId}`).then((res) => res.data);
+  const getBoardData = async (questionId: number | string) =>
+    await api.get(`/questions/${questionId}`).then((res) => res.data.data);
   const deleteBoardData = async (
     questionId: number | string,
     memberId: number | string,
   ): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/questions/${questionId}?memberId=${memberId}`).then((res) => res.data);
 
-  const getAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
+  const getAnswerData = async (questionId: number | string) =>
     await api.get(`/questions/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
   const postAnswerData = async (
     questionId: number | string,
@@ -82,9 +89,18 @@ export const useGetData = () => {
   const deleteAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/questions/answer/${questionId}`);
 
-  const putBoardData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
-    await api.patch(`/questions/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
-  return { getData, getBoardData, deleteBoardData, getAnswerData, deleteAnswerData, putAnswerData, postAnswerData };
+  const putBoardData = async (questionId: number | string, body: PatchBody): Promise<AxiosResponse<BoardData>> =>
+    await api.patch(`/questions/${questionId}`, body).then((res) => res.data.data);
+  return {
+    putBoardData,
+    getData,
+    getBoardData,
+    deleteBoardData,
+    getAnswerData,
+    deleteAnswerData,
+    putAnswerData,
+    postAnswerData,
+  };
 };
 export function getDate(date: string) {
   const formatDate = new Date(date);
