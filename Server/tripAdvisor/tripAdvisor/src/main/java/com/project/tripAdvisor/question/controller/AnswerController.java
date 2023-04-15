@@ -1,9 +1,5 @@
 package com.project.tripAdvisor.question.controller;
 
-import com.project.tripAdvisor.blog.entity.BlogAnswer;
-import com.project.tripAdvisor.blog.entity.BlogAnswerComment;
-import com.project.tripAdvisor.exception.BusinessLogicException;
-import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.member.service.MemberFindService;
 import com.project.tripAdvisor.member.service.MemberService;
@@ -11,7 +7,6 @@ import com.project.tripAdvisor.question.dto.AnswerCommentDto;
 import com.project.tripAdvisor.question.dto.AnswerDto;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.AnswerComment;
-import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.AnswerCommentMapper;
 import com.project.tripAdvisor.question.mapper.AnswerMapper;
 import com.project.tripAdvisor.question.service.AnswerService;
@@ -28,7 +23,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.security.Principal;
 import java.util.List;
-import java.util.Objects;
 
 @CrossOrigin
 @RestController
