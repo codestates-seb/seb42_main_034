@@ -1,5 +1,7 @@
 package com.project.tripAdvisor.question.controller;
 
+import com.project.tripAdvisor.blog.entity.BlogAnswer;
+import com.project.tripAdvisor.blog.entity.BlogAnswerComment;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
@@ -60,36 +62,36 @@ public class AnswerController {
     }
 
     @PostMapping("/{question-id}")
-    public ResponseEntity postAnswer(@PathVariable("question-id") @Positive Long questionId,
+    public ResponseEntity postAnswer(Principal principal,
+                                     @PathVariable("question-id") @Positive Long questionId,
                                      @RequestBody AnswerDto.Post requestbody) {
 
         Answer answer = answerMapper.answerPostToAnswer(requestbody);
+        Member member =memberFindService.findMyProfile(principal.getName());
+        answer.setMember(member);
         answerService.createAnswer(answer, questionId);
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
-                , HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 
     @PatchMapping("/{answer-id}")
-    public ResponseEntity patchAnswer(@PathVariable("answer-id") @Positive Long answerId,
+    public ResponseEntity patchAnswer(Principal principal,
+                                      @PathVariable("answer-id") @Positive Long answerId,
                                       @Valid @RequestBody AnswerDto.Patch requestbody) {
         requestbody.setAnswerId(answerId);
 
         Answer answer = answerMapper.answerPatchToAnswer(requestbody);
-        answer = answerService.updateAnswer(answer, answer.getMember().getId());
+        answer = answerService.updateAnswer(answer, memberFindService.findMyProfile(principal.getName()).getId());
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(answerMapper.answerToAnswerResponse(answer))
-                , HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")
-    public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive Long answerId,
-                                       @RequestParam @Positive Long memberId) {
+    public ResponseEntity deleteAnswer(Principal principal,
+                                       @PathVariable("answer-id") @Positive Long answerId) {
 
-        answerService.deleteAnswer(answerId, memberId);
+        answerService.deleteAnswer(answerId, memberFindService.findMyProfile(principal.getName()).getId());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -113,9 +115,9 @@ public class AnswerController {
     /** 댓글 좋아요 기능 **/
     @PostMapping("like/{answer-id}")
     public ResponseEntity postAnswerLike(@Positive @PathVariable("answer-id") Long answerId,
-                                         @Positive @RequestParam Long memberId) {
+                                         Principal principal) {
 
-        answerService.switchLike(answerId, memberId);
+        answerService.switchLike(answerId, memberFindService.findMyProfile(principal.getName()).getId());
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -123,29 +125,34 @@ public class AnswerController {
     /******************************** 대댓글 *********************************/
 
     @PostMapping("/comments/{answer-id}")
-    public ResponseEntity postAnswerComment(@PathVariable("answer-id")@Positive Long answerId,
+    public ResponseEntity postAnswerComment(Principal principal,
+                                            @PathVariable("answer-id")@Positive Long answerId,
                                             @RequestBody AnswerCommentDto.Post requestBody){
+
         AnswerComment answerComment = answerCommentMapper.AnswerCommentPostToAnswerComment(requestBody);
+        Member member = memberFindService.findMyProfile(principal.getName());
+        answerComment.setMember(member);
         answerService.createAnswerComment(answerComment,answerId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/comments/{comment-id}")
-    public ResponseEntity patchAnswerComment(@PathVariable("comment-id")@Positive Long answerCommentId,
+    public ResponseEntity patchAnswerComment(Principal principal,
+                                             @PathVariable("comment-id")@Positive Long answerCommentId,
                                              @RequestBody AnswerCommentDto.Patch requestBody){
         requestBody.setCommentId(answerCommentId);
 
         AnswerComment answerComment = answerCommentMapper.AnswerCommentPatchToAnswerComment(requestBody);
-        answerService.updateAnswerComment(answerComment,answerComment.getMember().getId());
+        answerService.updateAnswerComment(answerComment,memberFindService.findMyProfile(principal.getName()).getId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/comments/{comment-id}")
-    public ResponseEntity deleteAnswerComment(@PathVariable("comment-id")@Positive Long answerCommentId,
-                                              @RequestParam @Positive Long memberId){
-        answerService.deleteAnswerComment(answerCommentId,memberId);
+    public ResponseEntity deleteAnswerComment(Principal principal,
+                                              @PathVariable("comment-id")@Positive Long answerCommentId){
+        answerService.deleteAnswerComment(answerCommentId,memberFindService.findMyProfile(principal.getName()).getId());
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

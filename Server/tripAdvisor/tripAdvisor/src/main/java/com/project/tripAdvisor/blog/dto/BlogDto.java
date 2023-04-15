@@ -66,6 +66,7 @@ public class BlogDto {
         private int likeCnt;
         private String createdAt;
         private String modifiedAt;
+        private Long memberId;
     }
 
 

@@ -60,34 +60,34 @@ public class LocationService {
             JsonNode addressNode = node.get("results").get(0).get("region").get("area1");
             String locationName = addressNode.get("name").asText();
             if (locationName.contains("서울")) {
-                return "서울";
+                return "Seoul";
             }
             else if(locationName.contains("경기")){
-                return "경기";
+                return "Gyeonggi";
             }
             else if(locationName.contains("충청")){
-                return "충청";
+                return "Chungcheong";
             }
             else if(locationName.contains("전라")){
-                return "전라";
+                return "Jeolla";
             }
             else if(locationName.contains("경상")){
-                return "경상";
+                return "Gyeongsang";
             }
             else if(locationName.contains("강원")){
-                return "강원";
+                return "Gangwon";
             }
             else if(locationName.contains("인천")){
-                return "인천";
+                return "Incheon";
             }
             else if(locationName.contains("부산")){
-                return "부산";
+                return "Busan";
             }
             else if(locationName.contains("울산")){
-                return "울산";
+                return "Ulsan";
             }
             else if("대구광역시".equals(locationName)){
-                locationName="경상";
+                locationName="Gyeongsang";
                 return locationName;
             }else {
                 return null;

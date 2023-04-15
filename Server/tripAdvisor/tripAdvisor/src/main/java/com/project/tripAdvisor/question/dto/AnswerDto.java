@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 public class AnswerDto {
 
     @Getter
-    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Post{
 
-        private Long memberId;
+//        private Long memberId;
 
         @NotBlank(message = "내용을 입력하세요.")
         private String content;
@@ -25,7 +26,7 @@ public class AnswerDto {
     @NoArgsConstructor
     public static class Patch{
 
-        private Long memberId;
+//        private Long memberId;
 
         private Long answerId;
 
@@ -50,7 +51,9 @@ public class AnswerDto {
 
         private boolean isChecked;
 
-        private String location;
+//        private String location;
+
+        private List<AnswerCommentDto.Response> comments;
 
     }
 

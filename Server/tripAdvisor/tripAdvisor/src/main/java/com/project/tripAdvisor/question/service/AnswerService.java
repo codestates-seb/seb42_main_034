@@ -138,6 +138,7 @@ public class AnswerService {
 
     /******************************** 대댓글 *********************************/
 
+    @Transactional
     /** 대댓글 작성 **/
     public AnswerComment createAnswerComment(AnswerComment answerComment,Long answerId){
 
@@ -155,10 +156,11 @@ public class AnswerService {
         return answerCommentRepository.save(answerComment);
     }
 
+    @Transactional
     /** 대댓글 수정 **/
     public AnswerComment updateAnswerComment(AnswerComment answerComment, Long memberId){
         AnswerComment findAnswerComment = findVerifiedAnswerComment(answerComment.getId());
-        if (answerComment.getMember().getId()!=memberId) {
+        if (findAnswerComment.getMember().getId()!=memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
         }
 
@@ -168,13 +170,13 @@ public class AnswerService {
         return answerCommentRepository.save(findAnswerComment);
     }
 
+    @Transactional
     /** 대댓글 삭제 **/
     public void deleteAnswerComment(Long commentId,Long memberId){
         AnswerComment answerComment = findVerifiedAnswerComment(commentId);
         if (answerComment.getMember().getId()!=memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
         }
-
         Answer answer = findVerifiedAnswer(answerComment.getAnswer().getId());
         Question question = answer.getQuestion();
         int commentCnt = question.getCommentCnt();

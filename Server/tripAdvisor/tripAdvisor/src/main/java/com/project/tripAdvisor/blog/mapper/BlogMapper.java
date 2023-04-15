@@ -46,8 +46,9 @@ public interface BlogMapper {
         String createdAt = blog.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         String modifiedAt = DateTimeFormatter.ofPattern( "yyyy-MM-dd HH:mm" ).format( blog.getModifiedAt());
         String image = blog.getImage_path();
+        Long memberId = blog.getMember().getId();
 
-        BlogDto.Response response = new BlogDto.Response( blogId, title, content,tags, image,writer, viewCnt, likeCnt, createdAt, modifiedAt );
+        BlogDto.Response response = new BlogDto.Response( blogId, title, content,tags, image,writer, viewCnt, likeCnt, createdAt, modifiedAt,memberId );
 
         return response;
     }

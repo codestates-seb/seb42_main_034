@@ -38,6 +38,7 @@ public class BlogAnswerDto {
         private String content;
         private LocalDateTime createdAt;
         private List<BlogAnswerCommentResponseDto> comments;
+        private Long memberId;
     }
 
 

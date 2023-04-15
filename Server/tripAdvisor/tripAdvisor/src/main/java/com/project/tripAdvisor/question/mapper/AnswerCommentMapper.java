@@ -22,11 +22,11 @@ public interface AnswerCommentMapper {
             return null;
         }
 
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         AnswerComment answerComment = new AnswerComment();
-        answerComment.setMember(member);
+//        answerComment.setMember(member);
         answerComment.setContent( requestBody.getContent() );
 
         return answerComment;
@@ -38,12 +38,12 @@ public interface AnswerCommentMapper {
             return null;
         }
 
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         AnswerComment answerComment = new AnswerComment();
         answerComment.setId(requestBody.getCommentId());
-        answerComment.setMember(member);
+//        answerComment.setMember(member);
         answerComment.setContent( requestBody.getContent() );
 
         return answerComment;
