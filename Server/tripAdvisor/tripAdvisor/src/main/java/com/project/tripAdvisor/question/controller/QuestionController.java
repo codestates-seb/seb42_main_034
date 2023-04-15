@@ -1,12 +1,14 @@
 package com.project.tripAdvisor.question.controller;
 
 import com.project.tripAdvisor.member.Member;
+import com.project.tripAdvisor.member.service.MemberFindService;
 import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.dto.QuestionDto;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.QuestionMapper;
 import com.project.tripAdvisor.question.service.QuestionService;
-import com.project.tripAdvisor.response.*;
+import com.project.tripAdvisor.response.MultiResponseDto;
+import com.project.tripAdvisor.response.SingleResponseDto;
 import com.project.tripAdvisor.tag.entity.QuestionTag;
 import com.project.tripAdvisor.tag.service.TagService;
 import lombok.Builder;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -30,14 +33,14 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
     private final MemberService memberService;
-
+    private final MemberFindService memberFindService;
     private final TagService tagService;
 
-    public QuestionController(QuestionService questionService, QuestionMapper questionMapper,
-                              MemberService memberService, TagService tagService) {
+    public QuestionController(QuestionService questionService, QuestionMapper questionMapper, MemberService memberService, MemberFindService memberFindService, TagService tagService) {
         this.questionService = questionService;
         this.questionMapper = questionMapper;
         this.memberService = memberService;
+        this.memberFindService = memberFindService;
         this.tagService = tagService;
     }
 
@@ -45,20 +48,16 @@ public class QuestionController {
      * 질문 생성
      **/
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionDto.Post requestBody){
+    public ResponseEntity postQuestion(Principal principal,
+                                       @Valid @RequestBody QuestionDto.Post requestBody){
 
         Question question = questionMapper.questionPostToQuestion(requestBody);
 
-        Member member = memberService.findVerifiedMember(requestBody.getMemberId());
+        Member member = memberFindService.findMyProfile(principal.getName());
         question.setMember(member);
         Question createdQuestion = questionService.createQuestion(question);
 
-
-        if(requestBody.getTags() != null) {
-            List<QuestionTag> questionTags = tagService.createQuestionTag(requestBody.getTags(), createdQuestion.getId());
-            createdQuestion.getQuestionTags().addAll(questionTags);
-        }
-
+        tagService.setTags(requestBody,question);
 
         return new ResponseEntity(
                 new SingleResponseDto<>(questionMapper.QuestionToQuestionResponse(createdQuestion)),
@@ -69,16 +68,17 @@ public class QuestionController {
      * 질문 수정
      **/
     @PatchMapping("/{question-id}")
-    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive Long questionId,
+    public ResponseEntity patchQuestion(Principal principal,
+                                        @PathVariable("question-id") @Positive Long questionId,
                                         @RequestBody QuestionDto.Patch requestBody) {
 
         Question question = questionMapper.questionPatchToQuestion(requestBody);
 
         question.setId(questionId);
 
-        Member member = memberService.findVerifiedMember(requestBody.getMemberId());
+        Question updatedQuestion = questionService.updateQuestion(question, memberFindService.findMyProfile(principal.getName()).getId());
 
-        Question updatedQuestion = questionService.updateQuestion(question, requestBody.getMemberId());
+        tagService.setTags(requestBody,updatedQuestion);
 
         // 태그 기능 추가
 
@@ -125,9 +125,9 @@ public class QuestionController {
      **/
 
     @DeleteMapping("/{question-id}")
-    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive Long questionId,
-                                         @RequestParam Long memberId) {
-        questionService.deleteQuestion(questionId, memberId);
+    public ResponseEntity deleteQuestion(Principal principal,
+                                         @PathVariable("question-id") @Positive Long questionId) {
+        questionService.deleteQuestion(questionId, memberFindService.findMyProfile(principal.getName()).getId());
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -147,4 +147,5 @@ public class QuestionController {
         return new ResponseEntity<>(
                 new MultiResponseDto<>(SearchResponses, pageQuestion), HttpStatus.OK);
     }
+
 }

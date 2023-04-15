@@ -1,9 +1,11 @@
 package com.project.tripAdvisor.tag.service;
 
+import com.project.tripAdvisor.blog.dto.BlogDto;
 import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
+import com.project.tripAdvisor.question.dto.QuestionDto;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.repository.QuestionRepository;
 import com.project.tripAdvisor.tag.entity.BlogTag;
@@ -13,6 +15,7 @@ import com.project.tripAdvisor.tag.repository.BlogTagRepository;
 import com.project.tripAdvisor.tag.repository.QuestionTagRepository;
 import com.project.tripAdvisor.tag.repository.TagRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +113,29 @@ public class TagService {
          */
     }
 
+    public List<QuestionTag> updateQuestionTag(List<String> tags, Long questionId){
+        List<QuestionTag> questionTags = new ArrayList<>();
+        questionTagRepository.deleteAllByQuestion_Id(questionId);
+        for(String tagName : tags){
+            Tag tag = tagRepository.findByName(tagName);
+            if(tag==null){
+                tag=new Tag(tagName);
+                tagRepository.save(tag);
+            }
+            QuestionTag questionTag = new QuestionTag();
+            Optional<Question> optionalQuestion =
+                    questionRepository.findById(questionId);
+            Question findQuestion=
+                    optionalQuestion.orElseThrow(()->
+                            new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+            questionTag.setQuestion(findQuestion);
+            questionTag.setTag(tag);
+            questionTagRepository.save(questionTag);
+            questionTags.add(questionTag);
+        }
+        return questionTags;
+    }
+
 
     public List<Blog> getBlogs(Long tagId){
         List<BlogTag> blogTags = blogTagRepository.findByTag_Id(tagId);
@@ -129,5 +155,36 @@ public class TagService {
             questions.add(question);
         }
         return questions;
+    }
+    @Transactional
+    public void setTags(BlogDto.Request requestBody,Blog blog){
+        if(requestBody.getTags()!=null){
+            List<BlogTag> blogTags=createBlogTag(requestBody.getTags(),blog.getId());
+            blog.getBlogTags().addAll(blogTags);
+        }
+    }
+    @Transactional
+    public void setTags(BlogDto.Patch requestBody,Blog blog){
+        if(requestBody.getTags()!=null)
+        {
+            List<BlogTag> blogTags=updateBlogTag(requestBody.getTags(),blog.getId());
+            blog.getBlogTags().addAll(blogTags);
+        }
+    }
+
+    @Transactional
+    public void setTags(QuestionDto.Post requestBody, Question question){
+        if(requestBody.getTags()!=null){
+            List<QuestionTag> questionTags=createQuestionTag(requestBody.getTags(),question.getId());
+            question.getQuestionTags().addAll(questionTags);
+        }
+    }
+    @Transactional
+    public void setTags(QuestionDto.Patch requestBody,Question question){
+        if(requestBody.getTags()!=null)
+        {
+            List<QuestionTag> questionTags=updateQuestionTag(requestBody.getTags(),question.getId());
+            question.getQuestionTags().addAll(questionTags);
+        }
     }
 }

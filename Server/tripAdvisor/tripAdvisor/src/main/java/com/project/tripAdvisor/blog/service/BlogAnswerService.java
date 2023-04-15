@@ -52,6 +52,7 @@ public class BlogAnswerService {
         blog.setCommentCnt(commentCnt+1);
         return blogAnswerRepository.save(blogAnswer);
     }
+    @Transactional
     public BlogAnswer updateBlogAnswer(BlogAnswer blogAnswer, Long memberId){
         BlogAnswer findBlogAnswer = findVerifiedBlogAnswer(blogAnswer.getId());
         /**
@@ -82,11 +83,11 @@ public class BlogAnswerService {
         }
         blogAnswerRepository.delete(blogAnswer);
     }
-
+    @Transactional
     public Page<BlogAnswer> findBlogAnswers (Long blogId,int page){
         return blogAnswerRepository.findByBlogId(blogId, PageRequest.of(page,size));
     }
-
+    @Transactional
     public BlogAnswer findVerifiedBlogAnswer(Long blogAnswerId){
 
         return blogAnswerRepository
@@ -110,20 +111,20 @@ public class BlogAnswerService {
 
         return blogAnswerCommentRepository.save(blogAnswerComment);
     }
-
+    @Transactional
     public BlogAnswerComment updateBlogAnswerComment(BlogAnswerComment blogAnswerComment, Long memberId){
         BlogAnswerComment findBlogAnswerComment = findVerifiedBlogAnswerComment(blogAnswerComment.getId());
-        if (blogAnswerComment.getMember().getId()!=memberId) {
+        if (findBlogAnswerComment.getMember().getId()!=memberId) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
         }
 
         Optional.ofNullable(blogAnswerComment.getContent())
                 .ifPresent(content->findBlogAnswerComment.setContent(content));
 
-        //return blogAnswerCommentRepository.save(findBlogAnswerComment);
-        return findBlogAnswerComment;
+        return blogAnswerCommentRepository.save(findBlogAnswerComment);
+//        return findBlogAnswerComment;
     }
-
+    @Transactional
     public void deleteBlogAnswerComment(Long commentId,Long memberId){
         BlogAnswerComment blogAnswerComment = findVerifiedBlogAnswerComment(commentId);
         if (blogAnswerComment.getMember().getId()!=memberId) {
@@ -137,7 +138,7 @@ public class BlogAnswerService {
 
         blogAnswerCommentRepository.delete(blogAnswerComment);
     }
-
+    @Transactional
     public BlogAnswerComment findVerifiedBlogAnswerComment(Long commentId){
         return blogAnswerCommentRepository
                 .findById(commentId)

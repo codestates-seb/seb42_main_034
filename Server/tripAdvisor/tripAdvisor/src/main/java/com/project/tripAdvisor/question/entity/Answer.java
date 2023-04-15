@@ -44,7 +44,7 @@ public class Answer extends Auditable {
     }
 
     @JoinColumn(name = "question_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Question question;
 
     public void addQuestion(Question question) {
