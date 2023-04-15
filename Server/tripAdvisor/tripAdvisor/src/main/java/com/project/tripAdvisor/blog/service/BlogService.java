@@ -8,7 +8,7 @@ import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.tag.entity.Tag;
 import com.project.tripAdvisor.tag.repository.BlogTagRepository;
 import com.project.tripAdvisor.tag.repository.TagRepository;

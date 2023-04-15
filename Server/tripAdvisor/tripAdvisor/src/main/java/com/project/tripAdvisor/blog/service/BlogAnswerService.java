@@ -8,7 +8,7 @@ import com.project.tripAdvisor.blog.repository.BlogAnswerRepository;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

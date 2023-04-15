@@ -3,7 +3,7 @@ package com.project.tripAdvisor.question.service;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.AnswerComment;
 import com.project.tripAdvisor.question.entity.AnswerLike;

@@ -1,6 +1,6 @@
 package com.project.tripAdvisor.question.controller;
 
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.dto.AnswerCommentDto;
 import com.project.tripAdvisor.question.dto.AnswerDto;
 import com.project.tripAdvisor.question.entity.Answer;

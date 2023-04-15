@@ -1,4 +1,4 @@
-package com.project.tripAdvisor.member.sevice;
+package com.project.tripAdvisor.member.service;
 
 import com.project.tripAdvisor.blog.entity.Blog;
 import com.project.tripAdvisor.blog.service.BlogService;

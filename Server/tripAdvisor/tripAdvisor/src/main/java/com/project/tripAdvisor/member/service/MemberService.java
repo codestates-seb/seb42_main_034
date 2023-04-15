@@ -1,4 +1,4 @@
-package com.project.tripAdvisor.member.sevice;
+package com.project.tripAdvisor.member.service;
 
 
 import com.project.tripAdvisor.auth.util.CustomAuthorityUtils;
