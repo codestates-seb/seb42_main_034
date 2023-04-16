@@ -31,17 +31,17 @@ const IdForm = ({data, notifi}: IdFormProps) => {
     }
     
     return (
-        <MainContainer>
-            <StyledLabel htmlFor={label}>{label}</StyledLabel>
+        <IDContainer>
+            <StyledIdLabel htmlFor={label}>{label}</StyledIdLabel>
             <SignInput label={label} state={state} setState={setState} maxLength={25} />
             <div onClick={() => handleValidate(label, state, setValidity)}>중복확인</div>
-        </MainContainer>
+        </IDContainer>
     )
 }
 
 
 
-const MainContainer = styled.div`
+const IDContainer = styled.div`
   width: 100%;
   margin-top: 20px;
   display: flex;
@@ -54,7 +54,7 @@ const MainContainer = styled.div`
   }
 `
 
-const StyledLabel = styled.label`
+const StyledIdLabel = styled.label`
   position: sticky;
   top: 0;
   left: 0;
