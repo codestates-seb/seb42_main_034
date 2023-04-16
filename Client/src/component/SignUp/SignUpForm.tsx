@@ -2,16 +2,13 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nbutton from 'component/ui/NButton';
 import { notifi } from '../../utils/notifi';
-import useAPI from '../../hooks/uesAPI';
 import styled from 'styled-components';
-import { useAppDispatch } from '../../redux/hooks';
 import React from 'react';
-import IdForm from './IdForm';
-import PasswordForm from './PasswordForm';
 import { keyframes } from 'styled-components';
 import CurrentPosition from './CurrentPosition';
 import Swal from 'sweetalert2';
 import AxiosCustom from 'utils/AxiosCustom';
+import { useDispatch } from 'react-redux';
 
 export const SignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -27,6 +24,9 @@ export const SignUpForm = () => {
   const [isPassword, setIsPassword] = useState(false);
   const [isPwCheck, setIsPwCheck] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
 
   // 아이디 유효성 검사 ( email )
   const handleChangeEmail = useCallback(
@@ -38,9 +38,11 @@ export const SignUpForm = () => {
 
       if (!emailRegex.test(emailCurrent)) {
         setEmailMessage('이메일 형식이 올바르지 않습니다.');
+        notifi(dispatch, '이메일 형식이 올바르지 않습니다.');
         setIsEmail(false);
       } else {
         setEmailMessage('올바른 이메일 형식입니다.');
+        notifi(dispatch, '올바른 이메일 형식입니다.');
         setIsEmail(true);
       }
     },
@@ -55,6 +57,7 @@ export const SignUpForm = () => {
     setNickname(event.target.value);
     if (event.target.value.length < 2 || event.target.value.length > 10) {
       setNicknameMessage('2글자 이상 10글자 미만으로 입력해주세요.');
+      notifi(dispatch, '올바르지 않은 닉네임 형식입니다.');
       setIsNickname(false);
     } else {
       setNicknameMessage('');
@@ -66,6 +69,7 @@ export const SignUpForm = () => {
  // 닉네임 중복확인 
  const handleCheckNickname = () => {
   Swal.fire('', '사용 가능한 닉네임입니다.')
+  notifi(dispatch, '사용 가능한 닉네임입니다.')
  }
   // const handleCheckNickname = async () => {
   //   await AxiosCustom
@@ -97,6 +101,7 @@ export const SignUpForm = () => {
         setPasswordMessage(
           '1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.'
         );
+        notifi(dispatch, '올바르지 않은 비밀번호 조합입니다')
         setIsPassword(false);
       } else {
         setPasswordMessage('올바른 비밀번호 형식입니다.');
@@ -118,6 +123,7 @@ export const SignUpForm = () => {
         setIsPwCheck(true);
       } else {
         setPwCheckMessage('비밀번호가 다릅니다.');
+        notifi(dispatch, '비밀번호가 일치 하지않습니다')
         setIsPwCheck(false);
       }
     },
@@ -134,6 +140,7 @@ export const SignUpForm = () => {
       isPwCheck === false
     ) {
       Swal.fire('', '양식을 다시 확인해주세요');
+      notifi(dispatch, '회원가입 양식을 획인 해주세요.')
     } else {
       await AxiosCustom
         .post(`/members`, {
