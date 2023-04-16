@@ -35,7 +35,6 @@ const Loginform = () => {
       dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
       notifi(dispatch, `${res.data.nickname}님 환영합니다.`);
       navigate(-1);
-      console.log(data1);
 
       // setTimeout(() => {
       //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));

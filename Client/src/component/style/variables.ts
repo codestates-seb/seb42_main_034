@@ -42,7 +42,7 @@ export enum ScreenSize {
   max_height = '1400px',
   middle_height = '900px',
   footer_height = '200px',
-  max_width = '1284px',
+  max_width = '1250px',
 }
 export enum Route {
   mainPage = '/',
@@ -66,5 +66,5 @@ export const cities = [
   { city: '울산', x: 40, y: 27.5 },
   { city: '경기', x: 25, y: 12 },
   { city: '인천', x: 19.5, y: 10.5 },
-  { city: '제주', x: 19.5, y: 44 },
+  { city: '제주', x: 19.5, y: 20 },
 ];

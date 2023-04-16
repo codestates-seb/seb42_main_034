@@ -1,8 +1,6 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ButtonWrapper } from '../../component/board/Button';
-import Editor from '../../component/board/Editor';
 import Tags from '../../component/board/Tags';
 import axios from 'axios';
 
@@ -18,10 +16,6 @@ const PostWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   padding: 10rem;
-`;
-
-const Button = styled(ButtonWrapper)`
-  margin-top: 10px;
 `;
 
 const Input = styled.input`

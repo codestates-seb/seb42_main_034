@@ -36,14 +36,16 @@ export const SignUpForm = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const notifiMessages = SignUpMessages(inputs);
+
     let allConditionsSatisfied = true;
+    //forEach문 두번째인자가 인덱스값인걸로 아는데 어떻게 불리언이 할당되는지 궁금합니다
     notifiMessages.forEach((message, notifiCase) => {
-      if (notifiCase) {
+      if (!notifiCase) {
         allConditionsSatisfied = false;
         goNotifi(message);
       }
     });
+    console.log(allConditionsSatisfied);
 
     if (allConditionsSatisfied) {
       const data = { email, nickname, password };
@@ -68,6 +70,7 @@ export const SignUpForm = () => {
         };
       });
     const validity = isValid[select];
+    //inut자체에 유효성검사하는 훅을 집어넣어사용
     const setValidity = (value: boolean) =>
       setIsValid((pre) => {
         return {
@@ -75,18 +78,22 @@ export const SignUpForm = () => {
           [select]: value,
         };
       });
-
     const type = select;
     return { label, state, setState, validity, setValidity, type };
   };
-
-  useValidate(inputs.password, inputs.passwordCheck, (input: inputKeys, value: boolean) =>
-    setIsValid((pre) => {
-      return {
-        ...pre,
-        [input]: value,
-      };
-    }),
+  //useValidate를 통해서 유효성검사한게 위의 validity변수에 적용됨
+  useValidate(
+    inputs.email,
+    inputs.nickname,
+    inputs.password,
+    inputs.passwordCheck,
+    (input: inputKeys, value: boolean) =>
+      setIsValid((pre) => {
+        return {
+          ...pre,
+          [input]: value,
+        };
+      }),
   );
 
   return (

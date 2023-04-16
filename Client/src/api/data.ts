@@ -1,4 +1,4 @@
-import { ListData, PageProps } from './../redux/boardDetails';
+import { BlogData, ListData, PageProps } from './../redux/boardDetails';
 import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios';
 import { axiosInstance } from './instance';
 import useAPI from 'hooks/uesAPI';
@@ -20,7 +20,8 @@ export interface ReturnData {
 export interface BoardData {
   createdAt: string;
   modifiedAt?: string;
-  questionId: string | number;
+  questionId?: string | number;
+  blogId?: string | number | undefined;
   tags: string | null;
   title: string;
   viewCnt: number;
@@ -69,16 +70,17 @@ export const useGetData = () => {
     });
     return response;
   };
-  const getBoardData = async (questionId: number | string) =>
-    await api.get(`/questions/${questionId}`).then((res) => res.data.data);
+  const getBoardData = async (questionId: number | string | undefined, filter: string) =>
+    await api.get(`/${filter}/${questionId}`).then((res) => res.data.data);
   const deleteBoardData = async (
-    questionId: number | string,
+    questionId: number | string | undefined,
     memberId: number | string,
+    filter: string,
   ): Promise<AxiosResponse<BoardData>> =>
-    await api.delete(`/questions/${questionId}?memberId=${memberId}`).then((res) => res.data);
+    await api.delete(`/${filter}/${questionId}?memberId=${memberId}`).then((res) => res.data);
 
-  const getAnswerData = async (questionId: number | string) =>
-    await api.get(`/questions/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
+  const getAnswerData = async (questionId: number | string, filter: string) =>
+    await api.get(`/${filter}/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
   const postAnswerData = async (
     questionId: number | string,
     body: AnswerRequestBody,
@@ -105,4 +107,10 @@ export const useGetData = () => {
 export function getDate(date: string) {
   const formatDate = new Date(date);
   return formatDate;
+}
+export function getFilterData() {
+  const isFiltered = localStorage.getItem('filter');
+  if (isFiltered) {
+    return JSON.parse(isFiltered);
+  }
 }

@@ -22,7 +22,7 @@ const NavStyle = styled(Nav)`
   border-bottom-right-radius: 0.4rem;
   padding: 0.4rem;
   max-width: 100vw;
-
+  box-shadow: 0px 2px rgba(93, 89, 89, 0.39);
   margin: auto;
   margin-bottom: 4rem;
 `;

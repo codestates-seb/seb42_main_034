@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import BoardDetail from '../../component/board/BoardDetail';
 
-import { BoardData, CRUDdata, useGetData } from 'api/data';
+import { BoardData, CRUDdata, getFilterData, useGetData } from 'api/data';
 import { useQuery } from '@tanstack/react-query';
 
 import { useAppSelector } from 'redux/hooks';
@@ -15,15 +15,15 @@ export default function QuestionDetails() {
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
   const { deleteBoardData } = useGetData();
+  const isFiltered = getFilterData();
   const { getBoardData, getAnswerData } = useGetData();
   const {
     isLoading,
     error,
     data: detail,
-  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId), {
+  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId, isFiltered), {
     staleTime: 1000 * 15,
   });
-  console.log(memberId, detail);
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function QuestionDetails() {
         <MoveBtn
           children="삭제"
           onClick={() => {
-            deleteBoardData(data.questionId, memberId)
+            deleteBoardData(data.questionId, memberId, isFiltered)
               .then((res) => {
                 navigate(-1);
               })

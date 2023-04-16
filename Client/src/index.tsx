@@ -22,7 +22,7 @@ import BoardList from 'pages/question/BoardList';
 import { GlobalStyle } from 'component/style/globalStyle';
 import ModifyQuestion from 'pages/question/ModifyQuestion';
 import QuestionBoardList from 'pages/question/BoardList';
-import BlogBoardList from './pages/blog/BlogList';
+import BlogBoardList from './pages/blog/BlogBoradList';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
           },
 
           {
-            path: '/board/boarddetails/:section',
+            path: '/board/blogsdetails/:section',
             element: <BlogDetails />,
           },
 
@@ -72,11 +72,11 @@ const router = createBrowserRouter([
             element: <MyPage />,
           },
           {
-            path: '/board/questionpost',
+            path: '/board/questionspost',
             element: <QuestionPost />,
           },
           {
-            path: '/board/blogpost',
+            path: '/board/blogspost',
             element: <BlogPost />,
           },
           {

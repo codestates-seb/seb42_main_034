@@ -23,15 +23,22 @@ export default function LandingPage() {
       scrollTrigger: {
         trigger: '.slide1',
         toggleActions: 'restart restart restart restart',
-        start: '0% 100%',
-        end: '50% 0%',
+        start: '100% 100%',
+        end: '300% 0%',
+
         // markers: true,
       },
     });
-    Silde1.from('.top1', {
-      opacity: 0,
-      x: '-22%',
-    })
+    Silde1.from(
+      '.top1',
+      {
+        opacity: 0,
+        x: '-31%',
+        duration: 2.2,
+        ease: 'sine.in',
+      },
+      0,
+    )
       .from('.top2', {
         opacity: 0,
         x: '-22%',
@@ -45,11 +52,11 @@ export default function LandingPage() {
     const Slide2 = gsap.timeline({
       scrollTrigger: {
         trigger: '.slide2',
-        start: '110% 110%',
-        end: '100% 20%%',
+        start: 'top center',
+        end: 'bottom bottom',
         // markers: true,
-        scrub: 2.2,
-        pin: '.slide2',
+        // scrub: 2.2,
+        // pin: '.slide2',
       },
     });
     Slide2.from('.middle1', {
@@ -65,28 +72,41 @@ export default function LandingPage() {
         x: '-22%',
       }); // Sli
 
-    //   const Slide3 = gsap.timeline({
-    //     scrollTrigger: {
-    //       trigger: '.slide3',
-    //       start: '200% 100%',
-    //       end: '300% 0%',
-    //       // markers: "true",
-    //       scrub: 2.2,
-    //       // pin: '.slide3',
-    //     },
-    //   });
-    //   Slide3.from('.third1', {
-    //     opacity: 0,
-    //     x: '-22%',
-    //   })
-    //     .from('.third2', {
-    //       opacity: 0,
-    //       x: '-22%',
-    //     })
-    //     .from('.third3', {
-    //       opacity: 0,
-    //       x: '-22%',
-    //     });
+    const Slide3 = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.slide3',
+        start: 'top center',
+        end: 'center bottom',
+        // markers: true,
+        scrub: 2.2,
+
+        // pin: '.slide3',
+      },
+    });
+    Slide3.from(
+      '.third1',
+      {
+        opacity: 0,
+        x: '-31%',
+        duration: 2.2,
+        ease: 'sine.in',
+      },
+      0,
+    )
+      .from(
+        '.third2',
+        {
+          opacity: 0,
+          x: '-31%',
+          duration: 2.2,
+          ease: 'sine.in',
+        },
+        0,
+      )
+      .from('.third3', {
+        opacity: 0,
+        x: '-22%',
+      });
   }, []);
 
   return (

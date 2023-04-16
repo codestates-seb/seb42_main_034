@@ -1,11 +1,27 @@
-import { ReturnData } from 'api/data';
-
-import { Flex, HoverAction } from 'component/style/cssTemplete';
-import { Colors, FontSize } from 'component/style/variables';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ListData } from 'redux/boardDetails';
+import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
+import { Colors, FontSize } from 'component/style/variables';
+export default function QuestionCard({ city }: { city: ListData }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/board/questionsdetails/${city.questionId}`, { state: city });
+  };
+  return (
+    <Card onClick={handleClick}>
+      <div>{city.tags}</div>
+      <div className="title">{city.title}</div>
+
+      <Flex gap="2rem" direction="column">
+        <div>{city.createdAt.split('T')[0]}</div>
+        <div>{city.writer}</div>
+      </Flex>
+    </Card>
+  );
+}
+
 const Card = styled.li`
   background: ${Colors.main_04_white};
   margin: 2rem;
@@ -23,23 +39,3 @@ const Card = styled.li`
     font-size: ${FontSize.lg};
   }
 `;
-
-export default function QuestionCard({ city, filter }: { city: ListData; filter: string }) {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/board/${filter}details/${city.questionId}`, { state: city });
-  };
-  console.log(city);
-
-  return (
-    <Card onClick={handleClick}>
-      <div>{city.tags}</div>
-      <div className="title">{city.title}</div>
-
-      <Flex gap="2rem" direction="column">
-        <div>{city.createdAt.split('T')[0]}</div>
-        <div>{city.writer}</div>
-      </Flex>
-    </Card>
-  );
-}

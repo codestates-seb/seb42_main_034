@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { CRUDdata, ReturnData, useGetData } from 'api/data';
+import { getFilterData, ReturnData } from 'api/data';
 import { Flex, HoverAction, Relative } from 'component/style/cssTemplete';
-import { Button, IButtonProps } from 'component/ui/Button';
-import QuestionCard from './QuestionCard';
+import { Button } from 'component/ui/Button';
 import styled from 'styled-components';
 import { Colors } from 'component/style/variables';
-import Searchbar from 'component/board/Searchbar';
-import Page from 'component/Page';
-
 import useAPI from 'hooks/uesAPI';
-import { getEnvironmentData } from 'worker_threads';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { ListData, setBoardDetails } from 'redux/boardDetails';
-
+import { useAppDispatch } from 'redux/hooks';
+import QuestionList from './QuestionList';
+export const section: string[] = ['questions', 'blogs'];
 export default function QuestionBoardList() {
-  const section: string[] = ['questions', 'blogs'];
-  const data = useLocation();
-  const api = useAPI();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const city = useAppSelector((state) => state.boardDetail);
-  const [filter, setFilter] = useState('questions');
+  const localFilter = getFilterData();
+  // const city = useAppSelector((state) => state.boardDetail);
+  const [filter, setFilter] = useState(localFilter);
   // const {
   //   isLoading,
   //   error,
@@ -30,66 +21,43 @@ export default function QuestionBoardList() {
   // } = useQuery([filter, 'region'] as const, async () => await new CRUDdata().getData('project', filter), {
   //   staleTime: 1000 * 15,
   // }); //여기에 해당지역넣기
-  const [pageNation, setPageNation] = useState({
-    page: 1,
-    totalElements: 0,
-    totalPages: 0,
-    size: 15,
-  });
   const handleClick = (section: string) => {
     setFilter(section);
+    navigate(`/board/boardlist/${section}`);
   };
-  useEffect(() => {
-    const getData = async () => {
-      const response = await api.get(filter, {
-        params: {
-          category: 'project',
-          page: pageNation.page,
-          sortedBy: 'default',
-        },
-      });
-      console.log(response);
-
-      dispatch(setBoardDetails(response.data));
-    };
-    setPageNation(city.pageInfo);
-    getData().catch(console.error);
-  }, [filter]);
-  console.log(city);
 
   // 블로그 버튼을 누르면 해당 블로그로 데이터 get 함 -> 필터를 바꿔야 useEffect로 다시 받아올수있음
+  /**구성요소 달라서 블로그랑 질문 나눌거임
+   * 그럼 어떻게 해야할까
+   * 질문 / 블로그 필터를 만듦
+   * 그에맞게 맞는 페이지로 넘김
+   */
   return (
     <Flex direction="column" width="100%" height="900px">
       <Relative>
-        {city &&
-          section.map((filter, idx) => (
-            <StyledCategoryBtn
-              key={idx}
-              children={filter === 'blogs' ? '블로그' : '질문'}
-              onClick={() => {
-                handleClick(filter);
-              }}
-            />
-          ))}
+        {section.map((filter, idx) => (
+          <StyledCategoryBtn
+            key={idx}
+            children={filter === 'blogs' ? '블로그' : '질문'}
+            onClick={() => {
+              handleClick(filter);
+            }}
+          />
+        ))}
         <PostBtn
           children="글 작성하기"
           onClick={() => {
-            navigate('/board/questionpost');
+            navigate(`/board/${filter}post`);
           }}
         />
       </Relative>
 
       <div>{filter === 'questions' ? '질문' : '블로그'}을(를) 작성하고 목록을 확인할수있는 곳 입니다</div>
-      <MainBoard>
-        {city && city.data.map((city: ListData, idx: number) => <QuestionCard key={idx} city={city} filter={filter} />)}
-      </MainBoard>
-      <Page pages={pageNation} onPage={setPageNation} />
+
+      <QuestionList filter={filter} />
     </Flex>
   );
 }
-const MainBoard = styled.ul`
-  flex: 1 1 auto;
-`;
 export const MoveBtn = styled(Button)<{ width?: string; height?: string; display?: string }>`
   background: ${Colors.button_blue};
   width: ${(props) => props.width};

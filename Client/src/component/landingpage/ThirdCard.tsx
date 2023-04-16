@@ -5,52 +5,25 @@ import { Icon } from 'component/ui/Icon';
 import { MoveBtn } from 'pages/question/BoardList';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
 import { ReactComponent as Monitor } from '../../image/monitor.svg';
-const Div = styled.div`
-  text-align: center;
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30%;
-`;
-const Line = styled.div`
-  border-top: 2px solid black;
-  width: 7rem;
-  transform: skewY(333deg);
-  margin-top: 3rem;
-  /* width: 30rem; */
-`;
-const Font = styled.div`
-  .h2 {
-    color: ${Colors.text_grey};
-    font-size: ${FontSize.h1};
-  }
-  .h3 {
-    font-size: ${FontSize.h3};
-    margin-bottom: 2rem;
-  }
-  .font {
-    font-size: 2rem;
-  }
-`;
-const PointCategory = styled(Absolute)`
-  top: 0;
-  right: 50%;
-  display: flex;
-  align-items: center;
-`;
 
 export default function ThirdCard() {
   const navigate = useNavigate();
+  const { accessToken } = useAppSelector((state) => state.loginInfo);
   const handleClick = () => {
-    navigate(`${Route.signin}`);
+    //로그인이 되어있다면 home으로 이동
+    if (accessToken) {
+      navigate(`${Route.home}`);
+    } else {
+      navigate(`${Route.signup}`);
+    }
   };
   return (
     <Div className="slide3">
       {' '}
-      <Icon svg={<Monitor />} />
+      <Icon svg={<StyledMonitorIcon />} />
       <PointCategory className="third1">
         <Line />
         <div>카테고리별검색</div>
@@ -69,3 +42,42 @@ export default function ThirdCard() {
     </Div>
   );
 }
+const Div = styled.div`
+  text-align: center;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30%;
+`;
+const Line = styled.div`
+  border-top: 2px solid black;
+  width: 4rem;
+  transform: skewY(333deg);
+  /* width: 30rem; */
+`;
+const Font = styled.div`
+  .h2 {
+    color: ${Colors.text_grey};
+    font-size: ${FontSize.h2};
+  }
+  .h3 {
+    font-size: ${FontSize.h3};
+    margin-bottom: 2rem;
+  }
+  .font {
+    font-size: 1.2em;
+  }
+`;
+const PointCategory = styled(Absolute)`
+  top: 19%;
+  right: 50%;
+  display: flex;
+  align-items: center;
+  z-index: 4;
+`;
+const StyledMonitorIcon = styled(Monitor)`
+  width: 30em;
+  display: inline;
+  position: relative;
+`;

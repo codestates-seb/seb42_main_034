@@ -43,7 +43,13 @@ const initialData: answerReturn = {
   writer: '',
   createdAt: '',
 };
-export default function AnswerList({ questionId, answer }: { questionId: number | string; answer: AllAnswer }) {
+export default function AnswerList({
+  questionId,
+  answer,
+}: {
+  questionId: number | string | undefined;
+  answer: AllAnswer;
+}) {
   // const { getAnswerData } = useGetData();
   const api = useAPI();
   const dispatch = useAppDispatch();
@@ -58,7 +64,7 @@ export default function AnswerList({ questionId, answer }: { questionId: number 
   //   staleTime: 1000 * 15,
   // });
   //get은 데이터가 바뀌었을 때 다시 해줘야함 ->input의 value가
-  console.log(answer);
+
   // useEffect(() => {
   //   const getAnswer = async () => {
   //     const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);

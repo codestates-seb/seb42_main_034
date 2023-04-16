@@ -6,12 +6,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Colors } from 'component/style/variables';
 import { Flex } from 'component/style/cssTemplete';
-import Search from 'component/ui/Search';
 import { useAppSelector } from 'redux/hooks';
 import Searchbar from 'component/board/Searchbar';
 const LogoStyle = styled(Logo)`
   width: 10rem;
-  margin-left: 3rem;
   padding: 1rem;
   color: ${Colors.text_black};
 `;
@@ -26,7 +24,7 @@ export default function Nav({ className }: Props) {
       <Link to="/home">
         <LogoStyle />
       </Link>
-      <Searchbar />
+      {/* <Searchbar /> */}
       <UserTab />
     </div>
   );

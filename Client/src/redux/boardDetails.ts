@@ -2,7 +2,8 @@
 import { ReturnData } from 'api/data';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface ListData {
-  questionId: string | number;
+  questionId?: string | number;
+  blogId?: string | number;
   title: string;
   tags: string | null;
   writer: string;
@@ -16,6 +17,17 @@ export interface PageProps {
   page: number;
   totalPages: number;
 }
+export interface BlogData {
+  createdAt: string;
+  modifiedAt?: string;
+  questionId?: string | number;
+  blogId?: string | number;
+  tags: string | null;
+  title: string;
+  viewCnt: number;
+  writer: string;
+  content?: string;
+}
 const initialState: ReturnData = {
   data: [],
   pageInfo: {
@@ -25,6 +37,7 @@ const initialState: ReturnData = {
     totalPages: 2,
   },
 };
+
 const boardDetailSlice = createSlice({
   name: 'boardDetail',
   initialState,

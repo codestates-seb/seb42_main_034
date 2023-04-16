@@ -26,7 +26,7 @@ export default function UserTab() {
     navigate(route);
   };
   useEffect(() => {
-    console.log('s');
+    console.log();
   }, [isLogin]);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);

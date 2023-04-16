@@ -5,8 +5,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function BoardDetail({ data, detail }: { data: BoardData; detail: BoardData }) {
-  console.log(detail);
-
   return (
     <>
       <ListWrapper>
@@ -31,7 +29,7 @@ const ListWrapper = styled.div`
   height: 50vh;
   .flex {
     flex: 1 1 auto;
-    font-size: ${FontSize.h3};
+    font-size: ${FontSize.md};
     width: 38em;
     height: 28em;
     border: 1px solid ${Colors.text_black};
@@ -54,7 +52,7 @@ const Item = styled.div`
     justify-content: end;
   }
   .title {
-    font-size: ${FontSize.h2};
+    font-size: ${FontSize.h3};
     font-weight: bold;
   }
 `;

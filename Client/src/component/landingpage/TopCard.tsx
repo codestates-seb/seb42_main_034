@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 gsap.registerPlugin(ScrollTrigger);
 const Hover = styled.div`
   margin: auto;
+  margin-top: 3em;
   text-align: center;
   position: relative;
   /* margin-bottom: 10rem; */
@@ -26,19 +27,26 @@ const Hover = styled.div`
 `;
 const StyledBtn = styled(Button)`
   position: absolute;
-  bottom: 9rem;
-  right: 26rem;
-  font-size: ${FontSize.h3};
+  top: 26em;
+  left: 25em;
+  width: 10em;
+  height: 3em;
+  font-size: ${FontSize.md};
   background: ${Colors.button_blue};
   border: none;
   padding: 2rem;
   border-radius: 3rem;
+  span {
+    position: absolute;
+    top: 1em;
+    left: 1.2em;
+  }
   ${HoverAction}
   ${BoxShadow}
 `;
 const LandingFrame = styled.div`
   /* background: ${Colors.main_02}; */
-  display: inline-block;
+  display: block;
   font-size: ${FontSize.h2};
   font-weight: bold;
   color: ${Colors.text_black};
@@ -47,12 +55,12 @@ const MessgeAbsolute = styled(Absolute)`
   z-index: 4;
   top: 19rem;
   left: 0.6rem;
-  font-size: 1.8rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  font-size: ${FontSize.md};
+  padding-left: 1em;
+  width: 9em;
 `;
 const ResizeMessageIcon = styled(Message)`
-  width: 20rem;
+  width: 13em;
 `;
 const MessageIconAbsolute = styled(Absolute)`
   z-index: 0;
@@ -60,18 +68,20 @@ const MessageIconAbsolute = styled(Absolute)`
   top: -4rem;
   right: -1rem;
   max-width: 10rem;
-  max-height: 13rem;
+  max-height: 10rem;
   display: flex;
 `;
 const Comment = styled(IconPng)`
   position: absolute;
-  top: 10rem;
-  left: 26rem;
+  top: 7rem;
+  left: 16rem;
   width: 6rem;
   z-index: 0;
 `;
 const SelfieIcon = styled(IconPng)`
   z-index: -1;
+  width: 30em;
+  height: 30em;
 `;
 export default function TopCard() {
   const main = useRef<HTMLDivElement>(null);

@@ -3,7 +3,7 @@ import { Colors, FontSize } from 'component/style/variables';
 import { IconPng } from 'component/ui/Icons';
 import React from 'react';
 import styled from 'styled-components';
-import main from '../../image/river.png';
+import main from '../../image/mountain.jpg';
 export default function Maincard() {
   return (
     <StyledBackground className="slide1">

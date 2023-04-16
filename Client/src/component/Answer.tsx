@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useGetData } from 'api/data';
+import { getFilterData, useGetData } from 'api/data';
 import { MoveBtn } from 'pages/question/BoardList';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -10,20 +10,21 @@ import { Flex } from './style/cssTemplete';
 import TextInput from './ui/Input';
 import { getAnswerData, postAnswerData } from 'redux/answer/answerslice';
 import useAPI from 'hooks/uesAPI';
-export default function Answer({ questionId }: { questionId: number | string }) {
+export default function Answer({ questionId }: { questionId: number | string | undefined }) {
   const [content, setComment] = useState<string>('');
   // const { postAnswerData } = useGetData(); // data.ts에서 정리할것
   const dispatch = useAppDispatch();
   const api = useAPI();
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const answer = useAppSelector((state) => state.answer);
+  const isFiltered = getFilterData();
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // postAnswerData(questionId, { content, memberId }).catch(console.log);
 
-    const response = await api.post(`/questions/answer/${questionId}`, { content, memberId });
+    const response = await api.post(`/${isFiltered}/answer/${questionId}`, { content, memberId });
     dispatch(postAnswerData(response.data));
-    getAnswer().catch(console.error);
+    getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
   };
   // const {
   //   refetch: answerFetch,
@@ -42,7 +43,7 @@ export default function Answer({ questionId }: { questionId: number | string }) 
   //   },
   // });
   const getAnswer = async () => {
-    const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
+    const response = await api.get(`${isFiltered}/answer/${questionId}?page=1&sortedBy=hot`);
     console.log(response);
 
     dispatch(getAnswerData(response.data));

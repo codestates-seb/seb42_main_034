@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
 import TextInput from 'component/ui/Input';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetData } from 'api/data';
-import Button from 'component/board/Button';
 import { MoveBtn, StyledCategoryBtn } from './BoardList';
-import { useQuery } from '@tanstack/react-query';
 
 export default function ModifyQuestion() {
   /**1. 기존 data get
