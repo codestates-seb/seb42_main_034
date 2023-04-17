@@ -11,10 +11,10 @@ export default function QuestionCard({ city }: { city: ListData }) {
   };
   return (
     <Card onClick={handleClick}>
-      <div>{city.tags}</div>
+      <div>#{city.tags || '여행'}</div>
       <div className="title">{city.title}</div>
 
-      <Flex gap="2rem" direction="column">
+      <Flex gap="1em" direction="column" className="sidecontent">
         <div>{city.createdAt.split('T')[0]}</div>
         <div>{city.writer}</div>
       </Flex>
@@ -23,19 +23,22 @@ export default function QuestionCard({ city }: { city: ListData }) {
 }
 
 const Card = styled.li`
-  background: ${Colors.main_04_white};
   margin: 2rem;
   list-style: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.9rem;
-  height: 5rem;
+  height: 2rem;
   border-radius: 1rem;
   padding: 1rem;
+  border-bottom: 1px solid lightgray;
   ${HoverAction}
   .title {
     font-weight: bold;
-    font-size: ${FontSize.lg};
+    font-size: ${FontSize.md};
+  }
+  .sidecontent {
+    font-size: ${FontSize.sm};
   }
 `;

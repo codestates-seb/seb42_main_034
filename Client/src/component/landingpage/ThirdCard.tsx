@@ -2,7 +2,7 @@ import { Absolute } from 'component/style/cssTemplete';
 import { Colors, FontSize, Route } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
 import { Icon } from 'component/ui/Icon';
-import { MoveBtn } from 'pages/question/BoardList';
+import { MoveBtn } from 'pages/question/QuestionBoardList';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';

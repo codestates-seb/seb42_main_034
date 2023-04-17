@@ -27,6 +27,17 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
     }),
     [],
   );
+  const quillOptions = {
+    // configure the options for react-quill
+    // disable HTML tags by setting "sanitize" to false
+    // and "stripTags" to true
+    sanitize: false,
+    stripTags: true,
+  };
+  const getTextWithoutTags = (html: string) => {
+    const regex = /(<([^>]+)>)/gi;
+    return html.replace(regex, '');
+  };
   return (
     <>
       <ReactQuill
@@ -41,6 +52,7 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
         modules={modules}
         theme="snow"
         style={{ height, width, marginBottom: '6%' }} // style
+        {...quillOptions}
       />
     </>
   );

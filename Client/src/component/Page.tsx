@@ -1,5 +1,5 @@
 import { ReturnData } from 'api/data';
-import { StyledCategoryBtn } from 'pages/question/BoardList';
+import { StyledCategoryBtn } from 'pages/question/QuestionBoardList';
 import React from 'react';
 import styled from 'styled-components';
 import { Flex, HoverAction, Relative } from './style/cssTemplete';
@@ -21,6 +21,8 @@ export default function Page({
   >;
 }) {
   const { page, totalElements, totalPages, size } = pages;
+  console.log(page);
+
   const handleLeftPage = () => {
     if (page === 1) return;
     onPage({ ...page, page: page - 1 });

@@ -2,6 +2,7 @@ import { BlogData, ListData, PageProps } from './../redux/boardDetails';
 import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios';
 import { axiosInstance } from './instance';
 import useAPI from 'hooks/uesAPI';
+import { SetStateAction } from 'react';
 
 axios.defaults.withCredentials = true;
 interface QuestionList {
@@ -10,23 +11,27 @@ interface QuestionList {
   page: string;
   sortedBy: string;
 }
-
+//질문 블로그 두개 타입 합치는방법 있을까효
 export interface ReturnData {
   [key: string]: any;
   data: ListData[] | [];
   pageInfo: PageProps;
 }
-
+export interface BlogReturnData {
+  [key: string]: any;
+  data: BlogData[] | [];
+  pageInfo: PageProps;
+}
 export interface BoardData {
   createdAt: string;
-  modifiedAt?: string;
-  questionId?: string | number;
+  modifiedAt: string;
+  questionId?: string | number | undefined;
   blogId?: string | number | undefined;
   tags: string | null;
   title: string;
   viewCnt: number;
   writer: string;
-  content?: string;
+  content: string;
 }
 
 interface Argument {
@@ -70,8 +75,8 @@ export const useGetData = () => {
     });
     return response;
   };
-  const getBoardData = async (questionId: number | string | undefined, filter: string) =>
-    await api.get(`/${filter}/${questionId}`).then((res) => res.data.data);
+  const getBoardData = async (id: number | string | undefined, filter: string) =>
+    await api.get(`/${filter}/${id}`).then((res) => res.data.data);
   const deleteBoardData = async (
     questionId: number | string | undefined,
     memberId: number | string,
@@ -79,13 +84,14 @@ export const useGetData = () => {
   ): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/${filter}/${questionId}?memberId=${memberId}`).then((res) => res.data);
 
-  const getAnswerData = async (questionId: number | string, filter: string) =>
+  const getAnswerData = async (questionId: number | string | undefined, filter: string) =>
     await api.get(`/${filter}/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
   const postAnswerData = async (
-    questionId: number | string,
+    questionId: number | string | undefined,
     body: AnswerRequestBody,
+    section: string,
   ): Promise<AxiosResponse<BoardData>> =>
-    await api.post(`/questions/answer/${questionId}`, body).then((res) => res.data.data);
+    await api.post(`/${section}/answer/${questionId}`, body).then((res) => res.data.data);
   const putAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
     await api.patch(`/questions/answer/${questionId}`).then((res) => res.data.data);
   const deleteAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>

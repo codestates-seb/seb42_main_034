@@ -10,7 +10,8 @@ import { useAppSelector } from 'redux/hooks';
 import Answer from 'component/Answer';
 
 import { Flex } from 'component/style/cssTemplete';
-import { MoveBtn } from 'pages/question/BoardList';
+import { MoveBtn } from 'pages/question/QuestionBoardList';
+import BlogAnswer from './BlogAnswer';
 export default function BlogDetails() {
   const data: BoardData = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
@@ -22,9 +23,10 @@ export default function BlogDetails() {
     isLoading,
     error,
     data: detail,
-  } = useQuery(['region', data] as const, async () => await getBoardData(data.blogId, isFiltered), {
+  } = useQuery(['region', data] as const, async () => await getBoardData(data.blogId, 'blogs'), {
     staleTime: 1000 * 15,
   });
+  console.log(data, detail);
 
   return (
     <>
@@ -50,7 +52,7 @@ export default function BlogDetails() {
       {data && detail && (
         <>
           <BoardDetail data={data} detail={detail} />
-          <Answer questionId={data.blogId} />
+          <BlogAnswer blogId={data.blogId} />
         </>
       )}
     </>

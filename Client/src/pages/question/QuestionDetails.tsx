@@ -8,8 +8,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useAppSelector } from 'redux/hooks';
 
 import Answer from 'component/Answer';
-import { MoveBtn } from './BoardList';
+import { MoveBtn } from './QuestionBoardList';
 import { Flex } from 'component/style/cssTemplete';
+import { useEffect } from 'react';
 export default function QuestionDetails() {
   const data: BoardData = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
@@ -21,10 +22,12 @@ export default function QuestionDetails() {
     isLoading,
     error,
     data: detail,
-  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId, isFiltered), {
+  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId, 'questions'), {
     staleTime: 1000 * 15,
   });
-
+  useEffect(() => {
+    getAnswerData(data.questionId, 'questions').catch(console.error);
+  });
   return (
     <>
       <Flex justify="end" width="90%" gap="2rem">
@@ -37,7 +40,7 @@ export default function QuestionDetails() {
         <MoveBtn
           children="삭제"
           onClick={() => {
-            deleteBoardData(data.questionId, memberId, isFiltered)
+            deleteBoardData(data.questionId, memberId, 'questions')
               .then((res) => {
                 navigate(-1);
               })

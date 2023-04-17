@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill';
 import TextInput from 'component/ui/Input';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetData } from 'api/data';
-import { MoveBtn, StyledCategoryBtn } from './BoardList';
+import { MoveBtn, StyledCategoryBtn } from './QuestionBoardList';
 
 export default function ModifyQuestion() {
   /**1. 기존 data get

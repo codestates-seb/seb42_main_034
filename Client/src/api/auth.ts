@@ -11,11 +11,12 @@ export interface IAccessToken {
 }
 
 export interface userInfo {
-  id: string;
-  username: string;
-  email: string;
-  nickname: string;
-  headers?: IAccessToken;
+  // id: string;
+  // username: string;
+  // email: string;
+  // nickname: string;
+  // headers?: IAccessToken;
+  memberId: string;
   // location: string;
 }
 

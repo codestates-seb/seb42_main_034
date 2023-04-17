@@ -8,7 +8,7 @@ import { useAppSelector } from 'redux/hooks';
 
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
-import { MoveBtn } from 'pages/question/BoardList';
+import { MoveBtn } from 'pages/question/QuestionBoardList';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;

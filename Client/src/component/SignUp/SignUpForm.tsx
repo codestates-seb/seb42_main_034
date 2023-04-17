@@ -11,6 +11,7 @@ import React from 'react';
 import IdForm from './IdForm';
 import PasswordForm from './PasswordForm';
 import CurrentPosition from './CurrentPosition';
+import { setUserInfo } from 'redux/userInfoSlice';
 
 export type inputKeys = 'email' | 'nickname' | 'password' | 'passwordCheck';
 
@@ -38,14 +39,13 @@ export const SignUpForm = () => {
     e.preventDefault();
 
     let allConditionsSatisfied = true;
-    //forEach문 두번째인자가 인덱스값인걸로 아는데 어떻게 불리언이 할당되는지 궁금합니다
+    //forEach문 두번째인자가 인덱스값인걸로 아는데 어떻게 불리언이 할당되는지 궁금합니다(로직이 너무 어렵네요..)
     notifiMessages.forEach((message, notifiCase) => {
       if (!notifiCase) {
         allConditionsSatisfied = false;
         goNotifi(message);
       }
     });
-    console.log(allConditionsSatisfied);
 
     if (allConditionsSatisfied) {
       const data = { email, nickname, password };

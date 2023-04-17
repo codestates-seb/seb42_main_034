@@ -3,7 +3,6 @@ import { ReturnData } from 'api/data';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface ListData {
   questionId?: string | number;
-  blogId?: string | number;
   title: string;
   tags: string | null;
   writer: string;
@@ -20,8 +19,7 @@ export interface PageProps {
 export interface BlogData {
   createdAt: string;
   modifiedAt?: string;
-  questionId?: string | number;
-  blogId?: string | number;
+  blogId: string | number;
   tags: string | null;
   title: string;
   viewCnt: number;

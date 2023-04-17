@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import useAPI from '../../hooks/uesAPI';
 import { useAppSelector } from 'redux/hooks';
-import { MoveBtn, StyledCategoryBtn } from './BoardList';
+import { MoveBtn, StyledCategoryBtn } from './QuestionBoardList';
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
 const PostWrapper = styled.div`

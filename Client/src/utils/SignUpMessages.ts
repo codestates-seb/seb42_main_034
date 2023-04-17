@@ -16,3 +16,8 @@ export const SignUpMessages = (
     // [!input.location, '도시를 입력 해주세요.'],
   ]);
 // console.log(SignUpMessages());
+const recipeMap = new Map([
+  ['cucumber', 500],
+  ['tomatoes', 350],
+  ['onion', 50],
+]);

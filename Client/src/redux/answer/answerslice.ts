@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PageProps } from 'redux/boardDetails';
 export interface AnswerData {
   answerId: string | number;
   checked: boolean;
@@ -6,13 +7,21 @@ export interface AnswerData {
   likeCnt: number;
   location: string | null;
   memberId: number;
-  questionId: number;
+  questionId?: number;
+  blogId?: string;
 }
 export interface AllAnswer {
-  data: AnswerData[] | [];
+  answers: AnswerData[] | [];
+  pageInfo: PageProps;
 }
 const initialState: AllAnswer = {
-  data: [],
+  answers: [],
+  pageInfo: {
+    totalElements: 0,
+    size: 0,
+    page: 0,
+    totalPages: 0,
+  },
 };
 const answerslice = createSlice({
   name: 'answer',
@@ -22,8 +31,8 @@ const answerslice = createSlice({
       state = data;
       return state;
     },
-    postAnswerData: (state, { payload: { data } }: PayloadAction<{ data: AnswerData[] }>) => {
-      state = { ...state, data };
+    postAnswerData: (state, { payload: { answers } }: PayloadAction<{ answers: AnswerData[] }>) => {
+      state = { ...state, answers };
     },
   },
 });

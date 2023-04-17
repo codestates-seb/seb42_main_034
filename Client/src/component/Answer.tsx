@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getFilterData, useGetData } from 'api/data';
-import { MoveBtn } from 'pages/question/BoardList';
+import { MoveBtn } from 'pages/question/QuestionBoardList';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -21,9 +21,11 @@ export default function Answer({ questionId }: { questionId: number | string | u
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // postAnswerData(questionId, { content, memberId }).catch(console.log);
+    console.log(content);
 
-    const response = await api.post(`/${isFiltered}/answer/${questionId}`, { content, memberId });
-    dispatch(postAnswerData(response.data));
+    await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
+    // dispatch(postAnswerData(response.data));
+
     getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
   };
   // const {
@@ -43,7 +45,7 @@ export default function Answer({ questionId }: { questionId: number | string | u
   //   },
   // });
   const getAnswer = async () => {
-    const response = await api.get(`${isFiltered}/answer/${questionId}?page=1&sortedBy=hot`);
+    const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
     console.log(response);
 
     dispatch(getAnswerData(response.data));

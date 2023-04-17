@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from '../../component/Sign/LoginForm';
-import SignLink from 'component/SignUp/SignLink';
 
+import SignLink from 'component/SignUp/SignLink';
+import Loginform from 'component/Sign/LoginForm';
 const SignIn = () => {
   const { isLogin } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const SignIn = () => {
         <PageStyled>
           <Container>
             <Title>로그인</Title>
-            <LoginForm />
+            <Loginform />
             <SignLink message="아직 회원이 아니신가요 ?" linkText="회원가입 하러가기" link="/board/signup" />
           </Container>
         </PageStyled>

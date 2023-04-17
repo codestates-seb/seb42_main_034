@@ -18,10 +18,10 @@ import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
 import NotificationCenter from 'component/ui/NotifiCationCenter';
-import BoardList from 'pages/question/BoardList';
+import BoardList from 'pages/question/QuestionBoardList';
 import { GlobalStyle } from 'component/style/globalStyle';
 import ModifyQuestion from 'pages/question/ModifyQuestion';
-import QuestionBoardList from 'pages/question/BoardList';
+import QuestionBoardList from 'pages/question/QuestionBoardList';
 import BlogBoardList from './pages/blog/BlogBoradList';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -76,7 +76,7 @@ const router = createBrowserRouter([
             element: <QuestionPost />,
           },
           {
-            path: '/board/blogspost',
+            path: '/board/blogpost',
             element: <BlogPost />,
           },
           {

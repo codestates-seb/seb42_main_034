@@ -23,8 +23,8 @@ const Layout = styled.div`
     border-radius: 6px;
   }
   padding: 0.6rem;
-  border-radius: 3rem;
-  max-width: ${ScreenSize.max_width};
+  border-radius: 0.7rem;
+  max-width: 90%;
   margin: auto;
   background: rgba(255, 255, 255, 0.4);
   ${BoxShadow};

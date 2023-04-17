@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { BoardData, useGetData } from 'api/data';
 import { Colors, FontSize } from 'component/style/variables';
+import useAPI from 'hooks/uesAPI';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 export default function BoardDetail({ data, detail }: { data: BoardData; detail: BoardData }) {
+  console.log(detail);
   return (
     <>
       <ListWrapper>
@@ -15,7 +17,7 @@ export default function BoardDetail({ data, detail }: { data: BoardData; detail:
           </div>
         </Item>
 
-        <div className="flex"> {detail.content}</div>
+        <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
       </ListWrapper>
     </>
   );

@@ -3,7 +3,7 @@ import { BoardData, useGetData } from 'api/data';
 import { AxiosResponse } from 'axios';
 import { Flex } from 'component/style/cssTemplete';
 import useAPI from 'hooks/uesAPI';
-import { MoveBtn, StyledCategoryBtn } from 'pages/question/BoardList';
+import { MoveBtn, StyledCategoryBtn } from 'pages/question/QuestionBoardList';
 import React, { useEffect } from 'react';
 import { AllAnswer, AnswerData, getAnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
