@@ -21,9 +21,8 @@ interface Member {
   value: string;
 }
 
-interface FixMyInfo {
+interface FixmemberInfo {
   nickname: string;
-  username: string;
   location: {
     latitude: string|number;
     longitude: string|number;
@@ -53,7 +52,7 @@ export const useMypageAPI = () => {
           return res.data.data;
       });
 
-      const patchFixMyInfo = (data: FixMyInfo) =>
+      const patchFixMemberInfo = (data: FixmemberInfo) =>
       api.patch(`/members/edit`, data)
 
       // const getPostList = (
@@ -76,7 +75,7 @@ export const useMypageAPI = () => {
   return {
       getMemberInfo,
       getMyInfo,
-      patchFixMyInfo,
+      patchFixMemberInfo,
       getPostList,
   }
 };

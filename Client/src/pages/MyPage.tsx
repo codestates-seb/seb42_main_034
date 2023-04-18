@@ -22,7 +22,7 @@ export default function MyPage() {
   const {mutate: mutateLogout} = useMutation(deleteLogout);
 
   const linkEditPage = () => {
-    navigate('/mypage/edit')
+    navigate('/board/mypage/edit')
   };
   const { getMyInfo } = useMypageAPI();
 

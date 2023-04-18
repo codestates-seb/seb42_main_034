@@ -22,6 +22,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import BlogList from 'pages/blog/BlogList';
 import NotificationCenter from 'component/ui/NotifiCationCenter';
 import BoardList from 'pages/question/BoardList';
+import ProfileEditPage from 'pages/user/ProfileEdit';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
           {
             path: '/board/mypage',
             element: <MyPage />,
+          },
+          {
+            path: '/board/mypage/edit',
+            element: <ProfileEditPage />,
           },
           {
             path: '/board/questionpost',
