@@ -36,7 +36,7 @@ export default function QuestionDetails() {
           <MoveBtn
             children="수정"
             onClick={() => {
-              navigate(`/board/modify/${data.questionId}`, { state: { data, detail } });
+              navigate(`/board/modifyquestion/${data.questionId}`, { state: { data, detail } });
             }}
           />
           <MoveBtn

@@ -61,7 +61,9 @@ interface PatchBody {
   title: string;
   tags: string | null;
   content: string;
+  image: null | string;
 }
+//중복사용되는 api는 훅으로 사용
 export const useGetData = () => {
   const api = useAPI();
   const getData = async (region: string, section: string): Promise<AxiosResponse<ReturnData>> => {
@@ -84,21 +86,33 @@ export const useGetData = () => {
   ): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/${filter}/${questionId}?memberId=${memberId}`).then((res) => res.data);
 
-  const getAnswerData = async (questionId: number | string | undefined, filter: string) =>
-    await api.get(`/${filter}/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
+  const getAnswerData = async (questionId: number | string | undefined, section: string) =>
+    await api.get(`/${section}/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
   const postAnswerData = async (
     questionId: number | string | undefined,
     body: AnswerRequestBody,
     section: string,
   ): Promise<AxiosResponse<BoardData>> =>
     await api.post(`/${section}/answer/${questionId}`, body).then((res) => res.data.data);
-  const putAnswerData = async (section: string, id: number | string): Promise<AxiosResponse<BoardData>> =>
-    await api.patch(`/${section}/answer/${id}`).then((res) => res.data.data);
+  const putAnswerData = async (
+    section: string,
+    id: number | string,
+    content: string,
+  ): Promise<AxiosResponse<BoardData>> =>
+    await api.patch(`/${section}/answer/${id}`, content).then((res) => {
+      console.log(res);
+
+      return res.data;
+    });
+
   const deleteAnswerData = async (section: string, id: number | string): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/${section}/answer/${id}`);
 
-  const putBoardData = async (questionId: number | string, body: PatchBody): Promise<AxiosResponse<BoardData>> =>
-    await api.patch(`/questions/${questionId}`, body).then((res) => res.data.data);
+  const putBoardData = async (
+    section: string,
+    id: number | string,
+    body: PatchBody,
+  ): Promise<AxiosResponse<BoardData>> => await api.patch(`/${section}/${id}`, body).then((res) => res.data.data);
   return {
     putBoardData,
     getData,

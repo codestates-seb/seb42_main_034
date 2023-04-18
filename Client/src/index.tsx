@@ -23,6 +23,7 @@ import { GlobalStyle } from 'component/style/globalStyle';
 import ModifyQuestion from 'pages/question/ModifyQuestion';
 import QuestionBoardList from 'pages/question/QuestionBoardList';
 import BlogBoardList from './pages/blog/BlogBoradList';
+import ModifyBlog from 'pages/blog/ModifyBlog';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -80,8 +81,12 @@ const router = createBrowserRouter([
             element: <BlogPost />,
           },
           {
-            path: '/board/modify/:id',
+            path: '/board/modifyquestion/:id',
             element: <ModifyQuestion />,
+          },
+          {
+            path: '/board/modifyblog/:id',
+            element: <ModifyBlog />,
           },
         ],
       },

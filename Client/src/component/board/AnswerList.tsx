@@ -8,33 +8,6 @@ import { AllAnswer, AnswerData, getAnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
 
-const AnswerWrapper = styled.div`
-  margin-top: 50px;
-`;
-
-const AnswerContainer = styled.ul`
-  list-style: none;
-  width: 100%;
-`;
-
-const AnswerItem = styled.li`
-  padding: 20px;
-  border: 1px solid gray;
-  margin-bottom: 20px;
-`;
-
-const AnswerContent = styled.div`
-  margin-top: 10px;
-`;
-export interface answerReturn {
-  questionId: number | string;
-  content: string;
-  title: string;
-  tag: string;
-  writer: string;
-  createdAt: string;
-}
-
 const initialData: answerReturn = {
   questionId: 0,
   content: '',
@@ -78,4 +51,31 @@ export default function AnswerList({
       </AnswerContainer>
     </AnswerWrapper>
   );
+}
+const AnswerWrapper = styled.div`
+  margin-top: 50px;
+`;
+
+const AnswerContainer = styled.ul`
+  list-style: none;
+  width: 100%;
+  padding: 0;
+`;
+
+const AnswerItem = styled.li`
+  padding: 20px;
+  border: 1px solid gray;
+  margin-bottom: 20px;
+`;
+
+const AnswerContent = styled.div`
+  margin-top: 10px;
+`;
+export interface answerReturn {
+  questionId: number | string;
+  content: string;
+  title: string;
+  tag: string;
+  writer: string;
+  createdAt: string;
 }

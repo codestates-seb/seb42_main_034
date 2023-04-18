@@ -12,12 +12,13 @@ import Answer from 'component/Answer';
 import { Flex } from 'component/style/cssTemplete';
 import { MoveBtn } from 'pages/question/QuestionBoardList';
 import BlogAnswer from './BlogAnswer';
+import useAPI from 'hooks/uesAPI';
 export default function BlogDetails() {
   const data: BoardData = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
-  const { deleteBoardData } = useGetData();
-  const { getBoardData, getAnswerData } = useGetData();
+  const api = useAPI();
+  const { getBoardData } = useGetData();
   const isFiltered = getFilterData();
   const {
     isLoading,
@@ -26,7 +27,10 @@ export default function BlogDetails() {
   } = useQuery(['region', data] as const, async () => await getBoardData(data.blogId, 'blogs'), {
     staleTime: 1000 * 15,
   });
-  console.log(data, detail);
+  const deleteBoardData = async () => {
+    await api.delete(`/blogs/${data.blogId}`);
+    navigate(-1);
+  };
 
   return (
     <>
@@ -34,19 +38,10 @@ export default function BlogDetails() {
         <MoveBtn
           children="수정"
           onClick={() => {
-            navigate(`/board/modify/${data.blogId}`, { state: { data, detail } });
+            navigate(`/board/modifyblog/${data.blogId}`, { state: { data, detail } });
           }}
         />
-        <MoveBtn
-          children="삭제"
-          onClick={() => {
-            deleteBoardData(data.blogId, memberId, isFiltered)
-              .then((res) => {
-                navigate(-1);
-              })
-              .catch(console.error);
-          }}
-        />
+        <MoveBtn children="삭제" onClick={deleteBoardData} />
       </Flex>
       {isLoading && <div>로딩중..</div>}
       {data && detail && (
