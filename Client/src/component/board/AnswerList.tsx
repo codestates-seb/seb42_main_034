@@ -1,9 +1,8 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { BoardData, useGetData } from 'api/data';
-import { AxiosResponse } from 'axios';
+
 import { Flex } from 'component/style/cssTemplete';
 import useAPI from 'hooks/uesAPI';
-import { MoveBtn, StyledCategoryBtn } from 'pages/question/QuestionBoardList';
+import { MoveBtn } from 'pages/question/QuestionBoardList';
 import React, { useEffect } from 'react';
 import { AllAnswer, AnswerData, getAnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -15,7 +14,7 @@ const AnswerWrapper = styled.div`
 
 const AnswerContainer = styled.ul`
   list-style: none;
-  width: 70em;
+  width: 100%;
 `;
 
 const AnswerItem = styled.li`
@@ -35,6 +34,7 @@ export interface answerReturn {
   writer: string;
   createdAt: string;
 }
+
 const initialData: answerReturn = {
   questionId: 0,
   content: '',
@@ -45,37 +45,19 @@ const initialData: answerReturn = {
 };
 export default function AnswerList({
   questionId,
+  blogId,
   answer,
 }: {
-  questionId: number | string | undefined;
+  questionId?: number | string | undefined;
+  blogId?: number | string | undefined;
   answer: AllAnswer;
 }) {
-  // const { getAnswerData } = useGetData();
   const api = useAPI();
   const dispatch = useAppDispatch();
   const { deleteAnswerData } = useGetData();
-  // const answer = useAppSelector((state) => state.answer);
-  // const {
-  //   refetch: answerFetch,
-  //   data: answer,
-  //   isLoading,
-  //   error,
-  // } = useQuery(['answer', questionId] as const, async () => await getAnswerData(questionId), {
-  //   staleTime: 1000 * 15,
-  // });
-  //get은 데이터가 바뀌었을 때 다시 해줘야함 ->input의 value가
-
-  // useEffect(() => {
-  //   const getAnswer = async () => {
-  //     const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
-  //     console.log(response);
-
-  //     dispatch(getAnswerData(response.data));
-  //   };
-  //   getAnswer().catch(console.error);
-  // }, []);
+  console.log(answer);
   const deleteAnswer = (answerId: number | string) => {
-    deleteAnswerData(answerId).catch(console.error);
+    deleteAnswerData('questions', answerId).catch(console.error);
   };
   const isAnswerArray = Array.isArray(answer);
   return (

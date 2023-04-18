@@ -92,10 +92,10 @@ export const useGetData = () => {
     section: string,
   ): Promise<AxiosResponse<BoardData>> =>
     await api.post(`/${section}/answer/${questionId}`, body).then((res) => res.data.data);
-  const putAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
-    await api.patch(`/questions/answer/${questionId}`).then((res) => res.data.data);
-  const deleteAnswerData = async (questionId: number | string): Promise<AxiosResponse<BoardData>> =>
-    await api.delete(`/questions/answer/${questionId}`);
+  const putAnswerData = async (section: string, id: number | string): Promise<AxiosResponse<BoardData>> =>
+    await api.patch(`/${section}/answer/${id}`).then((res) => res.data.data);
+  const deleteAnswerData = async (section: string, id: number | string): Promise<AxiosResponse<BoardData>> =>
+    await api.delete(`/${section}/answer/${id}`);
 
   const putBoardData = async (questionId: number | string, body: PatchBody): Promise<AxiosResponse<BoardData>> =>
     await api.patch(`/questions/${questionId}`, body).then((res) => res.data.data);

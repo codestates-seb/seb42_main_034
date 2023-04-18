@@ -25,6 +25,9 @@ const Layout = styled.div`
   padding: 0.6rem;
   border-radius: 0.7rem;
   max-width: 90%;
+  @media (min-width: 1400px) {
+    max-width: 70%;
+  }
   margin: auto;
   background: rgba(255, 255, 255, 0.4);
   ${BoxShadow};

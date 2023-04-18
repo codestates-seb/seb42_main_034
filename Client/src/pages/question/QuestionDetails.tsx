@@ -28,26 +28,29 @@ export default function QuestionDetails() {
   useEffect(() => {
     getAnswerData(data.questionId, 'questions').catch(console.error);
   });
+
   return (
     <>
-      <Flex justify="end" width="90%" gap="2rem">
-        <MoveBtn
-          children="수정"
-          onClick={() => {
-            navigate(`/board/modify/${data.questionId}`, { state: { data, detail } });
-          }}
-        />
-        <MoveBtn
-          children="삭제"
-          onClick={() => {
-            deleteBoardData(data.questionId, memberId, 'questions')
-              .then((res) => {
-                navigate(-1);
-              })
-              .catch(console.error);
-          }}
-        />
-      </Flex>
+      {detail && detail.memberId === memberId && (
+        <Flex justify="end" width="90%" gap="2rem">
+          <MoveBtn
+            children="수정"
+            onClick={() => {
+              navigate(`/board/modify/${data.questionId}`, { state: { data, detail } });
+            }}
+          />
+          <MoveBtn
+            children="삭제"
+            onClick={() => {
+              deleteBoardData(data.questionId, memberId, 'questions')
+                .then((res) => {
+                  navigate(-1);
+                })
+                .catch(console.error);
+            }}
+          />
+        </Flex>
+      )}
       {isLoading && <div>로딩중..</div>}
       {data && detail && (
         <>

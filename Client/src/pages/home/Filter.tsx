@@ -43,7 +43,7 @@ export default function Filter({
   const handleBtnClick = () => {
     //해당지역으로이동
     // console.log(city);
-    navigate(`/board/boardlist/questions`, { state: citys.city });
+    navigate(`/board/boardlist/questions/${citys.city}`, { state: citys.city });
   };
 
   return (

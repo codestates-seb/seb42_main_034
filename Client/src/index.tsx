@@ -42,11 +42,11 @@ const router = createBrowserRouter([
         element: <Board />,
         children: [
           {
-            path: '/board/boardlist/questions',
+            path: '/board/boardlist/questions/:category',
             element: <QuestionBoardList />,
           },
           {
-            path: '/board/boardlist/blogs',
+            path: '/board/boardlist/blogs/:category',
             element: <BlogBoardList />,
           },
 

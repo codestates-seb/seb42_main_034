@@ -19,13 +19,10 @@ const useAPI = () => {
 
   axiosWithAccessToken.interceptors.response.use(
     (seccess) => {
-      console.log(seccess);
-
       return seccess;
     },
     (err) => {
       if (err.response.data.message !== 'Token Expired') return;
-      console.log(err);
 
       dispatch(login({ accessToken, isLogin: true })); //토큰 재발급할때 토큰 제대로 안들어가서 고쳣음
     },

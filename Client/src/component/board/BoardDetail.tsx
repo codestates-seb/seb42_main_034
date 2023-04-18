@@ -2,11 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { BoardData, useGetData } from 'api/data';
 import { Colors, FontSize } from 'component/style/variables';
 import useAPI from 'hooks/uesAPI';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 export default function BoardDetail({ data, detail }: { data: BoardData; detail: BoardData }) {
-  console.log(detail);
   return (
     <>
       <ListWrapper>
@@ -27,15 +26,16 @@ const ListWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60rem;
+  width: 80%;
   height: 50vh;
   .flex {
     flex: 1 1 auto;
+    min-height: 40%;
+    width: 100%;
     font-size: ${FontSize.md};
-    width: 38em;
     height: 28em;
     border: 1px solid ${Colors.text_black};
-    padding: 2rem;
+    padding: 1.2em;
   }
 `;
 
@@ -43,12 +43,12 @@ const Item = styled.div`
   border: 1px solid blue;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  width: 65em;
+  width: 100%;
   display: flex;
   height: 8rem;
   flex-direction: column;
   justify-content: center;
-  padding: 0.8rem;
+  padding: 1.2em;
   .divide_title {
     display: flex;
     justify-content: end;
