@@ -34,6 +34,7 @@ public class BlogAnswerDto {
     @Setter
     @AllArgsConstructor
     public static class Response{
+        private Long answerId;
         private String writer;
         private String content;
         private LocalDateTime createdAt;
