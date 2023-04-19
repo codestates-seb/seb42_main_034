@@ -41,7 +41,7 @@ public interface BlogAnswerMapper {
     }
 
     default BlogAnswerDto.Response blogAnswerToBlogAnswerResponse(BlogAnswer blogAnswer,List<BlogAnswerCommentResponseDto> comments){
-        BlogAnswerDto.Response blogAnswerResponseDto = new BlogAnswerDto.Response(blogAnswer.getMember().getNickname(), blogAnswer.getContent(),
+        BlogAnswerDto.Response blogAnswerResponseDto = new BlogAnswerDto.Response(blogAnswer.getId(),blogAnswer.getMember().getNickname(), blogAnswer.getContent(),
                 blogAnswer.getCreatedAt(),comments,blogAnswer.getMember().getId());
         return blogAnswerResponseDto;
     }
