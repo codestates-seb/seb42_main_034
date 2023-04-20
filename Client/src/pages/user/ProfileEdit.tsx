@@ -18,7 +18,7 @@ function ProfileEditPage() {
     const onClickToggleModal = useCallback(() => {
         setOpenModal(!isOpenModal);
     }, [isOpenModal])
-    const userInfo = useAppSelector(state => state.persistReducer.userInfo);
+    const userInfo = useAppSelector((state) => state.persistReducer.userInfo);
 
     const location = useGeolocation().coordinates || {
         latitude: 0,
@@ -44,7 +44,7 @@ function ProfileEditPage() {
     }
 
     const handleBlurNickname = () => {
-        dispatch(updateUserInfo({ ...userInfo, value: nickname }));
+        dispatch(updateUserInfo({ key: 'nickname', value: nickname }));
       }
 
     useEffect(() => {
@@ -58,7 +58,7 @@ function ProfileEditPage() {
     return (
         <Layout>
 
-        {userInfo.name ? (
+        {/* {userInfo.name ? ( */}
             <>
                 <ProfileEditBox>
                     <SubTitle>회원정보 수정</SubTitle>
@@ -88,7 +88,7 @@ function ProfileEditPage() {
                         <p className="miniTitle">도시설정</p>
                         <div className="input">
                             <input 
-                            placeholder="도시를 설정해주세요"
+                            placeholder="도시를 설정하기 위해 여기를 클릭"
                             value={address||''}
                             disabled={false}
                             onClick={() => {
@@ -103,7 +103,7 @@ function ProfileEditPage() {
                             const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
                             if(!isconfirm) return;
                             mutate();
-                            navigate('/mypage')
+                            navigate('/board/mypage')
                         }}
                         className="Button"
                         
@@ -111,12 +111,14 @@ function ProfileEditPage() {
                         저장
                     </Button>
                             {isOpenModal && 
-                            // <Modal onClickToggleModal={onClickToggleModal} />
+                            <>
+                            <Modal onClickToggleModal={onClickToggleModal} />
                             <div>hihihihihihihihihihi</div>
+                            </>
                             }
                 </ProfileEditBox>
             </>
-        ) : ('잘못된 요청')} 
+        {/* ) : ('잘못된 요청')}  */}
 
 
         </Layout>
@@ -131,6 +133,7 @@ const Layout = styled.div`
     flex-direction: column;
     font-size: 1.3rem;
     text-align: center;
+    width: 100%;
 
     .username {
         padding-top: 2rem;
@@ -149,6 +152,7 @@ const Layout = styled.div`
         padding-bottom: 0.5rem;
         font-size: 15px;
         color: white;
+        display: flex;
     }
 `
 
@@ -171,14 +175,15 @@ const ProfileEditBox = styled.div`
     border: 3px solid red;
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 40%;
     top: 22%;
     padding: 1.2rem;
-    background-color: #016241;
+    background-color: #52a3e9;
     padding-top: 50px;
     padding-bottom: 50px;
     border-radius: 12px;
     margin-top: 120px;
+    align-items: center;
 
     .check {
         border: 3px solid blue;

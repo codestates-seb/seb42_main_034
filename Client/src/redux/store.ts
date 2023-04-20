@@ -6,6 +6,7 @@ import userInfoReducer from './userInfoSlice';
 import loginInfoReducer from './userSlice';
 import notificationReducer from './notifiCation';
 import thunkMiddleware from 'redux-thunk';
+import geoLocationSlice from './geoLocation';
 
 const persistConfig = {
   key: 'root',
@@ -21,6 +22,7 @@ const loginPersistConfig = {
 const rootReducer = combineReducers({
   userInfo: userInfoReducer,
   notification: notificationReducer,
+  getLocation: geoLocationSlice,
 });
 
 export const store = configureStore({
