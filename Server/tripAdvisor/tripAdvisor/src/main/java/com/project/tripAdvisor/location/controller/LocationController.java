@@ -22,7 +22,7 @@ public class LocationController {
     }
 
     @Transactional
-    @PostMapping("/location/{member-id}")
+    @PostMapping("/location")
     public ResponseEntity<String> registerLocation(Principal principal,
                                                    @RequestParam Double latitude,
                                                    @RequestParam Double longitude){
@@ -38,7 +38,7 @@ public class LocationController {
      * patchMapping 과 getMapping의 경우 member 단에서 할지?
      * 안할꺼면 위치 정보만을 업데이트하는 버튼이 최소한 필요할듯
      */
-    @PatchMapping("/location/{member-id}")
+    @PatchMapping("/location")
     public ResponseEntity<String> updateLocation(Principal principal,
                                                  @RequestParam Double latitude,
                                                  @RequestParam Double longitude){
@@ -48,7 +48,7 @@ public class LocationController {
         //memberRepository.save(member);
         return ResponseEntity.ok("Location updated successfully");
     }
-    @GetMapping("/location/{member-id}")
+    @GetMapping("/location")
     public ResponseEntity<String> getLocation(Principal principal){
         Member member =memberFindService.findMyProfile(principal.getName());
         if(member == null){

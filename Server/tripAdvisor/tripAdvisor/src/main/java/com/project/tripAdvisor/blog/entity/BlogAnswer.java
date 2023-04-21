@@ -31,6 +31,6 @@ public class BlogAnswer extends Auditable {
     @JoinColumn(name="blog_id")
     private Blog blog;
 
-    @OneToMany(mappedBy = "blogAnswer")
+    @OneToMany(mappedBy = "blogAnswer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BlogAnswerComment> comments = new ArrayList<>();
 }
