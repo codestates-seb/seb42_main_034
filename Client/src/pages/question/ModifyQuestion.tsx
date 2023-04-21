@@ -20,10 +20,10 @@ export default function ModifyQuestion() {
 
   const [title, setTitle] = useState<string>(data.detail.title || '');
   const [content, setContent] = useState<string>(data.detail.content || '');
-  const [tags, setTags] = useState<string>('');
+  const [tag, setTags] = useState<string>('');
   const handlePatch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await putBoardData('questions', data.data.questionId, { title, content, tags, image: null }).then(console.log);
+    await putBoardData('questions', data.data.questionId, { title, content, tag, image: null }).then(console.log);
     navigate(-1);
   };
 
@@ -31,7 +31,7 @@ export default function ModifyQuestion() {
     <div>
       <TextInput type="patchInput" setState={setTitle} value={title} placeholder="제목" />
       <QuillEditor width="100%" height="100%" quillRef={quillRef} htmlContent={content} setHtmlContent={setContent} />
-      <TextInput type="patchTag" setState={setTags} value={tags} placeholder="태그" />
+      <TextInput type="patchTag" setState={setTags} value={tag} placeholder="태그" />
       <form onSubmit={handlePatch}>
         <MoveBtn children="수정" />
       </form>

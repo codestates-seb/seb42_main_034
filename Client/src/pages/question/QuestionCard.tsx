@@ -33,12 +33,19 @@ const Card = styled.li`
   border-radius: 1rem;
   padding: 1rem;
   border-bottom: 1px solid lightgray;
+
   ${HoverAction}
   .title {
     font-weight: bold;
-    font-size: ${FontSize.md};
+    font-size: ${FontSize.lg};
+    @media (max-width: 760px) {
+      font-size: ${FontSize.md};
+    }
   }
   .sidecontent {
-    font-size: ${FontSize.sm};
+    font-size: ${FontSize.md};
+    @media (max-width: 760px) {
+      font-size: ${FontSize.sm};
+    }
   }
 `;

@@ -25,9 +25,9 @@ export default function QuestionDetails() {
   } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId, 'questions'), {
     staleTime: 1000 * 15,
   });
-  useEffect(() => {
-    getAnswerData(data.questionId, 'questions').catch(console.error);
-  });
+  // useEffect(() => {
+  //   getAnswerData(data.questionId, 'questions').catch(console.error);
+  // });
 
   return (
     <>

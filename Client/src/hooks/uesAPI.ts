@@ -8,7 +8,9 @@ axios.defaults.withCredentials = true;
 
 const useAPI = () => {
   const dispatch = useDispatch();
+  // const { postLogin } = useAuthAPI();
   const { accessToken } = useAppSelector((state) => state.loginInfo);
+
   const config = {
     baseURL: BASE_URL,
     withCredentials: true,
@@ -24,7 +26,7 @@ const useAPI = () => {
     (err) => {
       if (err.response.data.message !== 'Token Expired') return;
 
-      dispatch(login({ accessToken, isLogin: true })); //토큰 재발급할때 토큰 제대로 안들어가서 고쳣음
+      dispatch(login({ accessToken, isLogin: true }));
     },
   );
   return axiosWithAccessToken;

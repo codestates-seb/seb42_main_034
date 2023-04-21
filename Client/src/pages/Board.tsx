@@ -29,8 +29,7 @@ const Layout = styled.div`
     max-width: 70%;
   }
   margin: auto;
-  background: rgba(255, 255, 255, 0.4);
-  ${BoxShadow};
+  background: ${Colors.board_color} ${BoxShadow};
 `;
 export default function Board() {
   return (
@@ -39,3 +38,8 @@ export default function Board() {
     </Layout>
   );
 }
+const Modal = styled.div`
+  width: 100%;
+  background: rgba(227, 223, 223, 0.778);
+  z-index: 8;
+`;

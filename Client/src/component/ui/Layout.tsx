@@ -31,7 +31,7 @@ export const MiddleLayout = styled.div`
 
   margin: auto;
 `;
-interface LayoutProps {
+export interface LayoutProps {
   children: string | React.ReactElement;
 }
 // theme

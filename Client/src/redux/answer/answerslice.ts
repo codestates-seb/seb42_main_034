@@ -5,30 +5,20 @@ export interface AnswerData {
   checked: boolean;
   content: string;
   likeCnt: number;
-  location: string | null;
   memberId: number;
-  questionId?: number;
-  blogId?: string;
 }
 export interface AllAnswer {
   answers: AnswerData[] | [];
-  pageInfo: PageProps;
 }
 const initialState: AllAnswer = {
   answers: [],
-  pageInfo: {
-    totalElements: 0,
-    size: 0,
-    page: 0,
-    totalPages: 0,
-  },
 };
 const answerslice = createSlice({
   name: 'answer',
   initialState,
   reducers: {
-    getAnswerData: (state, { payload: { data } }: PayloadAction<{ data: AllAnswer }>) => {
-      state = data;
+    getAnswerData: (state, { payload: { answers } }: PayloadAction<{ answers: AllAnswer }>) => {
+      state = answers;
       return state;
     },
     postAnswerData: (state, { payload: { answers } }: PayloadAction<{ answers: AnswerData[] }>) => {

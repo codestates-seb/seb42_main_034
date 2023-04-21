@@ -1,3 +1,4 @@
+import { AnswerData } from 'redux/answer/answerslice';
 import { BlogData, ListData, PageProps } from './../redux/boardDetails';
 import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios';
 import { axiosInstance } from './instance';
@@ -59,19 +60,19 @@ export class CRUDdata {
 }
 interface PatchBody {
   title: string;
-  tags: string | null;
+  tag: string | null;
   content: string;
   image: null | string;
 }
 //중복사용되는 api는 훅으로 사용
 export const useGetData = () => {
   const api = useAPI();
-  const getData = async (region: string, section: string): Promise<AxiosResponse<ReturnData>> => {
+  const getData = async (region: string, section: string, page: number): Promise<AxiosResponse<ReturnData>> => {
     const response = await axiosInstance.get(section, {
       withCredentials: true,
       params: {
-        category: region,
-        page: 1,
+        category: encodeURIComponent(region),
+        page: page,
         sortedBy: 'default',
       },
     });
@@ -86,33 +87,37 @@ export const useGetData = () => {
   ): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/${filter}/${questionId}?memberId=${memberId}`).then((res) => res.data);
 
-  const getAnswerData = async (questionId: number | string | undefined, section: string) =>
-    await api.get(`/${section}/answer/${questionId}?page=1&sortedBy=hot`).then((res) => res.data.data);
+  const getAnswerData = async (
+    questionId: number | string | undefined,
+    section: string,
+    onUpdate: React.Dispatch<React.SetStateAction<[] | AnswerData[]>>,
+  ) =>
+    await api.get(`/${section}/answer/${questionId}?page=1&sortedBy=hot`).then((res) => {
+      onUpdate(res.data.answers);
+      return res.data.answers;
+    });
   const postAnswerData = async (
     questionId: number | string | undefined,
     body: AnswerRequestBody,
     section: string,
   ): Promise<AxiosResponse<BoardData>> =>
     await api.post(`/${section}/answer/${questionId}`, body).then((res) => res.data.data);
-  const putAnswerData = async (
-    section: string,
-    id: number | string,
-    content: string,
-  ): Promise<AxiosResponse<BoardData>> =>
-    await api.patch(`/${section}/answer/${id}`, content).then((res) => {
+  const putAnswerData = async (section: string, id: number | string, content: string) =>
+    await api.patch(`/${section}/answer/${id}`, { content }).then((res) => {
       console.log(res);
 
-      return res.data;
+      return res;
     });
 
   const deleteAnswerData = async (section: string, id: number | string): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/${section}/answer/${id}`);
 
-  const putBoardData = async (
-    section: string,
-    id: number | string,
-    body: PatchBody,
-  ): Promise<AxiosResponse<BoardData>> => await api.patch(`/${section}/${id}`, body).then((res) => res.data.data);
+  const putBoardData = async (section: string, id: number | string, body: PatchBody) =>
+    await api.patch(`/${section}/${id}`, body).then((res) => {
+      console.log(res);
+
+      return res;
+    });
   return {
     putBoardData,
     getData,

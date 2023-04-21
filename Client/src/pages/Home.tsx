@@ -27,6 +27,7 @@ export interface RegionInfo {
   x: number;
 
   y: number;
+  url: string;
 }
 const ChangeFont = styled.div`
   font-size: ${FontSize.h2};

@@ -10,6 +10,33 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { gsap } from 'gsap';
 import { useNavigate } from 'react-router-dom';
 gsap.registerPlugin(ScrollTrigger);
+
+export default function TopCard() {
+  const main = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const handleBtnClick = () => {
+    navigate(`${Route.home}`);
+  };
+
+  return (
+    <Hover className="slide1">
+      <LandingFrame>
+        <div>실제 거주하는 현지인이 추천하는 여행지.</div>
+        <div className="top1">궁금하신 지역에 질문글을 올려서 여행계획을 세우세요!</div>
+      </LandingFrame>
+      {/* <Absolute left={10}> */}
+      <MessageIconAbsolute className="top2">
+        <Icon svg={<ResizeMessageIcon />} />
+        <MessgeAbsolute>대전 oo동 맛집이 어디인가요?</MessgeAbsolute>
+      </MessageIconAbsolute>
+      <Comment className="top2" src={'/image/comments.png'} />
+      {/* </Absolute> */}
+      {/* <Icon svg={<TalkIcon />} /> */}
+      <SelfieIcon src={`/image/selfie.png`} className="top3" />
+      <StyledBtn className="third" children="정보 얻으러 가기" onClick={handleBtnClick} />
+    </Hover>
+  );
+}
 const Hover = styled.div`
   margin: auto;
   margin-top: 3em;
@@ -83,29 +110,3 @@ const SelfieIcon = styled(IconPng)`
   width: 30em;
   height: 30em;
 `;
-export default function TopCard() {
-  const main = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const handleBtnClick = () => {
-    navigate(`${Route.home}`);
-  };
-
-  return (
-    <Hover className="slide1">
-      <LandingFrame>
-        <div>실제 거주하는 현지인이 추천하는 여행지.</div>
-        <div className="top1">궁금하신 지역에 질문글을 올려서 여행계획을 세우세요!</div>
-      </LandingFrame>
-      {/* <Absolute left={10}> */}
-      <MessageIconAbsolute className="top2">
-        <Icon svg={<ResizeMessageIcon />} />
-        <MessgeAbsolute>대전 oo동 맛집이 어디인가요?</MessgeAbsolute>
-      </MessageIconAbsolute>
-      <Comment className="top2" src={'/image/comments.png'} />
-      {/* </Absolute> */}
-      {/* <Icon svg={<TalkIcon />} /> */}
-      <SelfieIcon src={`/image/selfie.png`} className="top3" />
-      <StyledBtn className="third" children="정보 얻으러 가기" onClick={handleBtnClick} />
-    </Hover>
-  );
-}

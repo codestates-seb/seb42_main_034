@@ -33,7 +33,7 @@ export default function Answer({ questionId }: { questionId: number | string | u
   const dispatch = useAppDispatch();
   const api = useAPI();
   const { memberId } = useAppSelector((state) => state.loginInfo);
-  const answer = useAppSelector((state) => state.answer);
+  const answer = useAppSelector((state) => state.answer.answers);
 
   const [pageNation, setPageNation] = useState({
     page: 1,
@@ -50,18 +50,19 @@ export default function Answer({ questionId }: { questionId: number | string | u
     await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
     // dispatch(postAnswerData(response.data));
 
-    getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
+    // getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
   };
   console.log(answer);
 
-  const getAnswer = async () => {
-    const response = await api.get(`questions/answer/${questionId}?page=${pageNation.page}&sortedBy=hot`);
-    setPageNation(response.data.pageInfo);
-    dispatch(getAnswerData(response.data));
-  };
   useEffect(() => {
+    const getAnswer = async () => {
+      const response = await api.get(`questions/answer/${questionId}?page=${pageNation.page}&sortedBy=hot`);
+      setPageNation(response.data.pageInfo);
+      dispatch(getAnswerData(response.data));
+    };
     getAnswer().catch(console.error);
-  }, [pageNation.page]);
+    console.log('dd');
+  }, [pageNation.page, dispatch]);
 
   return (
     <AnswerWrapper>

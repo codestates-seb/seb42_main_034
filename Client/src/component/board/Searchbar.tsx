@@ -1,21 +1,45 @@
+import { useGetData } from 'api/data';
 import { Relative } from 'component/style/cssTemplete';
 import { Colors } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
 import { Icon } from 'component/ui/Icon';
 import React, { useState } from 'react';
+import { BlogData, ListData, PageProps } from 'redux/boardDetails';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../image/search.svg';
-
-export default function Searchbar() {
+type Data = [] | ListData[] | BlogData[];
+export default function Searchbar({
+  section,
+  onCity,
+  page,
+  onPage,
+}: {
+  section: string;
+  onCity: React.Dispatch<React.SetStateAction<any>>;
+  page: PageProps;
+  onPage: React.Dispatch<
+    React.SetStateAction<{
+      page: number;
+      totalElements: number;
+      totalPages: number;
+      size: number;
+    }>
+  >;
+}) {
   const [searchData, setSearchData] = useState('');
-
+  const { getData } = useGetData();
   const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchData(e.target.value);
   };
 
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchData('');
+    //페이지함수 넣어야하는지 말아야하는지 모르겠음
+    getData(searchData, section, page.page)
+      .then((res) => {
+        onCity(res.data.data);
+      })
+      .catch(console.error);
   };
   return (
     <SearchWrapper onSubmit={searchHandler}>
