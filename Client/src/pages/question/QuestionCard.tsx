@@ -4,6 +4,7 @@ import { ListData } from 'redux/boardDetails';
 import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
 import { Colors, FontSize } from 'component/style/variables';
+import dayjs from 'dayjs';
 export default function QuestionCard({ city }: { city: ListData }) {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -15,7 +16,7 @@ export default function QuestionCard({ city }: { city: ListData }) {
       <div className="title">{city.title}</div>
 
       <Flex gap="1em" direction="column" className="sidecontent">
-        <div>{city.createdAt.split('T')[0]}</div>
+        <div>{dayjs(city.createdAt).format('YYYY-MM-DD')}</div>
         <div>{city.writer}</div>
       </Flex>
     </Card>

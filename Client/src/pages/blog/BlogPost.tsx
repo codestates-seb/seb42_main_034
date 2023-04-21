@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Tags from '../../component/board/Tags';
 
@@ -9,6 +9,7 @@ import { useAppSelector } from 'redux/hooks';
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
 import { MoveBtn } from 'pages/question/QuestionBoardList';
+import TextInput from 'component/ui/Input';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -32,10 +33,11 @@ const Input = styled.input`
 export default function BlogPost() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [tag, setTag] = useState<string[]>([]);
+  const { category } = useParams();
   const api = useAPI();
   const quillRef = useRef<ReactQuill>(null);
   const navigate = useNavigate();
+
   const { accessToken, memberId } = useAppSelector((state) => state.loginInfo);
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -48,14 +50,20 @@ export default function BlogPost() {
     setContent(value);
   };
 
-  const addTag = (newTag: string) => {
-    setTag((tag) => [...tag, newTag]);
-  };
+  // const addTag = (newTag: string) => {
+  //   setTag((tag) => [...tag, newTag]);
+  // };
 
-  const removeTag = (index: number) => {
-    setTag((tag) => [...tag.slice(0, index), ...tag.slice(index + 1)]);
-  };
-
+  // const removeTag = (index: number) => {
+  //   setTag((tag) => [...tag.slice(0, index), ...tag.slice(index + 1)]);
+  // };
+  console.log({
+    memberId,
+    title,
+    content,
+    tag: [],
+    category,
+  });
   const submitHandler = () => {
     if (title.trim() === '') {
       alert('제목을 입력하세요.');
@@ -65,7 +73,13 @@ export default function BlogPost() {
       alert('내용을 입력하세요.');
       return;
     }
-
+    console.log({
+      memberId,
+      title,
+      content,
+      tag: [],
+      category,
+    });
     api
       .post(
         '/blogs',
@@ -73,14 +87,15 @@ export default function BlogPost() {
           memberId,
           title,
           content,
-          tag,
-          category: 'project',
+          tag: [],
+          category,
+          image: '',
         },
-        {
-          headers: {
-            Authorization: accessToken,
-          },
-        },
+        // {
+        //   headers: {
+        //     Authorization: accessToken,
+        //   },
+        // },
       )
       .then(function (response) {
         navigate(-1);
@@ -102,7 +117,8 @@ export default function BlogPost() {
           htmlContent={content}
           setHtmlContent={setContent}
         />
-        <Tags tag={tag} addTag={addTag} removeTag={removeTag} />
+        {/* <Tags tag={tag} addTag={addTag} removeTag={removeTag} /> */}
+        {/* <TextInput type="category" setState={setTag} /> */}
         <MoveBtn onClick={submitHandler}>작성</MoveBtn>
         <Outlet />
       </PostWrapper>

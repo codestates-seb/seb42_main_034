@@ -64,6 +64,7 @@ interface PatchBody {
   content: string;
   image: null | string;
 }
+
 //중복사용되는 api는 훅으로 사용
 export const useGetData = () => {
   const api = useAPI();
@@ -93,8 +94,11 @@ export const useGetData = () => {
     onUpdate: React.Dispatch<React.SetStateAction<[] | AnswerData[]>>,
   ) =>
     await api.get(`/${section}/answer/${questionId}?page=1&sortedBy=hot`).then((res) => {
-      onUpdate(res.data.answers);
-      return res.data.answers;
+      if (section === 'blogs') {
+        onUpdate(res.data.answers);
+      } else {
+        onUpdate(res.data.data);
+      }
     });
   const postAnswerData = async (
     questionId: number | string | undefined,
@@ -129,6 +133,9 @@ export const useGetData = () => {
     postAnswerData,
   };
 };
+// const SearchList = async () => {
+//   await api.get(`/blogs/search?searchText=${searchData}&type=${}&page=`)
+// };
 export function getDate(date: string) {
   const formatDate = new Date(date);
   return formatDate;
@@ -139,3 +146,13 @@ export function getFilterData() {
     return JSON.parse(isFiltered);
   }
 }
+export const useLike = (answerId: number) => {
+  const api = useAPI();
+  const seletedQuestion = async (answerId: number) => {
+    await api.post(`questions/answer/select/${answerId}`).then((res) => {
+      console.log(res);
+
+      return res;
+    });
+  };
+};

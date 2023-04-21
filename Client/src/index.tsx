@@ -77,7 +77,7 @@ const router = createBrowserRouter([
             element: <QuestionPost />,
           },
           {
-            path: '/board/blogpost',
+            path: '/board/blogpost/:category',
             element: <BlogPost />,
           },
           {

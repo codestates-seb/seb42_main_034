@@ -41,13 +41,6 @@ export default function QuestionPost() {
     setTitle(e.target.value);
     console.log('ss');
   };
-  // const titleInput = () =>
-  //   useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-  //     titleHandler(e);
-  //   }, []); 대체 input re-rendering언제 할수있는지
-  const contentHandler = (value: string) => {
-    setContent(value);
-  };
 
   const addTag = (newTag: string) => {
     setTag((tag) => [...tag, newTag]);
@@ -75,7 +68,7 @@ export default function QuestionPost() {
           title,
           content,
           tag,
-          category: 'project',
+          category: 'proj',
         },
         {
           headers: {
