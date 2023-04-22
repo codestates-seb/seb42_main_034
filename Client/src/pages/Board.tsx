@@ -23,12 +23,13 @@ const Layout = styled.div`
     border-radius: 6px;
   }
   padding: 0.6rem;
-  border-radius: 3rem;
-  max-width: ${ScreenSize.max_width};
+  border-radius: 0.7rem;
+  max-width: 90%;
+  @media (min-width: 1400px) {
+    max-width: 70%;
+  }
   margin: auto;
-  background: ${Colors.boardlist_color};
-  border: 5px solid black;
-  ${BoxShadow};
+  background: ${Colors.board_color} ${BoxShadow};
 `;
 export default function Board() {
   return (
@@ -37,3 +38,8 @@ export default function Board() {
     </Layout>
   );
 }
+const Modal = styled.div`
+  width: 100%;
+  background: rgba(227, 223, 223, 0.778);
+  z-index: 8;
+`;

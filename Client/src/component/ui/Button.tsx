@@ -1,6 +1,5 @@
-import classNames from 'classnames';
 import React, { DOMAttributes } from 'react';
-import { ButtonHTMLAttributes } from 'react';
+
 export type ButtonType = 'button' | 'submit' | 'reset';
 
 export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
@@ -15,13 +14,7 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
 }
 export const Button: React.FC<IButtonProps> = ({ className, children, isDisabled, typeButton, onClick, ...rest }) => {
   return (
-    <button
-      className={classNames('Button', className)}
-      disabled={isDisabled}
-      type={typeButton}
-      onClick={onClick}
-      {...rest}
-    >
+    <button className={className} disabled={isDisabled} type={typeButton} onClick={onClick} {...rest}>
       <span>{children}</span>
     </button>
   );

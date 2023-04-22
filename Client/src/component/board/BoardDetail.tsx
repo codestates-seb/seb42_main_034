@@ -1,31 +1,62 @@
+import { useQuery } from '@tanstack/react-query';
+import { BoardData, useGetData } from 'api/data';
+import { Colors, FontSize } from 'component/style/variables';
+import useAPI from 'hooks/uesAPI';
 import React from 'react';
 import styled from 'styled-components';
 
+export default function BoardDetail({ data, detail }: { data: BoardData; detail: BoardData }) {
+  return (
+    <>
+      <ListWrapper>
+        <Item>
+          <Title className="title">{detail.title}</Title>
+          <div className="divide_title">
+            조회수:{detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
+          </div>
+        </Item>
+
+        <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
+      </ListWrapper>
+    </>
+  );
+}
 const ListWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 80%;
   height: 50vh;
+  .flex {
+    flex: 1 1 auto;
+    min-height: 40%;
+    width: 100%;
+    font-size: ${FontSize.md};
+    height: 28em;
+    border: 1px solid ${Colors.text_black};
+    padding: 1.2em;
+  }
 `;
 
-const ListContainer = styled.ul`
-  width: 60rem;
-`;
-
-const Item = styled.li`
-  display: flex;
-  flex-direction: column; /* 수정된 부분 */
-  align-items: center;
-  padding: 20px;
-  margin: 20px 0;
+const Item = styled.div`
   border: 1px solid blue;
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   width: 100%;
+  display: flex;
+  height: 8rem;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.2em;
+  .divide_title {
+    display: flex;
+    justify-content: end;
+  }
+  .title {
+    font-size: ${FontSize.h3};
+    font-weight: bold;
+  }
 `;
 
 const Title = styled.div`
@@ -34,27 +65,3 @@ const Title = styled.div`
   text-align: center;
   text-decoration: none;
 `;
-
-const Sub = styled.div`
-  font-size: 20x;
-`;
-
-export default function BoardDetail() {
-  return (
-    <>
-      <ListWrapper>
-        <ListContainer>
-          <Item>
-            <TitleWrapper>
-              <Title>여름 여행지로 제주 어떤가요?</Title>
-              <Sub>조회수: 0 | 작성시간: 23.03.19 14:00:00 </Sub>
-            </TitleWrapper>
-          </Item>
-          <div>
-            <Sub>제주도를 가고싶은데 갈지말지 아직 못정해서 어떻게 생각하시는지 조언좀 듣고싶어요</Sub>
-          </div>
-        </ListContainer>
-      </ListWrapper>
-    </>
-  );
-}

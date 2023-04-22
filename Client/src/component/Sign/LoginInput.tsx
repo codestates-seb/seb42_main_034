@@ -33,7 +33,6 @@ const LoginInput = (props: InputProps) => {
   );
 };
 
-
 const MainDiv = styled.div`
   width: 100%;
   margin-top: 20px;
@@ -48,24 +47,23 @@ const MainDiv = styled.div`
 `;
 
 const StyledInput = styled.input`
-width: 100%;
-padding: 10px 0;
-font-size: 16px;
-color: #fff;
-border: none;
-margin-bottom: 30px;
-border-bottom: 1px solid #fff;
-outline: none;
-background: transparent;
-&:focus ~ label,
-&:valid ~ label {
-  top: -20px;
-  left: 0;
-  color: #03e9f4;
-  font-size:12px;
-}
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+  &:focus ~ label,
+  &:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+  }
 `;
-
 
 const StyledLabel = styled.label`
   position: absolute;
@@ -75,14 +73,7 @@ const StyledLabel = styled.label`
   font-size: 16px;
   color: #fff;
   pointer-events: none;
-  transition: .6s;
+  transition: 0.6s;
 `;
 
-
-
-
-
-
 export default LoginInput;
-
-

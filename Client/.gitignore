@@ -20,8 +20,11 @@
 .env
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
 
 >>>>>>> 6f8d364434be06314d00c419cb2175b949a2854b
+>>>>>>> c06e4e54b377388a53f743294c456f3e19c0831f
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { ButtonWrapper } from '../../component/board/Button';
-import Editor from '../../component/board/Editor';
 import Tags from '../../component/board/Tags';
 import axios from 'axios';
 
 import useAPI from '../../hooks/uesAPI';
 import { useAppSelector } from 'redux/hooks';
+import { MoveBtn, StyledCategoryBtn } from './QuestionBoardList';
+import QuillEditor from 'component/ui/QuillEditor';
+import ReactQuill from 'react-quill';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100vh;
   justify-content: center;
   flex-direction: column;
-`;
-
-const Button = styled(ButtonWrapper)`
-  margin-top: 10px;
+  padding: 10rem;
 `;
 
 const Input = styled.input`
@@ -36,13 +34,12 @@ export default function QuestionPost() {
   const [content, setContent] = useState<string>('');
   const [tag, setTag] = useState<string[]>([]);
   const api = useAPI();
-  const { accessToken } = useAppSelector((state) => state.loginInfo);
+  const { category } = useParams();
+  const quillRef = useRef<ReactQuill>(null);
+  const navigate = useNavigate();
+  const { accessToken, memberId } = useAppSelector((state) => state.loginInfo);
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-  };
-
-  const contentHandler = (value: string) => {
-    setContent(value);
   };
 
   const addTag = (newTag: string) => {
@@ -62,17 +59,16 @@ export default function QuestionPost() {
       alert('내용을 입력하세요.');
       return;
     }
-    console.log(accessToken);
 
-    axios
+    api
       .post(
-        'http://ec2-3-35-230-52.ap-northeast-2.compute.amazonaws.com:8080/questions',
+        '/questions',
         {
-          memberId: 1,
+          memberId,
           title,
           content,
           tag,
-          category: 'test',
+          category: 'proj',
         },
         {
           headers: {
@@ -81,10 +77,11 @@ export default function QuestionPost() {
         },
       )
       .then(function (response) {
-        console.log(response);
+        navigate(-1);
       })
       .catch(function (error) {
         console.log(error);
+        //권한이 없습니다 띄우기
       });
   };
 
@@ -92,11 +89,21 @@ export default function QuestionPost() {
     <>
       <PostWrapper>
         <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
-        <Editor value={content} onChange={contentHandler} />
+        <ResizeEditor
+          width="100%"
+          height="100%"
+          quillRef={quillRef}
+          htmlContent={content}
+          setHtmlContent={setContent}
+        />
         <Tags tag={tag} addTag={addTag} removeTag={removeTag} />
-        <Button onClick={submitHandler}>작성</Button>
+        <MoveBtn onClick={submitHandler}>작성</MoveBtn>
         <Outlet />
       </PostWrapper>
     </>
   );
 }
+const ResizeEditor = styled(QuillEditor)`
+  width: 20rem;
+  background: white;
+`;

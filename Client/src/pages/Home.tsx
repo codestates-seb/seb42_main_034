@@ -1,9 +1,7 @@
-import { Relative } from 'component/style/cssTemplete';
-
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
-import { Colors, FontSize, ScreenSize } from '../component/style/variables';
+import { FontSize, ScreenSize } from '../component/style/variables';
 import { Icon } from '../component/ui/Icon';
 import { cities } from '../component/style/variables';
 import { ReactComponent as MapIcon } from '../image/map.svg';
@@ -21,15 +19,18 @@ const RelativeLayout = styled.div`
   max-width: ${ScreenSize.max_width};
   margin: auto;
 `;
-
+const StyledMapIcon = styled(MapIcon)`
+  height: 35em;
+`;
 export interface RegionInfo {
   city: string;
   x: number;
 
   y: number;
+  url: string;
 }
 const ChangeFont = styled.div`
-  font-size: ${FontSize.h1};
+  font-size: ${FontSize.h2};
   text-align: center;
   margin-bottom: 3rem;
 `;
@@ -41,7 +42,7 @@ export default function Home() {
     <>
       <ChangeFont>질문하고 싶은 지역을 선택해주세요.</ChangeFont>
       <RelativeLayout>
-        <MapImg svg={<MapIcon />} />
+        <MapImg svg={<StyledMapIcon />} />
         {cities.map((region, idx) => (
           <Filter key={idx} citys={region} setState={setFilter} filter={filter} />
         ))}

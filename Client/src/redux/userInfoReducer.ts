@@ -11,8 +11,9 @@ interface InitProps {
   address: string;
   totalCount: number;
   avatarUrl: string;
-  key: string;
-  value: string;
+  avgGrade: number,
+  // key: string;
+  // value: string;
 }
 
 const initialState: InitProps = {
@@ -26,8 +27,8 @@ const initialState: InitProps = {
   totalCount: 0,
   avatarUrl: '',
   avgGrade: 0,
-  value: '',
-  key: '',
+  // value: '',
+  // key: '',
 };
 
 const userInfoSlice = createSlice({

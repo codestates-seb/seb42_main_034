@@ -1,38 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-const ListWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ListContainer = styled.ul`
-  width: 50rem;
-`;
-
-const Item = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  margin: 20px 0;
-  border: 1px solid blue;
-`;
-
-const Title = styled(Link)`
-  display: flex;
-  font-size: 22px;
-  white-space: nowrap;
-  text-align: center;
-  text-decoration: none;
-`;
-
-const Sub = styled.div`
-  font-size: 15px;
-`;
-
 // props
 
 // export default function BoardList() {

@@ -1,22 +1,52 @@
-import { ReturnData } from 'api/data';
-import { Flex } from 'component/style/cssTemplete';
-import { Colors } from 'component/style/variables';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ListData } from 'redux/boardDetails';
+import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
-const Card = styled.li`
-  background: ${Colors.main_04_white};
-  margin: 2rem;
-  list-style: none;
-  height: 5rem;
-  border-radius: 1rem;
-  padding: 0.2rem;
-`;
-
-export default function QuestionCard({ city, filter }: { city: ReturnData; filter: string }) {
+import { Colors, FontSize } from 'component/style/variables';
+import dayjs from 'dayjs';
+export default function QuestionCard({ city }: { city: ListData }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/board/${filter}details/${city.questionId}`, { state: city });
+    navigate(`/board/questionsdetails/${city.questionId}`, { state: city });
   };
-  return <Card onClick={handleClick}>{city.title}</Card>;
+  return (
+    <Card onClick={handleClick}>
+      <div>#{city.tags || '여행'}</div>
+      <div className="title">{city.title}</div>
+
+      <Flex gap="1em" direction="column" className="sidecontent">
+        <div>{dayjs(city.createdAt).format('YYYY-MM-DD')}</div>
+        <div>{city.writer}</div>
+      </Flex>
+    </Card>
+  );
 }
+
+const Card = styled.li`
+  margin: 2rem;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem;
+  height: 2rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid lightgray;
+
+  ${HoverAction}
+  .title {
+    font-weight: bold;
+    font-size: ${FontSize.lg};
+    @media (max-width: 760px) {
+      font-size: ${FontSize.md};
+    }
+  }
+  .sidecontent {
+    font-size: ${FontSize.md};
+    @media (max-width: 760px) {
+      font-size: ${FontSize.sm};
+    }
+  }
+`;

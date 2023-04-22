@@ -21,40 +21,59 @@ interface Member {
   value: string;
 }
 
-interface FixMyInfo {
+interface FixmemberInfo {
   nickname: string;
-  username: string;
   location: {
-    latitude: string|number;
-    longitude: string|number;
+    latitude: string | number;
+    longitude: string | number;
   } | null;
   address: string;
   avatarUrl: string;
+}
+
+interface GetPost {
+  content: {
+    [x: string]: any;
+    title: string;
+    page: number;
+    size: number;
+  };
 }
 
 export const useMypageAPI = () => {
   const api = useAPI();
   const dispatch = useAppDispatch();
 
-    const getMemberInfo = async (id: string | undefined) =>
-      await api.get(`/members/me`).then((res) => res.data);
+  const getMemberInfo = async () => await api.get(`/members/me`).then((res) => res.data);
 
   const getMyInfo = async (id: string | undefined) =>
-      await api.get<Member>(`/members/me`).then(res => {
-          dispatch(setUserInfo(res.data));
-          return res.data;
-      });
+    await api.get<Member>(`/members/me`).then((res) => {
+      dispatch(setUserInfo(res.data));
+      return res.data.data;
+    });
 
-      const patchFixMyInfo = (data: FixMyInfo) =>
-      api.patch(`/members/edit`, data)
+  const patchFixMemberInfo = (data: FixmemberInfo) => api.patch(`/members/edit`, data);
 
-      // const aixosAddPhoto = (data:any) => {
-      //   axios.post(`/upload`, data).then(res => console.log(res));
-      // }
+  // const getPostList = (
+  //   id: string|undefined,
+  //   index?: string|undefined,
+  // ) => {
+  //   if(index) {
+  //     return api
+  //       .get(`members/${id}/questionTitle`, {params: {index} })
+  //       .then(res => res.data);
+  //   } else {
+  //     return api.get(`/members/${id}/questionTitle`).then(res => res.data);
+  //   }
+  // }
+  const getPostList = async () => {
+    await api.get(`members/questionTitle`).then((res) => res.data);
+  };
 
   return {
-      getMemberInfo,
-      getMyInfo,
-      patchFixMyInfo,
-  }
+    getMemberInfo,
+    getMyInfo,
+    patchFixMemberInfo,
+    getPostList,
+  };
 };

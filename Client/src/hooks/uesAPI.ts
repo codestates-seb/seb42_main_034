@@ -8,7 +8,9 @@ axios.defaults.withCredentials = true;
 
 const useAPI = () => {
   const dispatch = useDispatch();
+  // const { postLogin } = useAuthAPI();
   const { accessToken } = useAppSelector((state) => state.loginInfo);
+
   const config = {
     baseURL: BASE_URL,
     withCredentials: true,
@@ -16,10 +18,17 @@ const useAPI = () => {
   };
 
   const axiosWithAccessToken = axios.create(config);
-  axiosWithAccessToken.interceptors.response.use(undefined, (err) => {
-    if (err.response.data.message !== 'Token Expired') return;
-    dispatch(login({ accessToken: 'Bearer', isLogin: true }));
-  });
+
+  axiosWithAccessToken.interceptors.response.use(
+    (seccess) => {
+      return seccess;
+    },
+    (err) => {
+      if (err.response.data.message !== 'Token Expired') return;
+
+      dispatch(login({ accessToken, isLogin: true }));
+    },
+  );
   return axiosWithAccessToken;
 };
 

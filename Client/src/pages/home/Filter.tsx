@@ -1,5 +1,5 @@
 import { Colors, Route } from 'component/style/variables';
-import { BoxShadow, ButtonTheme, HoverAction } from 'component/style/cssTemplete';
+import { BoxShadow, ButtonTheme, Flex, HoverAction } from 'component/style/cssTemplete';
 import { RegionInfo } from 'pages/Home';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import { CRUDdata, ReturnData } from 'api/data';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+
 const RegionButton = styled(Button)`
   z-index: 0;
   /* ${ButtonTheme} */
@@ -16,7 +17,6 @@ const RegionButton = styled(Button)`
   color: ${Colors.main_04_white};
   ${HoverAction}
   ${BoxShadow}
-  position: absolute;
   font-size: 1.3rem;
   border-radius: 1.7rem;
   padding: 0.5rem;
@@ -43,15 +43,36 @@ export default function Filter({
   const handleBtnClick = () => {
     //해당지역으로이동
     // console.log(city);
-    navigate('/board/boardlist', { state: citys.city });
+    navigate(`/board/boardlist/questions/${citys.city}`, { state: citys.city });
   };
 
   return (
-    <RegionButton
-      children={citys.city}
-      className=""
-      onClick={handleBtnClick} //경로랑
-      style={{ left: `${citys.x}em`, top: `${citys.y}em` }}
-    />
+    <Absolute style={{ left: `${citys.x}em`, top: `${citys.y}em` }}>
+      <RegionButton
+        children={citys.city}
+        className=""
+        onClick={handleBtnClick} //경로랑
+      />
+
+      <Picture display="none">
+        <img src={citys.url} />
+      </Picture>
+    </Absolute>
   );
 }
+const Absolute = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  &:hover {
+    div {
+      display: block;
+    }
+    div & {
+      display: block;
+    }
+  }
+`;
+const Picture = styled.div<{ display: string }>`
+  display: ${(props) => props.display};
+`;

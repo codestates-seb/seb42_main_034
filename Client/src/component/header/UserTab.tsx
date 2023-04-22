@@ -13,18 +13,21 @@ const MenuTabBtn = styled(Button)`
   border: none;
   background: none;
   ${HoverAction}
-  font-size: ${FontSize.lg};
+  font-size: ${FontSize.sm};
 `;
 export default function UserTab() {
   //상태넣을자리
   //로그인 상태에 따라서 로그인 ,회원가입 or 로그아웃,마이페이지
   const { isLogin } = useAppSelector((state) => state.loginInfo);
-  const [login, setLogin] = useState(isLogin);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = (route: string) => {
     navigate(route);
   };
+  useEffect(() => {
+    console.log();
+  }, [isLogin]);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
   const handleLogOut = () => {
@@ -33,9 +36,10 @@ export default function UserTab() {
     mutateLogout();
     dispatch(logout());
   };
+
   return (
     <>
-      {login || (
+      {isLogin || (
         <div>
           <MenuTabBtn
             children="로그인"
@@ -53,7 +57,7 @@ export default function UserTab() {
           />
         </div>
       )}
-      {login && (
+      {isLogin && (
         <div>
           <MenuTabBtn children="로그아웃" onClick={handleLogOut} className="" />
           <MenuTabBtn children="마이페이지" onClick={() => handleClick('/board/mypage')} className="" />

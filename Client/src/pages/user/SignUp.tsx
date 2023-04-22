@@ -47,7 +47,7 @@ const Title = styled.h2`
 
 const FormWrapper = styled.div`
   position: absolute;
-  width: 40%;
+  width: 480px;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;

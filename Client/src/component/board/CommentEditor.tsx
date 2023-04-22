@@ -9,7 +9,7 @@ interface CommentEditorProps {
 const EditorWrapper = styled(Editor)`
   margin-top: 10px;
   border-radius: 5px;
-  width: 50rem;
+  width: rem;
 `;
 
 export default function CommentEditor({ onSubmit }: CommentEditorProps) {

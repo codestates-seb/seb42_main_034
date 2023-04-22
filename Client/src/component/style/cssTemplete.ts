@@ -24,6 +24,7 @@ export const ButtonTheme = css`
     background-color: var(--button-clicked);
   }
 `;
+
 export const Flex = styled.div<{
   width?: string;
   height?: string;
@@ -31,6 +32,7 @@ export const Flex = styled.div<{
   justify?: string;
   items?: string;
   gap?: string;
+  position?: string;
 }>`
   display: flex;
   flex-direction: ${(props) => props.direction};
@@ -39,6 +41,7 @@ export const Flex = styled.div<{
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
+  position: ${(props) => props.position};
 `;
 export const Relative = styled.div<{ width?: string; height?: string; pb?: string }>`
   position: relative;
