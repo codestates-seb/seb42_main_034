@@ -1,16 +1,16 @@
-import { Props } from 'component/header/Logo';
 import useGeolocation from 'hooks/useGeoLocation';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Geocode from 'react-geocode';
 import styled from 'styled-components';
-// import { updateUserInfo } from 'redux/userInfoReducer';
 import { useAppDispatch } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
+import useAPI from 'hooks/uesAPI';
+import axios from 'axios';
 
 interface ModalDefaultType {
   onClickToggleModal: () => void;
 }
+
 
 function Modal({
   onClickToggleModal,
@@ -19,12 +19,13 @@ function Modal({
 
   const location = useGeolocation();
   const dispatch = useAppDispatch();
+  const api = useAPI();
 
   const { latitude, longitude }: any = location.coordinates;
   const [ad, setAd] = useState('');
 
   useEffect(() => {
-    if(location.loaded === true) getAddressFromLatLng();
+    if(location.loaded === true) getAddressFromLatLng() ;
   }, [location])
 
   const GEOCODER_KEY: any = process.env.REACT_APP_GEOCODER_KEY;
@@ -36,7 +37,13 @@ function Modal({
     Geocode.fromLatLng(latitude, longitude).then(
       response => {
         const address = response.results[4].formatted_address;
+        const location = {latitude, longitude};
         setAd(address.slice(5))
+        api.post('/location', {latitude, longitude});
+        api.post('/location', location)
+        console.log(address)
+        console.log(location)
+        //body: JSON.stringify({ latitude: latitude, longitude: longitude, address: ad })
       },
       error => {
         console.log(error)
@@ -44,6 +51,28 @@ function Modal({
       }
     )
   }
+
+
+
+  
+api.post(`/location`,{latitude,longitude})
+
+  // fetch('/location', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({ latitude: latitude, longitude: longitude, address: ad })
+  // })
+  // .then(response => {
+  //   // 서버로부터의 응답 처리
+  // })
+  // .catch(error => {
+  //   // 오류 처리
+  // });
+  
+
+
   return (
     <Layout>
       <Dialog>

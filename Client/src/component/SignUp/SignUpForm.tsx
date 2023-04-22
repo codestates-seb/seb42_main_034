@@ -5,7 +5,7 @@ import { notifi } from '../../utils/notifi';
 import styled from 'styled-components';
 import React from 'react';
 import { keyframes } from 'styled-components';
-import CurrentPosition from './CurrentPosition';
+// import CurrentPosition from './CurrentPosition';
 import Swal from 'sweetalert2';
 import AxiosCustom from 'utils/AxiosCustom';
 import { useDispatch } from 'react-redux';
@@ -38,11 +38,11 @@ export const SignUpForm = () => {
 
       if (!emailRegex.test(emailCurrent)) {
         setEmailMessage('이메일 형식이 올바르지 않습니다.');
-        notifi(dispatch, '이메일 형식이 올바르지 않습니다.');
+        // notifi(dispatch, '이메일 형식이 올바르지 않습니다.');
         setIsEmail(false);
       } else {
         setEmailMessage('올바른 이메일 형식입니다.');
-        notifi(dispatch, '올바른 이메일 형식입니다.');
+        // notifi(dispatch, '올바른 이메일 형식입니다.');
         setIsEmail(true);
       }
     },
@@ -57,7 +57,7 @@ export const SignUpForm = () => {
     setNickname(event.target.value);
     if (event.target.value.length < 2 || event.target.value.length > 10) {
       setNicknameMessage('2글자 이상 10글자 미만으로 입력해주세요.');
-      notifi(dispatch, '올바르지 않은 닉네임 형식입니다.');
+      // notifi(dispatch, '올바르지 않은 닉네임 형식입니다.');
       setIsNickname(false);
     } else {
       setNicknameMessage('');
@@ -69,7 +69,7 @@ export const SignUpForm = () => {
  // 닉네임 중복확인 
  const handleCheckNickname = () => {
   Swal.fire('', '사용 가능한 닉네임입니다.')
-  notifi(dispatch, '사용 가능한 닉네임입니다.')
+  // notifi(dispatch, '사용 가능한 닉네임입니다.')
  }
   // const handleCheckNickname = async () => {
   //   await AxiosCustom
@@ -101,7 +101,7 @@ export const SignUpForm = () => {
         setPasswordMessage(
           '1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.'
         );
-        notifi(dispatch, '올바르지 않은 비밀번호 조합입니다')
+        // notifi(dispatch, '올바르지 않은 비밀번호 조합입니다')
         setIsPassword(false);
       } else {
         setPasswordMessage('올바른 비밀번호 형식입니다.');
@@ -123,7 +123,7 @@ export const SignUpForm = () => {
         setIsPwCheck(true);
       } else {
         setPwCheckMessage('비밀번호가 다릅니다.');
-        notifi(dispatch, '비밀번호가 일치 하지않습니다')
+        // notifi(dispatch, '비밀번호가 일치 하지않습니다')
         setIsPwCheck(false);
       }
     },
@@ -227,7 +227,7 @@ export const SignUpForm = () => {
           </PWContainer>
 
 
-        <CurrentPosition />
+        {/* <CurrentPosition /> */}
       </FormWrapper>
       <SubmitButton id="join" type="submit">
         <span></span>

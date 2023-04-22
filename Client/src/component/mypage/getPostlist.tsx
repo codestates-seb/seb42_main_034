@@ -6,7 +6,7 @@ import { useAppSelector } from "redux/hooks";
 import { useParams } from "react-router-dom";
 import AxiosCustom from "utils/AxiosCustom";
 import useAPI from "hooks/uesAPI";
-
+import Page from "component/Page";
 interface Post {
   content: string;
   id : number;
@@ -26,13 +26,19 @@ const PostList = () => {
 
   const { memberId} = useParams();
   const [post, setPost] = useState<Post[]|[]>([]); 
-  
+  const [pageNation, setPageNation] = useState({
+    page: 1,
+    totalElements: 0,
+    totalPages: 0,
+    size: 15,
+  });
   const getPost = async () => {
     await api
-    .get(`/members/${memberId}/posts`)
+    .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
     .then(resp => {
       setPost(resp.data.data);
-
+      
+console.log(resp)
     })
     .catch(error => {
       console.log(error);
@@ -41,7 +47,7 @@ const PostList = () => {
 
   useEffect(() => {
     getPost();
-  }, [memberId])
+  }, [memberId,pageNation.page])
 
 
 console.log(post)                               
@@ -56,6 +62,7 @@ console.log(post)
         <p>{p.content}</p>
       </div>
     ))}
+   {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
     </MainContainer>
   );
 };

@@ -1,5 +1,5 @@
 import Avatar from "component/mypage/Avatar";
-import Modal from "component/ui/Modal";
+import Modal from "component/ui/editModal";
 import { handleScroll } from "component/ui/ScrollTop";
 import { useFixInfo } from "hooks/useFixInfo";
 import useGeolocation from "hooks/useGeoLocation";
