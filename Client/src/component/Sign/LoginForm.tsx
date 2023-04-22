@@ -9,8 +9,6 @@ import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
 import LoginButton from './LoginButton';
-import { useAppSelector } from 'redux/hooks';
-import { useMypageAPI } from 'api/mypage';
 
 const Loginform = () => {
   const [email, setEmail] = useState('');
@@ -20,8 +18,7 @@ const Loginform = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postLogin } = useAuthAPI();
-  const data1 = useAppSelector((state) => state.persistReducer.userInfo);
-  const { getMemberInfo } = useMypageAPI();
+  console.log(email, password, vaildEmail, vaildPW);
 
   const { mutate, data: userData } = useMutation({
     mutationKey: ['loginInfo'],
@@ -36,15 +33,16 @@ const Loginform = () => {
         headers: { authorization },
       } = res;
       dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
-
+      notifi(dispatch, `${data.nickname}님 환영합니다.`);
       navigate(-1);
-      notifi(dispatch, `${res.data.memberId}님 환영합니다.`);
+      console.log(res);
 
       // setTimeout(() => {
       //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
       // }, 1000 * 60 * 29);
     },
     onError: (res) => {
+      console.log('login failed: ', res);
       alert('아이디 혹은 비밀번호를 확인해주세요');
     },
   });
@@ -162,9 +160,7 @@ const StyledLoginButton = styled(LoginButton)`
     left: -100%;
     width: 100%;
     height: 2px;
-
     background: linear-gradient(90deg, transparent, #013ef6);
-
     animation: ${btnAnim1} 1s linear infinite;
   }
   span:nth-child(2) {
@@ -172,9 +168,7 @@ const StyledLoginButton = styled(LoginButton)`
     right: 0;
     width: 2px;
     height: 100%;
-
     background: linear-gradient(180deg, transparent, #013ef6);
-
     animation: ${btnAnim2} 1s linear infinite;
     animation-delay: 0.25s;
   }
@@ -183,9 +177,7 @@ const StyledLoginButton = styled(LoginButton)`
     right: -100%;
     width: 100%;
     height: 2px;
-
     background: linear-gradient(270deg, transparent, #013ef6);
-
     animation: ${btnAnim3} 1s linear infinite;
     animation-delay: 0.5s;
   }
@@ -194,9 +186,7 @@ const StyledLoginButton = styled(LoginButton)`
     left: 0;
     width: 2px;
     height: 100%;
-
     background: linear-gradient(360deg, transparent, #013ef6);
-
     animation: ${btnAnim4} 1s linear infinite;
     animation-delay: 0.75s;
   }
