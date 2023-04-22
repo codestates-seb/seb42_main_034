@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nbutton from 'component/ui/NButton';
-import { notifi } from '../../utils/notifi';
+// import { notifi } from '../../utils/notifi';
 import styled from 'styled-components';
 import React from 'react';
 import { keyframes } from 'styled-components';
@@ -140,7 +140,7 @@ export const SignUpForm = () => {
       isPwCheck === false
     ) {
       Swal.fire('', '양식을 다시 확인해주세요');
-      notifi(dispatch, '회원가입 양식을 획인 해주세요.')
+      // notifi(dispatch, '회원가입 양식을 획인 해주세요.')
     } else {
       await AxiosCustom
         .post(`/members`, {
