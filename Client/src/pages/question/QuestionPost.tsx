@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Tags from '../../component/board/Tags';
 import axios from 'axios';
@@ -34,12 +34,12 @@ export default function QuestionPost() {
   const [content, setContent] = useState<string>('');
   const [tag, setTag] = useState<string[]>([]);
   const api = useAPI();
+  const { category } = useParams();
   const quillRef = useRef<ReactQuill>(null);
   const navigate = useNavigate();
   const { accessToken, memberId } = useAppSelector((state) => state.loginInfo);
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    console.log('ss');
   };
 
   const addTag = (newTag: string) => {

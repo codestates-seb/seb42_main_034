@@ -26,7 +26,13 @@ const initialData: answerReturn = {
   writer: '',
   createdAt: '',
 };
-export default function Answer({ questionId }: { questionId: number | string | undefined }) {
+export default function Answer({
+  questionId,
+  writerId,
+}: {
+  questionId: number | string | undefined;
+  writerId: number;
+}) {
   const [content, setComment] = useState<string>('');
 
   const { deleteAnswerData, getAnswerData } = useGetData(); // data.ts에서 정리할것
@@ -44,7 +50,6 @@ export default function Answer({ questionId }: { questionId: number | string | u
   const getAnswer = async () => {
     const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
     setAnswer(response.data.data);
-    console.log(response.data);
   };
   const deleteAnswer = (answerId: number | string) => {
     deleteAnswerData('questions', answerId)
@@ -56,18 +61,15 @@ export default function Answer({ questionId }: { questionId: number | string | u
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // postAnswerData(questionId, { content, memberId }).catch(console.log);
-    console.log(content);
 
     await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
     // dispatch(postAnswerData(response.data));
 
     // getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
   };
-  console.log(answer);
 
   useEffect(() => {
     getAnswer().catch(console.error);
-    console.log('dd');
   }, []); //
 
   return (
@@ -83,7 +85,13 @@ export default function Answer({ questionId }: { questionId: number | string | u
           <h3>답변내용 ( 답변 수 : {answer.length} )</h3>
           {answer &&
             answer.map((answer) => (
-              <AnswerList questionId={questionId} answer={answer} onAnswer={setAnswer} onDelete={deleteAnswer} />
+              <AnswerList
+                questionId={questionId}
+                answer={answer}
+                onAnswer={setAnswer}
+                onDelete={deleteAnswer}
+                writerId={writerId}
+              />
             ))}
           {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
         </>

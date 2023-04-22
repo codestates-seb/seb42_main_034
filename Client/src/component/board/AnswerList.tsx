@@ -1,23 +1,17 @@
-import { BoardData, useGetData } from 'api/data';
+import { useGetData } from 'api/data';
 
 import { Flex } from 'component/style/cssTemplete';
 import TextInput from 'component/ui/Input';
-import useAPI from 'hooks/uesAPI';
+import { AiOutlineHeart } from 'react-icons/ai';
+import { AiFillHeart } from 'react-icons/ai';
 
 import { MoveBtn } from 'pages/question/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
-import { AllAnswer, AnswerData, getAnswerData } from 'redux/answer/answerslice';
+import { AnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
+import { Button } from 'component/ui/Button';
 
-const initialData: answerReturn = {
-  questionId: 0,
-  content: '',
-  title: '',
-  tag: '',
-  writer: '',
-  createdAt: '',
-};
 export interface answerReturn {
   questionId: number | string;
   content: string;
@@ -33,20 +27,20 @@ export default function AnswerList({
   answer,
   onAnswer,
   onDelete,
+  writerId,
 }: {
   questionId?: number | string | undefined;
   blogId?: number | string | undefined;
   answer: AnswerData;
   onAnswer: React.Dispatch<React.SetStateAction<[] | AnswerData[]>>;
   onDelete: (answerId: number | string) => void;
+  writerId: number;
 }) {
-  const api = useAPI();
-  const dispatch = useAppDispatch();
-  const { deleteAnswerData, putAnswerData, getAnswerData } = useGetData();
+  const { putAnswerData, getAnswerData } = useGetData();
   const [isEdit, setIsEdit] = useState(false);
   const [content, setContent] = useState<string>('');
-  console.log(answer);
-
+  const { memberId } = useAppSelector((state) => state.loginInfo);
+  const [isLike, setIsLike] = useState(false);
   useEffect(() => {
     // onAnswer(answer);
   }, [answer]);
@@ -75,19 +69,31 @@ export default function AnswerList({
             ) : (
               <>
                 <div>{answer.content}</div>
-                <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />
-                <MoveBtn
-                  children="수정"
-                  onClick={() => {
-                    setIsEdit(!isEdit);
-                  }}
-                />
+                {answer.memberId === memberId && <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />}
+                {answer.memberId === memberId && (
+                  <MoveBtn
+                    children="수정"
+                    onClick={() => {
+                      setIsEdit(!isEdit);
+                    }}
+                  />
+                )}
               </>
             )}
-            <>{/* 같은 사람일때만 보이게 로직짜기 */}</>
+            {<MoveBtn children="채택하기" />}
           </Flex>
 
-          <AnswerContent>{answer.likeCnt}</AnswerContent>
+          <AnswerContent>
+            {answer.likeCnt}
+
+            <StyledBtn
+              onClick={() => {
+                setIsLike(!isLike);
+              }}
+            >
+              {isLike ? <AiFillHeart /> : <AiOutlineHeart />}
+            </StyledBtn>
+          </AnswerContent>
         </AnswerItem>
       </AnswerContainer>
     </AnswerWrapper>
@@ -109,4 +115,15 @@ const AnswerItem = styled.li`
 `;
 const AnswerContent = styled.div`
   margin-top: 10px;
+  display: flex;
+  gap: 0.1em;
+`;
+const StyledBtn = styled(Button)`
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: 200ms ease-in;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

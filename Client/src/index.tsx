@@ -73,7 +73,7 @@ const router = createBrowserRouter([
             element: <MyPage />,
           },
           {
-            path: '/board/questionspost',
+            path: '/board/questionspost/:category',
             element: <QuestionPost />,
           },
           {

@@ -1,10 +1,10 @@
 import { ReturnData } from 'api/data';
-import { StyledCategoryBtn } from 'pages/question/QuestionBoardList';
+
 import React from 'react';
 import styled from 'styled-components';
-import { Flex, HoverAction, Relative } from './style/cssTemplete';
-import { Colors, FontSize } from './style/variables';
-import { Button, IButtonProps } from './ui/Button';
+import { Flex } from './style/cssTemplete';
+import { FontSize } from './style/variables';
+import { Button } from './ui/Button';
 
 export default function Page({
   pages,
@@ -21,7 +21,6 @@ export default function Page({
   >;
 }) {
   const { page, totalElements, totalPages, size } = pages;
-  console.log(pages);
 
   const handleLeftPage = () => {
     if (page === 1) return;

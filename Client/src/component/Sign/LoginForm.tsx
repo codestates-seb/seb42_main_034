@@ -22,7 +22,6 @@ const Loginform = () => {
   const { postLogin } = useAuthAPI();
   const data1 = useAppSelector((state) => state.persistReducer.userInfo);
   const { getMemberInfo } = useMypageAPI();
-  console.log(data1);
 
   const { mutate, data: userData } = useMutation({
     mutationKey: ['loginInfo'],
@@ -32,8 +31,6 @@ const Loginform = () => {
         password: password,
       }),
     onSuccess: (res) => {
-      console.log(res);
-
       const {
         data,
         headers: { authorization },
@@ -48,7 +45,6 @@ const Loginform = () => {
       // }, 1000 * 60 * 29);
     },
     onError: (res) => {
-      console.log('login failed: ', res);
       alert('아이디 혹은 비밀번호를 확인해주세요');
     },
   });

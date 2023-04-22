@@ -57,13 +57,7 @@ export default function BlogPost() {
   // const removeTag = (index: number) => {
   //   setTag((tag) => [...tag.slice(0, index), ...tag.slice(index + 1)]);
   // };
-  console.log({
-    memberId,
-    title,
-    content,
-    tag: [],
-    category,
-  });
+
   const submitHandler = () => {
     if (title.trim() === '') {
       alert('제목을 입력하세요.');
@@ -101,7 +95,6 @@ export default function BlogPost() {
         navigate(-1);
       })
       .catch(function (error) {
-        console.log(error);
         //권한이 없습니다 띄우기
       });
   };

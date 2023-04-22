@@ -55,7 +55,7 @@ export default function QuestionDetails() {
       {data && detail && (
         <>
           <BoardDetail data={data} detail={detail} />
-          <Answer questionId={data.questionId} />
+          <Answer questionId={data.questionId} writerId={detail.memberId} />
         </>
       )}
     </>

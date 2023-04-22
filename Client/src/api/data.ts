@@ -108,8 +108,6 @@ export const useGetData = () => {
     await api.post(`/${section}/answer/${questionId}`, body).then((res) => res.data.data);
   const putAnswerData = async (section: string, id: number | string, content: string) =>
     await api.patch(`/${section}/answer/${id}`, { content }).then((res) => {
-      console.log(res);
-
       return res;
     });
 
@@ -150,8 +148,6 @@ export const useLike = (answerId: number) => {
   const api = useAPI();
   const seletedQuestion = async (answerId: number) => {
     await api.post(`questions/answer/select/${answerId}`).then((res) => {
-      console.log(res);
-
       return res;
     });
   };
