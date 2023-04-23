@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getFilterData, ReturnData } from 'api/data';
 import { Flex, HoverAction, Relative } from 'component/style/cssTemplete';
@@ -27,20 +27,19 @@ export default function QuestionBoardList() {
   // } = useQuery([filter, 'region'] as const, async () => await new CRUDdata().getData('project', filter), {
   //   staleTime: 1000 * 15,
   // }); //여기에 해당지역넣기
+
+  console.log(section);
+
   const handleClick = (section: string) => {
     setFilter(section);
     navigate(`/board/boardlist/${section}/${category}`);
+
     // localStorage.setItem('filter', JSON.stringify(data));
   };
 
-  // 블로그 버튼을 누르면 해당 블로그로 데이터 get 함 -> 필터를 바꿔야 useEffect로 다시 받아올수있음
-  /**구성요소 달라서 블로그랑 질문 나눌거임
-   * 그럼 어떻게 해야할까
-   * 질문 / 블로그 필터를 만듦
-   * 그에맞게 맞는 페이지로 넘김
-   */
-  console.log(category);
-
+  useEffect(() => {
+    //
+  }, [filter]);
   return (
     <Flex direction="column" width="100%" height="900px">
       <div>{category}</div>

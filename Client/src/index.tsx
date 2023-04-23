@@ -7,7 +7,7 @@ import QuestionDetails from './pages/question/QuestionDetails';
 import SignUp from './pages/user/SignUp';
 import Board from './pages/Board';
 import MyPage from './pages/MyPage';
-import QuestionPost from './pages/question/QuestionPost';
+
 import BlogPost from './pages/blog/BlogPost';
 import LandingPage from './pages/LandingPage/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
@@ -17,15 +17,14 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PersistGate } from 'redux-persist/integration/react';
-
 import NotificationCenter from 'component/ui/NotifiCationCenter';
-import BoardList from 'pages/question/QuestionBoardList';
 import { GlobalStyle } from 'component/style/globalStyle';
 import ModifyQuestion from 'pages/question/ModifyQuestion';
 import QuestionBoardList from 'pages/question/QuestionBoardList';
 import BlogBoardList from './pages/blog/BlogBoradList';
 import ModifyBlog from 'pages/blog/ModifyBlog';
 import ProfileEditPage from 'pages/user/ProfileEdit';
+import QuestionPost from 'pages/question/QuestionPost';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -79,7 +78,7 @@ const router = createBrowserRouter([
             path: '/board/mypage/edit',
             element: <ProfileEditPage />,
           },
-{
+          {
             path: '/board/questionspost/:category',
 
             element: <QuestionPost />,

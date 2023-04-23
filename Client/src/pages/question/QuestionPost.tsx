@@ -9,7 +9,7 @@ import { useAppSelector } from 'redux/hooks';
 import { MoveBtn, StyledCategoryBtn } from './QuestionBoardList';
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
-const PostWrapper = styled.div`
+const PostWrapper = styled.form`
   display: flex;
   align-items: center;
   height: 100vh;
@@ -49,6 +49,29 @@ export default function QuestionPost() {
   const removeTag = (index: number) => {
     setTag((tag) => [...tag.slice(0, index), ...tag.slice(index + 1)]);
   };
+  let section = '';
+  if (category === '서울') {
+    section = 'seoul';
+  } else if (category === '경상') {
+    section = 'kyungsang';
+  } else if (category === '강원') {
+    section = 'gangwon';
+  } else if (category === '충청') {
+    section = 'chungcheong';
+  } else if (category === '부산') {
+    section = 'busan';
+  } else if (category === '제주') {
+    section = 'jeju';
+  } else if (category === '인천') {
+    section = 'incheon';
+  } else if (category === '울산') {
+    section = 'ulsan';
+  } else if (category === '전라') {
+    section = 'Jeolla';
+  } else if (category === '경기') {
+    section = 'gyeonggi';
+  }
+  console.log(section);
 
   const submitHandler = () => {
     if (title.trim() === '') {
@@ -61,21 +84,13 @@ export default function QuestionPost() {
     }
 
     api
-      .post(
-        '/questions',
-        {
-          memberId,
-          title,
-          content,
-          tag,
-          category,
-        },
-        {
-          headers: {
-            Authorization: accessToken,
-          },
-        },
-      )
+      .post('/questions', {
+        memberId,
+        title,
+        content,
+        tag,
+        category: section,
+      })
       .then(function (response) {
         navigate(-1);
       })

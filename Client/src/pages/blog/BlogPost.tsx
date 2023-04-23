@@ -57,8 +57,30 @@ export default function BlogPost() {
   // const removeTag = (index: number) => {
   //   setTag((tag) => [...tag.slice(0, index), ...tag.slice(index + 1)]);
   // };
+  let section = '';
 
   const submitHandler = () => {
+    if (category === '서울') {
+      section = 'seoul';
+    } else if (category === '경상') {
+      section = 'kyungsang';
+    } else if (category === '강원') {
+      section = 'gangwon';
+    } else if (category === '충청') {
+      section = 'chungcheong';
+    } else if (category === '부산') {
+      section = 'busan';
+    } else if (category === '제주') {
+      section = 'jeju';
+    } else if (category === '인천') {
+      section = 'incheon';
+    } else if (category === '울산') {
+      section = 'ulsan';
+    } else if (category === '전라') {
+      section = 'Jeolla';
+    } else if (category === '경기') {
+      section = 'gyeonggi';
+    }
     if (title.trim() === '') {
       alert('제목을 입력하세요.');
       return;
@@ -82,7 +104,7 @@ export default function BlogPost() {
           title,
           content,
           tag: [],
-          category,
+          category: section,
           image: '',
         },
         // {

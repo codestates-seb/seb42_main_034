@@ -14,17 +14,20 @@ const useAPI = () => {
   const config = {
     baseURL: BASE_URL,
     withCredentials: true,
-    headers: { ContentType: 'application/json', Authorization: accessToken, Refresh: refresh },
+    headers: { ContentType: 'application/json', Authorization: accessToken },
   };
 
   const axiosWithAccessToken = axios.create(config);
 
   axiosWithAccessToken.interceptors.response.use(
     (seccess) => {
+      console.log(seccess);
+      //요청이 다 성공으로 가지고있음
       return seccess;
     },
     (err) => {
       if (err.response.data.message !== 'Token Expired') return;
+      console.log(err);
 
       dispatch(login({ accessToken, isLogin: true }));
     },

@@ -30,12 +30,12 @@ const Loginform = () => {
     onSuccess: (res) => {
       const {
         data,
-        headers: { authorization },
+        headers: { authorization, refresh },
       } = res;
-      dispatch(login({ ...data, accessToken: authorization, isLogin: true }));
+      dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));
       notifi(dispatch, `${data.nickname}님 환영합니다.`);
       navigate(-1);
-      console.log(res);
+      console.log(res.headers.refresh);
 
       // setTimeout(() => {
       //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));

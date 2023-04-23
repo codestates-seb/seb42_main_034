@@ -2,7 +2,7 @@ import Searchbar from 'component/board/Searchbar';
 import { Flex, Relative } from 'component/style/cssTemplete';
 import { Button } from 'component/ui/Button';
 import { DescriptionFont, MoveBtn, Section, section, StyledCategoryBtn } from 'pages/question/QuestionBoardList';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import BlogList from './BlogList.';
@@ -16,7 +16,10 @@ export default function BlogBoardList() {
 
     navigate(`/board/boardlist/${section}/${category}`);
   };
-
+  console.log(filter);
+  useEffect(() => {
+    //
+  }, [filter]);
   return (
     <Flex direction="column" width="100%" height="900px">
       <div>{category}</div>

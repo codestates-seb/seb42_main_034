@@ -19,34 +19,39 @@ export default function BlogList({ filter }: { filter: string }) {
     size: 15,
   });
 
-  let section;
-  if (category === '서울') {
-    section = 'seoul';
-  } else if (category === '경상') {
-    section = 'kyungsang';
-  } else if (category === '강원') {
-    section = 'gangwon';
-  } else if (category === '충청') {
-    section = 'chungcheong';
-  } else if (category === '부산') {
-    section = 'busan';
-  } else if (category === '제주') {
-    section = 'jeju';
-  } else if (category === '인천') {
-    section = 'incheon';
-  } else if (category === '울산') {
-    section = 'ulsan';
-  } else if (category === '전라') {
-    section = 'Jeolla';
-  } else if (category === '경기') {
-    section = 'gyeonggi';
-  }
+  let section = '';
+
+  console.log(filter);
+
   useEffect(() => {
+    if (category === '서울') {
+      section = 'seoul';
+    } else if (category === '경상') {
+      section = 'kyungsang';
+    } else if (category === '강원') {
+      section = 'gangwon';
+    } else if (category === '충청') {
+      section = 'chungcheong';
+    } else if (category === '부산') {
+      section = 'busan';
+    } else if (category === '제주') {
+      section = 'jeju';
+    } else if (category === '인천') {
+      section = 'incheon';
+    } else if (category === '울산') {
+      section = 'ulsan';
+    } else if (category === '전라') {
+      section = 'Jeolla';
+    } else if (category === '경기') {
+      section = 'gyeonggi';
+    }
+    console.log(section);
+
     const getData = async () => {
       const response: BlogReturnData = await api
         .get('blogs', {
           params: {
-            category: category,
+            category: section,
             page: pageNation.page,
             sortedBy: 'default',
           },
