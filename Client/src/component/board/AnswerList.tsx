@@ -1,4 +1,4 @@
-import { useGetData } from 'api/data';
+import { useGetData, useLike } from 'api/data';
 
 import { Flex } from 'component/style/cssTemplete';
 import TextInput from 'component/ui/Input';
@@ -28,6 +28,7 @@ export default function AnswerList({
   onAnswer,
   onDelete,
   writerId,
+  onLike,
 }: {
   questionId?: number | string | undefined;
   blogId?: number | string | undefined;
@@ -35,15 +36,18 @@ export default function AnswerList({
   onAnswer: React.Dispatch<React.SetStateAction<[] | AnswerData[]>>;
   onDelete: (answerId: number | string) => void;
   writerId: number;
+  onLike: (state: boolean, answerId: number) => void;
 }) {
   const { putAnswerData, getAnswerData } = useGetData();
   const [isEdit, setIsEdit] = useState(false);
   const [content, setContent] = useState<string>('');
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const [isLike, setIsLike] = useState(false);
+  const { setLike, seletedQuestion } = useLike();
   useEffect(() => {
     // onAnswer(answer);
-  }, [answer]);
+  }, [answer, isLike]);
+  console.log(answer);
 
   return (
     <AnswerWrapper>
@@ -80,7 +84,8 @@ export default function AnswerList({
                 )}
               </>
             )}
-            {<MoveBtn children="채택하기" />}
+            {/**로그인상태 해결하고 적용 */}
+            {answer.checked || <MoveBtn children="채택하기" onClick={() => seletedQuestion(answer.answerId)} />}
           </Flex>
 
           <AnswerContent>
@@ -89,6 +94,7 @@ export default function AnswerList({
             <StyledBtn
               onClick={() => {
                 setIsLike(!isLike);
+                onLike(isLike, answer.answerId);
               }}
             >
               {isLike ? <AiFillHeart /> : <AiOutlineHeart />}

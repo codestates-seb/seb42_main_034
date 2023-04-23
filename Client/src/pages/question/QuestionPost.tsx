@@ -68,7 +68,7 @@ export default function QuestionPost() {
           title,
           content,
           tag,
-          category: 'proj',
+          category,
         },
         {
           headers: {

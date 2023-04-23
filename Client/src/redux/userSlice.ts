@@ -6,6 +6,7 @@ interface InitProps {
   nickname?: string;
   username?: string;
   accessToken?: string;
+  refresh?: string;
   address?: string;
   email?: string;
 }

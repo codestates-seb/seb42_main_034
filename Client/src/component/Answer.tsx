@@ -1,4 +1,4 @@
-import { useGetData } from 'api/data';
+import { useGetData, useLike } from 'api/data';
 import { MoveBtn } from 'pages/question/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 
@@ -7,9 +7,10 @@ import styled from 'styled-components';
 import AnswerList from './board/AnswerList';
 import { Flex } from './style/cssTemplete';
 import TextInput from './ui/Input';
-import { AnswerData, getAnswerData, postAnswerData } from 'redux/answer/answerslice';
+import { AnswerData, getAnswerLike } from 'redux/answer/answerslice';
 import useAPI from 'hooks/uesAPI';
 import Page from './Page';
+
 export interface answerReturn {
   questionId: number | string;
   content: string;
@@ -38,9 +39,11 @@ export default function Answer({
   const { deleteAnswerData, getAnswerData } = useGetData(); // data.ts에서 정리할것
   const dispatch = useAppDispatch();
   const api = useAPI();
+  const { setLike, seletedQuestion } = useLike();
   const { memberId } = useAppSelector((state) => state.loginInfo);
-  const [answer, setAnswer] = useState<AnswerData[] | []>([]);
 
+  const [answer, setAnswer] = useState<AnswerData[] | []>([]);
+  const { putAnswerData } = useGetData();
   const [pageNation, setPageNation] = useState({
     page: 1,
     totalElements: 0,
@@ -65,9 +68,27 @@ export default function Answer({
     await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
     // dispatch(postAnswerData(response.data));
 
-    // getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
+    getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
   };
+  const handleLike = (isLike: boolean, answerId: number) => {
+    if (!isLike) {
+      //해당 answer만 바꾸기
+      setLike(answerId).then((res) => {
+        setAnswer(
+          answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt + 1 } : answer)),
+        );
+      });
+    } else {
+      setAnswer(
+        answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt - 1 } : answer)),
 
+        //좋아요상태 넣기
+      );
+    }
+  };
+  const setChecked = (answerId: number) => {
+    seletedQuestion(answerId);
+  };
   useEffect(() => {
     getAnswer().catch(console.error);
   }, []); //
@@ -86,11 +107,13 @@ export default function Answer({
           {answer &&
             answer.map((answer) => (
               <AnswerList
+                key={answer.answerId}
                 questionId={questionId}
                 answer={answer}
                 onAnswer={setAnswer}
                 onDelete={deleteAnswer}
                 writerId={writerId}
+                onLike={handleLike}
               />
             ))}
           {pageNation && <Page pages={pageNation} onPage={setPageNation} />}

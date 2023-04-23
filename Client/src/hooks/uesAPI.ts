@@ -9,12 +9,12 @@ axios.defaults.withCredentials = true;
 const useAPI = () => {
   const dispatch = useDispatch();
   // const { postLogin } = useAuthAPI();
-  const { accessToken } = useAppSelector((state) => state.loginInfo);
+  const { accessToken, refresh } = useAppSelector((state) => state.loginInfo);
 
   const config = {
     baseURL: BASE_URL,
     withCredentials: true,
-    headers: { ContentType: 'application/json', Authorization: accessToken },
+    headers: { ContentType: 'application/json', Authorization: accessToken, Refresh: refresh },
   };
 
   const axiosWithAccessToken = axios.create(config);

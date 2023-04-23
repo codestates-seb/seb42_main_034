@@ -144,11 +144,15 @@ export function getFilterData() {
     return JSON.parse(isFiltered);
   }
 }
-export const useLike = (answerId: number) => {
+export const useLike = () => {
   const api = useAPI();
   const seletedQuestion = async (answerId: number) => {
     await api.post(`questions/answer/select/${answerId}`).then((res) => {
       return res;
     });
   };
+  const setLike = async (answerId: number) => {
+    await api.post(`questions/answer/like/${answerId}`);
+  };
+  return { setLike, seletedQuestion };
 };
