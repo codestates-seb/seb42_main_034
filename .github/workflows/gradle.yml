@@ -37,6 +37,7 @@ jobs:
         jwt.key: ${{ secrets.JWT_KEY }}
         naver.map.client.id: ${{ secrets.NAVER_CLIENT_ID }}
         naver.map.client.secret: ${{ secrets.NAVER_CLIENT_SECRET }}
+        config.domain: ${{ secrets.S3_ENDPOINT }}
         
     - name: Add permission
       run: chmod +x gradlew
