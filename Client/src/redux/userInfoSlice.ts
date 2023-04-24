@@ -12,7 +12,7 @@ interface InitProps {
   avatarUrl: string;
 }
 
-const initialState: InitProps = {
+export const initialState: InitProps = {
   memberId: 0,
   nickname: '',
   location: {
@@ -33,8 +33,9 @@ const userInfoSlice = createSlice({
       const { key } = action.payload;
       state[key] = action.payload.value;
     },
+    deleteUserInfo: () => initialState,
   },
 });
 
-export const { setUserInfo, updateUserInfo } = userInfoSlice.actions;
+export const { setUserInfo, updateUserInfo, deleteUserInfo } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

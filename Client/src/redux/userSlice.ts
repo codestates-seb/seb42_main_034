@@ -13,6 +13,13 @@ interface InitProps {
 
 const initialState: InitProps = {
   isLogin: false,
+  memberId: '',
+  nickname: '',
+  username: '',
+  accessToken: '',
+  refresh: '',
+  address: '',
+  email: '',
 };
 
 const loginInfoSlice = createSlice({

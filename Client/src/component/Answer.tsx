@@ -68,15 +68,18 @@ export default function Answer({
     await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
     // dispatch(postAnswerData(response.data));
 
-    getAnswer().catch(console.error); //이게 최선은 아닐텐데...ㅎㅎ 리팩토링 필수
+    getAnswer().catch(console.error);
   };
-  const handleLike = (isLike: boolean, answerId: number) => {
+  const handleLike = (isLike: boolean, answerId: number, setState: (value: React.SetStateAction<boolean>) => void) => {
     if (!isLike) {
       //해당 answer만 바꾸기
       setLike(answerId).then((res) => {
         setAnswer(
           answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt + 1 } : answer)),
         );
+        //성공했을때 상태바꿈
+        setState(!isLike);
+        console.log('tjdrhd');
       });
     } else {
       setAnswer(
@@ -84,6 +87,8 @@ export default function Answer({
 
         //좋아요상태 넣기
       );
+      //성공했을때 상태바꿈
+      setState(!isLike);
     }
   };
   const setChecked = (answerId: number) => {
@@ -114,6 +119,7 @@ export default function Answer({
                 onDelete={deleteAnswer}
                 writerId={writerId}
                 onLike={handleLike}
+                getAnswer={getAnswer}
               />
             ))}
           {pageNation && <Page pages={pageNation} onPage={setPageNation} />}

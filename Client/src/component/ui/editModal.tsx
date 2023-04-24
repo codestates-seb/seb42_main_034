@@ -34,10 +34,9 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
         const address = response.results[4].formatted_address;
         const location = { latitude, longitude };
         setAd(address.slice(5));
-        api.post('/location', { latitude, longitude });
-        api.post('/location', location);
-        console.log(address);
-        console.log(location);
+        api.post(`/location?latitude=${latitude}&longitude=${longitude}`);
+        console.log(latitude, longitude);
+
         //body: JSON.stringify({ latitude: latitude, longitude: longitude, address: ad })
       },
       (error) => {
@@ -46,8 +45,6 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
       },
     );
   };
-
-  api.post(`/location`, { latitude, longitude });
 
   // fetch('/location', {
   //   method: 'POST',

@@ -9,6 +9,8 @@ import { FontSize } from 'component/style/variables';
 import { useAuthAPI } from 'api/auth';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
+import { setUserInfo } from 'redux/userInfoReducer';
+import { deleteUserInfo, initialState } from 'redux/userInfoSlice';
 const MenuTabBtn = styled(Button)`
   border: none;
   background: none;
@@ -35,6 +37,7 @@ export default function UserTab() {
     if (!confirm) return;
     mutateLogout();
     dispatch(logout());
+    dispatch(deleteUserInfo());
   };
 
   return (

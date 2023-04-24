@@ -169,7 +169,15 @@ export const useLike = () => {
     });
   };
   const setLike = async (answerId: number) => {
-    await api.post(`questions/answer/like/${answerId}`);
+    await api
+      .post(`questions/answer/like/${answerId}`)
+      .then((res) => {
+        console.log('성공ㅇㅇ');
+        console.log(res.config);
+      })
+      .catch((error) => {
+        throw new Error('실패');
+      });
   };
   const blogLikes = async (data: BlogDataQuery) => {
     const { blogId, isLike } = data;

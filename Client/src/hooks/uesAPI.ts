@@ -28,6 +28,7 @@ const useAPI = () => {
     (err) => {
       if (err.response.data.message !== 'Token Expired') return;
       console.log(err);
+      console.log('실패');
 
       dispatch(login({ accessToken, isLogin: true }));
     },
