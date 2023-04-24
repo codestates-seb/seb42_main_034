@@ -26,6 +26,16 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
+    - name: Generate Environment Variables File for Production
+      run: |
+         echo "REACT_APP_HOST=$REACT_APP_HOST" >> .env
+         echo "REACT_APP_KAKAO_MAP_KEY=$REACT_APP_KAKAO_MAP_KEY" >> .env
+         echo "REACT_APP_GEOCODER_KEY=$REACT_APP_GEOCODER_KEY" >> .env
+      env:
+        REACT_APP_HOST: ${{ secrets.REACT_APP_HOST }}
+        REACT_APP_KAKAO_MAP_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_KEY }}
+        REACT_APP_GEOCODER_KEY: ${{ secrets.REACT_APP_GEOCODER_KEY }}
+        
     - name: Set yml file 
       uses: microsoft/variable-substitution@v1
       with:
@@ -37,7 +47,6 @@ jobs:
         jwt.key: ${{ secrets.JWT_KEY }}
         naver.map.client.id: ${{ secrets.NAVER_CLIENT_ID }}
         naver.map.client.secret: ${{ secrets.NAVER_CLIENT_SECRET }}
-        config.domain: ${{ secrets.S3_ENDPOINT }}
         
     - name: Add permission
       run: chmod +x gradlew
