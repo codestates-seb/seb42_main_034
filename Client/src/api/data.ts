@@ -4,6 +4,7 @@ import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from 'axios';
 import { axiosInstance } from './instance';
 import useAPI from 'hooks/uesAPI';
 import { SetStateAction } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 axios.defaults.withCredentials = true;
 interface QuestionList {
@@ -27,14 +28,25 @@ export interface BoardData {
   createdAt: string;
   modifiedAt: string;
   questionId?: string | number | undefined;
-  blogId?: string | number | undefined;
+  blogId?: string | number;
   tags: string | null;
   title: string;
   viewCnt: number;
   writer: string;
   content: string;
+  likeCnt: string;
 }
-
+export interface BlogBoarData {
+  createdAt: string;
+  modifiedAt: string;
+  blogId: number;
+  tags: string | null;
+  title: string;
+  viewCnt: number;
+  writer: string;
+  content: string;
+  likeCnt: string;
+}
 interface Argument {
   region: string;
   page?: number;
@@ -60,11 +72,16 @@ export class CRUDdata {
 }
 interface PatchBody {
   title: string;
-  tag: string | null;
+  tags?: string[] | undefined;
+  tag?: string[] | undefined;
   content: string;
-  image: null | string;
+  image?: null | string;
 }
-
+//블로그 좋아요 쿼리 타입
+export interface BlogDataQuery {
+  blogId: number | string | undefined;
+  isLike: boolean;
+}
 //중복사용되는 api는 훅으로 사용
 export const useGetData = () => {
   const api = useAPI();
@@ -154,5 +171,57 @@ export const useLike = () => {
   const setLike = async (answerId: number) => {
     await api.post(`questions/answer/like/${answerId}`);
   };
-  return { setLike, seletedQuestion };
+  const blogLikes = async (data: BlogDataQuery) => {
+    const { blogId, isLike } = data;
+
+    if (isLike) {
+      await api.post(`/blog/unlike/${blogId}`);
+    } else {
+      await api.post(`/blog/like/${blogId}`);
+    }
+  };
+  const blogUnLikes = async (blogId: number | string | undefined) => {
+    await api.post(`/blogs/unlike/${blogId}`);
+  };
+  return { setLike, seletedQuestion, blogLikes, blogUnLikes };
+};
+export const useSearch = () => {
+  const api = useAPI();
+  const searchTag = async (text: string, section: string, page: number) => {
+    await api.get(`/tags/${section}?tagName=${text}&page=${page}`);
+  };
+
+  return { searchTag };
+};
+export const queryKeys = {
+  data: ['region'] as const,
+  getData: (todoId: string) => ['todos', todoId] as const,
+};
+export default function useAddTodoMutation() {
+  const { blogLikes, blogUnLikes } = useLike();
+  const queryClient = useQueryClient();
+  return useMutation(blogLikes, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.data); // mutation을 성공하면 todo list를 불러오는 useQuery를 무효화 시킨다.
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+}
+
+//대댓글
+export const useReply = () => {
+  const api = useAPI();
+
+  const createReply = async (answerId: number, section: string, content: string) => {
+    await api.post(`${section}/answer/comments/${answerId}`, { content });
+  };
+  const patchReply = async (commentId: number, section: string, content: string) => {
+    await api.patch(`${section}/answer/comments/${commentId}`, { content });
+  };
+  const deleteReply = async (commentId: number, section: string) => {
+    await api.delete(`${section}/answer/comments/${commentId}`);
+  };
+  return { createReply, patchReply, deleteReply };
 };

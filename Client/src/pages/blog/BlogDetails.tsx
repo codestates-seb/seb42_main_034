@@ -46,7 +46,7 @@ export default function BlogDetails() {
       {isLoading && <div>로딩중..</div>}
       {data && detail && (
         <>
-          <BoardDetail data={data} detail={detail} />
+          <BoardDetail section="blogs" data={data} detail={detail} />
           <BlogAnswer blogId={data.blogId} />
         </>
       )}

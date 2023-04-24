@@ -33,6 +33,7 @@ const Input = styled.input`
 export default function BlogPost() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [tags, setTag] = useState<string[]>([]);
   const { category } = useParams();
   const api = useAPI();
   const quillRef = useRef<ReactQuill>(null);
@@ -89,30 +90,16 @@ export default function BlogPost() {
       alert('내용을 입력하세요.');
       return;
     }
-    console.log({
-      memberId,
-      title,
-      content,
-      tag: [],
-      category,
-    });
+
     api
-      .post(
-        '/blogs',
-        {
-          memberId,
-          title,
-          content,
-          tag: [],
-          category: section,
-          image: '',
-        },
-        // {
-        //   headers: {
-        //     Authorization: accessToken,
-        //   },
-        // },
-      )
+      .post('/blogs', {
+        memberId,
+        title,
+        content,
+        tags,
+        category: section,
+        image: '',
+      })
       .then(function (response) {
         navigate(-1);
       })
@@ -120,7 +107,12 @@ export default function BlogPost() {
         //권한이 없습니다 띄우기
       });
   };
+  const handleEnter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    const inputArray = inputValue.split(',').map((item) => item.trim());
 
+    setTag(inputArray);
+  };
   return (
     <>
       <PostWrapper>
@@ -132,7 +124,7 @@ export default function BlogPost() {
           htmlContent={content}
           setHtmlContent={setContent}
         />
-        {/* <Tags tag={tag} addTag={addTag} removeTag={removeTag} /> */}
+        <input value={tags} onChange={handleEnter} placeholder="태그(중복선택시 쉼표(,)로 나눠주세요)" />
         {/* <TextInput type="category" setState={setTag} /> */}
         <MoveBtn onClick={submitHandler}>작성</MoveBtn>
         <Outlet />

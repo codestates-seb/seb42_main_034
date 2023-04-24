@@ -20,18 +20,27 @@ export default function ModifyQuestion() {
 
   const [title, setTitle] = useState<string>(data.detail.title || '');
   const [content, setContent] = useState<string>(data.detail.content || '');
-  const [tag, setTags] = useState<string>('');
+  const [tags, setTags] = useState<string[]>(data.detail.tags || []);
+  const [tag, setTag] = useState<string>('');
   const handlePatch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await putBoardData('questions', data.data.questionId, { title, content, tag, image: null });
+    await putBoardData('questions', data.data.questionId, { title, content, tags, image: null });
     navigate(-1);
   };
+  console.log(tags);
+  const handleEnter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    const inputArray = inputValue.split(',').map((item) => item.trim());
+    console.log(inputValue.split(','));
 
+    setTags(inputArray);
+  };
   return (
     <div>
       <TextInput type="patchInput" setState={setTitle} value={title} placeholder="제목" />
       <QuillEditor width="100%" height="100%" quillRef={quillRef} htmlContent={content} setHtmlContent={setContent} />
-      <TextInput type="patchTag" setState={setTags} value={tag} placeholder="태그" />
+      <input value={tags} placeholder="태그(중복선택시 쉼표(,)로 나눠주세요)" onChange={handleEnter} />
+      <div>중복선택시 쉼표(,)로 나눠주세요</div>
       <form onSubmit={handlePatch}>
         <MoveBtn children="수정" />
       </form>

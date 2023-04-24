@@ -11,6 +11,7 @@ import { AnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
+import Comment from 'component/Comment';
 
 export interface answerReturn {
   questionId: number | string;
@@ -75,19 +76,22 @@ export default function AnswerList({
                 <div>{answer.content}</div>
                 {answer.memberId === memberId && <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />}
                 {answer.memberId === memberId && (
-                  <MoveBtn
-                    children="수정"
-                    onClick={() => {
-                      setIsEdit(!isEdit);
-                    }}
-                  />
+                  <>
+                    <MoveBtn
+                      children="수정"
+                      onClick={() => {
+                        setIsEdit(!isEdit);
+                      }}
+                    />
+                    <MoveBtn children="댓글달기" />
+                  </>
                 )}
               </>
             )}
             {/**로그인상태 해결하고 적용 */}
             {answer.checked || <MoveBtn children="채택하기" onClick={() => seletedQuestion(answer.answerId)} />}
           </Flex>
-
+          <Comment />
           <AnswerContent>
             {answer.likeCnt}
 
@@ -101,6 +105,7 @@ export default function AnswerList({
             </StyledBtn>
           </AnswerContent>
         </AnswerItem>
+        <div>{answer.comments}</div>
       </AnswerContainer>
     </AnswerWrapper>
   );

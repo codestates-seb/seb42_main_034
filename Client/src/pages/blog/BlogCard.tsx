@@ -15,7 +15,7 @@ export default function BlogCard({ city }: { city: BlogData }) {
 
   return (
     <Card onClick={handleClick}>
-      <div>{city.tags}</div>
+      <div>{city && city.tags.map((tag, idx) => <div key={idx}>#{tag}</div>)}</div>
       <div className="title">{city.title}</div>
 
       <Flex gap="2rem" direction="column">

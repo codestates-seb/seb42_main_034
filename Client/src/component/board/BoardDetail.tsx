@@ -1,11 +1,36 @@
-import { useQuery } from '@tanstack/react-query';
-import { BoardData, useGetData } from 'api/data';
+import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { BoardData, queryKeys, useGetData, useLike } from 'api/data';
 import { Colors, FontSize } from 'component/style/variables';
 import useAPI from 'hooks/uesAPI';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { AiOutlineDislike } from 'react-icons/ai';
+import { AiOutlineLike } from 'react-icons/ai';
+import { Button } from 'component/ui/Button';
+import { Flex, HoverAction } from 'component/style/cssTemplete';
+export default function BoardDetail({
+  section,
+  data,
+  detail,
+}: {
+  section?: string;
+  data: BoardData;
+  detail: BoardData;
+}) {
+  const { blogLikes } = useLike();
+  const queryClient = useQueryClient();
+  const [isLike, setIsLike] = useState(false);
+  const { mutate } = useMutation(blogLikes, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKeys.data);
+    },
+  });
 
-export default function BoardDetail({ data, detail }: { data: BoardData; detail: BoardData }) {
+  const handleLikes = () => {
+    mutate({ blogId: data.blogId, isLike });
+    setIsLike(!isLike);
+  };
+
   return (
     <>
       <ListWrapper>
@@ -17,6 +42,17 @@ export default function BoardDetail({ data, detail }: { data: BoardData; detail:
         </Item>
 
         <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
+        {section === 'blogs' && (
+          <Flex>
+            {detail.likeCnt}
+            <LikeButton onClick={handleLikes}>
+              <AiOutlineLike />
+            </LikeButton>
+            <UnLikeButton onClick={handleLikes}>
+              <AiOutlineDislike />
+            </UnLikeButton>
+          </Flex>
+        )}
       </ListWrapper>
     </>
   );
@@ -64,4 +100,29 @@ const Title = styled.div`
   white-space: nowrap;
   text-align: center;
   text-decoration: none;
+`;
+const LikeButton = styled(Button)`
+  border: none;
+  background: none;
+  ${HoverAction}
+  span {
+    display: block;
+  }
+  span > svg {
+    width: 1rem;
+    height: 2rem;
+  }
+`;
+const UnLikeButton = styled(Button)`
+  border: none;
+  background: none;
+  width: 3em;
+  ${HoverAction}
+  span {
+    display: block;
+  }
+  span > svg {
+    width: 1rem;
+    height: 2rem;
+  }
 `;

@@ -32,7 +32,7 @@ export default function Tags({ tag, addTag, removeTag }: TagInputProps) {
         window.confirm('태그는 2개까지 작성할 수 있습니다.');
         return;
       }
-      addTag(`#${value}`);
+      addTag(value);
       setInputValue('');
     }
   };

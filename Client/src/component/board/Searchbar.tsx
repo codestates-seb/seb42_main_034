@@ -1,4 +1,4 @@
-import { useGetData } from 'api/data';
+import { useGetData, useSearch } from 'api/data';
 import { Relative } from 'component/style/cssTemplete';
 import { Colors } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
@@ -28,6 +28,7 @@ export default function Searchbar({
 }) {
   const [searchData, setSearchData] = useState('');
   const { getData } = useGetData();
+  const { searchTag } = useSearch();
   const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchData(e.target.value);
   };
@@ -35,9 +36,10 @@ export default function Searchbar({
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //페이지함수 넣어야하는지 말아야하는지 모르겠음
-    getData(searchData, section, page.page)
+    searchTag(searchData, section.slice(0, -1), page.page)
       .then((res) => {
-        onCity(res.data.data);
+        // onCity(res.data.data);
+        console.log(res);
       })
       .catch(console.error);
   };

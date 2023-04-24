@@ -1,12 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Tags from '../../component/board/Tags';
-import axios from 'axios';
 
 import useAPI from '../../hooks/uesAPI';
 import { useAppSelector } from 'redux/hooks';
-import { MoveBtn, StyledCategoryBtn } from './QuestionBoardList';
+import { MoveBtn } from './QuestionBoardList';
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
 const PostWrapper = styled.form`
@@ -32,7 +30,7 @@ const Input = styled.input`
 export default function QuestionPost() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [tag, setTag] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const api = useAPI();
   const { category } = useParams();
   const quillRef = useRef<ReactQuill>(null);
@@ -42,13 +40,8 @@ export default function QuestionPost() {
     setTitle(e.target.value);
   };
 
-  const addTag = (newTag: string) => {
-    setTag((tag) => [...tag, newTag]);
-  };
+  console.log(tags);
 
-  const removeTag = (index: number) => {
-    setTag((tag) => [...tag.slice(0, index), ...tag.slice(index + 1)]);
-  };
   let section = '';
   if (category === '서울') {
     section = 'seoul';
@@ -73,7 +66,8 @@ export default function QuestionPost() {
   }
   console.log(section);
 
-  const submitHandler = () => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (title.trim() === '') {
       alert('제목을 입력하세요.');
       return;
@@ -88,21 +82,28 @@ export default function QuestionPost() {
         memberId,
         title,
         content,
-        tag,
+        tags,
         category: section,
       })
       .then(function (response) {
         navigate(-1);
+        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
         //권한이 없습니다 띄우기
       });
   };
+  console.log(tags);
+  const handleEnter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    const inputArray = inputValue.split(',').map((item) => item.trim());
 
+    setTags(inputArray);
+  };
   return (
     <>
-      <PostWrapper>
+      <PostWrapper onSubmit={submitHandler}>
         <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
         <ResizeEditor
           width="100%"
@@ -111,8 +112,8 @@ export default function QuestionPost() {
           htmlContent={content}
           setHtmlContent={setContent}
         />
-        <Tags tag={tag} addTag={addTag} removeTag={removeTag} />
-        <MoveBtn onClick={submitHandler}>작성</MoveBtn>
+        <input value={tags} onChange={handleEnter} placeholder="태그(중복선택시 쉼표(,)로 나눠주세요)" />
+        <MoveBtn>작성</MoveBtn>
         <Outlet />
       </PostWrapper>
     </>

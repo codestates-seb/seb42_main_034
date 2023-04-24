@@ -12,7 +12,7 @@ export default function QuestionCard({ city }: { city: ListData }) {
   };
   return (
     <Card onClick={handleClick}>
-      <div>#{city.tags || '여행'}</div>
+      <MaxWidthTag>{(city && city.tags.map((tag, idx) => <div key={idx}>#{tag}</div>)) || '여행'}</MaxWidthTag>
       <div className="title">{city.title}</div>
 
       <Flex gap="1em" direction="column" className="sidecontent">
@@ -39,6 +39,7 @@ const Card = styled.li`
   .title {
     font-weight: bold;
     font-size: ${FontSize.lg};
+
     @media (max-width: 760px) {
       font-size: ${FontSize.md};
     }
@@ -48,5 +49,12 @@ const Card = styled.li`
     @media (max-width: 760px) {
       font-size: ${FontSize.sm};
     }
+  }
+`;
+const MaxWidthTag = styled.div`
+  max-width: 12%;
+  min-width: 12%;
+  div {
+    font-size: ${FontSize.md};
   }
 `;
