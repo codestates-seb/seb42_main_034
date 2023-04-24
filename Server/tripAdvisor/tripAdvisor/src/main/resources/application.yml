@@ -18,6 +18,8 @@ server:
   servlet:
     encoding:
       force-response: true
+config:
+  domain: ${s3.endpoint}
 
 logging:
   level:
