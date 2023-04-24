@@ -12,6 +12,7 @@ permissions:
 env:
   S3_BUCKET_NAME: jungyeon222
   RESOURCE_PATH: ./Server/tripAdvisor/tripAdvisor/src/main/resources/application.yml
+  RESOURCE_PATH1: ./Client
 
 jobs:
   build:
@@ -31,6 +32,7 @@ jobs:
          echo "REACT_APP_HOST=$REACT_APP_HOST" >> .env
          echo "REACT_APP_KAKAO_MAP_KEY=$REACT_APP_KAKAO_MAP_KEY" >> .env
          echo "REACT_APP_GEOCODER_KEY=$REACT_APP_GEOCODER_KEY" >> .env
+      working-directory: ${{ env.RESOURCE_PATH1 }}
       env:
         REACT_APP_HOST: ${{ secrets.REACT_APP_HOST }}
         REACT_APP_KAKAO_MAP_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_KEY }}
