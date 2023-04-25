@@ -27,12 +27,12 @@ function ProfileEditPage() {
 
     //유저이미지
     const {address, avatarUrl} = userInfo;
-    const [nickname, setNickname] = useState(userInfo.name);
+    const [nickName, setNickname] = useState(userInfo.name);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const {mutate} = useFixInfo({
-        nickname,
+        nickName,
         location,
         address: address,
         avatarUrl,
@@ -44,7 +44,7 @@ function ProfileEditPage() {
     }
 
     const handleBlurNickname = () => {
-        dispatch(updateUserInfo({ key: 'nickname', value: nickname }));
+        dispatch(updateUserInfo({ key: 'nickName', value: nickName }));
       }
 
     useEffect(() => {
@@ -69,7 +69,7 @@ function ProfileEditPage() {
                             placeholder="수정할 닉네임을 작성하세요(15자이하)"
                             disabled={false}
                             type="nickname"
-                            value={nickname}
+                            value={nickName}
                             onChange={handleChangeNickname}
                             onBlur={handleBlurNickname}
                             maxLength={15}
@@ -104,6 +104,7 @@ function ProfileEditPage() {
                             if(!isconfirm) return;
                             mutate();
                             navigate('/board/mypage')
+                            console.log(useFixInfo)
                         }}
                         className="Button"
                         

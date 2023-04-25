@@ -11,7 +11,7 @@ import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
 import { useState } from 'react';
 import PostList from 'component/mypage/getPostlist';
-import AnswerList from 'component/mypage/getAnswer';
+import BlogsList from 'component/mypage/getBlogslist';
 
 
 export default function MyPage() {
@@ -54,7 +54,7 @@ export default function MyPage() {
         </>;
       case 1:
         return <>
-          <AnswerList />
+          <BlogsList />
         </>;
       case 2:
         return <div>작성한 댓글을 찾을 수  없습니다.</div>;
@@ -83,7 +83,7 @@ export default function MyPage() {
         </p>
         <div className='editprofile'>
           <p className='editbtn' onClick={linkEditPage}>
-            수정하기
+            프로필 수정하기 및 도시인증 하기
           </p>
           <FiEdit className='editbtnImg' onClick={linkEditPage}/>
         </div>
@@ -142,6 +142,7 @@ const ProfileContainer = styled.div`
     right: 0;
     padding-left: 10px;
     cursor: pointer;
+    padding-top: 20px;
   }
 `
 const UserInfoContainer = styled.div`

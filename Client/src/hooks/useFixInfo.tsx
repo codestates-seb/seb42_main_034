@@ -5,7 +5,7 @@ import { notifi } from "utils/notifi";
 
 
 interface FixmemberInfo {
-    nickname: string;
+    nickName: string;
     location: {
         latitude: string | number;
         longitude: string | number;

@@ -14,7 +14,7 @@ interface Post {
 }
 
 
-const AnswerList = () => {
+const BlogsList = () => {
   const { id } = useAppSelector((state) => state.loginInfo);
   const { getMyInfo } = useMypageAPI();
   const { data } = useQuery({
@@ -54,7 +54,7 @@ console.log(post)
     <MainContainer>
       {post.map((p) => (
       <Divide key={p.id}>
-        <p>{p.title}</p>
+        <p>{p.title ?? '작성한 블로그 글이 없습니다'}</p>
       </Divide>
     ))}
    {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
@@ -81,4 +81,4 @@ const Divide = styled.div`
   justify-content: center;
 `
 
-export default AnswerList;
+export default BlogsList;

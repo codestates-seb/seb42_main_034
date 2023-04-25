@@ -8,7 +8,7 @@ import { useAppDispatch } from '../redux/hooks';
 interface Member {
   [key: string]: any;
   memberId: number;
-  nickname: string;
+  nickName: string;
   username: string;
   location: {
     latitude: string;
@@ -22,7 +22,7 @@ interface Member {
 }
 
 interface FixmemberInfo {
-  nickname: string;
+  nickName: string;
   location: {
     latitude: string|number;
     longitude: string|number;
@@ -53,20 +53,9 @@ export const useMypageAPI = () => {
       });
 
       const patchFixMemberInfo = (data: FixmemberInfo) =>
-      api.patch(`/members/edit`, data)
+      api.patch(`/members`, data)
 
-      // const getPostList = (
-      //   id: string|undefined,
-      //   index?: string|undefined,
-      // ) => {
-      //   if(index) {
-      //     return api
-      //       .get(`members/${id}/questionTitle`, {params: {index} })
-      //       .then(res => res.data);
-      //   } else {
-      //     return api.get(`/members/${id}/questionTitle`).then(res => res.data);
-      //   }
-      // }
+
       const getPostList = async () => {
         await api.get(`members/questionTitle`).then(res=>res.data)
       }
