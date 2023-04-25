@@ -5,7 +5,6 @@ import Nbutton from 'component/ui/NButton';
 import styled from 'styled-components';
 import React from 'react';
 import { keyframes } from 'styled-components';
-// import CurrentPosition from './CurrentPosition';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import useAPI from 'hooks/uesAPI';
@@ -212,7 +211,6 @@ export const SignUpForm = () => {
           </PWContainer>
 
 
-        {/* <CurrentPosition /> */}
       </FormWrapper>
       <SubmitButton id="join" type="submit">
         <span></span>
