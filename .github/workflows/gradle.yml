@@ -12,11 +12,45 @@ permissions:
 env:
   S3_BUCKET_NAME: jungyeon222
   RESOURCE_PATH: ./Server/tripAdvisor/tripAdvisor/src/main/resources/application.yml
-  RESOURCE_PATH1: ./Client
+ 
 
 jobs:
-  build:
-
+  build1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+        
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./Client
+        
+      - name: Build
+        run: npm run build
+        working-directory: ./Client
+        env:
+          REACT_APP_HOST: ${{ secrets.REACT_APP_HOST }}
+          REACT_APP_KAKAO_MAP_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_KEY }}
+          REACT_APP_GEOCODER_KEY: ${{ secrets.REACT_APP_GEOCODER_KEY }}
+          
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }} # 등록한 Github Secret이 자동으로 불려옵니다.
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # 등록한 Github Secret이 자동으로 불려옵니다.
+          aws-region: ap-northeast-2
+      
+      - name: Upload to S3
+        run: |
+          aws s3 sync \
+            --region ap-northeast-2 \
+            build s3://jungyeon222 \
+            --delete
+        working-directory: ./Client
+  #----------------------------------------------------------------------------------------
+  
+  build2:
+    needs: build1
     runs-on: ubuntu-latest
 
     steps:
@@ -27,12 +61,12 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
-    - name: Generate Environment Variables File for Production
-      run: |
-         echo "REACT_APP_HOST=${{ secrets.REACT_APP_HOST }}" >> .env
-         echo "REACT_APP_KAKAO_MAP_KEY=${{ secrets.REACT_APP_KAKAO_MAP_KEY }}" >> .env
-         echo "REACT_APP_GEOCODER_KEY=${{ secrets.REACT_APP_GEOCODER_KEY }}" >> .env
-         cat .env
+#     - name: Generate Environment Variables File for Production
+#       run: |
+#          echo "REACT_APP_HOST=${{ secrets.REACT_APP_HOST }}" >> .env
+#          echo "REACT_APP_KAKAO_MAP_KEY=${{ secrets.REACT_APP_KAKAO_MAP_KEY }}" >> .env
+#          echo "REACT_APP_GEOCODER_KEY=${{ secrets.REACT_APP_GEOCODER_KEY }}" >> .env
+#          cat .env
         
     - name: Set yml file 
       uses: microsoft/variable-substitution@v1
