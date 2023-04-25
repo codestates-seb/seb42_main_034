@@ -27,7 +27,7 @@ logging:
         jpa: DEBUG
 jwt:
   key: ${jwt.key}
-  access-token-expiration-minutes: 30 #30분.
+  access-token-expiration-minutes: 420
   refresh-token-expiration-minutes: 420 # 420분
 
 mail:
