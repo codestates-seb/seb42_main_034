@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { useAppDispatch } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
 import useAPI from 'hooks/uesAPI';
-import axios from 'axios';
 
 interface ModalDefaultType {
   onClickToggleModal: () => void;
@@ -35,42 +34,21 @@ function Modal({
 
   const getAddressFromLatLng = () => {
     Geocode.fromLatLng(latitude, longitude).then(
-      response => {
+      (response) => {
         const address = response.results[4].formatted_address;
-        const location = {latitude, longitude};
-        setAd(address.slice(5))
-        api.post('/location', {latitude, longitude});
-        api.post('/location', location)
-        console.log(address)
-        console.log(location)
-        //body: JSON.stringify({ latitude: latitude, longitude: longitude, address: ad })
+        const location = { latitude, longitude };
+        setAd(address.slice(5));
+        api.post(`/location?latitude=${latitude}&longitude=${longitude}`);
+ 
       },
-      error => {
-        console.log(error)
-        alert('위치 정보를 불러올 수 없습니다.')
-      }
-    )
-  }
+      (error) => {
+        console.log(error);
+        alert('위치 정보를 불러올 수 없습니다.');
+      },
+    );
+  };
 
 
-
-  
-api.post(`/location`,{latitude,longitude})
-
-  // fetch('/location', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({ latitude: latitude, longitude: longitude, address: ad })
-  // })
-  // .then(response => {
-  //   // 서버로부터의 응답 처리
-  // })
-  // .catch(error => {
-  //   // 오류 처리
-  // });
-  
 
 
   return (
@@ -89,7 +67,7 @@ api.post(`/location`,{latitude,longitude})
         onClickToggleModal();
       }}
       >
-        예
+        Y
       </Button>
 
       <Button
@@ -100,7 +78,7 @@ api.post(`/location`,{latitude,longitude})
         }
       }}
       >
-        아니오
+        N
       </Button>
       </div>
       </Dialog>
@@ -130,7 +108,7 @@ const Dialog = styled.dialog`
   justify-content: center;
   border: none;
   border-radius: 4px;
-  background-color: white;
+  background-color: skyblue;
   z-index: 9999;
   
   h1{

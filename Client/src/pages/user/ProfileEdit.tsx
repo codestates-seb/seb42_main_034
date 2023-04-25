@@ -113,7 +113,6 @@ function ProfileEditPage() {
                             {isOpenModal && 
                             <>
                             <Modal onClickToggleModal={onClickToggleModal} />
-                            <div>hihihihihihihihihihi</div>
                             </>
                             }
                 </ProfileEditBox>
@@ -165,14 +164,13 @@ const SubTitle = styled.p`
 
 const Button = styled.button`
     font-size: 1rem;
-    color: skyblue;
+    color: black;
     background-color: white;
     border-radius: 5px;
     width: 40%;
 `
 
 const ProfileEditBox = styled.div`
-    border: 3px solid red;
     display: flex;
     flex-direction: column;
     width: 40%;

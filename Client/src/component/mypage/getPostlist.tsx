@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useMypageAPI } from "api/mypage";
 import { useAppSelector } from "redux/hooks";
 import { useParams } from "react-router-dom";
-import AxiosCustom from "utils/AxiosCustom";
 import useAPI from "hooks/uesAPI";
-import Page from "component/Page";
+
+
 interface Post {
   content: string;
+  title: string;
   id : number;
 }
 
@@ -21,7 +22,6 @@ const PostList = () => {
     queryFn: () => getMyInfo(id),
     retry: false,
   });
-// console.log(data)
  const api = useAPI();
 
   const { memberId} = useParams();
@@ -37,8 +37,6 @@ const PostList = () => {
     .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
     .then(resp => {
       setPost(resp.data.data);
-      
-console.log(resp)
     })
     .catch(error => {
       console.log(error);
@@ -54,12 +52,9 @@ console.log(post)
 
   return (
     <MainContainer>
-      {data?.nickname}
-      {data?.comments}
-      {data?.email}
       {post.map((p) => (
       <div key={p.id}>
-        <p>{p.content}</p>
+        <p>{p.title}</p>
       </div>
     ))}
    {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
@@ -71,6 +66,7 @@ const MainContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border: 2px solid red;
 `;
 

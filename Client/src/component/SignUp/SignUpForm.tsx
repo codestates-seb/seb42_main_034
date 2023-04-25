@@ -7,8 +7,9 @@ import React from 'react';
 import { keyframes } from 'styled-components';
 // import CurrentPosition from './CurrentPosition';
 import Swal from 'sweetalert2';
-import AxiosCustom from 'utils/AxiosCustom';
 import { useDispatch } from 'react-redux';
+import useAPI from 'hooks/uesAPI';
+
 
 export const SignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ export const SignUpForm = () => {
   const [isPwCheck, setIsPwCheck] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const api = useAPI();
 
 
   // 아이디 유효성 검사 ( email )
@@ -71,22 +72,6 @@ export const SignUpForm = () => {
   Swal.fire('', '사용 가능한 닉네임입니다.')
   // notifi(dispatch, '사용 가능한 닉네임입니다.')
  }
-  // const handleCheckNickname = async () => {
-  //   await AxiosCustom
-  //     .post(`/members/nickname`, {
-  //       nickname,
-  //     })
-  //     .then(res => {
-  //       if (res.status === 200) {
-  //         Swal.fire('', '사용가능한 닉네임 입니다.');
-  //       }
-  //     })
-  //     .catch(error => {
-  //       Swal.fire('', '사용가능한 닉네임 입니다.');
-  //       setIsNickname(false);
-  //       console.log(error);
-  //     });
-  // };
 
 
 
@@ -142,7 +127,7 @@ export const SignUpForm = () => {
       Swal.fire('', '양식을 다시 확인해주세요');
       // notifi(dispatch, '회원가입 양식을 획인 해주세요.')
     } else {
-      await AxiosCustom
+      await api
         .post(`/members`, {
           email,
           nickname,

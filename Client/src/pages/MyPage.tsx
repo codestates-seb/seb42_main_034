@@ -48,9 +48,9 @@ export default function MyPage() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
-        return <div>작성한 글을 찾을 수  없습니다.
-          <PostList />
-        </div>;
+        return <>
+        <PostList />
+        </>;
       case 1:
         return <div>작성한 답변을 찾을 수  없습니다.</div>;
       case 2:
