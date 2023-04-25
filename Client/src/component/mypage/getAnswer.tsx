@@ -14,7 +14,7 @@ interface Post {
 }
 
 
-const PostList = () => {
+const AnswerList = () => {
   const { id } = useAppSelector((state) => state.loginInfo);
   const { getMyInfo } = useMypageAPI();
   const { data } = useQuery({
@@ -34,7 +34,7 @@ const PostList = () => {
   });
   const getPost = async () => {
     await api
-    .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
+    .get(`/members/me/blogsTitle?page=${pageNation.page}&size=10`)
     .then(resp => {
       setPost(resp.data.data);
     })
@@ -81,4 +81,4 @@ const Divide = styled.div`
   justify-content: center;
 `
 
-export default PostList;
+export default AnswerList;

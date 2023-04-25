@@ -11,6 +11,7 @@ import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
 import { useState } from 'react';
 import PostList from 'component/mypage/getPostlist';
+import AnswerList from 'component/mypage/getAnswer';
 
 
 export default function MyPage() {
@@ -40,7 +41,7 @@ export default function MyPage() {
     return (
       <>
         <TabStyled onClick={() => handleTabClick(0)}>작성한 질문</TabStyled>
-        <TabStyled onClick={() => handleTabClick(1)}>작성한 답변</TabStyled>
+        <TabStyled onClick={() => handleTabClick(1)}>작성한 블로그 글</TabStyled>
         <TabStyled onClick={() => handleTabClick(2)}>작성한 댓글</TabStyled>
       </>
     );
@@ -52,7 +53,9 @@ export default function MyPage() {
         <PostList />
         </>;
       case 1:
-        return <div>작성한 답변을 찾을 수  없습니다.</div>;
+        return <>
+          <AnswerList />
+        </>;
       case 2:
         return <div>작성한 댓글을 찾을 수  없습니다.</div>;
       default:
