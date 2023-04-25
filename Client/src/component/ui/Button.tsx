@@ -10,12 +10,13 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
   children: React.ReactNode | string | number;
   style?: React.CSSProperties;
   region?: string;
+
   setState?: React.Dispatch<React.SetStateAction<string>>;
 }
 export const Button: React.FC<IButtonProps> = ({ className, children, isDisabled, typeButton, onClick, ...rest }) => {
   return (
     <button className={className} disabled={isDisabled} type={typeButton} onClick={onClick} {...rest}>
-      <span>{children}</span>
+      {children}
     </button>
   );
 };

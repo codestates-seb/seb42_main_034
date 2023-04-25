@@ -3,15 +3,21 @@ import Searchbar from 'component/board/Searchbar';
 import Page from 'component/Page';
 import useAPI from 'hooks/uesAPI';
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BlogData, ListData } from 'redux/boardDetails';
 import styled from 'styled-components';
 import BlogCard from './BlogCard';
+interface Category {
+  category: string;
+}
 
 export default function BlogList({ filter }: { filter: string }) {
   const [city, setCity] = useState<BlogData[] | []>([]);
   const api = useAPI();
   const { category } = useParams();
+  const search = useLocation().search.split('=');
+  const dd: string = category as string;
+  const searchData = decodeURIComponent(search[search.length - 1]);
   const [pageNation, setPageNation] = useState({
     page: 1,
     totalElements: 0,
@@ -46,7 +52,9 @@ export default function BlogList({ filter }: { filter: string }) {
       section = 'gyeonggi';
     }
     console.log(section);
-
+    if (searchData) {
+      //서치데이터 쿼리스트링 있으면 서치데이터 검색
+    }
     const getData = async () => {
       const response: BlogReturnData = await api
         .get('blogs', {
@@ -64,11 +72,16 @@ export default function BlogList({ filter }: { filter: string }) {
 
     getData().catch(console.error);
   }, [filter, pageNation.page]);
+
   return (
     <>
       {' '}
-      <Searchbar section="blogs" onCity={setCity} page={pageNation} onPage={setPageNation} />
-      <MainBoard>{city.length > 0 && city.map((city) => <BlogCard city={city} key={city.blogId} />)}</MainBoard>
+      <Searchbar section="blogs" onCity={setCity} page={pageNation} onPage={setPageNation} querystring={searchData} />
+      <MainBoard>
+        {city.length > 0 &&
+          category &&
+          city.map((city) => <BlogCard city={city} key={city.blogId} region={category} />)}
+      </MainBoard>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </>
   );

@@ -1,4 +1,4 @@
-import { useGetData } from 'api/data';
+import { useGetData, useReply } from 'api/data';
 import { answerReturn } from 'component/board/AnswerList';
 import { Flex } from 'component/style/cssTemplete';
 import TextInput from 'component/ui/Input';
@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { AllAnswer, AnswerData } from 'redux/answer/answerslice';
 import { useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
+import Comment from 'component/Comment';
 export interface BlogAnswerReturn {
   blogId: number | string;
   content: string;
@@ -21,19 +22,27 @@ export default function BlogAnswerList({
   answer,
   onAnswer,
   onDelete,
+  getAnswer,
 }: {
   blogId: number | string | undefined;
   answer: AnswerData;
   onAnswer: React.Dispatch<React.SetStateAction<[] | AnswerData[]>>;
   onDelete: (answerId: number | string) => void;
+  getAnswer: () => Promise<void>;
 }) {
   const { deleteAnswerData, putAnswerData, getAnswerData } = useGetData();
   const [isEdit, setIsEdit] = useState(false);
+  const [comment, setComment] = useState('');
+  const [isComment, setIsComment] = useState(false);
+  const { createReply } = useReply();
   const { memberId } = useAppSelector((state) => state.loginInfo);
   useEffect(() => {
     // onAnswer(answer);
   }, [answer]);
-
+  const handlePost = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createReply(answer.answerId, 'blogs', comment).then((res) => getAnswer());
+  };
   const [content, setContent] = useState<string>('');
   return (
     <AnswerWrapper>
@@ -76,6 +85,19 @@ export default function BlogAnswerList({
           <AnswerContent>{answer.likeCnt}</AnswerContent>
         </AnswerItem>
       </AnswerContainer>
+      {isComment && (
+        <div>
+          <div>
+            {answer.comments &&
+              answer.comments.map((comment, idx) => <Comment key={idx} comment={comment} getAnswer={getAnswer} />)}
+          </div>
+          <form onSubmit={handlePost}>
+            <TextInput type="comment" placeholder="댓글을 입력해주세요" setState={setComment} />
+
+            <MoveBtn children="작성" />
+          </form>
+        </div>
+      )}
     </AnswerWrapper>
   );
 }

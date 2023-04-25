@@ -29,7 +29,7 @@ export interface BoardData {
   modifiedAt: string;
   questionId?: string | number | undefined;
   blogId?: string | number;
-  tags: string | null;
+  tags: string[] | [];
   title: string;
   viewCnt: number;
   writer: string;
@@ -122,11 +122,27 @@ export const useGetData = () => {
     body: AnswerRequestBody,
     section: string,
   ): Promise<AxiosResponse<BoardData>> =>
-    await api.post(`/${section}/answer/${questionId}`, body).then((res) => res.data.data);
+    await api
+      .post(`/${section}/answer/${questionId}`, body)
+      .then((res) => {
+        console.log('댓글등록성공');
+
+        return res.data.data;
+      })
+      .catch((error) => {
+        console.log('댓글등록실패');
+      });
   const putAnswerData = async (section: string, id: number | string, content: string) =>
-    await api.patch(`/${section}/answer/${id}`, { content }).then((res) => {
-      return res;
-    });
+    await api
+      .patch(`/${section}/answer/${id}`, { content })
+      .then((res) => {
+        console.log('댓글성공');
+
+        return res;
+      })
+      .catch((error) => {
+        console.log('댓글실패');
+      });
 
   const deleteAnswerData = async (section: string, id: number | string): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/${section}/answer/${id}`);
@@ -195,7 +211,7 @@ export const useLike = () => {
 };
 export const useSearch = () => {
   const api = useAPI();
-  const searchTag = async (text: string, section: string, page: number) => {
+  const searchTag = async (text: string | undefined, section: string, page: number) => {
     await api.get(`/tags/${section}?tagName=${text}&page=${page}`);
   };
 

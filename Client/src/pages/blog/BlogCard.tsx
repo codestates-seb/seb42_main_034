@@ -5,12 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { BlogData, ListData } from 'redux/boardDetails';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-export default function BlogCard({ city }: { city: BlogData }) {
+export default function BlogCard({ city, region }: { city: BlogData; region: string }) {
   const navigate = useNavigate();
   const ss = useLocation();
 
   const handleClick = () => {
-    navigate(`/board/blogsdetails/${city.blogId}`, { state: city });
+    navigate(`/board/blogsdetails/${region}/${city.blogId}`, { state: city });
   };
 
   return (

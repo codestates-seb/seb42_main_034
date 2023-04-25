@@ -14,14 +14,25 @@ const useAPI = () => {
   const config = {
     baseURL: BASE_URL,
     withCredentials: true,
-    headers: { ContentType: 'application/json', Authorization: accessToken },
+    headers: { ContentType: 'application/json', Authorization: accessToken, refresh },
   };
 
   const axiosWithAccessToken = axios.create(config);
+  axiosWithAccessToken.interceptors.request.use(
+    (success) => {
+      console.log(success);
+      console.log(success.headers);
+      return success;
+    },
+    (error) => {
+      console.log(error.response.data.message);
 
+      console.log('에ㅐ러남', error);
+    },
+  );
   axiosWithAccessToken.interceptors.response.use(
     (seccess) => {
-      console.log(seccess);
+      console.log(seccess.status);
       //요청이 다 성공으로 가지고있음
       return seccess;
     },

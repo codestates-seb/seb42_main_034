@@ -8,6 +8,8 @@ import { AiOutlineDislike } from 'react-icons/ai';
 import { AiOutlineLike } from 'react-icons/ai';
 import { Button } from 'component/ui/Button';
 import { Flex, HoverAction } from 'component/style/cssTemplete';
+import Tag from './Tags';
+import { useParams } from 'react-router-dom';
 export default function BoardDetail({
   section,
   data,
@@ -19,6 +21,8 @@ export default function BoardDetail({
 }) {
   const { blogLikes } = useLike();
   const queryClient = useQueryClient();
+  const { region } = useParams();
+
   const [isLike, setIsLike] = useState(false);
   const { mutate } = useMutation(blogLikes, {
     onSuccess: () => {
@@ -35,6 +39,12 @@ export default function BoardDetail({
     <>
       <ListWrapper>
         <Item>
+          <Flex justify="start">
+            {' '}
+            {data.tags.map((tag) => (
+              <Tag text={tag} region={region} />
+            ))}
+          </Flex>
           <Title className="title">{detail.title}</Title>
           <div className="divide_title">
             조회수:{detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}

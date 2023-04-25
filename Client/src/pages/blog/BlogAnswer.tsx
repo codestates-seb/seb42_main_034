@@ -24,8 +24,13 @@ export default function BlogAnswer({ blogId }: { blogId: number | string | undef
   const { deleteAnswerData, putAnswerData, getAnswerData } = useGetData();
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await api.post(`/blogs/answer/${blogId}`, { content }).catch(console.error);
-    getAnswer().catch(console.error);
+    await api
+      .post(`/blogs/answer/${blogId}`, { content })
+      .then((res) => {
+        // getAnswer().catch(console.error);
+        console.log('블로그댓글작성성공');
+      })
+      .catch(console.error);
   };
 
   const getAnswer = async () => {
@@ -63,6 +68,7 @@ export default function BlogAnswer({ blogId }: { blogId: number | string | undef
             answer={answer}
             onAnswer={setAnswer}
             onDelete={deleteAnswer}
+            getAnswer={getAnswer}
           />
         ))}
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
