@@ -1,9 +1,7 @@
-import Searchbar from 'component/board/Searchbar';
-import { Flex, Relative } from 'component/style/cssTemplete';
-import { Button } from 'component/ui/Button';
+import { Flex } from 'component/style/cssTemplete';
 import { DescriptionFont, MoveBtn, Section, section, StyledCategoryBtn } from 'pages/question/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import BlogList from './BlogList.';
 
@@ -11,11 +9,15 @@ export default function BlogBoardList() {
   const [filter, setFilter] = useState('');
   const navigate = useNavigate();
   const { category } = useParams();
+  const picture = useLocation().state;
+  console.log(picture);
+
   const handleClick = (section: string) => {
     setFilter(section);
 
     navigate(`/board/boardlist/${section}/${category}`);
   };
+
   console.log(filter);
   useEffect(() => {
     //

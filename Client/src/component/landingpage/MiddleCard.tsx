@@ -1,5 +1,6 @@
 import MapContainer from 'component/Kakao.maps';
-import Item from 'component/slider/Item';
+import Item, { itemsProps } from 'component/slider/Item';
+import Slick from 'component/slider/Slider';
 import { Flex } from 'component/style/cssTemplete';
 import { FontSize } from 'component/style/variables';
 import React from 'react';
@@ -15,6 +16,34 @@ const Container = styled.div`
     margin-top: 2em;
   }
 `;
+const items: itemsProps[] = [
+  {
+    items:
+      'https://images.unsplash.com/photo-1597552661064-af143a5f3bee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+    name: 'Seoul',
+  },
+  {
+    items:
+      'https://images.unsplash.com/photo-1575907794679-016b6bd90285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80',
+    name: 'Busan',
+  },
+  {
+    items:
+      'https://images.unsplash.com/photo-1591688795017-4f31784362ed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+    name: 'Gangneung',
+  },
+  {
+    items:
+      'https://images.unsplash.com/photo-1634131484642-887b96daac15?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80',
+    name: 'Incheon',
+  },
+  {
+    items:
+      'https://images.unsplash.com/photo-1606739669974-ced280212a14?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=874&q=80',
+    name: 'Jeonju',
+  },
+];
+
 export default function MiddleCard() {
   return (
     <div>
@@ -24,7 +53,11 @@ export default function MiddleCard() {
         <div>Recommended popular destinations</div>
         <div className="font">현지인들에게 유명한 장소들을 추천 받아보세요!</div>
       </Container>
-      <Item />
+      <StyledSlick>
+        {items.map((el, idx) => (
+          <Item item={el} />
+        ))}
+      </StyledSlick>
       {/* <MapContainer
         width={900}
         height={600}
@@ -36,3 +69,5 @@ export default function MiddleCard() {
     </div>
   );
 }
+
+const StyledSlick = styled(Slick)``;
