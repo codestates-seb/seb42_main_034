@@ -9,7 +9,7 @@ const Layout = styled.div`
   align-items: center;
   min-height: ${ScreenSize.middle_height};
   max-height: ${ScreenSize.middle_height};
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
     padding: 4rem;

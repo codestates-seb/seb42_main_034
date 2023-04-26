@@ -7,8 +7,8 @@ import React from 'react';
 import { keyframes } from 'styled-components';
 // import CurrentPosition from './CurrentPosition';
 import Swal from 'sweetalert2';
-import AxiosCustom from 'utils/AxiosCustom';
 import { useDispatch } from 'react-redux';
+import useAPI from 'hooks/uesAPI';
 
 export const SignUpForm = () => {
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ export const SignUpForm = () => {
   const [isPwCheck, setIsPwCheck] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const api = useAPI();
   // 아이디 유효성 검사 ( email )
   const handleChangeEmail = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const emailRegex =
@@ -119,11 +119,12 @@ export const SignUpForm = () => {
       Swal.fire('', '양식을 다시 확인해주세요');
       // notifi(dispatch, '회원가입 양식을 획인 해주세요.')
     } else {
-      await AxiosCustom.post(`/members`, {
-        email,
-        nickname,
-        password,
-      })
+      await api
+        .post(`/members`, {
+          email,
+          nickname,
+          password,
+        })
         .then(() => {
           Swal.fire('Congratulation!', '가입이 완료되었습니다.'), navigate('/board/signin');
         })

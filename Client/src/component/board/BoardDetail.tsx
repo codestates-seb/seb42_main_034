@@ -51,7 +51,9 @@ export default function BoardDetail({
           </div>
         </Item>
 
-        <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
+        <OverFlow>
+          <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
+        </OverFlow>
         {section === 'blogs' && (
           <Flex>
             {detail.likeCnt}
@@ -73,7 +75,7 @@ const ListWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 80%;
-  height: 50vh;
+
   .flex {
     flex: 1 1 auto;
     min-height: 40%;
@@ -135,4 +137,7 @@ const UnLikeButton = styled(Button)`
     width: 1rem;
     height: 2rem;
   }
+`;
+const OverFlow = styled.div`
+  overflow: auto;
 `;

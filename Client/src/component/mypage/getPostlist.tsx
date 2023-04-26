@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useMypageAPI } from 'api/mypage';
 import { useAppSelector } from 'redux/hooks';
 import { useParams } from 'react-router-dom';
-import AxiosCustom from 'utils/AxiosCustom';
+
 import useAPI from 'hooks/uesAPI';
 import Page from 'component/Page';
 interface Post {

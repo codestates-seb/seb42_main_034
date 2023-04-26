@@ -1,27 +1,12 @@
-import { Colors, Route } from 'component/style/variables';
-import { BoxShadow, ButtonTheme, Flex, HoverAction } from 'component/style/cssTemplete';
+import { Colors } from 'component/style/variables';
+import { BoxShadow, ButtonTheme, HoverAction } from 'component/style/cssTemplete';
 import { RegionInfo } from 'pages/Home';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
-import { CRUDdata, ReturnData } from 'api/data';
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-
-const RegionButton = styled(Button)`
-  z-index: 0;
-  /* ${ButtonTheme} */
-  border: none;
-  background: ${Colors.main_02};
-  color: ${Colors.main_04_white};
-  ${HoverAction}
-  ${BoxShadow}
-  font-size: 1.3rem;
-  border-radius: 1.7rem;
-  padding: 0.5rem;
-  padding-top: 0.6rem;
-`;
 
 export default function Filter({
   citys,
@@ -47,23 +32,21 @@ export default function Filter({
   };
 
   return (
-    <Absolute style={{ left: `${citys.x}em`, top: `${citys.y}em` }}>
-      <RegionButton
-        children={citys.city}
-        className=""
-        onClick={handleBtnClick} //경로랑
-      />
-
-      <Picture display="none">
-        <img src={citys.url} />
-      </Picture>
-    </Absolute>
+    <>
+      {/* 버튼 호버했을때 글자 나오기 호버 안했을때는 이름 사진만 */}
+      <RegionButton url={citys.url} onClick={handleBtnClick}>
+        <div>{citys.city}</div>
+        {/* <img src={citys.url} /> */}
+        <div>{citys.content}</div>
+      </RegionButton>
+    </>
   );
 }
 const Absolute = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
+
   &:hover {
     div {
       display: block;
@@ -75,4 +58,22 @@ const Absolute = styled.div`
 `;
 const Picture = styled.div<{ display: string }>`
   display: ${(props) => props.display};
+`;
+const RegionButton = styled(Button)<{ url: string }>`
+  z-index: 0;
+  background: none;
+  border: none;
+  margin: 1em;
+  background-image: ${(props) => props.url && `url(${props.url})`};
+  background-repeat:no-repeat;
+  ${HoverAction}
+  ${BoxShadow}
+  font-size: 1.3rem;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  padding-top: 0.6rem;
+  &:hover {
+    cursor: pointer;
+    background
+  }
 `;

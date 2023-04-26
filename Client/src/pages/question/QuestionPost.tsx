@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -62,7 +62,9 @@ export default function QuestionPost() {
   } else if (category === '경기') {
     section = 'gyeonggi';
   }
-  console.log(section);
+  useEffect(() => {
+    console.log(content);
+  }, [content]);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,7 +94,21 @@ export default function QuestionPost() {
         //권한이 없습니다 띄우기
       });
   };
-  console.log(quillRef.current?.getEditorContents());
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+    input.onchange = () => {
+      if (input.files) {
+        const file = input.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        const fileName = file.name;
+        console.log(fileName);
+      }
+    };
+  };
   const handleEnter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const inputArray = inputValue.split(',').map((item) => item.trim());
@@ -110,6 +126,7 @@ export default function QuestionPost() {
           quillRef={quillRef}
           htmlContent={content}
           setHtmlContent={setContent}
+          imgHandler={imageHandler}
         />
         <input value={tags} onChange={handleEnter} placeholder="태그(중복선택시 쉼표(,)로 나눠주세요)" />
         <MoveBtn>작성</MoveBtn>

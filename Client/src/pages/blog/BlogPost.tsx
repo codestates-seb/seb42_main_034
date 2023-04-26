@@ -1,15 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import AWS, { S3 } from 'aws-sdk';
+
 import useAPI from '../../hooks/uesAPI';
 import { useAppSelector } from 'redux/hooks';
 
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
 import { MoveBtn } from 'pages/question/QuestionBoardList';
-import TextInput from 'component/ui/Input';
-import { uploadImageToS3 } from 'api/imageUpload';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -113,19 +111,11 @@ export default function BlogPost() {
 
     setTag(inputArray);
   };
-  console.log(quillRef.current);
-
   return (
     <>
       <PostWrapper>
         <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
-        <ResizeEditor
-          width="100%"
-          height="100%"
-          quillRef={quillRef}
-          htmlContent={content}
-          setHtmlContent={setContent}
-        />
+        <ResizeEditor width="70%" height="100%" quillRef={quillRef} htmlContent={content} setHtmlContent={setContent} />
         <input value={tags} onChange={handleEnter} placeholder="태그(중복선택시 쉼표(,)로 나눠주세요)" />
         {/* <TextInput type="category" setState={setTag} /> */}
         <MoveBtn onClick={submitHandler}>작성</MoveBtn>
@@ -136,5 +126,6 @@ export default function BlogPost() {
 }
 const ResizeEditor = styled(QuillEditor)`
   width: 20rem;
+  max-width: 70%;
   background: white;
 `;

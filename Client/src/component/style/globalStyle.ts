@@ -27,6 +27,9 @@ body {
 
  
 }
+.flex> p> img{
+  width : 100%
+}
 
 @font-face {
   font-family: 'GmarketSansMedium';

@@ -61,6 +61,7 @@ const ItemImg = styled.div<{ url: string }>`
   width: 100%;
   position: relative;
   background-image: ${(props) => props.url && `url(${props.url})`};
+  background-size: cover;
   height: 20em;
   margin: 4em;
   border-radius: 3em;
