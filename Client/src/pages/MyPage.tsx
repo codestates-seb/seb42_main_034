@@ -29,6 +29,7 @@ export default function MyPage() {
     queryFn: () => getMyInfo(memberId),
     retry: false,
   });
+  console.log(data);
 
   const [activeTab, setActiveTab] = useState<number>(0);
   const handleTabClick = (index: number) => {

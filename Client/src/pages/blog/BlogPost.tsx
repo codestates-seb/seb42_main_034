@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Tags from '../../component/board/Tags';
-
+import AWS, { S3 } from 'aws-sdk';
 import useAPI from '../../hooks/uesAPI';
 import { useAppSelector } from 'redux/hooks';
 
@@ -10,6 +9,7 @@ import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
 import { MoveBtn } from 'pages/question/QuestionBoardList';
 import TextInput from 'component/ui/Input';
+import { uploadImageToS3 } from 'api/imageUpload';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -113,6 +113,8 @@ export default function BlogPost() {
 
     setTag(inputArray);
   };
+  console.log(quillRef.current);
+
   return (
     <>
       <PostWrapper>

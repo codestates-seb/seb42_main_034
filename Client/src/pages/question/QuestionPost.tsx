@@ -40,8 +40,6 @@ export default function QuestionPost() {
     setTitle(e.target.value);
   };
 
-  console.log(tags);
-
   let section = '';
   if (category === '서울') {
     section = 'seoul';
@@ -94,13 +92,14 @@ export default function QuestionPost() {
         //권한이 없습니다 띄우기
       });
   };
-  console.log(tags);
+  console.log(quillRef.current?.getEditorContents());
   const handleEnter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const inputArray = inputValue.split(',').map((item) => item.trim());
 
     setTags(inputArray);
   };
+
   return (
     <>
       <PostWrapper onSubmit={submitHandler}>
