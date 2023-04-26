@@ -1,5 +1,5 @@
-import { Colors } from 'component/style/variables';
-import { BoxShadow, ButtonTheme, HoverAction } from 'component/style/cssTemplete';
+import { FontSize } from 'component/style/variables';
+import { BoxShadow } from 'component/style/cssTemplete';
 import { RegionInfo } from 'pages/Home';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
@@ -18,8 +18,6 @@ export default function Filter({
   setState: React.Dispatch<React.SetStateAction<string>>;
   filter: string;
 }): JSX.Element {
-  // const { isLoading, error, data: city } = useQuery([filter], async () => await new CRUDdata().getData(citys.city)); //여기에 해당지역넣기
-  // dd.getData().then(console.log).catch(console.error);
   const navigate = useNavigate();
   const [data, setData] = useState('');
   useEffect(() => {
@@ -27,53 +25,75 @@ export default function Filter({
   }, []);
   const handleBtnClick = () => {
     //해당지역으로이동
-    // console.log(city);
-    navigate(`/board/boardlist/questions/${citys.city}`, { state: citys.city });
+
+    navigate(`/board/boardlist/questions/${citys.city}`, { state: citys.url });
   };
 
   return (
     <>
       {/* 버튼 호버했을때 글자 나오기 호버 안했을때는 이름 사진만 */}
       <RegionButton url={citys.url} onClick={handleBtnClick}>
-        <div>{citys.city}</div>
-        {/* <img src={citys.url} /> */}
-        <div>{citys.content}</div>
+        <div className="cardTitle">{citys.city}</div>
+        <ContentFont className="cardFont" display="none">
+          {citys.content}
+        </ContentFont>
       </RegionButton>
     </>
   );
 }
-const Absolute = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
 
-  &:hover {
-    div {
-      display: block;
-    }
-    div & {
-      display: block;
-    }
-  }
-`;
-const Picture = styled.div<{ display: string }>`
-  display: ${(props) => props.display};
-`;
 const RegionButton = styled(Button)<{ url: string }>`
-  z-index: 0;
   background: none;
   border: none;
   margin: 1em;
-  background-image: ${(props) => props.url && `url(${props.url})`};
-  background-repeat:no-repeat;
-  ${HoverAction}
+  position: relative;
+  border-radius: 1rem;
   ${BoxShadow}
   font-size: 1.3rem;
-  border-radius: 1rem;
+  transition: all 1s ease-out;
   padding: 0.5rem;
   padding-top: 0.6rem;
+
   &:hover {
     cursor: pointer;
-    background
+
+    ::before {
+      opacity: 0.6;
+      background-size: 150%;
+      background-position: center;
+    }
+    .cardTitle {
+      font-size: ${FontSize.lg};
+      margin-bottom: 1em;
+    }
+    .cardFont {
+      display: block;
+    }
+  }
+
+  .cardTitle {
+    font-size: ${FontSize.h2};
+    font-weight: bold;
+    position: relative;
+  }
+  ::before {
+    content: '';
+    transition: all 1s ease-out;
+    background-image: ${(props) => props.url && `url(${props.url})`};
+    background-size: cover;
+    position: absolute;
+    border-radius: 1rem;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+  }
+`;
+const ContentFont = styled.div<{ display: string }>`
+  font-size: ${FontSize.md};
+  position: relative;
+  display: ${(props) => props.display};
+  &:hover {
+    display: block;
   }
 `;

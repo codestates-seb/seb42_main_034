@@ -41,6 +41,7 @@ const RelativeLayout = styled.div`
   max-width: ${ScreenSize.max_width};
   margin: auto;
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(3, 30%);
   grid-auto-rows: 20rem;
   gap: 0.5em;
