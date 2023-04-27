@@ -6,6 +6,7 @@ import { useReply } from 'api/data';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import styled from 'styled-components';
 import { Flex } from './style/cssTemplete';
+import { Colors, FontSize } from './style/variables';
 export interface Comment {
   commentId: number;
   content: string;
@@ -17,26 +18,30 @@ export default function Comment({ comment, getAnswer }: { comment: Comment; getA
   const { patchReply, deleteReply } = useReply();
   const handlePatch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    patchReply(comment.commentId, 'questions', modify).then((res) => {
-      console.log(res);
-      setIsEdit(!isEdit);
-      getAnswer();
-    });
+    patchReply(comment.commentId, 'questions', modify)
+      .then((res) => {
+        console.log(res);
+        setIsEdit(!isEdit);
+        getAnswer();
+      })
+      .catch((error) => console.log('댓글실패', error));
   };
   return (
-    <div>
-      <BsArrowReturnRight />
+    <BackGround items="center">
+      <Arrow />
+
       {isEdit ? (
         <StyledForm onSubmit={handlePatch}>
           <TextInput value={modify} type="modifyComment" setState={setModify} />
           <MoveBtn children="수정완료" />
         </StyledForm>
       ) : (
-        <Flex>
-          <Flex>
+        <Flex items="space-between">
+          <Flex direction="column">
             <div>{comment.content}</div>
-            <div>{dayjs(comment.createdAt).format('YYYY-MM-DD')}</div>
+            <DateFont>{dayjs(comment.createdAt).format('YYYY-MM-DD')}</DateFont>
           </Flex>
+
           <div>
             <MoveBtn
               children="수정"
@@ -55,9 +60,21 @@ export default function Comment({ comment, getAnswer }: { comment: Comment; getA
           </div>
         </Flex>
       )}
-    </div>
+    </BackGround>
   );
 }
 const StyledForm = styled.form`
   display: flex;
+`;
+const DateFont = styled.div`
+  font-size: ${FontSize.md};
+  color: ${Colors.text_grey};
+`;
+const Arrow = styled(BsArrowReturnRight)`
+  margin-right: 1.2em;
+`;
+const BackGround = styled(Flex)`
+  background: ${Colors.main_01};
+  border-bottom: 1px solid ${Colors.text_grey};
+  padding: 1em;
 `;

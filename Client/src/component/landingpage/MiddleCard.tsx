@@ -5,17 +5,7 @@ import { Flex } from 'component/style/cssTemplete';
 import { FontSize } from 'component/style/variables';
 import React from 'react';
 import styled from 'styled-components';
-const Container = styled.div`
-  font-size: ${FontSize.h2};
-  text-align: center;
-  margin-top: 10rem;
-  margin: 2rem;
-  .font {
-    opacity: 0.8;
-    font-size: ${FontSize.sm};
-    margin-top: 2em;
-  }
-`;
+
 const items: itemsProps[] = [
   {
     items:
@@ -53,9 +43,9 @@ export default function MiddleCard() {
         <div>Recommended popular destinations</div>
         <div className="font">현지인들에게 유명한 장소들을 추천 받아보세요!</div>
       </Container>
-      <StyledSlick>
+      <StyledSlick slidesToShow={3}>
         {items.map((el, idx) => (
-          <Item item={el} />
+          <Item item={el} key={idx} />
         ))}
       </StyledSlick>
       {/* <MapContainer
@@ -71,3 +61,14 @@ export default function MiddleCard() {
 }
 
 const StyledSlick = styled(Slick)``;
+const Container = styled.div`
+  font-size: ${FontSize.h2};
+  text-align: center;
+  margin-top: 10rem;
+  margin: 2rem;
+  .font {
+    opacity: 0.8;
+    font-size: ${FontSize.sm};
+    margin-top: 2em;
+  }
+`;

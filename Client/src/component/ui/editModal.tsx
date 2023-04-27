@@ -2,7 +2,7 @@ import useGeolocation from 'hooks/useGeoLocation';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import Geocode from 'react-geocode';
 import styled from 'styled-components';
-import { useAppDispatch } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
 import useAPI from 'hooks/uesAPI';
 import axios from 'axios';

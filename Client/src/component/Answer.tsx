@@ -10,6 +10,7 @@ import TextInput from './ui/Input';
 import { AnswerData, getAnswerLike } from 'redux/answer/answerslice';
 import useAPI from 'hooks/uesAPI';
 import Page from './Page';
+import { useParams } from 'react-router-dom';
 
 export interface answerReturn {
   questionId: number | string;
@@ -39,8 +40,12 @@ export default function Answer({
   const { deleteAnswerData, getAnswerData } = useGetData(); // data.ts에서 정리할것
   const dispatch = useAppDispatch();
   const api = useAPI();
+  const { region } = useParams();
   const { setLike, seletedQuestion } = useLike();
   const { memberId } = useAppSelector((state) => state.loginInfo);
+  //위치검증
+  const location = useAppSelector((state) => state.persistReducer.userInfo.data.location);
+  console.log(region);
 
   const [answer, setAnswer] = useState<AnswerData[] | []>([]);
   const { putAnswerData } = useGetData();
@@ -91,6 +96,7 @@ export default function Answer({
       setState(!isLike);
     }
   };
+  //채택
   const setChecked = (answerId: number) => {
     seletedQuestion(answerId);
   };
@@ -102,12 +108,18 @@ export default function Answer({
     <AnswerWrapper>
       {answer && (
         <>
-          <p>댓글 작성</p>
-          <StyledForm onSubmit={submitHandler}>
-            <StyledInput type="text" placeholder="댓글을 입력해주세요" setState={setComment} />
-            <MoveBtn children="작성" />
-            {/* 추후에 위치정보도 함께 첨부  */}
-          </StyledForm>
+          {region === location && (
+            <>
+              {' '}
+              <p>댓글 작성</p>
+              <StyledForm onSubmit={submitHandler}>
+                <StyledInput type="text" placeholder="댓글을 입력해주세요" setState={setComment} />
+                <MoveBtn children="작성" />
+                {/* 추후에 위치정보도 함께 첨부  */}
+              </StyledForm>
+            </>
+          )}
+
           <h3>답변내용 ( 답변 수 : {answer.length} )</h3>
           {answer &&
             answer.map((answer) => (

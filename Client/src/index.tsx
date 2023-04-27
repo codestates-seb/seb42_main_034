@@ -7,7 +7,6 @@ import QuestionDetails from './pages/question/QuestionDetails';
 import SignUp from './pages/user/SignUp';
 import Board from './pages/Board';
 import MyPage from './pages/MyPage';
-
 import BlogPost from './pages/blog/BlogPost';
 import LandingPage from './pages/LandingPage/LandingPage';
 import BlogDetails from './pages/blog/BlogDetails';
@@ -59,7 +58,7 @@ const router = createBrowserRouter([
           },
 
           {
-            path: '/board/questionsdetails/:id',
+            path: '/board/questionsdetails/:region/:id',
             element: <QuestionDetails />,
           },
           {

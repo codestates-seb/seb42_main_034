@@ -10,7 +10,7 @@ import { useAppSelector } from 'redux/hooks';
 import Answer from 'component/Answer';
 import { MoveBtn } from './QuestionBoardList';
 import { Flex } from 'component/style/cssTemplete';
-import { useEffect } from 'react';
+
 export default function QuestionDetails() {
   const data: BoardData = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
@@ -55,7 +55,7 @@ export default function QuestionDetails() {
       {isLoading && <div>로딩중..</div>}
       {data && detail && (
         <>
-          <BoardDetail data={data} detail={detail} />
+          <BoardDetail data={data} detail={detail} section="questions" />
           <Answer questionId={data.questionId} writerId={detail.memberId} />
         </>
       )}

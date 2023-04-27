@@ -5,10 +5,10 @@ import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
 import { Colors, FontSize } from 'component/style/variables';
 import dayjs from 'dayjs';
-export default function QuestionCard({ city }: { city: ListData }) {
+export default function QuestionCard({ city, region }: { city: ListData; region: string | undefined }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/board/questionsdetails/${city.questionId}`, { state: city });
+    navigate(`/board/questionsdetails/${region}/${city.questionId}`, { state: city });
   };
   return (
     <Card onClick={handleClick}>

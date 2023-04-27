@@ -19,7 +19,6 @@ export default function QuestionList({ filter }: { filter: string }) {
     size: 15,
   });
   let section = '';
-  console.log(filter);
 
   useEffect(() => {
     if (category === '서울') {
@@ -63,7 +62,9 @@ export default function QuestionList({ filter }: { filter: string }) {
   return (
     <>
       <Searchbar section="questions" onCity={setCity} page={pageNation} onPage={setPageNation} />
-      <MainBoard>{city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}</MainBoard>
+      <MainBoard>
+        {city && city.map((city) => <QuestionCard region={category} city={city} key={city.questionId} />)}
+      </MainBoard>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </>
   );

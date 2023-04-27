@@ -39,7 +39,7 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
       }
 
       const url = await uploadToS3(file);
-      console.log(url);
+      // console.log(url);
       const range = quillRef.current?.getEditor().getSelection()?.index || 0;
       quillRef.current?.getEditor().insertEmbed(range, 'image', url);
       // if (img) {
@@ -77,6 +77,9 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
           // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
           image: imageHandlerr,
         },
+      },
+      clipboard: {
+        matchVisual: false,
       },
     }),
     [],

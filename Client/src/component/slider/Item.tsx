@@ -1,5 +1,4 @@
 import { BoxShadow } from 'component/style/cssTemplete';
-import { Colors } from 'component/style/variables';
 
 import React from 'react';
 import styled from 'styled-components';

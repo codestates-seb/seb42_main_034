@@ -1,16 +1,27 @@
 import { Flex } from 'component/style/cssTemplete';
-import { DescriptionFont, MoveBtn, Section, section, StyledCategoryBtn } from 'pages/question/QuestionBoardList';
+import {
+  CategoryFilter,
+  DescriptionFont,
+  MoveBtn,
+  Section,
+  section,
+  StyledCategoryBtn,
+} from 'pages/question/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import BlogList from './BlogList.';
-
+import { AiOutlineBulb } from 'react-icons/ai';
+import { FaMicroblog } from 'react-icons/fa';
+import { useAppSelector } from 'redux/hooks';
 export default function BlogBoardList() {
   const [filter, setFilter] = useState('');
   const navigate = useNavigate();
   const { category } = useParams();
   const picture = useLocation().state;
-  console.log(picture);
+  const { isLogin } = useAppSelector((state) => state.loginInfo);
+  const location = useAppSelector((state) => state.persistReducer.userInfo.data.location);
+  console.log(location);
 
   const handleClick = (section: string) => {
     setFilter(section);
@@ -18,7 +29,7 @@ export default function BlogBoardList() {
     navigate(`/board/boardlist/${section}/${category}`);
   };
 
-  console.log(filter);
+  // console.log(filter);
   useEffect(() => {
     //
   }, [filter]);
@@ -29,19 +40,33 @@ export default function BlogBoardList() {
         {section.map((filter, idx) => (
           <StyledCategoryBtn
             key={idx}
-            children={filter === 'blogs' ? '블로그' : '질문'}
+            children={
+              filter === 'blogs' ? (
+                <CategoryFilter>
+                  블로그
+                  <AiOutlineBulb />
+                </CategoryFilter>
+              ) : (
+                <CategoryFilter>
+                  질문 <FaMicroblog />
+                </CategoryFilter>
+              )
+            }
             onClick={() => {
               handleClick(filter);
             }}
             selected={filter === 'blogs'}
           />
         ))}
-        <PostBtn
-          children="글 작성하기"
-          onClick={() => {
-            navigate(`/board/blogpost/${category}`);
-          }}
-        />
+        {/* 검증된 사람들만 글 작성 가능 */}
+        {location && category === location && (
+          <PostBtn
+            children="글 작성하기"
+            onClick={() => {
+              navigate(`/board/blogpost/${category}`);
+            }}
+          />
+        )}
       </Section>
 
       <DescriptionFont>
@@ -57,4 +82,7 @@ const PostBtn = styled(MoveBtn)`
   right: 3em;
   width: 8rem;
   position: absolute;
+  @media (max-width: 762px) {
+    display: none;
+  }
 `;

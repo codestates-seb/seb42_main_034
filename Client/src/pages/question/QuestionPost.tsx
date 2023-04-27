@@ -62,9 +62,6 @@ export default function QuestionPost() {
   } else if (category === '경기') {
     section = 'gyeonggi';
   }
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -11,7 +11,10 @@ interface InitProps {
   address: string;
   avatarUrl: string;
 }
-
+interface Location {
+  latitude: '';
+  longitude: '';
+}
 export const initialState: InitProps = {
   memberId: 0,
   nickname: '',

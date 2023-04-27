@@ -40,6 +40,7 @@ export default function Searchbar({
     setSearchData(changeUrl(e.target.value));
   };
   useEffect(() => {
+    //서치데이터일때
     if (querystring) {
       setSearchData(changeUrl(querystring));
     }
@@ -67,8 +68,8 @@ const SearchInput = styled.input`
   font-size: var(--font-size-md);
   padding: 10px;
   width: 60%;
-  border-radius: 1rem;
-  border: 5px solid ${Colors.main_02};
+  border-radius: 0.4rem;
+  border: 2px solid ${Colors.main_02};
   height: 12%;
   margin: 1em;
 `;
@@ -78,8 +79,9 @@ const ResizedIcon = styled(SearchIcon)`
 `;
 const SearchBar = styled(Icon)`
   position: absolute;
-  top: 1.5em;
+  top: 1.2em;
   right: 1.5em;
+  cursor: pointer;
 `;
 const SearchWrapper = styled.form`
   display: flex;

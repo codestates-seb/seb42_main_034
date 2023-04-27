@@ -21,15 +21,16 @@ interface sliderProps {
   speed?: number;
   /** 반복 여부 */
   loop?: boolean;
+  slidesToShow?: number;
 }
 
-function Slick({ children, className, autoplay = true, speed = 3000, loop = true }: sliderProps) {
+function Slick({ slidesToShow, children, className, autoplay = true, speed = 3000, loop = true }: sliderProps) {
   const settings = useMemo<Settings>(
     () => ({
       dots: true,
       infinite: true,
       speed: speed,
-      slidesToShow: 3,
+      slidesToShow,
       autoplay: Boolean(autoplay),
       autoplaySpeed: typeof autoplay === 'boolean' ? 3000 : autoplay,
       slidesToScroll: 1,

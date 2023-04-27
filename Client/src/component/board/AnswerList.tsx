@@ -4,7 +4,7 @@ import { Flex } from 'component/style/cssTemplete';
 import TextInput from 'component/ui/Input';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
-
+import { MdOutlineTaskAlt } from 'react-icons/md';
 import { MoveBtn } from 'pages/question/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 import { AnswerData } from 'redux/answer/answerslice';
@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
 import Comment from 'component/Comment';
+import { Colors } from 'component/style/variables';
 
 export interface answerReturn {
   questionId: number | string;
@@ -58,12 +59,13 @@ export default function AnswerList({
     e.preventDefault();
     createReply(answer.answerId, 'questions', comment).then((res) => getAnswer());
   };
+  console.log(answer);
 
   return (
     <AnswerWrapper>
       <AnswerContainer>
         <AnswerItem>
-          <Flex>
+          <AnswerTop justify="space-between">
             {isEdit ? (
               <form>
                 <TextInput value={answer.content} setState={setContent} type="answer" />
@@ -83,32 +85,44 @@ export default function AnswerList({
             ) : (
               <>
                 <div>{answer.content}</div>
-                {answer.memberId === memberId && <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />}
-                {answer.memberId === memberId && (
-                  <>
+                <div>
+                  {answer.memberId === memberId && (
+                    <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />
+                  )}
+                  {answer.memberId === memberId && (
                     <MoveBtn
                       children="수정"
                       onClick={() => {
                         setIsEdit(!isEdit);
                       }}
                     />
-                    <MoveBtn children="답글보기" onClick={() => setIsComment(!isComment)} />
-                  </>
-                )}
+                  )}
+                  {/**로그인상태 해결하고 적용 */}
+                  {answer.checked || (
+                    <MoveBtn
+                      children={
+                        <div>
+                          채택하기
+                          <MdOutlineTaskAlt />
+                        </div>
+                      }
+                      onClick={() => seletedQuestion(answer.answerId)}
+                    ></MoveBtn>
+                  )}{' '}
+                </div>
               </>
             )}
-            {/**로그인상태 해결하고 적용 */}
-            {answer.checked || <MoveBtn children="채택하기" onClick={() => seletedQuestion(answer.answerId)} />}
-          </Flex>
+          </AnswerTop>
 
           <AnswerContent>
-            {answer.likeCnt}
+            <MoveBtn children={`답글보기${isComment ? '▽' : '△'}`} onClick={() => setIsComment(!isComment)} />
 
             <StyledBtn
               onClick={() => {
                 onLike(isLike, answer.answerId, setIsLike);
               }}
             >
+              <div>{answer.likeCnt}</div>
               {isLike ? <AiFillHeart /> : <AiOutlineHeart />}
             </StyledBtn>
           </AnswerContent>
@@ -138,23 +152,32 @@ const AnswerContainer = styled.ul`
   list-style: none;
   width: 100%;
   padding: 0;
+  margin-bottom: 0;
 `;
 const AnswerItem = styled.li`
   padding: 20px;
-  border: 1px solid gray;
+
   margin-bottom: 20px;
+  border-bottom: 1px solid black;
 `;
 const AnswerContent = styled.div`
   margin-top: 10px;
   display: flex;
-  gap: 0.1em;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 `;
 const StyledBtn = styled(Button)`
   background: none;
   border: none;
   cursor: pointer;
+  display: flex;
   transition: 200ms ease-in;
+  gap: 0.2em;
   &:hover {
     transform: scale(1.1);
   }
+`;
+const AnswerTop = styled(Flex)`
+  padding-left: 1.5em;
 `;

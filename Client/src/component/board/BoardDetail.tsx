@@ -37,35 +37,33 @@ export default function BoardDetail({
 
   return (
     <>
-      <ListWrapper>
-        <Item>
-          <Flex justify="start">
-            {' '}
-            {data.tags.map((tag) => (
-              <Tag text={tag} region={region} />
-            ))}
-          </Flex>
-          <Title className="title">{detail.title}</Title>
-          <div className="divide_title">
-            조회수:{detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
-          </div>
-        </Item>
+      <Item>
+        <Flex justify="start">
+          {' '}
+          {data.tags.map((tag) => (
+            <Tag text={tag} region={region} />
+          ))}
+        </Flex>
+        <Title className="title">{detail.title}</Title>
+        <div className="divide_title">
+          조회수:{detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
+        </div>
+      </Item>
 
-        <OverFlow>
-          <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
-        </OverFlow>
-        {section === 'blogs' && (
-          <Flex>
-            {detail.likeCnt}
-            <LikeButton onClick={handleLikes}>
-              <AiOutlineLike />
-            </LikeButton>
-            <UnLikeButton onClick={handleLikes}>
-              <AiOutlineDislike />
-            </UnLikeButton>
-          </Flex>
-        )}
-      </ListWrapper>
+      <OverFlow>
+        <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
+      </OverFlow>
+      {section === 'blogs' && (
+        <Flex>
+          {detail.likeCnt}
+          <LikeButton onClick={handleLikes}>
+            <AiOutlineLike />
+          </LikeButton>
+          <UnLikeButton onClick={handleLikes}>
+            <AiOutlineDislike />
+          </UnLikeButton>
+        </Flex>
+      )}
     </>
   );
 }
@@ -82,16 +80,16 @@ const ListWrapper = styled.div`
     width: 100%;
     font-size: ${FontSize.md};
     height: 28em;
-    border: 1px solid ${Colors.text_black};
+
     padding: 1.2em;
   }
 `;
 
 const Item = styled.div`
-  border: 1px solid blue;
+  border-bottom: 1px solid ${Colors.button_blue};
   margin-top: 1rem;
   margin-bottom: 1rem;
-  width: 100%;
+  width: 90%;
   display: flex;
   height: 8rem;
   flex-direction: column;
@@ -140,4 +138,6 @@ const UnLikeButton = styled(Button)`
 `;
 const OverFlow = styled.div`
   overflow: auto;
+  width: 90%;
+  padding: 1.2em;
 `;
