@@ -1,8 +1,8 @@
 package com.project.tripAdvisor.member;
 
 import com.project.tripAdvisor.blog.entity.Blog;
-import com.project.tripAdvisor.member.sevice.MemberFindService;
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.member.service.MemberFindService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.response.MultiResponseDto;
 import com.project.tripAdvisor.response.SingleResponseDto;

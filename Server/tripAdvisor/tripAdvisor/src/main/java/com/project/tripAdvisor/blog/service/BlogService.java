@@ -8,7 +8,7 @@ import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.exception.BusinessLogicException;
 import com.project.tripAdvisor.exception.ExceptionCode;
 import com.project.tripAdvisor.member.Member;
-import com.project.tripAdvisor.member.sevice.MemberService;
+import com.project.tripAdvisor.member.service.MemberService;
 import com.project.tripAdvisor.tag.entity.Tag;
 import com.project.tripAdvisor.tag.repository.BlogTagRepository;
 import com.project.tripAdvisor.tag.repository.TagRepository;
@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,14 +44,14 @@ public class BlogService {
     }
 
     // 포스트 등록
-
+    @Transactional
     public Blog createBlog(Blog blog) {
 
         Blog savedBlog = blogRepository.save(blog);
 
         return savedBlog;
     }
-
+    @Transactional
     // 포스트 수정
     public Blog updateBlog(Blog blog,Long memberId) {
 
@@ -67,7 +68,7 @@ public class BlogService {
         return blogRepository.save(findBlog);
 
     }
-
+    @Transactional
     //포스트 삭제
     public void deleteBlog(Long blogId, Long memberId) {
         Blog findBlog = findVerifyBlog(blogId);
@@ -79,7 +80,7 @@ public class BlogService {
         blogRepository.delete(findBlog);
 
     }
-
+    @Transactional
     // 포스트 조회
     public Page<Blog> findBlog(String category, int page, String sortedBy) {
         sortedBy = sortedBy.toUpperCase();
@@ -95,6 +96,7 @@ public class BlogService {
         }
     }
 
+    @Transactional
     // 포스트 상세 조회
     public Blog viewBlog(Long blogId) {
         Blog findBlog = findVerifyBlog(blogId);
@@ -102,7 +104,7 @@ public class BlogService {
         return findBlog;
 
     }
-
+    @Transactional
     // 좋아요
     public void switchLike(Long blogId, Long memberId) {
         Blog blog = findVerifyBlog(blogId);
@@ -120,7 +122,7 @@ public class BlogService {
         }
     }
 
-
+    @Transactional
     private void addBlogLikeIfLikeType(Blog blog, Optional<BlogLike> optionalBlogLike, int likeCnt) {
         BlogLike findBlogLike = optionalBlogLike.get();
         boolean likeType = findBlogLike.isLikeType();
@@ -134,7 +136,7 @@ public class BlogService {
         }
     }
 
-
+    @Transactional
     private void addBlogLike(Blog blog, BlogLike blogLike, int likeCnt) {
         blogLike.setLikeType(true);
         likeCnt++;
@@ -145,7 +147,7 @@ public class BlogService {
     }
 
     // 포스트 검색
-
+    @Transactional
     public Page<Blog> searchBlog(int page, String keyword, String type) {
         type = type.toUpperCase();
 
@@ -171,7 +173,7 @@ public class BlogService {
 
 
     }
-
+    @Transactional
     public Blog findVerifyBlog(Long blogId) {
         Optional<Blog> optionalBlog = blogRepository.findById(blogId);
         Blog findBlog = optionalBlog
@@ -179,7 +181,7 @@ public class BlogService {
 
         return findBlog;
     }
-
+    @Transactional
     public Page<Blog> findMemberBlogs(long id, int page, int size) {
 
         PageRequest pageRequest = PageRequest.of(page, size,

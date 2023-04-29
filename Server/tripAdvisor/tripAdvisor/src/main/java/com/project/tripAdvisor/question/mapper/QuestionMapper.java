@@ -24,14 +24,13 @@ public interface QuestionMapper {
             return null;
         }
 
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         Question question = new Question();
         question.setTitle(requestBody.getTitle());
         question.setCategory(requestBody.getCategory());
         question.setContent(requestBody.getContent());
-        //question.setQuestionTags((QuestionTag) requestBody.getTags());
 
         return question;
 
@@ -42,11 +41,11 @@ public interface QuestionMapper {
         if (requestBody == null) {
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         Question question = new Question();
-        question.setMember(member);
+//        question.setMember(member);
         question.setTitle(requestBody.getTitle());
         question.setContent(requestBody.getContent());
 
@@ -68,6 +67,8 @@ public interface QuestionMapper {
         response.setViewCnt(question.getViewCnt());
         response.setCreatedAt(question.getCreatedAt());
         response.setWriter(question.getMember().getNickname());
+        response.setTags(QuestionToTagName(question));
+        response.setMemberId(question.getMember().getId());
 
         return response;
     }
@@ -80,6 +81,7 @@ public interface QuestionMapper {
         response.setTitle(question.getTitle());
         response.setWriter(question.getMember().getNickname());
         response.setCreatedAt(question.getCreatedAt());
+        response.setTags(QuestionToTagName(question));
 
         return response;
     }

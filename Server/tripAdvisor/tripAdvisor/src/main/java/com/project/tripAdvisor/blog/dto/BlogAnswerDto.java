@@ -16,7 +16,7 @@ public class BlogAnswerDto {
     @NoArgsConstructor
     public static class Post {
 
-        private Long memberId;
+//        private Long memberId;
         private String content;
 
     }
@@ -26,7 +26,7 @@ public class BlogAnswerDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Patch{
-        private Long memberId;
+//        private Long memberId;
         private Long blogAnswerId;
         private String content;
     }
@@ -34,10 +34,12 @@ public class BlogAnswerDto {
     @Setter
     @AllArgsConstructor
     public static class Response{
+        private Long answerId;
         private String writer;
         private String content;
         private LocalDateTime createdAt;
         private List<BlogAnswerCommentResponseDto> comments;
+        private Long memberId;
     }
 
 

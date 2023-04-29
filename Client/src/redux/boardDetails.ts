@@ -26,6 +26,7 @@ export interface BlogData {
   viewCnt: number;
   writer: string;
   content?: string;
+  isChecked?:boolean;
 }
 const initialState: ReturnData = {
   data: [],
@@ -44,6 +45,9 @@ const boardDetailSlice = createSlice({
     //원래 state에서 actionpayload로 받은값으로 state를 변경해줌
     setBoardDetails: (state, { payload: { data } }: PayloadAction<{ data: ListData[] }>) => {
       return { ...state, data };
+    },
+    setIsChecked :(state, { payload: { isChecked } }: PayloadAction<{ isChecked: ListData[] }>) => {
+      return { ...state, isChecked };
     },
   },
 });

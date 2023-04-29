@@ -19,7 +19,7 @@ public class QuestionDto {
     @AllArgsConstructor
     public static class Post {
 
-        private Long memberId;
+//        private Long memberId;
 
         @NotBlank(message = "제목을 입력하세요.")
         private String title;
@@ -43,7 +43,7 @@ public class QuestionDto {
 
         private Long questionId;
 
-        private Long memberId;
+//        private Long memberId;
 
         @NotBlank(message = "제목을 입력하세요.")
         private String title;
@@ -73,6 +73,8 @@ public class QuestionDto {
         private LocalDateTime createdAt;
 
         private int viewCnt;
+
+        private Long memberId;
 
     }
 

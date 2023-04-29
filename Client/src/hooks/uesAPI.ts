@@ -14,7 +14,7 @@ const useAPI = () => {
   const config = {
     baseURL: BASE_URL,
     withCredentials: true,
-    headers: { ContentType: 'application/json', Authorization: accessToken },
+    headers: { ContentType: 'application/json', Authorization: accessToken, refresh },
   };
 
   const axiosWithAccessToken = axios.create(config);
