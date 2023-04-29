@@ -6,12 +6,20 @@ interface InitProps {
   nickname?: string;
   username?: string;
   accessToken?: string;
+  refresh?: string;
   address?: string;
   email?: string;
 }
 
 const initialState: InitProps = {
   isLogin: false,
+  memberId: '',
+  nickname: '',
+  username: '',
+  accessToken: '',
+  refresh: '',
+  address: '',
+  email: '',
 };
 
 const loginInfoSlice = createSlice({
@@ -19,6 +27,8 @@ const loginInfoSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<InitProps>) => {
+      console.log(action.payload);
+
       return { ...state, ...action.payload };
     },
     logout: () => initialState,

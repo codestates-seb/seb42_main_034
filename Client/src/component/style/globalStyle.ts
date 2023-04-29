@@ -27,6 +27,20 @@ body {
 
  
 }
+.flex> p> img{
+  width : 100%
+}
+.flex> p{
+  width : 100%
+}
+.my-editor .ql-editor {
+  max-width: 600px; /* Change this value to your desired maximum width */
+  margin: 0 auto; /* Center the editor horizontally */
+}
+.slick-slider{
+  display:flex;
+  align-items: center;
+}
 
 @font-face {
   font-family: 'GmarketSansMedium';
@@ -34,4 +48,11 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+    font-family: 'HSSaemaul-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSSaemaul-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 `;

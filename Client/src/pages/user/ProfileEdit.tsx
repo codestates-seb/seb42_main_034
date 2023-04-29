@@ -1,6 +1,7 @@
 import Avatar from 'component/mypage/Avatar';
 import Modal from 'component/ui/editModal';
 import { handleScroll } from 'component/ui/ScrollTop';
+import useAPI from 'hooks/uesAPI';
 import { useFixInfo } from 'hooks/useFixInfo';
 import useGeolocation from 'hooks/useGeoLocation';
 import React, { useCallback } from 'react';
@@ -12,18 +13,18 @@ import styled from 'styled-components';
 import { notifi } from 'utils/notifi';
 
 function ProfileEditPage() {
+  const api = useAPI();
+
   //위치정보 수정
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
   const userInfo = useAppSelector((state) => state.persistReducer.userInfo);
-
   const location = useGeolocation().coordinates || {
     latitude: 0,
     longitude: 0,
   };
-
   //유저이미지
   const { address, avatarUrl } = userInfo;
   const [nickname, setNickname] = useState(userInfo.name);
@@ -33,9 +34,13 @@ function ProfileEditPage() {
   const { mutate } = useFixInfo({
     nickname,
     location,
-    address: address,
-    avatarUrl,
+    // address: address,
+    // avatarUrl,
   });
+
+  const changeNickName = () => {
+    api.post('/members');
+  };
 
   //닉네임
   const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +48,7 @@ function ProfileEditPage() {
   };
 
   const handleBlurNickname = () => {
-    // dispatch(updateUserInfo({ key: 'nickname', value: nickname }));
+    dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
   };
 
   useEffect(() => {
@@ -76,6 +81,7 @@ function ProfileEditPage() {
               className="check"
               onClick={() => {
                 notifi(dispatch, '사용가능한 닉네임 입니다.');
+                console.log('nickname check');
               }}
             >
               중복확인
@@ -100,6 +106,7 @@ function ProfileEditPage() {
               const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
               if (!isconfirm) return;
               mutate();
+              changeNickName();
               navigate('/board/mypage');
             }}
             className="Button"
@@ -109,7 +116,6 @@ function ProfileEditPage() {
           {isOpenModal && (
             <>
               <Modal onClickToggleModal={onClickToggleModal} />
-              <div>hihihihihihihihihihi</div>
             </>
           )}
         </ProfileEditBox>
@@ -126,7 +132,6 @@ const Layout = styled.div`
   font-size: 1.3rem;
   text-align: center;
   width: 100%;
-
   .username {
     padding-top: 2rem;
     padding-bottom: 0.5rem;
@@ -138,7 +143,6 @@ const Layout = styled.div`
     border-radius: 5px;
     border: 1px solid grey;
   }
-
   .miniTitle {
     padding-top: 2rem;
     padding-bottom: 0.5rem;
@@ -157,14 +161,13 @@ const SubTitle = styled.p`
 
 const Button = styled.button`
   font-size: 1rem;
-  color: skyblue;
+  color: black;
   background-color: white;
   border-radius: 5px;
   width: 40%;
 `;
 
 const ProfileEditBox = styled.div`
-  border: 3px solid red;
   display: flex;
   flex-direction: column;
   width: 40%;
@@ -176,7 +179,6 @@ const ProfileEditBox = styled.div`
   border-radius: 12px;
   margin-top: 120px;
   align-items: center;
-
   .check {
     border: 3px solid blue;
     width: 60px;
@@ -191,11 +193,9 @@ const ProfileEditBox = styled.div`
       color: #eaeaea;
     }
   }
-
   .nickname {
     width: 160px;
   }
-
   .image {
     box-sizing: border-box;
     width: 200px;
@@ -207,20 +207,17 @@ const ProfileEditBox = styled.div`
       border: 3px solid white;
     }
   }
-
   .Button {
     margin-top: 2.5rem;
     width: 230px;
     font-size: 16px;
     background-color: skyblue;
   }
-
   .input {
     display: flex;
     text-align: center;
     align-items: center;
   }
-
   .editicon {
     width: 20px;
     height: 20px;

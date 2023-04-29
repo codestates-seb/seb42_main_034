@@ -8,7 +8,7 @@ import { useAppDispatch } from '../redux/hooks';
 interface Member {
   [key: string]: any;
   memberId: number;
-  nickname: string;
+  nickName: string;
   username: string;
   location: {
     latitude: string;
@@ -27,10 +27,9 @@ interface FixmemberInfo {
     latitude: string | number;
     longitude: string | number;
   } | null;
-  address: string;
-  avatarUrl: string;
+  // address: string;
+  // avatarUrl: string;
 }
-
 interface GetPost {
   content: {
     [x: string]: any;
@@ -44,7 +43,7 @@ export const useMypageAPI = () => {
   const api = useAPI();
   const dispatch = useAppDispatch();
 
-  const getMemberInfo = async () => await api.get(`/members/me`).then((res) => res.data);
+  const getMemberInfo = async (id: string | undefined) => await api.get(`/members/me`).then((res) => res.data);
 
   const getMyInfo = async (id: string | undefined) =>
     await api.get<Member>(`/members/me`).then((res) => {
@@ -52,20 +51,8 @@ export const useMypageAPI = () => {
       return res.data.data;
     });
 
-  const patchFixMemberInfo = (data: FixmemberInfo) => api.patch(`/members/edit`, data);
+  const patchFixMemberInfo = (data: FixmemberInfo) => api.patch(`/members`, data);
 
-  // const getPostList = (
-  //   id: string|undefined,
-  //   index?: string|undefined,
-  // ) => {
-  //   if(index) {
-  //     return api
-  //       .get(`members/${id}/questionTitle`, {params: {index} })
-  //       .then(res => res.data);
-  //   } else {
-  //     return api.get(`/members/${id}/questionTitle`).then(res => res.data);
-  //   }
-  // }
   const getPostList = async () => {
     await api.get(`members/questionTitle`).then((res) => res.data);
   };
