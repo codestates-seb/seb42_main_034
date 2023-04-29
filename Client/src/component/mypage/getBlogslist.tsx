@@ -7,7 +7,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useAPI from "hooks/uesAPI";
 
 
-interface Post {
+interface Blogs {
   content: string;
   title: string;
   id : number;
@@ -15,27 +15,25 @@ interface Post {
 
 
 const BlogsList = () => {
-  const { id } = useAppSelector((state) => state.loginInfo);
+  const { memberId } = useAppSelector((state) => state.loginInfo);
   const { getMyInfo } = useMypageAPI();
-  const api = useAPI();
   const navigate = useNavigate();
 
-
   const { data } = useQuery({
-    queryKey: ["me"],
-    queryFn: () => getMyInfo(id),
+    queryKey: ['me'],
+    queryFn: () => getMyInfo(memberId),
     retry: false,
   });
+ const api = useAPI();
 
-
-  const { memberId} = useParams();
-  const [post, setPost] = useState<Post[]|[]>([]); 
+  const [post, setPost] = useState<Blogs[] | []>([]);
   const [pageNation, setPageNation] = useState({
     page: 1,
     totalElements: 0,
     totalPages: 0,
     size: 15,
   });
+
   const getPost = async () => {
     await api
     .get(`/members/me/blogsTitle?page=${pageNation.page}&size=10`)
@@ -49,29 +47,27 @@ const BlogsList = () => {
 
   useEffect(() => {
     getPost();
-  }, [memberId,pageNation.page])
+  }, [memberId, pageNation.page]);
+
+  const handlePostClick = (postId: any) => {
+    navigate(`/blogs/${postId}`);
+  };
 
 
-console.log(post)  
-
-const handleBlogClick = (blogsId: any) => {
-  navigate(`/blogs/`);
-};
-
+console.log(post)                               
 
   return (
   //   <MainContainer>
   //     {post.map((p) => (
   //     <Divide key={p.id}>
-  //       <p>{p.title ?? '작성한 블로그 글이 없습니다'}</p>
+  //       <p>{p.title}</p>
   //     </Divide>
   //   ))}
   //  {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
   //   </MainContainer>
-  
   <MainContainer>
   {post.map((p) => (
-    <Divide key={p.id} onClick={() => handleBlogClick(p.id)}>
+    <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
        <p>{p.title ?? '작성한 질문이 없습니다'}</p>
     </Divide>
   ))}
