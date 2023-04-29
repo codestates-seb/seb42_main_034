@@ -1,0 +1,77 @@
+import { changeUrl } from 'api/changeUrl';
+import { BlogReturnData, ReturnData, useSearch } from 'api/data';
+import Searchbar from 'component/board/Searchbar';
+import Page from 'component/Page';
+import useAPI from 'hooks/uesAPI';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { BlogData, ListData } from 'redux/boardDetails';
+import styled from 'styled-components';
+import BlogCard from './BlogCard';
+interface Category {
+  category: string;
+}
+
+export default function BlogList({ filter }: { filter: string }) {
+  const [city, setCity] = useState<BlogData[] | []>([]);
+  const api = useAPI();
+  const { SearchText } = useSearch();
+  const { category } = useParams() as { category: string };
+  const section = decodeURIComponent(category);
+  const search = useLocation().search.split('=');
+  console.log(search);
+  //enceded된 특문 -> 한국어로 변형
+  const searchData = decodeURIComponent(search[search.length - 1]);
+  const [pageNation, setPageNation] = useState({
+    page: 1,
+    totalElements: 0,
+    totalPages: 0,
+    size: 15,
+  });
+
+  useEffect(() => {
+    if (searchData) {
+      //서치데이터 쿼리스트링 있으면 서치데이터 검색
+      SearchText(section, searchData, pageNation.page, setCity, setPageNation).then((res) => {
+        console.log(res);
+      });
+    } else {
+      const getData = async () => {
+        const response: BlogReturnData = await api
+          .get('blogs', {
+            params: {
+              category: section,
+              page: pageNation.page,
+              sortedBy: 'default',
+            },
+          })
+          .then((res) => res.data);
+
+        setCity(response.data);
+        setPageNation(response.pageInfo);
+      };
+
+      getData().catch(console.error);
+    }
+  }, [filter, pageNation.page]);
+
+  return (
+    <>
+      {' '}
+      <Searchbar section="blogs" onCity={setCity} page={pageNation} onPage={setPageNation} querystring={searchData} />
+      <MainBoard>
+        {city.length > 0 &&
+          category &&
+          city.map((city) => <BlogCard city={city} key={city.blogId} region={category} />)}
+      </MainBoard>
+      {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
+    </>
+  );
+}
+const MainBoard = styled.ul`
+  flex: 1 1 auto;
+  grid-template-columns: repeat(3, 30%);
+  grid-auto-rows: 15rem;
+  gap: 0.5em;
+  padding-left: 0px;
+`;
