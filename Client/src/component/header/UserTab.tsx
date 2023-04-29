@@ -64,11 +64,14 @@ export default function UserTab() {
         </div>
       )}
       {isLogin && (
-        <div>
+        <MediaUserTab>
           <MenuTabBtn children="로그아웃" onClick={handleLogOut} className="" />
           <MenuTabBtn children="마이페이지" onClick={() => handleClick('/board/mypage')} className="" />
-        </div>
+        </MediaUserTab>
       )}
     </>
   );
 }
+const MediaUserTab = styled.div`
+  text-align: end;
+`;

@@ -10,10 +10,10 @@ type QuillEditorProps = {
   setHtmlContent: Dispatch<SetStateAction<string>>;
   width: string;
   height: string;
-  imgHandler?: any;
+  setImage: Dispatch<SetStateAction<string>>;
 };
 
-const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height, imgHandler }: QuillEditorProps) => {
+const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height, setImage }: QuillEditorProps) => {
   // Function to handle image uploads to S3
   // eslint-disable-next-line @typescript-eslint/require-await
   const imageHandlerr = async () => {
@@ -37,9 +37,10 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
       if (!file) {
         return;
       }
-
+      console.log(htmlContent);
       const url = await uploadToS3(file);
-      // console.log(url);
+      setImage(url);
+
       const range = quillRef.current?.getEditor().getSelection()?.index || 0;
       quillRef.current?.getEditor().insertEmbed(range, 'image', url);
       // if (img) {
@@ -72,6 +73,7 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
           [{ size: ['small', false, 'large', 'huge'] }, { color: [] }],
           [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }, { align: [] }],
           ['image', 'video'],
+          ['lineBreak'],
         ],
         handlers: {
           // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
@@ -110,7 +112,7 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
         modules={modules}
         formats={['image']}
         theme="snow"
-        style={{ height, width, marginBottom: '6%', maxWidth: '90%' }} // style
+        style={{ height, width, marginBottom: '6%', maxWidth: '900px' }} // style
         {...quillOptions}
       />
     </>

@@ -1,7 +1,7 @@
 import { currentLocation } from 'api/kakaoApi';
 import { constants } from 'buffer';
 import React, { useEffect } from 'react';
-import Filter from '../pages/home/Filter';
+import Filter from './home/Filter';
 import { ScreenSize } from './style/variables';
 import { MiddleLayout } from './ui/Layout';
 

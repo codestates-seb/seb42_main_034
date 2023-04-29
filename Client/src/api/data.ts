@@ -209,13 +209,30 @@ export const useLike = () => {
   };
   return { setLike, seletedQuestion, blogLikes, blogUnLikes };
 };
+//검색 API
 export const useSearch = () => {
   const api = useAPI();
-  const searchTag = async (text: string | undefined, section: string, page: number) => {
+  const searchTag = async (text: string | undefined, section: string | undefined, page: number) => {
     await api.get(`/tags/${section}?tagName=${text}&page=${page}`);
   };
-
-  return { searchTag };
+  const SearchText = async (
+    section: string,
+    text: string,
+    page: number,
+    setCity: React.Dispatch<React.SetStateAction<any>>,
+    onPage: React.Dispatch<React.SetStateAction<PageProps>>,
+  ) => {
+    await api.get(`/${section}/search?searchText=${text}&page=${page}`).then((res) => {
+      if (section === 'questions') {
+        setCity(res.data.data);
+        onPage(res.data.pageInfo);
+        console.log(res);
+      } else {
+        console.log(res);
+      }
+    });
+  };
+  return { searchTag, SearchText };
 };
 export const queryKeys = {
   data: ['region'] as const,

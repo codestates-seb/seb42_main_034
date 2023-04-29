@@ -1,5 +1,5 @@
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BoardData, queryKeys, useGetData, useLike } from 'api/data';
+import { BoardData, getFilterData, queryKeys, useGetData, useLike } from 'api/data';
 import { Colors, FontSize } from 'component/style/variables';
 import useAPI from 'hooks/uesAPI';
 import React, { useState } from 'react';
@@ -9,20 +9,21 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { Button } from 'component/ui/Button';
 import { Flex, HoverAction } from 'component/style/cssTemplete';
 import Tag from './Tags';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 export default function BoardDetail({
   section,
   data,
   detail,
 }: {
-  section?: string;
+  section: string;
   data: BoardData;
   detail: BoardData;
 }) {
   const { blogLikes } = useLike();
   const queryClient = useQueryClient();
-  const { region } = useParams();
-
+  // const { region } = useParams();
+  const search = useLocation().search.split('=');
+  const region = getFilterData();
   const [isLike, setIsLike] = useState(false);
   const { mutate } = useMutation(blogLikes, {
     onSuccess: () => {
@@ -34,20 +35,23 @@ export default function BoardDetail({
     mutate({ blogId: data.blogId, isLike });
     setIsLike(!isLike);
   };
-
+  console.log(detail);
   return (
     <>
       <Item>
         <Flex justify="start">
           {' '}
           {data.tags.map((tag) => (
-            <Tag text={tag} region={region} />
+            <Tag text={tag} region={region} section={section} />
           ))}
         </Flex>
         <Title className="title">{detail.title}</Title>
-        <div className="divide_title">
-          조회수:{detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
-        </div>
+        <Flex justify="space-between" items="center">
+          <div>작성자 : {detail.writer}</div>
+          <div className="divide_title">
+            조회수 : {detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
+          </div>
+        </Flex>
       </Item>
 
       <OverFlow>
@@ -67,23 +71,6 @@ export default function BoardDetail({
     </>
   );
 }
-const ListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-
-  .flex {
-    flex: 1 1 auto;
-    min-height: 40%;
-    width: 100%;
-    font-size: ${FontSize.md};
-    height: 28em;
-
-    padding: 1.2em;
-  }
-`;
 
 const Item = styled.div`
   border-bottom: 1px solid ${Colors.button_blue};
@@ -110,6 +97,7 @@ const Title = styled.div`
   white-space: nowrap;
   text-align: center;
   text-decoration: none;
+  margin-bottom: 0.8em;
 `;
 const LikeButton = styled(Button)`
   border: none;

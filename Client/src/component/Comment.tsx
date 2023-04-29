@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { MoveBtn } from 'pages/question/QuestionBoardList';
+import { MoveBtn } from 'pages/QuestionBoardList';
 import TextInput from './ui/Input';
 import { useReply } from 'api/data';
 import { BsArrowReturnRight } from 'react-icons/bs';

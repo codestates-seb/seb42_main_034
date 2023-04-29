@@ -43,7 +43,7 @@ const Hover = styled.div`
   text-align: center;
   position: relative;
   /* margin-bottom: 10rem; */
-  width: ${ScreenSize.max_width};
+  width: 90%;
   transition: all ease-in 400ms;
   margin-bottom: 20rem;
   border-radius: 4rem;
@@ -77,6 +77,9 @@ const LandingFrame = styled.div`
   font-size: ${FontSize.h2};
   font-weight: bold;
   color: ${Colors.text_black};
+  @media (max-width: 762px) {
+    font-size: ${FontSize.lg};
+  }
 `;
 const MessgeAbsolute = styled(Absolute)`
   z-index: 4;

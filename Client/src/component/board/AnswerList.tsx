@@ -5,7 +5,7 @@ import TextInput from 'component/ui/Input';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 import { MdOutlineTaskAlt } from 'react-icons/md';
-import { MoveBtn } from 'pages/question/QuestionBoardList';
+import { MoveBtn } from 'pages/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 import { AnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -135,7 +135,7 @@ export default function AnswerList({
               answer.comments.map((comment, idx) => <Comment key={idx} comment={comment} getAnswer={getAnswer} />)}
           </div>
           <form onSubmit={handlePost}>
-            <TextInput type="comment" placeholder="댓글을 입력해주세요" setState={setComment} />
+            <ReplyInput type="comment" placeholder="댓글을 입력해주세요" setState={setComment} />
 
             <MoveBtn children="작성" />
           </form>
@@ -156,8 +156,6 @@ const AnswerContainer = styled.ul`
 `;
 const AnswerItem = styled.li`
   padding: 20px;
-
-  margin-bottom: 20px;
   border-bottom: 1px solid black;
 `;
 const AnswerContent = styled.div`
@@ -180,4 +178,12 @@ const StyledBtn = styled(Button)`
 `;
 const AnswerTop = styled(Flex)`
   padding-left: 1.5em;
+`;
+const ReplyInput = styled(TextInput)`
+  height: 6em;
+  width: 60%;
+  margin-top: 0.4em;
+`;
+const ReplyForm = styled.form`
+  text-align: center;
 `;

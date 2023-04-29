@@ -2,7 +2,8 @@ import React from 'react';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 import Slider, { Settings } from 'react-slick';
-
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -37,6 +38,8 @@ function Slick({ slidesToShow, children, className, autoplay = true, speed = 300
       //   className: 'center',
       //   centerMode: true,
       //   centerPadding: '60px',
+      prevArrow: <PrevArrow direction="left" />,
+      nextArrow: <NextArrow direction="right" />,
     }),
     [autoplay, loop, speed],
   );
@@ -47,4 +50,31 @@ function Slick({ slidesToShow, children, className, autoplay = true, speed = 300
   );
 }
 
+const PrevArrow = ({
+  direction,
+  onClick,
+}: {
+  direction: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}) => (
+  <StyledArrow className={`slick-arrow slick-${direction}`} onClick={onClick}>
+    <AiOutlineArrowLeft />
+  </StyledArrow>
+);
+const NextArrow = ({
+  direction,
+  onClick,
+}: {
+  direction: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}) => (
+  <StyledArrow className={`slick-arrow slick-${direction}`} onClick={onClick}>
+    <AiOutlineArrowRight />
+  </StyledArrow>
+);
 export default Slick;
+const StyledArrow = styled.button`
+  border: none;
+  background: none;
+  height: 2rem;
+`;

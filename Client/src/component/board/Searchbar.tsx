@@ -5,7 +5,7 @@ import { Colors } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
 import { Icon } from 'component/ui/Icon';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BlogData, ListData, PageProps } from 'redux/boardDetails';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../../image/search.svg';
@@ -34,24 +34,32 @@ export default function Searchbar({
   const { getData } = useGetData();
   const data = useLocation();
   console.log(data);
-
-  const { searchTag } = useSearch();
+  const navigate = useNavigate();
+  const { searchTag, SearchText } = useSearch();
   const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchData(changeUrl(e.target.value));
   };
+  const { category } = useParams();
+
   useEffect(() => {
     //서치데이터일때
     if (querystring) {
       setSearchData(changeUrl(querystring));
+      SearchText(section, changeUrl(querystring), page.page, onCity, onPage).then((res) => {
+        console.log(res);
+      });
     }
   }, []);
+
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //페이지함수 넣어야하는지 말아야하는지 모르겠음
-    searchTag(searchData, section.slice(0, -1), page.page)
+
+    SearchText(section, decodeURIComponent(searchData), page.page, onCity, onPage)
       .then((res) => {
         // onCity(res.data.data);
         console.log(res);
+        navigate(`/board/boardlist/${section}/${category}?search=${searchData}`);
       })
       .catch(console.error);
   };

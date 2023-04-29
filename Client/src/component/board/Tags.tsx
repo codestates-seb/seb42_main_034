@@ -1,4 +1,4 @@
-import { useSearch } from 'api/data';
+import { getFilterData, useSearch } from 'api/data';
 import React, { useState, KeyboardEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -18,20 +18,21 @@ type TagInputProps = {
   removeTag: (index: number) => void;
 };
 
-export default function Tag({ text, region }: { text: string; region: string | undefined }) {
-  const [inputValue, setInputValue] = useState<string>('');
+export default function Tag({ section, text, region }: { section: string; text: string; region: string | undefined }) {
   const textRef = useRef<HTMLButtonElement>(null);
   const { searchTag } = useSearch();
   const navigate = useNavigate();
+
   const handleSearch = () => {
     /**1.전페이지로 이동
      * 2. search한 내용을 querystirng으로 받아올수있으면 서치태그에 집어 넣어서 검 색
      * 3. 질문인지 블로그인지 태그에 받고 페이지네이션
      
     */
+
     const searchText = textRef.current?.innerText.slice(1);
-    searchTag(searchText, 'blogs', 1);
-    navigate(`/board/boardlist/blogs/${region}?search=${searchText}`);
+    searchTag(searchText, section.slice(0, -1), 1);
+    navigate(`/board/boardlist/${section}/${region}?tag=${searchText}`);
   };
   return <StyledTagBtn onClick={handleSearch} ref={textRef} children={`#${text}`} />;
 }
