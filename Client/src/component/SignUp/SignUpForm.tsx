@@ -377,7 +377,6 @@ const SubmitButton = styled(Nbutton)`
   text-decoration: none;
   text-align: center;
   width: 100%;
-  border: solid 1px red;
   align-items: center;
   overflow: hidden;
   margin-top: 20px;

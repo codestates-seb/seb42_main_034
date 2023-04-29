@@ -1,6 +1,7 @@
 import Avatar from "component/mypage/Avatar";
 import Modal from "component/ui/editModal";
 import { handleScroll } from "component/ui/ScrollTop";
+import useAPI from "hooks/uesAPI";
 import { useFixInfo } from "hooks/useFixInfo";
 import useGeolocation from "hooks/useGeoLocation";
 import React, { useCallback } from "react";
@@ -13,6 +14,9 @@ import { notifi } from "utils/notifi";
 
 
 function ProfileEditPage() {
+
+    const api =useAPI();
+
     //위치정보 수정
     const [isOpenModal, setOpenModal] = useState<boolean>(false);
     const onClickToggleModal = useCallback(() => {
@@ -25,26 +29,32 @@ function ProfileEditPage() {
         longitude: 0,
     };
 
+
     //유저이미지
     const {address, avatarUrl} = userInfo;
-    const [nickName, setNickname] = useState(userInfo.name);
+    const [nickname, setNickname] = useState(userInfo.name);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const {mutate} = useFixInfo({
-        nickName,
+        nickname,
         location,
-        address: address,
-        avatarUrl,
+        // address: address,
+        // avatarUrl,
     })
+
+    const changeNickName = () => {
+        api.post('/members', )
+    }
 
     //닉네임
     const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNickname(e.target.value);
+
     }
 
     const handleBlurNickname = () => {
-        dispatch(updateUserInfo({ key: 'nickName', value: nickName }));
+        dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
       }
 
     useEffect(() => {
@@ -69,7 +79,7 @@ function ProfileEditPage() {
                             placeholder="수정할 닉네임을 작성하세요(15자이하)"
                             disabled={false}
                             type="nickname"
-                            value={nickName}
+                            value={nickname}
                             onChange={handleChangeNickname}
                             onBlur={handleBlurNickname}
                             maxLength={15}
@@ -79,6 +89,7 @@ function ProfileEditPage() {
                         className="check"
                         onClick={() => {
                             notifi(dispatch, '사용가능한 닉네임 입니다.');
+                            console.log('nickname check')
                         }}
                         >
                         중복확인
@@ -103,8 +114,8 @@ function ProfileEditPage() {
                             const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
                             if(!isconfirm) return;
                             mutate();
+                            changeNickName();
                             navigate('/board/mypage')
-                            console.log(useFixInfo)
                         }}
                         className="Button"
                         

@@ -22,13 +22,13 @@ interface Member {
 }
 
 interface FixmemberInfo {
-  nickName: string;
+  nickname: string;
   location: {
     latitude: string|number;
     longitude: string|number;
   } | null;
-  address: string;
-  avatarUrl: string;
+  // address: string;
+  // avatarUrl: string;
 }
 interface GetPost {
   content: {

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useMypageAPI } from "api/mypage";
 import { useAppSelector } from "redux/hooks";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useAPI from "hooks/uesAPI";
 
 
@@ -17,6 +17,8 @@ interface Post {
 const PostList = () => {
   const { id } = useAppSelector((state) => state.loginInfo);
   const { getMyInfo } = useMypageAPI();
+  const navigate = useNavigate();
+
   const { data } = useQuery({
     queryKey: ["me"],
     queryFn: () => getMyInfo(id),
@@ -32,6 +34,7 @@ const PostList = () => {
     totalPages: 0,
     size: 15,
   });
+
   const getPost = async () => {
     await api
     .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
@@ -47,18 +50,30 @@ const PostList = () => {
     getPost();
   }, [memberId,pageNation.page])
 
+  const handlePostClick = (postId: any) => {
+    navigate(`/posts/${postId}`);
+  };
+
 
 console.log(post)                               
 
   return (
-    <MainContainer>
-      {post.map((p) => (
-      <Divide key={p.id}>
-        <p>{p.title}</p>
-      </Divide>
-    ))}
-   {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
-    </MainContainer>
+  //   <MainContainer>
+  //     {post.map((p) => (
+  //     <Divide key={p.id}>
+  //       <p>{p.title}</p>
+  //     </Divide>
+  //   ))}
+  //  {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
+  //   </MainContainer>
+  <MainContainer>
+  {post.map((p) => (
+    <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
+       <p>{p.title ?? '작성한 질문이 없습니다'}</p>
+    </Divide>
+  ))}
+  {/* ... */}
+</MainContainer>
   );
 };
 

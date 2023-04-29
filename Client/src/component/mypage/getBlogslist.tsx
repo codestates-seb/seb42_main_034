@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useMypageAPI } from "api/mypage";
 import { useAppSelector } from "redux/hooks";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useAPI from "hooks/uesAPI";
 
 
@@ -17,12 +17,16 @@ interface Post {
 const BlogsList = () => {
   const { id } = useAppSelector((state) => state.loginInfo);
   const { getMyInfo } = useMypageAPI();
+  const api = useAPI();
+  const navigate = useNavigate();
+
+
   const { data } = useQuery({
     queryKey: ["me"],
     queryFn: () => getMyInfo(id),
     retry: false,
   });
- const api = useAPI();
+
 
   const { memberId} = useParams();
   const [post, setPost] = useState<Post[]|[]>([]); 
@@ -48,17 +52,31 @@ const BlogsList = () => {
   }, [memberId,pageNation.page])
 
 
-console.log(post)                               
+console.log(post)  
+
+const handleBlogClick = (blogsId: any) => {
+  navigate(`/blogs/`);
+};
+
 
   return (
-    <MainContainer>
-      {post.map((p) => (
-      <Divide key={p.id}>
-        <p>{p.title ?? '작성한 블로그 글이 없습니다'}</p>
-      </Divide>
-    ))}
-   {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
-    </MainContainer>
+  //   <MainContainer>
+  //     {post.map((p) => (
+  //     <Divide key={p.id}>
+  //       <p>{p.title ?? '작성한 블로그 글이 없습니다'}</p>
+  //     </Divide>
+  //   ))}
+  //  {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
+  //   </MainContainer>
+  
+  <MainContainer>
+  {post.map((p) => (
+    <Divide key={p.id} onClick={() => handleBlogClick(p.id)}>
+       <p>{p.title ?? '작성한 질문이 없습니다'}</p>
+    </Divide>
+  ))}
+  {/* ... */}
+</MainContainer>
   );
 };
 
