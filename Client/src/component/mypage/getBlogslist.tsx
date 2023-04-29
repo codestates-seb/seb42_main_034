@@ -13,29 +13,32 @@ interface Post {
   id : number;
 }
 
-const PostList = () => {
-  const { memberId } = useAppSelector((state) => state.loginInfo);
+
+const BlogsList = () => {
+  const { id } = useAppSelector((state) => state.loginInfo);
   const { getMyInfo } = useMypageAPI();
+  const api = useAPI();
   const navigate = useNavigate();
 
+
   const { data } = useQuery({
-    queryKey: ['me'],
-    queryFn: () => getMyInfo(memberId),
+    queryKey: ["me"],
+    queryFn: () => getMyInfo(id),
     retry: false,
   });
- const api = useAPI();
 
-  const [post, setPost] = useState<Post[] | []>([]);
+
+  const { memberId} = useParams();
+  const [post, setPost] = useState<Post[]|[]>([]); 
   const [pageNation, setPageNation] = useState({
     page: 1,
     totalElements: 0,
     totalPages: 0,
     size: 15,
   });
-
   const getPost = async () => {
     await api
-    .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
+    .get(`/members/me/blogsTitle?page=${pageNation.page}&size=10`)
     .then(resp => {
       setPost(resp.data.data);
     })
@@ -46,27 +49,29 @@ const PostList = () => {
 
   useEffect(() => {
     getPost();
-  }, [memberId, pageNation.page]);
-
-  const handlePostClick = (postId: any) => {
-    navigate(`/posts/${postId}`);
-  };
+  }, [memberId,pageNation.page])
 
 
-console.log(post)                               
+console.log(post)  
+
+const handleBlogClick = (blogsId: any) => {
+  navigate(`/blogs/`);
+};
+
 
   return (
   //   <MainContainer>
   //     {post.map((p) => (
   //     <Divide key={p.id}>
-  //       <p>{p.title}</p>
+  //       <p>{p.title ?? '작성한 블로그 글이 없습니다'}</p>
   //     </Divide>
   //   ))}
   //  {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
   //   </MainContainer>
+  
   <MainContainer>
   {post.map((p) => (
-    <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
+    <Divide key={p.id} onClick={() => handleBlogClick(p.id)}>
        <p>{p.title ?? '작성한 질문이 없습니다'}</p>
     </Divide>
   ))}
@@ -94,4 +99,4 @@ const Divide = styled.div`
   justify-content: center;
 `
 
-export default PostList;
+export default BlogsList;

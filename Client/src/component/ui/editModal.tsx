@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { useAppDispatch } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
 import useAPI from 'hooks/uesAPI';
-import axios from 'axios';
 
 interface ModalDefaultType {
   onClickToggleModal: () => void;
@@ -34,11 +33,8 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
         const address = response.results[4].formatted_address;
         const location = { latitude, longitude };
         setAd(address.slice(5));
-        api.post('/location', { latitude, longitude });
-        api.post('/location', location);
-        console.log(address);
-        console.log(location);
-        //body: JSON.stringify({ latitude: latitude, longitude: longitude, address: ad })
+        api.post(`/location?latitude=${latitude}&longitude=${longitude}`);
+ 
       },
       (error) => {
         console.log(error);
@@ -47,50 +43,39 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
     );
   };
 
-  api.post(`/location`, { latitude, longitude });
 
-  // fetch('/location', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({ latitude: latitude, longitude: longitude, address: ad })
-  // })
-  // .then(response => {
-  //   // 서버로부터의 응답 처리
-  // })
-  // .catch(error => {
-  //   // 오류 처리
-  // });
+
 
   return (
     <Layout>
       <Dialog>
         {children}
         <h1>현재 계신 위치로 도시가 설정 됩니다. 동의 하시겠습니까?</h1>
-        <div className="currentplace">{location.loaded ? ad : '현재 위치를 확인 중입니다.'}</div>
-        <div className="btn">
-          <Button
-            className="btn1"
-            onClick={() => {
-              dispatch(updateUserInfo({ key: 'address', value: ad }));
-              onClickToggleModal();
-            }}
-          >
-            예
-          </Button>
-
-          <Button
-            className="btn2"
-            onClick={() => {
-              if (onClickToggleModal) {
-                onClickToggleModal();
-              }
-            }}
-          >
-            아니오
-          </Button>
+        <div className='currentplace'>
+      {location.loaded ? ad : '현재 위치를 확인 중입니다.'}
         </div>
+    <div className='btn'>
+      <Button
+      className='btn1'
+      onClick={() => {
+        dispatch(updateUserInfo({  key: 'address', value: ad}));
+        onClickToggleModal();
+      }}
+      >
+        Y
+      </Button>
+
+      <Button
+      className='btn2'
+      onClick={() => {
+        if(onClickToggleModal) {
+          onClickToggleModal();
+        }
+      }}
+      >
+        N
+      </Button>
+      </div>
       </Dialog>
     </Layout>
   );
@@ -114,7 +99,7 @@ const Dialog = styled.dialog`
   justify-content: center;
   border: none;
   border-radius: 4px;
-  background-color: white;
+  background-color: skyblue;
   z-index: 9999;
 
   h1 {

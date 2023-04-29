@@ -10,11 +10,12 @@ interface FixmemberInfo {
         latitude: string | number;
         longitude: string | number;
     };
-    address: string;
-    avatarUrl: string;
+    // address: string;
+    // avatarUrl: string;
 }
 
 export const useFixInfo = (content: FixmemberInfo) => {
+
     const {patchFixMemberInfo} = useMypageAPI();
     const dispatch = useAppDispatch();
     const queryClient = useQueryClient(); 
