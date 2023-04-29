@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface InitProps {
   [key: string]: any;
   memberId: number;
-  nickname: string;
+  nickName: string;
   location: {
     latitude: string;
     longitude: string;
@@ -17,7 +17,7 @@ interface Location {
 }
 export const initialState: InitProps = {
   memberId: 0,
-  nickname: '',
+  nickName: '',
   location: {
     latitude: '',
     longitude: '',

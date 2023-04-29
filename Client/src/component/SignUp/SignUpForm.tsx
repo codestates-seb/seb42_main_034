@@ -5,7 +5,6 @@ import Nbutton from 'component/ui/NButton';
 import styled from 'styled-components';
 import React from 'react';
 import { keyframes } from 'styled-components';
-// import CurrentPosition from './CurrentPosition';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import useAPI from 'hooks/uesAPI';
@@ -26,6 +25,7 @@ export const SignUpForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const api = useAPI();
+
   // 아이디 유효성 검사 ( email )
   const handleChangeEmail = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const emailRegex =
@@ -62,22 +62,6 @@ export const SignUpForm = () => {
     Swal.fire('', '사용 가능한 닉네임입니다.');
     // notifi(dispatch, '사용 가능한 닉네임입니다.')
   };
-  // const handleCheckNickname = async () => {
-  //   await AxiosCustom
-  //     .post(`/members/nickname`, {
-  //       nickname,
-  //     })
-  //     .then(res => {
-  //       if (res.status === 200) {
-  //         Swal.fire('', '사용가능한 닉네임 입니다.');
-  //       }
-  //     })
-  //     .catch(error => {
-  //       Swal.fire('', '사용가능한 닉네임 입니다.');
-  //       setIsNickname(false);
-  //       console.log(error);
-  //     });
-  // };
 
   // 비밀번호 유효성 검사
   const handleChangePassword = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,8 +153,6 @@ export const SignUpForm = () => {
           <StyledInput type="password" id="pw-check" onChange={handleChangePwCheck}></StyledInput>
           {pwcheck.length > 0 && <span className={`message ${isPwCheck ? 'success' : 'error'}`}>{pwCheckMessage}</span>}
         </PWContainer>
-
-        {/* <CurrentPosition /> */}
       </FormWrapper>
       <SubmitButton id="join" type="submit">
         <span></span>
@@ -335,7 +317,6 @@ const SubmitButton = styled(Nbutton)`
   text-decoration: none;
   text-align: center;
   width: 100%;
-  border: solid 1px red;
   align-items: center;
   overflow: hidden;
   margin-top: 20px;

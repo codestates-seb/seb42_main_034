@@ -11,6 +11,7 @@ import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
 import { useState } from 'react';
 import PostList from 'component/mypage/getPostlist';
+import BlogsList from 'component/mypage/getBlogslist';
 
 export default function MyPage() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function MyPage() {
     return (
       <>
         <TabStyled onClick={() => handleTabClick(0)}>작성한 질문</TabStyled>
-        <TabStyled onClick={() => handleTabClick(1)}>작성한 답변</TabStyled>
+        <TabStyled onClick={() => handleTabClick(1)}>작성한 블로그 글</TabStyled>
         <TabStyled onClick={() => handleTabClick(2)}>작성한 댓글</TabStyled>
       </>
     );
@@ -48,13 +49,17 @@ export default function MyPage() {
     switch (activeTab) {
       case 0:
         return (
-          <div>
-            작성한 글을 찾을 수 없습니다.
+          <>
             <PostList />
-          </div>
+          </>
         );
       case 1:
-        return <div>작성한 답변을 찾을 수 없습니다.</div>;
+        return (
+          <>
+            <BlogsList />
+          </>
+        );
+
       case 2:
         return <div>작성한 댓글을 찾을 수 없습니다.</div>;
       default:
@@ -82,7 +87,7 @@ export default function MyPage() {
             </p>
             <div className="editprofile">
               <p className="editbtn" onClick={linkEditPage}>
-                수정하기
+                프로필 수정하기 및 도시인증 하기
               </p>
               <FiEdit className="editbtnImg" onClick={linkEditPage} />
             </div>
@@ -134,6 +139,7 @@ const ProfileContainer = styled.div`
     right: 0;
     padding-left: 10px;
     cursor: pointer;
+    padding-top: 20px;
   }
 `;
 const UserInfoContainer = styled.div`
