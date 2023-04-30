@@ -79,10 +79,13 @@ const MainContainer = styled.div`
 const Divide = styled.div`
   padding: 3px 0;
   width: 100%;
-  border-bottom: 3px solid skyblue;
+  height: 2rem;
   align-items: center;
   display: flex;
   justify-content: center;
+  border: solid 2px skyblue;
+  border-bottom: 3px solid skyblue;
+  border-radius: 18px;
 `
 
 export default PostList;

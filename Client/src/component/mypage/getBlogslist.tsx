@@ -65,7 +65,7 @@ const BlogsList = () => {
       {post.length > 0 ? (
         post.map((p) => (
           <Divide key={p.id} onClick={() => handleBlogClick(p.blogId)}>
-            <p>{p.title ?? "작성한 질문이 없습니다"}</p>
+            <p>{p.title ?? "작성한 질문이 없습니다"}</p>  
           </Divide>
         ))
       ) : (
@@ -77,7 +77,6 @@ const BlogsList = () => {
 
 
 const MainContainer = styled.div`
-  border: solid 1px red;
   width: 50%;
   height: 100%;
   display: flex;
@@ -88,13 +87,15 @@ const MainContainer = styled.div`
 `;
 
 const Divide = styled.div`
-  border: solid 1px blue;
+  height: 2rem;
   padding: 3px 0;
   width: 100%;
-  border-bottom: 3px solid skyblue;
   align-items: center;
   display: flex;
   justify-content: center;
+  border: solid 2px skyblue;
+  border-bottom: 3px solid skyblue;
+  border-radius: 18px;
 `
 
 export default BlogsList;
