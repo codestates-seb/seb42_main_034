@@ -68,7 +68,11 @@ export default function BlogList({ filter }: { filter: string }) {
     <>
       {' '}
       <Searchbar section="blogs" onCity={setCity} page={pageNation} onPage={setPageNation} />
-      <MainBoard>{city.length > 0 && city.map((city) => <BlogCard city={city} key={city.blogId} />)}</MainBoard>
+      <MainBoard>
+        {city.length > 0 && city.map((city) =>
+         <BlogCard city={city} key={city.blogId} />
+         )}
+        </MainBoard>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </>
   );

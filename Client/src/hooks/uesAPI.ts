@@ -21,7 +21,7 @@ const useAPI = () => {
 
   axiosWithAccessToken.interceptors.response.use(
     (seccess) => {
-      console.log(seccess);
+      // console.log(seccess);
       //요청이 다 성공으로 가지고있음
       return seccess;
     },

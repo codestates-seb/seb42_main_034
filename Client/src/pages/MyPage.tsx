@@ -12,6 +12,7 @@ import { logout } from 'redux/userSlice';
 import { useState } from 'react';
 import PostList from 'component/mypage/getPostlist';
 import BlogsList from 'component/mypage/getBlogslist';
+import { BlogData } from 'redux/boardDetails';
 
 
 export default function MyPage() {
@@ -20,6 +21,7 @@ export default function MyPage() {
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
+  const [city, setCity] = useState<BlogData[] | []>([]);
 
   const linkEditPage = () => {
     navigate('/board/mypage/edit');

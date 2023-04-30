@@ -35,45 +35,36 @@ const PostList = () => {
 
   const getPost = async () => {
     await api
-    .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
-    .then(resp => {
-      setPost(resp.data.data);
+    .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)  // 이 부분 api 필요함
+    .then((resp) => {
+      setPost(resp.data.data.map((p: Post) => ({ ...p, id: p.id })));
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
-    }) 
+    });
   }
+
 
   useEffect(() => {
     getPost();
   }, [memberId, pageNation.page]);
 
-  const handlePostClick = (postId: any) => {
-    navigate(`/posts/${postId}`);
+  const handlePostClick = (postId: number) => {
+    navigate(`/board/questionsdetails/${postId}`);
   };
 
-
-console.log(post)                               
-
+                            
   return (
-  //   <MainContainer>
-  //     {post.map((p) => (
-  //     <Divide key={p.id}>
-  //       <p>{p.title}</p>
-  //     </Divide>
-  //   ))}
-  //  {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
-  //   </MainContainer>
-  <MainContainer>
-  {post.map((p) => (
-    <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
-       <p>{p.title ?? '작성한 질문이 없습니다'}</p>
-    </Divide>
-  ))}
-  {/* ... */}
-</MainContainer>
+    <MainContainer>
+      {post.map((p) => (
+        <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
+          <p>{p.title ?? '작성한 질문이 없습니다'}</p>
+        </Divide>
+      ))}
+    </MainContainer>
   );
 };
+
 
 const MainContainer = styled.div`
   width: 50%;
