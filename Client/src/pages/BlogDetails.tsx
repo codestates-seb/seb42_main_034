@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import BoardDetail from '../component/board/BoardDetail';
 
 import { BoardData, useGetData } from 'api/data';
 import { useQuery } from '@tanstack/react-query';
@@ -13,6 +12,7 @@ import { Flex } from 'component/style/cssTemplete';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import BlogAnswer from '../component/blog/BlogAnswer';
 import useAPI from 'hooks/uesAPI';
+import BoardDetail from 'component/board/BoardDetail';
 
 export default function BlogDetails() {
   const data: BoardData = useLocation().state;

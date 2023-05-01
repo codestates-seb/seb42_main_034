@@ -31,11 +31,13 @@ export default function MyPage() {
     retry: false,
   });
   console.log(data);
+
   useEffect(() => {
     if (isLogin === false) {
       navigate(`/`);
     }
   }, [isLogin]);
+
   const [activeTab, setActiveTab] = useState<number>(0);
   const handleTabClick = (index: number) => {
     setActiveTab(index);

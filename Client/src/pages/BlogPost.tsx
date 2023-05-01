@@ -2,12 +2,12 @@ import React, { useRef, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import useAPI from '../../hooks/uesAPI';
 import { useAppSelector } from 'redux/hooks';
 
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
 import { MoveBtn } from 'pages/QuestionBoardList';
+import useAPI from 'hooks/uesAPI';
 const PostWrapper = styled.div`
   display: flex;
   align-items: center;
