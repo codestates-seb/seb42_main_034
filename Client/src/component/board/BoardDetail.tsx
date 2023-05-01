@@ -30,7 +30,7 @@ export default function BoardDetail({
       queryClient.invalidateQueries(queryKeys.data);
     },
   });
-
+  //dddd
   const handleLikes = () => {
     mutate({ blogId: data.blogId, isLike });
     setIsLike(!isLike);

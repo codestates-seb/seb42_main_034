@@ -49,7 +49,7 @@ export default function BlogAnswer({ blogId }: { blogId: number | string | undef
   useEffect(() => {
     getAnswer().catch(console.error);
   }, []);
-
+  console.log(answer);
   return (
     <AnswerWrapper>
       {/* <h3>답변내용 ( 답변 수 : {answer.length} )</h3> */}
@@ -75,6 +75,7 @@ export default function BlogAnswer({ blogId }: { blogId: number | string | undef
     </AnswerWrapper>
   );
 }
+
 const StyledForm = styled.form`
   width: 100%;
   display: flex;

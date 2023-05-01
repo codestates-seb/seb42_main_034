@@ -70,7 +70,6 @@ const PostList = () => {
           <p>{p.title ?? '작성한 질문이 없습니다'}</p>
         </Divide>
       ))}
-      {/* ... */}
     </MainContainer>
   );
 };

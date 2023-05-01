@@ -21,18 +21,15 @@ export default function Filter({
 }): JSX.Element {
   const navigate = useNavigate();
   const [data, setData] = useState('');
-  const { isLogin } = useAppSelector((state) => state.loginInfo);
+
   useEffect(() => {
     setState(filter);
   }, []);
   const handleBtnClick = () => {
     //해당지역으로이동
-    if (isLogin) {
-      navigate(`/board/boardlist/questions/${citys.city}`, { state: citys.url });
-      localStorage.setItem('filter', JSON.stringify(citys.city));
-    } else {
-      alert('로그인을 해주세요!');
-    }
+
+    navigate(`/board/boardlist/questions/${citys.city}`, { state: citys.url });
+    localStorage.setItem('filter', JSON.stringify(citys.city));
   };
 
   return (
