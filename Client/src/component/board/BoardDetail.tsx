@@ -10,15 +10,7 @@ import { Button } from 'component/ui/Button';
 import { Flex, HoverAction } from 'component/style/cssTemplete';
 import Tag from './Tags';
 import { useLocation, useParams } from 'react-router-dom';
-export default function BoardDetail({
-  section,
-  data,
-  detail,
-}: {
-  section: string;
-  data: BoardData;
-  detail: BoardData;
-}) {
+export default function BoardDetail({ section, detail }: { section: string; detail: BoardData }) {
   const { blogLikes } = useLike();
   const queryClient = useQueryClient();
   // const { region } = useParams();
@@ -32,7 +24,7 @@ export default function BoardDetail({
   });
   //dddd
   const handleLikes = () => {
-    mutate({ blogId: data.blogId, isLike });
+    mutate({ blogId: detail.blogId, isLike });
     setIsLike(!isLike);
   };
   console.log(detail);
@@ -41,7 +33,7 @@ export default function BoardDetail({
       <Item>
         <Flex justify="start">
           {' '}
-          {data.tags.map((tag) => (
+          {detail.tags.map((tag) => (
             <Tag text={tag} region={region} section={section} />
           ))}
         </Flex>
@@ -49,7 +41,7 @@ export default function BoardDetail({
         <Flex justify="space-between" items="center">
           <div>작성자 : {detail.writer}</div>
           <div className="divide_title">
-            조회수 : {detail.viewCnt} | 작성시간: {data.createdAt.split('T')[0]}{' '}
+            조회수 : {detail.viewCnt} | 작성시간: {detail.createdAt.split('T')[0]}{' '}
           </div>
         </Flex>
       </Item>

@@ -24,8 +24,7 @@ export default function ModifyBlog() {
   const [tags, setTags] = useState<string[]>(data.detail.tags);
   const handlePatch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    await putBoardData('blogs', data.data.blogId, { title, content, tags, image: null });
+    await putBoardData('blogs', data.detail.blogId, { title, content, tags, image: null });
     navigate(-1);
   };
   const handleEnter = (e: React.ChangeEvent<HTMLInputElement>) => {

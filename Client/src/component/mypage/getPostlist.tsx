@@ -50,7 +50,7 @@ const PostList = () => {
   }, [memberId, pageNation.page]);
 
   const handlePostClick = (postId: any) => {
-    navigate(`/posts/${postId}`);
+    navigate(`/board/questionsdetails/${postId}`);
   };
 
   console.log(post);

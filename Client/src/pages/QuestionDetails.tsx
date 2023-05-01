@@ -1,5 +1,7 @@
 import React from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import BoardDetail from '../component/board/BoardDetail';
 
 import { BoardData, CRUDdata, getFilterData, useGetData } from 'api/data';
@@ -16,13 +18,15 @@ export default function QuestionDetails() {
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
   const { deleteBoardData } = useGetData();
-
+  const { id } = useParams() as { id: string };
+  const questionId = Number(id);
+  console.log();
   const { getBoardData, getAnswerData } = useGetData();
   const {
     isLoading,
     error,
     data: detail,
-  } = useQuery(['region', data] as const, async () => await getBoardData(data.questionId, 'questions'), {
+  } = useQuery(['region', data] as const, async () => await getBoardData(questionId, 'questions'), {
     staleTime: 1000 * 15,
   });
   // useEffect(() => {
@@ -37,13 +41,16 @@ export default function QuestionDetails() {
           <MoveBtn
             children="수정"
             onClick={() => {
-              navigate(`/board/modifyquestion/${data.questionId}`, { state: { data, detail } });
+              navigate(`/board/modifyquestion/${questionId}`, { state: { detail } });
+
             }}
           />
           <MoveBtn
             children="삭제"
             onClick={() => {
-              deleteBoardData(data.questionId, memberId, 'questions')
+
+              deleteBoardData(questionId, memberId, 'questions')
+
                 .then((res) => {
                   navigate(-1);
                 })
@@ -54,10 +61,11 @@ export default function QuestionDetails() {
       )}
       <div>질문 </div>
       {isLoading && <div>로딩중..</div>}
-      {data && detail && (
+      {detail && (
         <>
-          <BoardDetail data={data} detail={detail} section="questions" />
-          <Answer questionId={data.questionId} writerId={detail.memberId} />
+          <BoardDetail detail={detail} section="questions" />
+          <Answer questionId={questionId} writerId={detail.memberId} />
+
         </>
       )}
     </>
