@@ -85,6 +85,13 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
+  &:hover {
+    background: #0583c6;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+    border-radius: 18px;
+  }
 `;
 
 const Divide = styled.div`

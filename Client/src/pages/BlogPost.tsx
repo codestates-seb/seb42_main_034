@@ -88,8 +88,8 @@ export default function BlogPost() {
         <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
         <ResizeEditor
           setImage={setImage}
-          width="70%"
           height="100%"
+          width="100%"
           quillRef={quillRef}
           htmlContent={content}
           setHtmlContent={setContent}

@@ -1,5 +1,5 @@
 import { useGetData, useLike } from 'api/data';
-import { MoveBtn } from 'pages/question/QuestionBoardList';
+import { MoveBtn } from 'pages/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -113,8 +113,9 @@ export default function Answer({
                 onAnswer={setAnswer}
                 onDelete={deleteAnswer}
                 writerId={writerId}
-                onLike={handleLike}
-              />
+                onLike={handleLike} getAnswer={function (): Promise<void> {
+                  throw new Error('Function not implemented.');
+                } }              />
             ))}
           {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
         </>
