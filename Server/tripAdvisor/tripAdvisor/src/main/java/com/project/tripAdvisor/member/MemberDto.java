@@ -63,6 +63,7 @@ public class MemberDto {
     @Setter
     @AllArgsConstructor
     public static class MemberQuestionResponse{
+        private Long id;
         private String title;
     }
 
@@ -70,6 +71,7 @@ public class MemberDto {
     @Setter
     @AllArgsConstructor
     public static class MemberBlogResponse{
+        private Long id;
         private String title;
     }
 
