@@ -1,3 +1,4 @@
+import { FontSize } from 'component/style/variables';
 import useAPI from 'hooks/uesAPI';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -22,6 +23,8 @@ const LogoLink = styled.div<{ nav?: number }>`
   .logo {
     position: absolute;
     z-index: 0;
+    font-family: 'HSSaemaul-Regular';
+    font-size: ${FontSize.h2};
   }
 `;
 const LogoImg = styled(Icon)<{ svg: React.ReactNode }>`

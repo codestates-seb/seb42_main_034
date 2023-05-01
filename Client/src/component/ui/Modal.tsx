@@ -1,10 +1,24 @@
 import { Props } from 'component/header/Logo';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Button } from './Button';
 import { LayoutProps } from './Layout';
-
+import { AiFillCloseCircle } from 'react-icons/ai';
 export default function Modal({ children }: LayoutProps) {
-  return <ModalBackground>{children}</ModalBackground>;
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+  return (
+    <>
+      {isOpen && (
+        <ModalBackground>
+          <Button children={<AiFillCloseCircle />} />
+          {children}
+        </ModalBackground>
+      )}
+    </>
+  );
 }
 const ModalBackground = styled.div`
   width: 100%;

@@ -30,7 +30,6 @@ interface FixmemberInfo {
   // address: string;
   // avatarUrl: string;
 }
-
 interface GetPost {
   content: {
     [x: string]: any;
@@ -52,9 +51,7 @@ export const useMypageAPI = () => {
       return res.data.data;
     });
 
-      const patchFixMemberInfo = (data: FixmemberInfo) =>
-      api.patch(`/members`, data)
-
+  const patchFixMemberInfo = (data: FixmemberInfo) => api.patch(`/members`, data);
 
       // const getPostList = (
       //   id: string|undefined,

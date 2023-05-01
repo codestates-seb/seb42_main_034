@@ -5,29 +5,15 @@ import { FontSize, ScreenSize } from '../component/style/variables';
 import { Icon } from '../component/ui/Icon';
 import { cities } from '../component/style/variables';
 import { ReactComponent as MapIcon } from '../image/map.svg';
-import Filter from './home/Filter';
+import Filter from '../component/home/Filter';
 
-import { type } from '@testing-library/user-event/dist/type';
 //필터컴포넌트를 만들어서 해당 지역에 맞는 위치에 정적으로 만들기
 
-const MapImg = styled(Icon)`
-  margin: auto;
-  max-width: ${ScreenSize.max_width};
-`;
-const RelativeLayout = styled.div`
-  position: relative;
-  max-width: ${ScreenSize.max_width};
-  margin: auto;
-`;
-const StyledMapIcon = styled(MapIcon)`
-  height: 35em;
-`;
 export interface RegionInfo {
   city: string;
-  x: number;
 
-  y: number;
   url: string;
+  content: string;
 }
 const ChangeFont = styled.div`
   font-size: ${FontSize.h2};
@@ -38,11 +24,9 @@ export default function Home() {
   const [filter, setFilter] = useState('');
 
   return (
-    //맵돌려서 집어넣기
     <>
-      <ChangeFont>질문하고 싶은 지역을 선택해주세요.</ChangeFont>
+      <ChangeFont>어디로 갈까요?</ChangeFont>
       <RelativeLayout>
-        <MapImg svg={<StyledMapIcon />} />
         {cities.map((region, idx) => (
           <Filter key={idx} citys={region} setState={setFilter} filter={filter} />
         ))}
@@ -50,3 +34,19 @@ export default function Home() {
     </>
   );
 }
+
+const RelativeLayout = styled.div`
+  max-width: ${ScreenSize.max_width};
+  margin: auto;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 30%);
+  grid-auto-rows: 20rem;
+  gap: 0.5em;
+  @media (max-width: 780px) {
+    grid-template-columns: repeat(2, 50%);
+  }
+  @media (max-width: 370px) {
+    grid-template-columns: repeat(1, 100%);
+  }
+`;

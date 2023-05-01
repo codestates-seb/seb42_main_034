@@ -9,17 +9,21 @@ import { FontSize } from 'component/style/variables';
 import { useAuthAPI } from 'api/auth';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
+import { setUserInfo } from 'redux/userInfoReducer';
+import { deleteUserInfo, initialState } from 'redux/userInfoSlice';
+import Modal from 'component/ui/Modal';
+import SignIn from 'pages/user/SignIn';
 const MenuTabBtn = styled(Button)`
   border: none;
   background: none;
   ${HoverAction}
-  font-size: ${FontSize.sm};
+  font-size: ${FontSize.md};
 `;
 export default function UserTab() {
   //상태넣을자리
   //로그인 상태에 따라서 로그인 ,회원가입 or 로그아웃,마이페이지
   const { isLogin } = useAppSelector((state) => state.loginInfo);
-
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = (route: string) => {
@@ -35,6 +39,7 @@ export default function UserTab() {
     if (!confirm) return;
     mutateLogout();
     dispatch(logout());
+    dispatch(deleteUserInfo());
   };
 
   return (
@@ -45,6 +50,7 @@ export default function UserTab() {
             children="로그인"
             onClick={() => {
               handleClick('/board/signin');
+              setIsOpen(!isOpen);
             }}
             className=""
           />
@@ -58,11 +64,14 @@ export default function UserTab() {
         </div>
       )}
       {isLogin && (
-        <div>
+        <MediaUserTab>
           <MenuTabBtn children="로그아웃" onClick={handleLogOut} className="" />
           <MenuTabBtn children="마이페이지" onClick={() => handleClick('/board/mypage')} className="" />
-        </div>
+        </MediaUserTab>
       )}
     </>
   );
 }
+const MediaUserTab = styled.div`
+  text-align: end;
+`;

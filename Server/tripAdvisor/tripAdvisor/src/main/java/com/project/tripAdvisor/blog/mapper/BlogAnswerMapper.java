@@ -18,11 +18,8 @@ public interface BlogAnswerMapper {
         if(requestBody==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
 
         BlogAnswer blogAnswer = new BlogAnswer();
-        blogAnswer.setMember(member);
         blogAnswer.setContent(requestBody.getContent());
 
         return blogAnswer;
@@ -32,20 +29,20 @@ public interface BlogAnswerMapper {
         if(requestBody==null){
             return null;
         }
-        Member member = new Member();
-        member.setId(requestBody.getMemberId());
+//        Member member = new Member();
+//        member.setId(requestBody.getMemberId());
 
         BlogAnswer blogAnswer = new BlogAnswer();
         blogAnswer.setId(requestBody.getBlogAnswerId());
-        blogAnswer.setMember(member);
+//        blogAnswer.setMember(member);
         blogAnswer.setContent(requestBody.getContent());
 
         return blogAnswer;
     }
 
     default BlogAnswerDto.Response blogAnswerToBlogAnswerResponse(BlogAnswer blogAnswer,List<BlogAnswerCommentResponseDto> comments){
-        BlogAnswerDto.Response blogAnswerResponseDto = new BlogAnswerDto.Response(blogAnswer.getMember().getNickname(), blogAnswer.getContent(),
-                blogAnswer.getCreatedAt(),comments);
+        BlogAnswerDto.Response blogAnswerResponseDto = new BlogAnswerDto.Response(blogAnswer.getId(),blogAnswer.getMember().getNickname(), blogAnswer.getContent(),
+                blogAnswer.getCreatedAt(),comments,blogAnswer.getMember().getId());
         return blogAnswerResponseDto;
     }
 

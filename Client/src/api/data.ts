@@ -29,7 +29,7 @@ export interface BoardData {
   modifiedAt: string;
   questionId?: string | number | undefined;
   blogId?: string | number;
-  tags: string | null;
+  tags: string[] | [];
   title: string;
   viewCnt: number;
   writer: string;
@@ -122,11 +122,27 @@ export const useGetData = () => {
     body: AnswerRequestBody,
     section: string,
   ): Promise<AxiosResponse<BoardData>> =>
-    await api.post(`/${section}/answer/${questionId}`, body).then((res) => res.data.data);
+    await api
+      .post(`/${section}/answer/${questionId}`, body)
+      .then((res) => {
+        console.log('댓글등록성공');
+
+        return res.data.data;
+      })
+      .catch((error) => {
+        console.log('댓글등록실패');
+      });
   const putAnswerData = async (section: string, id: number | string, content: string) =>
-    await api.patch(`/${section}/answer/${id}`, { content }).then((res) => {
-      return res;
-    });
+    await api
+      .patch(`/${section}/answer/${id}`, { content })
+      .then((res) => {
+        console.log('댓글성공');
+
+        return res;
+      })
+      .catch((error) => {
+        console.log('댓글실패');
+      });
 
   const deleteAnswerData = async (section: string, id: number | string): Promise<AxiosResponse<BoardData>> =>
     await api.delete(`/${section}/answer/${id}`);
@@ -169,7 +185,15 @@ export const useLike = () => {
     });
   };
   const setLike = async (answerId: number) => {
-    await api.post(`questions/answer/like/${answerId}`);
+    await api
+      .post(`questions/answer/like/${answerId}`)
+      .then((res) => {
+        console.log('성공ㅇㅇ');
+        console.log(res.config);
+      })
+      .catch((error) => {
+        throw new Error('실패');
+      });
   };
   const blogLikes = async (data: BlogDataQuery) => {
     const { blogId, isLike } = data;
@@ -185,13 +209,30 @@ export const useLike = () => {
   };
   return { setLike, seletedQuestion, blogLikes, blogUnLikes };
 };
+//검색 API
 export const useSearch = () => {
   const api = useAPI();
-  const searchTag = async (text: string, section: string, page: number) => {
+  const searchTag = async (text: string | undefined, section: string | undefined, page: number) => {
     await api.get(`/tags/${section}?tagName=${text}&page=${page}`);
   };
-
-  return { searchTag };
+  const SearchText = async (
+    section: string,
+    text: string,
+    page: number,
+    setCity: React.Dispatch<React.SetStateAction<any>>,
+    onPage: React.Dispatch<React.SetStateAction<PageProps>>,
+  ) => {
+    await api.get(`/${section}/search?searchText=${text}&page=${page}`).then((res) => {
+      if (section === 'questions') {
+        setCity(res.data.data);
+        onPage(res.data.pageInfo);
+        console.log(res);
+      } else {
+        console.log(res);
+      }
+    });
+  };
+  return { searchTag, SearchText };
 };
 export const queryKeys = {
   data: ['region'] as const,

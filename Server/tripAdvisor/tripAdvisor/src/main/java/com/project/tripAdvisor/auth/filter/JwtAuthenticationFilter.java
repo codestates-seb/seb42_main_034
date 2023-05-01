@@ -65,7 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         //response header(Authorization)에 Access Token을 추가함
         //클라이언트에서 요청을 보낼때마다 request header에 추가해야함
-        response.setHeader("Authorization", "Bearer" + accessToken);
+        response.setHeader("Authorization", "Bearer " + accessToken);
         //Access 토큰이 만료될 경우 클라이언트 측이 추가로 발급받기위해 제공 될 수있다.
         //이것을 같이 제공할지는 요구사항에 따라 다름
         response.setHeader("Refresh", refreshToken);

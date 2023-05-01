@@ -134,7 +134,7 @@ public class QuestionService {
         else {
             keyword = "%" + keyword + "%";
 
-            return questionRepository.findByTitleOrContent(keyword, keyword, PageRequest.of(page, 15));
+            return questionRepository.findByTitleLikeOrContentLike(keyword, keyword, PageRequest.of(page, 15));
         }
     }
 

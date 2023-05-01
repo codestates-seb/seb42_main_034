@@ -7,6 +7,7 @@ export interface AnswerData {
   likeCnt: number;
   memberId: number;
   comments: [];
+  createdAt:string;
 }
 export interface AllAnswer {
   answers: AnswerData[] | [];

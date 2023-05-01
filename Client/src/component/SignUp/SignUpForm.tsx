@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nbutton from 'component/ui/NButton';
-// import { notifi } from '../../utils/notifi';
 import styled from 'styled-components';
 import React from 'react';
 import { keyframes } from 'styled-components';
@@ -337,6 +336,45 @@ const SubmitButton = styled(Nbutton)`
     color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+  }
+  span {
+    position: absolute;
+    display: block;
+  }
+  span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #013ef6);
+    animation: ${btnAnim1} 1s linear infinite;
+  }
+  span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #013ef6);
+    animation: ${btnAnim2} 1s linear infinite;
+    animation-delay: 0.25s;
+  }
+  span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #013ef6);
+    animation: ${btnAnim3} 1s linear infinite;
+    animation-delay: 0.5s;
+  }
+  span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #013ef6);
+    animation: ${btnAnim4} 1s linear infinite;
+    animation-delay: 0.75s;
   }
   span {
     position: absolute;

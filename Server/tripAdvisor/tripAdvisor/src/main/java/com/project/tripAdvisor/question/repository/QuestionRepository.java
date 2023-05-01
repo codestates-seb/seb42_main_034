@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
-    Page<Question> findByTitleOrContent(String title, String content, Pageable pageable);
+    Page<Question> findByTitleLikeOrContentLike(String title, String content, Pageable pageable);
 
     Page<Question> findByIdIn(List<Long> ids, Pageable pageable);
 

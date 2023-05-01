@@ -11,8 +11,11 @@ interface InitProps {
   address: string;
   avatarUrl: string;
 }
-
-const initialState: InitProps = {
+interface Location {
+  latitude: '';
+  longitude: '';
+}
+export const initialState: InitProps = {
   memberId: 0,
   nickName: '',
   location: {
@@ -33,9 +36,9 @@ const userInfoSlice = createSlice({
       const { key } = action.payload;
       state[key] = action.payload.value;
     },
+    deleteUserInfo: () => initialState,
   },
 });
 
-export const { setUserInfo, updateUserInfo } = userInfoSlice.actions;
+export const { setUserInfo, updateUserInfo, deleteUserInfo } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
-
