@@ -18,7 +18,8 @@ export default function BlogDetails() {
   const data: BoardData = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
-  const { region } = useParams();
+  const { id } = useParams() as { id: string };
+  const blogId = Number(id);
   const api = useAPI();
   const { getBoardData } = useGetData();
 
@@ -26,12 +27,12 @@ export default function BlogDetails() {
     isLoading,
     error,
     data: detail,
-  } = useQuery(['region', data] as const, async () => await getBoardData(data.blogId, 'blogs'), {
+  } = useQuery(['region', data] as const, async () => await getBoardData(blogId, 'blogs'), {
     staleTime: 1000 * 15,
   });
 
   const deleteBoardData = async () => {
-    await api.delete(`/blogs/${data.blogId}`);
+    await api.delete(`/blogs/${blogId}`);
     navigate(-1);
   };
 
@@ -42,17 +43,17 @@ export default function BlogDetails() {
           <MoveBtn
             children="수정"
             onClick={() => {
-              navigate(`/board/modifyblog/${data.blogId}`, { state: { data, detail } });
+              navigate(`/board/modifyblog/${blogId}`, { state: { detail } });
             }}
           />
           <MoveBtn children="삭제" onClick={deleteBoardData} />
         </>
       </Flex>
       {isLoading && <div>로딩중..</div>}
-      {data && detail && (
+      {detail && (
         <>
-          <BoardDetail section="blogs" data={data} detail={detail} />
-          <BlogAnswer blogId={data.blogId} />
+          <BoardDetail section="blogs" detail={detail} />
+          <BlogAnswer blogId={blogId} />
         </>
       )}
     </>

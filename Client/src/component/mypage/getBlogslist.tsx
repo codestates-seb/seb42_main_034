@@ -49,8 +49,8 @@ const BlogsList = () => {
 
   console.log(post);
 
-  const handleBlogClick = (blogsId: any) => {
-    navigate(`/blogs/`);
+  const handleBlogClick = (blogId: any) => {
+    navigate(`/board/blogsdetails/${blogId}`);
   };
 
   return (
