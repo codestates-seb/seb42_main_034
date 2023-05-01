@@ -29,6 +29,7 @@ export default function QuestionDetails() {
   //   getAnswerData(data.questionId, 'questions').catch(console.error);
   // });
   console.log(detail);
+  console.log(data)
 
   return (
     <>

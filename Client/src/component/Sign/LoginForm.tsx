@@ -18,7 +18,6 @@ const Loginform = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postLogin } = useAuthAPI();
-  console.log(email, password, vaildEmail, vaildPW);
 
   const { mutate, data: userData } = useMutation({
     mutationKey: ['loginInfo'],
@@ -35,11 +34,6 @@ const Loginform = () => {
       dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));
       notifi(dispatch, `${data.nickname}님 환영합니다.`);
       navigate(-1);
-      console.log(res.headers.refresh);
-
-      // setTimeout(() => {
-      //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
-      // }, 1000 * 60 * 29);
     },
     onError: (res) => {
       console.log('login failed: ', res);

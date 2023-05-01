@@ -52,11 +52,12 @@ const BlogsList = () => {
   }, [memberId, pageNation.page]);
 
   const handleBlogClick = (blogId: number) => {
-    const clickedBlog = post.find((p) => p.blogId === blogId);
-    console.log(blogId)
-    if(clickedBlog){
+    // const clickedBlog = post.find((p) => p.blogId === blogId);
+    // console.log(blogId)
+    // if(clickedBlog){
+    // navigate(`/board/blogsdetails/${blogId}`);
+    // }
     navigate(`/board/blogsdetails/${blogId}`);
-    }
   };
 
 
