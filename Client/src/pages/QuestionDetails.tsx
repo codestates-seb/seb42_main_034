@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import BoardDetail from '../component/board/BoardDetail';
 
 import { BoardData, CRUDdata, getFilterData, useGetData } from 'api/data';
@@ -19,7 +21,6 @@ export default function QuestionDetails() {
   const { id } = useParams() as { id: string };
   const questionId = Number(id);
   console.log();
-
   const { getBoardData, getAnswerData } = useGetData();
   const {
     isLoading,
@@ -41,12 +42,15 @@ export default function QuestionDetails() {
             children="수정"
             onClick={() => {
               navigate(`/board/modifyquestion/${questionId}`, { state: { detail } });
+
             }}
           />
           <MoveBtn
             children="삭제"
             onClick={() => {
+
               deleteBoardData(questionId, memberId, 'questions')
+
                 .then((res) => {
                   navigate(-1);
                 })
@@ -61,6 +65,7 @@ export default function QuestionDetails() {
         <>
           <BoardDetail detail={detail} section="questions" />
           <Answer questionId={questionId} writerId={detail.memberId} />
+
         </>
       )}
     </>

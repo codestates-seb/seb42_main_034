@@ -28,6 +28,7 @@ export default function BlogDetails() {
     error,
     data: detail,
   } = useQuery(['region', data] as const, async () => await getBoardData(blogId, 'blogs'), {
+
     staleTime: 1000 * 15,
   });
 
@@ -54,6 +55,7 @@ export default function BlogDetails() {
         <>
           <BoardDetail section="blogs" detail={detail} />
           <BlogAnswer blogId={blogId} />
+
         </>
       )}
     </>
