@@ -29,9 +29,10 @@ export default function Tag({ section, text, region }: { section: string; text: 
      * 3. 질문인지 블로그인지 태그에 받고 페이지네이션
      
     */
+    console.log(section.slice(0, -1));
 
     const searchText = textRef.current?.innerText.slice(1);
-    searchTag(searchText, section.slice(0, -1), 1);
+    // searchTag(searchText, section, 1,);
     navigate(`/board/boardlist/${section}/${region}?tag=${searchText}`);
   };
   return <StyledTagBtn onClick={handleSearch} ref={textRef} children={`#${text}`} />;

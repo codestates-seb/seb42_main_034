@@ -4,10 +4,7 @@ interface InitProps {
   [key: string]: any;
   memberId: number;
   nickName: string;
-  location: {
-    latitude: string;
-    longitude: string;
-  };
+  location: string;
   address: string;
   avatarUrl: string;
 }
@@ -18,10 +15,7 @@ interface Location {
 export const initialState: InitProps = {
   memberId: 0,
   nickName: '',
-  location: {
-    latitude: '',
-    longitude: '',
-  },
+  location: '',
   address: '',
   avatarUrl: '',
   avgGrade: 0,

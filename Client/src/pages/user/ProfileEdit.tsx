@@ -2,7 +2,7 @@ import Avatar from 'component/mypage/Avatar';
 import Modal from 'component/ui/editModal';
 import { handleScroll } from 'component/ui/ScrollTop';
 import useAPI from 'hooks/uesAPI';
-import { useFixInfo } from 'hooks/useFixInfo';
+import { FixmemberInfo, useFixInfo } from 'hooks/useFixInfo';
 import useGeolocation from 'hooks/useGeoLocation';
 import React, { useCallback } from 'react';
 import { useState, useEffect } from 'react';
@@ -21,26 +21,28 @@ function ProfileEditPage() {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
   const userInfo = useAppSelector((state) => state.persistReducer.userInfo);
-  const location = useGeolocation().coordinates || {
-    latitude: 0,
-    longitude: 0,
-  };
+  //   const location = useGeolocation().coordinates || {
+  //     latitude: 0,
+  //     longitude: 0,
+  //   };
+  console.log(userInfo);
+
   //유저이미지
   const { address, avatarUrl } = userInfo;
-  const [nickname, setNickname] = useState(userInfo.name);
+  const [nickname, setNickname] = useState(userInfo.nickname);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const [password, setPassword] = useState<FixmemberInfo['password']>(0);
 
+  const dispatch = useAppDispatch();
+  console.log(nickname);
+  //바로 수정
   const { mutate } = useFixInfo({
     nickname,
-    location,
+    location: userInfo?.location,
+    password,
     // address: address,
     // avatarUrl,
   });
-
-  const changeNickName = () => {
-    api.post('/members');
-  };
 
   //닉네임
   const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,12 +53,12 @@ function ProfileEditPage() {
     dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   useEffect(() => {
+  //     window.addEventListener('scroll', handleScroll);
+  //     return () => {
+  //       window.removeEventListener('scroll', handleScroll);
+  //     };
+  //   }, []);
 
   return (
     <Layout>
@@ -92,7 +94,7 @@ function ProfileEditPage() {
           <div className="input">
             <input
               placeholder="도시를 설정하기 위해 여기를 클릭"
-              value={address || ''}
+              value={userInfo.location || ''}
               disabled={false}
               onClick={() => {
                 onClickToggleModal();
@@ -106,7 +108,6 @@ function ProfileEditPage() {
               const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
               if (!isconfirm) return;
               mutate();
-              changeNickName();
               navigate('/board/mypage');
             }}
             className="Button"

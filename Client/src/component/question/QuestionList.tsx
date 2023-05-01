@@ -18,7 +18,7 @@ export default function QuestionList({ filter }: { filter: string }) {
   const api = useAPI();
   const search = useLocation().search.split('=');
   const searchData = decodeURIComponent(search[search.length - 1]);
-  const { SearchText } = useSearch();
+  const { SearchText, searchTag } = useSearch();
   const [pageNation, setPageNation] = useState({
     page: 1,
     totalElements: 0,
@@ -49,13 +49,16 @@ export default function QuestionList({ filter }: { filter: string }) {
     // } else if (category === '경기') {
     //   section = 'gyeonggi';
     // }
-    console.log(section);
+    console.log(city);
 
-    if (searchData) {
+    if (searchData && search[0] === '?search') {
       //서치데이터 쿼리스트링 있으면 서치데이터 검색
       console.log('서치데이터', changeUrl(searchData));
       SearchText('questions', changeUrl(searchData), pageNation.page, setCity, setPageNation);
-    } else {
+    } else if (searchData) {
+      searchTag(searchData, 'questions', pageNation.page, setCity, setPageNation);
+    }
+    {
       const getData = async () => {
         const response: ReturnData = await api
           .get('questions', {

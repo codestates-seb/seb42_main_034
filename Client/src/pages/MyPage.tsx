@@ -112,6 +112,7 @@ export default function MyPage() {
         >
           로그아웃
         </LogOuttbutton>
+        <Withdrawal>회원탈퇴</Withdrawal>
       </MainContainer>
     </>
   );
@@ -205,3 +206,4 @@ const LogOuttbutton = styled(Nbutton)`
     box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
   }
 `;
+const Withdrawal = styled(Nbutton)``;

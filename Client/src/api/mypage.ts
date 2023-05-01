@@ -4,6 +4,7 @@ import useAPI from '../hooks/uesAPI';
 import axios from 'axios';
 import { setUserInfo } from '../redux/userInfoSlice';
 import { useAppDispatch } from '../redux/hooks';
+import { FixmemberInfo } from 'hooks/useFixInfo';
 
 interface Member {
   [key: string]: any;
@@ -21,15 +22,15 @@ interface Member {
   value: string;
 }
 
-interface FixmemberInfo {
-  nickname: string;
-  location: {
-    latitude: string | number;
-    longitude: string | number;
-  } | null;
-  // address: string;
-  // avatarUrl: string;
-}
+// interface FixmemberInfo {
+//   nickname: string;
+//   location: {
+//     latitude: string | number;
+//     longitude: string | number;
+//   } | null;
+//   // address: string;
+//   // avatarUrl: string;
+// }
 interface GetPost {
   content: {
     [x: string]: any;
@@ -47,7 +48,8 @@ export const useMypageAPI = () => {
 
   const getMyInfo = async (id: string | undefined) =>
     await api.get<Member>(`/members/me`).then((res) => {
-      dispatch(setUserInfo(res.data));
+      dispatch(setUserInfo(res.data.data));
+
       return res.data.data;
     });
 
