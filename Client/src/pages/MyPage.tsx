@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthAPI } from 'api/auth';
 import { useMypageAPI } from 'api/mypage';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
@@ -16,7 +16,7 @@ import BlogsList from 'component/mypage/getBlogslist';
 export default function MyPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { memberId } = useAppSelector((state) => state.loginInfo);
+  const { memberId, isLogin } = useAppSelector((state) => state.loginInfo);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
 
@@ -31,6 +31,12 @@ export default function MyPage() {
     retry: false,
   });
   console.log(data);
+
+  useEffect(() => {
+    if (isLogin === false) {
+      navigate(`/`);
+    }
+  }, [isLogin]);
 
   const [activeTab, setActiveTab] = useState<number>(0);
   const handleTabClick = (index: number) => {

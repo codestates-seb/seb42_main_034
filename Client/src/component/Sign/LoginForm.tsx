@@ -30,6 +30,7 @@ const Loginform = () => {
     onSuccess: (res) => {
       const {
         data,
+
         headers: { authorization, refresh },
       } = res;
       dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));

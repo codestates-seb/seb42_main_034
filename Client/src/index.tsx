@@ -7,7 +7,7 @@ import QuestionDetails from './pages/QuestionDetails';
 import SignUp from './pages/user/SignUp';
 import Board from './component/Board';
 import MyPage from './pages/MyPage';
-import BlogPost from './component/blog/BlogPost';
+import BlogPost from 'pages/BlogPost';
 import LandingPage from './pages/LandingPage';
 import BlogDetails from './pages/BlogDetails';
 import SignIn from './pages/user/SignIn';
