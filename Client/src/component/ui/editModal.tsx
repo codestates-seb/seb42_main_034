@@ -2,7 +2,7 @@ import useGeolocation from 'hooks/useGeoLocation';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import Geocode from 'react-geocode';
 import styled from 'styled-components';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { useAppDispatch } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
 import useAPI from 'hooks/uesAPI';
 
@@ -34,6 +34,7 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
         const location = { latitude, longitude };
         setAd(address.slice(5));
         api.post(`/location?latitude=${latitude}&longitude=${longitude}`);
+ 
       },
       (error) => {
         console.log(error);
@@ -42,57 +43,39 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
     );
   };
 
+
+
+
   return (
     <Layout>
       <Dialog>
         {children}
         <h1>현재 계신 위치로 도시가 설정 됩니다. 동의 하시겠습니까?</h1>
-        <div className="currentplace">{location.loaded ? ad : '현재 위치를 확인 중입니다.'}</div>
-        <div className="btn">
-          <Button
-            className="btn1"
-            onClick={() => {
-              dispatch(updateUserInfo({ key: 'address', value: ad }));
-              onClickToggleModal();
-            }}
-          >
-            예
-          </Button>
-
-          <Button
-            className="btn2"
-            onClick={() => {
-              if (onClickToggleModal) {
-                onClickToggleModal();
-              }
-            }}
-          >
-            아니오
-          </Button>
+        <div className='currentplace'>
+      {location.loaded ? ad : '현재 위치를 확인 중입니다.'}
         </div>
+    <div className='btn'>
+      <Button
+      className='btn1'
+      onClick={() => {
+        dispatch(updateUserInfo({  key: 'address', value: ad}));
+        onClickToggleModal();
+      }}
+      >
+        Y
+      </Button>
 
-        <div className="btn">
-          <Button
-            className="btn1"
-            onClick={() => {
-              dispatch(updateUserInfo({ key: 'address', value: ad }));
-              onClickToggleModal();
-            }}
-          >
-            Y
-          </Button>
-
-          <Button
-            className="btn2"
-            onClick={() => {
-              if (onClickToggleModal) {
-                onClickToggleModal();
-              }
-            }}
-          >
-            N
-          </Button>
-        </div>
+      <Button
+      className='btn2'
+      onClick={() => {
+        if(onClickToggleModal) {
+          onClickToggleModal();
+        }
+      }}
+      >
+        N
+      </Button>
+      </div>
       </Dialog>
     </Layout>
   );

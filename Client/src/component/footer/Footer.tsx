@@ -12,6 +12,7 @@ const BottomLayout = styled.div`
   margin: auto;
   padding: 0.5rem;
   margin-top: 3rem;
+  width: 100%;
 `;
 
 export default function Footer() {

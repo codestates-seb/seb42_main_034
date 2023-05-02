@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthAPI } from 'api/auth';
 import { useMypageAPI } from 'api/mypage';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
@@ -12,13 +12,16 @@ import { logout } from 'redux/userSlice';
 import { useState } from 'react';
 import PostList from 'component/mypage/getPostlist';
 import BlogsList from 'component/mypage/getBlogslist';
+import { BlogData } from 'redux/boardDetails';
+
 
 export default function MyPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { memberId, isLogin } = useAppSelector((state) => state.loginInfo);
+  const { memberId } = useAppSelector((state) => state.loginInfo);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
+  const [city, setCity] = useState<BlogData[] | []>([]);
 
   const linkEditPage = () => {
     navigate('/board/mypage/edit');
@@ -30,13 +33,6 @@ export default function MyPage() {
     queryFn: () => getMyInfo(memberId),
     retry: false,
   });
-  console.log(data);
-
-  useEffect(() => {
-    if (isLogin === false) {
-      navigate(`/`);
-    }
-  }, [isLogin]);
 
   const [activeTab, setActiveTab] = useState<number>(0);
   const handleTabClick = (index: number) => {
@@ -54,18 +50,13 @@ export default function MyPage() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
-        return (
-          <>
-            <PostList />
-          </>
-        );
+        return <>
+        <PostList />
+        </>;
       case 1:
-        return (
-          <>
-            <BlogsList />
-          </>
-        );
-
+        return <>
+          <BlogsList />
+        </>;
       case 2:
         return <div>작성한 댓글을 찾을 수 없습니다.</div>;
       default:
@@ -85,36 +76,41 @@ export default function MyPage() {
             alt="프로필 이미지 입니다."
           ></img>
 
-          <UserInfoContainer>
-            <p>닉네임: {data?.nickname ?? '로그인 정보를 불러오지 못했습니다.'}</p>
-            <p>
-              도시 : {data?.location ?? '도시가 설정되어 있지 않습니다.'}
-              {data?.address}
-            </p>
-            <div className="editprofile">
-              <p className="editbtn" onClick={linkEditPage}>
-                프로필 수정하기 및 도시인증 하기
-              </p>
-              <FiEdit className="editbtnImg" onClick={linkEditPage} />
-            </div>
-          </UserInfoContainer>
-        </ProfileContainer>
-        <TabContainer>{renderTabs()}</TabContainer>
-        {renderTabContent()}
-        <LogOuttbutton
-          onClick={() => {
-            const confirm = window.confirm('로그아웃을 하시겠습니까?');
-            if (!confirm) return;
-            mutateLogout();
-            dispatch(logout());
-            navigate('/board/signin');
-          }}
-        >
-          로그아웃
-        </LogOuttbutton>
-      </MainContainer>
-    </>
-  );
+      <UserInfoContainer>
+        <p>닉네임: {data?.nickname ?? '로그인 정보를 불러오지 못했습니다.'}</p>
+        <p>
+          도시 : {data?.location ?? '도시가 설정되어 있지 않습니다.'}
+          {data?.address}
+        </p>
+        <div className='editprofile'>
+          <p className='editbtn' onClick={linkEditPage}>
+            프로필 수정하기 및 도시인증 하기
+          </p>
+          <FiEdit className='editbtnImg' onClick={linkEditPage}/>
+        </div>
+      </UserInfoContainer>
+    </ProfileContainer>
+
+    <TabContainer>
+      {renderTabs()}
+      </TabContainer>
+      {renderTabContent()}
+
+
+    <LogOuttbutton
+    onClick={() => {
+      const confirm = window.confirm('로그아웃을 하시겠습니까?');
+      if(!confirm) return;
+      mutateLogout();
+      dispatch(logout());
+      navigate('/board/signin');
+    }}
+    >
+      로그아웃
+    </LogOuttbutton>
+  </MainContainer>
+  </>
+  )
 }
 
 const MainContainer = styled.div`

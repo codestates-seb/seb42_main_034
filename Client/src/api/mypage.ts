@@ -43,7 +43,7 @@ export const useMypageAPI = () => {
   const api = useAPI();
   const dispatch = useAppDispatch();
 
-  const getMemberInfo = async (id: string | undefined) => await api.get(`/members/me`).then((res) => res.data);
+  const getMemberInfo = async () => await api.get(`/members/me`).then((res) => res.data);
 
   const getMyInfo = async (id: string | undefined) =>
     await api.get<Member>(`/members/me`).then((res) => {
@@ -53,9 +53,22 @@ export const useMypageAPI = () => {
 
   const patchFixMemberInfo = (data: FixmemberInfo) => api.patch(`/members`, data);
 
-  const getPostList = async () => {
-    await api.get(`members/questionTitle`).then((res) => res.data);
-  };
+      // const getPostList = (
+      //   id: string|undefined,
+      //   index?: string|undefined,
+      // ) => {
+      //   if(index) {
+      //     return api
+      //       .get(`members/${id}/questionTitle`, {params: {index} })
+      //       .then(res => res.data);
+      //   } else {
+      //     return api.get(`/members/${id}/questionTitle`).then(res => res.data);
+      //   }
+      // }
+      const getPostList = async () => {
+        await api.get(`members/questionTitle`).then(res=>res.data)
+      }
+
 
   return {
     getMemberInfo,

@@ -1,15 +1,16 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useQuery } from '@tanstack/react-query';
-import { useMypageAPI } from 'api/mypage';
-import { useAppSelector } from 'redux/hooks';
-import { useParams, useNavigate } from 'react-router-dom';
-import useAPI from 'hooks/uesAPI';
+import React, { FunctionComponent, useEffect, useState } from "react";
+import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { useMypageAPI } from "api/mypage";
+import { useAppSelector } from "redux/hooks";
+import { useParams, useNavigate } from "react-router-dom";
+import useAPI from "hooks/uesAPI";
+
 
 interface Post {
   content: string;
   title: string;
-  id: number;
+  id : number;
 }
 
 const PostList = () => {
@@ -22,8 +23,7 @@ const PostList = () => {
     queryFn: () => getMyInfo(memberId),
     retry: false,
   });
-
-  const api = useAPI();
+ const api = useAPI();
 
   const [post, setPost] = useState<Post[] | []>([]);
   const [pageNation, setPageNation] = useState({
@@ -35,44 +35,40 @@ const PostList = () => {
 
   const getPost = async () => {
     await api
+    .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)  // 이 부분 api 필요함
+    .then((resp) => {
+      setPost(resp.data.data.map((p: Post) => ({ ...p, id: p.id })));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
-      .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
-      .then((resp) => {
-        setPost(resp.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   useEffect(() => {
     getPost();
   }, [memberId, pageNation.page]);
 
-  const handlePostClick = (postId: any) => {
+  const handlePostClick = (postId: number) => {
     navigate(`/board/questionsdetails/${postId}`);
   };
 
-  console.log(post);
-
+                            
   return (
-    //   <MainContainer>
-    //     {post.map((p) => (
-    //     <Divide key={p.id}>
-    //       <p>{p.title}</p>
-    //     </Divide>
-    //   ))}
-    //  {/* {pageNation && <Page pages={pageNation} onPage={setPageNation} />} */}
-    //   </MainContainer>
     <MainContainer>
-      {post.map((p) => (
-        <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
-          <p>{p.title ?? '작성한 질문이 없습니다'}</p>
-        </Divide>
-      ))}
+      {post.length > 0 ? (
+        post.map((p) => (
+          <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
+            <p>{p.title ?? "작성한 질문이 없습니다"}</p>  
+          </Divide>
+        ))
+      ) : (
+        <p>작성한 질문 글이 없습니다</p>
+      )}
     </MainContainer>
   );
 };
+
 
 const MainContainer = styled.div`
   width: 50%;
@@ -82,15 +78,26 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
+  margin-top: 15px;
+  cursor: pointer;
 `;
 
 const Divide = styled.div`
   padding: 3px 0;
   width: 100%;
-  border-bottom: 3px solid skyblue;
+  height: 2rem;
   align-items: center;
   display: flex;
   justify-content: center;
-`;
+  border: solid 2px skyblue;
+  border-bottom: 3px solid skyblue;
+  border-radius: 18px;
+  margin-top: 8px;
+  &:hover {
+    background: #0583c6;
+    color: #fff;
+    border-radius: 18px;
+  }
+`
 
 export default PostList;

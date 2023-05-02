@@ -1,13 +1,9 @@
 import React from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-
 import { BoardData, useGetData } from 'api/data';
 import { useQuery } from '@tanstack/react-query';
-
 import { useAppSelector } from 'redux/hooks';
-
 import Answer from 'component/question/Answer';
-
 import { Flex } from 'component/style/cssTemplete';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import BlogAnswer from '../component/blog/BlogAnswer';
