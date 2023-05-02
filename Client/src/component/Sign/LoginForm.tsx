@@ -36,10 +36,8 @@ const Loginform = ({ modal, setModal }: Pick<Props, 'modal' | 'setModal'>) => {
         headers: { authorization, refresh },
       } = res;
       dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));
-
       notifi(dispatch, `${data.nickname}님 환영합니다.`);
-      navigate(-1);
-
+      setModal(!modal);
       console.log(res.data);
 
       // setTimeout(() => {

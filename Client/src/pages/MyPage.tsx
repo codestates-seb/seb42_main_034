@@ -12,6 +12,7 @@ import { logout } from 'redux/userSlice';
 import { useState } from 'react';
 import PostList from 'component/mypage/getPostlist';
 import BlogsList from 'component/mypage/getBlogslist';
+import DeleteMyInfo from 'component/mypage/DeleteMyInfo';
 
 export default function MyPage() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ export default function MyPage() {
   const handleTabClick = (index: number) => {
     setActiveTab(index);
   };
+
   const renderTabs = () => {
     return (
       <>
@@ -112,7 +114,7 @@ export default function MyPage() {
         >
           로그아웃
         </LogOuttbutton>
-        <Withdrawal>회원탈퇴</Withdrawal>
+        <DeleteMyInfo />
       </MainContainer>
     </>
   );
@@ -206,4 +208,3 @@ const LogOuttbutton = styled(Nbutton)`
     box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
   }
 `;
-const Withdrawal = styled(Nbutton)``;

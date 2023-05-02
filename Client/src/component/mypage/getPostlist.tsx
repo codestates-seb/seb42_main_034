@@ -5,6 +5,7 @@ import { useMypageAPI } from 'api/mypage';
 import { useAppSelector } from 'redux/hooks';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAPI from 'hooks/uesAPI';
+import Page from 'component/Page';
 
 interface Post {
   content: string;
@@ -68,6 +69,7 @@ const PostList = () => {
       {post.map((p) => (
         <Divide key={p.id} onClick={() => handlePostClick(p.id)}>
           <p>{p.title ?? '작성한 질문이 없습니다'}</p>
+          {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
         </Divide>
       ))}
     </MainContainer>

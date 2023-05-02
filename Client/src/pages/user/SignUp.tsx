@@ -22,7 +22,7 @@ export default function SignUp({
   return (
     <MainContainer>
       <Title>회원가입</Title>
-      <SignUpForm setModal={setModal} modal={modal} />
+      <SignUpForm setModal={setModal} modal={modal} setsiginInModal={setsiginInModal} />
       <div>이미 회원이신가요?</div>
       <Button
         onClick={() => {

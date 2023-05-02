@@ -10,7 +10,11 @@ import { useDispatch } from 'react-redux';
 import useAPI from 'hooks/uesAPI';
 import { Props } from 'component/ui/Modal';
 
-export const SignUpForm = ({ modal, setModal }: Pick<Props, 'modal' | 'setModal'>) => {
+export const SignUpForm = ({
+  modal,
+  setModal,
+  setsiginInModal,
+}: Pick<Props, 'modal' | 'setModal'> & { setsiginInModal: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
@@ -111,8 +115,9 @@ export const SignUpForm = ({ modal, setModal }: Pick<Props, 'modal' | 'setModal'
           password,
         })
         .then(() => {
-          Swal.fire('Congratulation!', '가입이 완료되었습니다.'), navigate('/board/signin');
+          Swal.fire('Congratulation!', '가입이 완료되었습니다.');
           setModal(!modal);
+          setsiginInModal((prev) => !prev);
         })
         .catch((error) => {
           console.log(error);
