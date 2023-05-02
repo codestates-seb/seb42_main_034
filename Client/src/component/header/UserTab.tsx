@@ -13,6 +13,8 @@ import { setUserInfo } from 'redux/userInfoReducer';
 import { deleteUserInfo, initialState } from 'redux/userInfoSlice';
 import Modal from 'component/ui/Modal';
 import SignIn from 'pages/user/SignIn';
+import SignUp from 'pages/user/SignUp';
+import { SignUpForm } from 'component/SignUp/SignUpForm';
 const MenuTabBtn = styled(Button)`
   border: none;
   background: none;
@@ -26,6 +28,8 @@ export default function UserTab() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isSignUpModalActive, setIsSignUpModalActive] = useState(false);
+  const [isSignInModalActive, setIsSignInModalActive] = useState(false);
   const handleClick = (route: string) => {
     navigate(route);
   };
@@ -46,18 +50,49 @@ export default function UserTab() {
     <>
       {isLogin || (
         <div>
+          {isSignUpModalActive && (
+            <Modal
+              modal={isSignUpModalActive}
+              setModal={setIsSignUpModalActive}
+              width="350"
+              height="500"
+              children={
+                <SignUp
+                  setModal={setIsSignUpModalActive}
+                  modal={isSignUpModalActive}
+                  setsiginInModal={setIsSignInModalActive}
+                />
+              }
+            />
+          )}
+          {isSignInModalActive && (
+            <Modal
+              modal={isSignInModalActive}
+              setModal={setIsSignInModalActive}
+              width="350"
+              height="500"
+              children={
+                <SignIn
+                  setModal={setIsSignInModalActive}
+                  modal={isSignInModalActive}
+                  setsignupModal={setIsSignUpModalActive}
+                />
+              }
+            />
+          )}
           <MenuTabBtn
             children="로그인"
             onClick={() => {
-              handleClick('/board/signin');
-              setIsOpen(!isOpen);
+              // handleClick('/board/signin');
+              setIsSignInModalActive(!isSignInModalActive);
             }}
             className=""
           />
           <MenuTabBtn
             children="회원가입"
             onClick={() => {
-              handleClick('/board/signup');
+              // handleClick('/board/signup');
+              setIsSignUpModalActive(!isSignUpModalActive);
             }}
             className=""
           />

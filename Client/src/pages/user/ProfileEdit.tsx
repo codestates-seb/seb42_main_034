@@ -25,10 +25,9 @@ function ProfileEditPage() {
   //     latitude: 0,
   //     longitude: 0,
   //   };
-  console.log(userInfo);
 
   //유저이미지
-  const { address, avatarUrl } = userInfo;
+
   const [nickname, setNickname] = useState(userInfo.nickname);
   const navigate = useNavigate();
   const [password, setPassword] = useState<FixmemberInfo['password']>(0);
@@ -40,8 +39,6 @@ function ProfileEditPage() {
     nickname,
     location: userInfo?.location,
     password,
-    // address: address,
-    // avatarUrl,
   });
 
   //닉네임
@@ -53,16 +50,8 @@ function ProfileEditPage() {
     dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
   };
 
-  //   useEffect(() => {
-  //     window.addEventListener('scroll', handleScroll);
-  //     return () => {
-  //       window.removeEventListener('scroll', handleScroll);
-  //     };
-  //   }, []);
-
   return (
     <Layout>
-      {/* {userInfo.name ? ( */}
       <>
         <ProfileEditBox>
           <SubTitle>회원정보 수정</SubTitle>

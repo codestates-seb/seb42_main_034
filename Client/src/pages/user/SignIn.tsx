@@ -4,8 +4,15 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../component/Sign/LoginForm';
 import SignLink from 'component/SignUp/SignLink';
+import { Props } from 'component/ui/Modal';
+import { Button } from 'component/ui/Button';
+import { Flex } from 'component/style/cssTemplete';
 
-const SignIn = () => {
+const SignIn = ({
+  setModal,
+  modal,
+  setsignupModal,
+}: Pick<Props, 'setModal' | 'modal'> & { setsignupModal: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const { isLogin } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
 
@@ -16,13 +23,27 @@ const SignIn = () => {
   return (
     <>
       {isLogin || (
-        <PageStyled>
-          <Container>
-            <Title>로그인</Title>
-            <LoginForm />
-            <SignLink message="아직 회원이 아니신가요 ?" linkText="회원가입 하러가기" link="/board/signup" />
-          </Container>
-        </PageStyled>
+        // <PageStyled>
+        // <Container>
+        <>
+          <Title>로그인</Title>
+          <LoginForm setModal={setModal} modal={modal} />
+          {/* <SignLink message="아직 회원이 아니신가요 ?" linkText="회원가입 하러가기" onClick={}/>
+           */}
+          <Flex>
+            <div>아직 회원이 아니신가요 ?</div>
+            <Button
+              onClick={() => {
+                setModal(!modal);
+                setsignupModal((prev) => !prev);
+              }}
+            >
+              회원가입 하러가기
+            </Button>
+          </Flex>
+        </>
+        // </Container>
+        //  </PageStyled>
       )}
     </>
   );

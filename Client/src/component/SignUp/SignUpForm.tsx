@@ -8,8 +8,9 @@ import { keyframes } from 'styled-components';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import useAPI from 'hooks/uesAPI';
+import { Props } from 'component/ui/Modal';
 
-export const SignUpForm = () => {
+export const SignUpForm = ({ modal, setModal }: Pick<Props, 'modal' | 'setModal'>) => {
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
@@ -111,6 +112,7 @@ export const SignUpForm = () => {
         })
         .then(() => {
           Swal.fire('Congratulation!', '가입이 완료되었습니다.'), navigate('/board/signin');
+          setModal(!modal);
         })
         .catch((error) => {
           console.log(error);
@@ -123,37 +125,33 @@ export const SignUpForm = () => {
 
   return (
     <MainFormContainer onSubmit={handleSubmit}>
-      <FormWrapper>
-        <IDContainer>
-          <Wrapper>
-            <StyledIdLabel htmlFor="nickname">이메일</StyledIdLabel>
-          </Wrapper>
-          <StyledInput type="text" id="email" onChange={handleChangeEmail}></StyledInput>
-          {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
-        </IDContainer>
-        <IDContainer>
-          <Wrapper>
-            <StyledIdLabel htmlFor="nickname">닉네임</StyledIdLabel>
-            <CheckBtn onClick={handleCheckNickname}>중복확인</CheckBtn>
-          </Wrapper>
-          <StyledInput type="text" id="nickname" onChange={handleChangeNickname}></StyledInput>
-          {nickname.length > 0 && (
-            <span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</span>
-          )}
-        </IDContainer>
-        <PWContainer>
-          <StyledIdLabel htmlFor="pw">비밀번호</StyledIdLabel>
-          <StyledInput type="password" id="pw" onChange={handleChangePassword}></StyledInput>
-          {password.length > 0 && (
-            <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>
-          )}
-        </PWContainer>
-        <PWContainer>
-          <StyledIdLabel htmlFor="pw-check">비밀번호 확인</StyledIdLabel>
-          <StyledInput type="password" id="pw-check" onChange={handleChangePwCheck}></StyledInput>
-          {pwcheck.length > 0 && <span className={`message ${isPwCheck ? 'success' : 'error'}`}>{pwCheckMessage}</span>}
-        </PWContainer>
-      </FormWrapper>
+      {/* <FormWrapper> */}
+      {/* <IDContainer> */}
+      <Wrapper>
+        <StyledIdLabel htmlFor="nickname">이메일</StyledIdLabel>
+      </Wrapper>
+      <StyledInput type="text" id="email" onChange={handleChangeEmail}></StyledInput>
+      {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
+      {/* </IDContainer>
+      <IDContainer> */}
+      <Wrapper>
+        <StyledIdLabel htmlFor="nickname">닉네임</StyledIdLabel>
+        <CheckBtn onClick={handleCheckNickname}>중복확인</CheckBtn>
+      </Wrapper>
+      <StyledInput type="text" id="nickname" onChange={handleChangeNickname}></StyledInput>
+      {nickname.length > 0 && <span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</span>}
+      {/* </IDContainer> */}
+      {/* <PWContainer> */}
+      <StyledIdLabel htmlFor="pw">비밀번호</StyledIdLabel>
+      <StyledInput type="password" id="pw" onChange={handleChangePassword}></StyledInput>
+      {password.length > 0 && <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>}
+      {/* </PWContainer> */}
+      {/* <PWContainer> */}
+      <StyledIdLabel htmlFor="pw-check">비밀번호 확인</StyledIdLabel>
+      <StyledInput type="password" id="pw-check" onChange={handleChangePwCheck}></StyledInput>
+      {pwcheck.length > 0 && <span className={`message ${isPwCheck ? 'success' : 'error'}`}>{pwCheckMessage}</span>}
+      {/* </PWContainer> */}
+      {/* </FormWrapper> */}
       <SubmitButton id="join" type="submit">
         <span></span>
         <span></span>
@@ -166,10 +164,14 @@ export const SignUpForm = () => {
 };
 
 const MainFormContainer = styled.form`
-  width: 100%;
+  /* width: 100%;
   min-width: 22rem;
   display: grid;
-  height: 200px;
+  height: 200px; */
+  /* display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 500px; */
 `;
 
 const FormWrapper = styled.div`
@@ -177,12 +179,12 @@ const FormWrapper = styled.div`
 `;
 
 const IDContainer = styled.div`
-  width: 100%;
+  /* width: 100%;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
   .message {
     font-weight: 400;
     font-size: 1rem;
@@ -201,12 +203,12 @@ const IDContainer = styled.div`
 `;
 
 const PWContainer = styled.div`
-  width: 100%;
+  /* width: 100%;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 20px; */
   .message {
     font-weight: 400;
     font-size: 1rem;
@@ -251,8 +253,8 @@ const StyledInput = styled.input`
   &:valid ~ label {
     top: -20px;
     left: 0;
-    color: #03e9f4;
-    font-size: 12px;
+    /* color: #03e9f4; */
+    /* font-size: 12px; */
   }
 `;
 

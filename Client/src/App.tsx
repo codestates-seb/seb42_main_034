@@ -1,4 +1,7 @@
+import Modal from 'component/ui/Modal';
 import ScrollTop from 'component/ui/ScrollTop';
+import SignIn from 'pages/user/SignIn';
+import SignUp from 'pages/user/SignUp';
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';

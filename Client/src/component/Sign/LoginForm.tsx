@@ -9,8 +9,10 @@ import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
 import LoginButton from './LoginButton';
+import { Props } from 'component/ui/Modal';
+import { useAppSelector } from 'redux/hooks';
 
-const Loginform = () => {
+const Loginform = ({ modal, setModal }: Pick<Props, 'modal' | 'setModal'>) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [vaildEmail, setVaildEmail] = useState(true);
@@ -34,9 +36,11 @@ const Loginform = () => {
         headers: { authorization, refresh },
       } = res;
       dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));
+
       notifi(dispatch, `${data.nickname}님 환영합니다.`);
       navigate(-1);
-      console.log(res.headers.refresh);
+
+      console.log(res.data);
 
       // setTimeout(() => {
       //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
@@ -93,7 +97,7 @@ const LoginFormWrapper = styled.form`
   width: 100%;
   min-width: 22rem;
   display: grid;
-  height: 200px;
+  height: 100%;
 `;
 
 const btnAnim1 = keyframes`

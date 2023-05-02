@@ -21,7 +21,6 @@ export default function Nav({ className }: Props) {
   }, [login]);
   return (
     <div className={className}>
-      <Modal children={<SignIn />}></Modal>
       <Link to="/home">
         <LogoStyle />
       </Link>

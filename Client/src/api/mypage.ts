@@ -54,7 +54,9 @@ export const useMypageAPI = () => {
     });
 
   const patchFixMemberInfo = (data: FixmemberInfo) => api.patch(`/members`, data);
-
+  const deleteMemberInfo = () => {
+    api.delete('/members');
+  };
   const getPostList = async () => {
     await api.get(`members/questionTitle`).then((res) => res.data);
   };
@@ -64,5 +66,6 @@ export const useMypageAPI = () => {
     getMyInfo,
     patchFixMemberInfo,
     getPostList,
+    deleteMemberInfo,
   };
 };
