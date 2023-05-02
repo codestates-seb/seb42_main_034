@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
 import useAPI from 'hooks/uesAPI';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMypageAPI } from 'api/mypage';
 interface ModalDefaultType {
   onClickToggleModal: () => void;
 }
@@ -14,11 +15,20 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
   const location = useGeolocation();
   const dispatch = useAppDispatch();
   const api = useAPI();
+  const { getMyInfo } = useMypageAPI();
   const myLocation = useAppSelector((state) => state.persistReducer.userInfo);
-
+  const { memberId } = useAppSelector((state) => state.loginInfo);
+  const queryClient = useQueryClient();
   const { latitude, longitude }: any = location.coordinates;
   const [ad, setAd] = useState('');
+  //지역 바로 반영
+  const { mutate } = useMutation(() => getMyInfo(memberId), {
+    onSuccess: () => {
+      console.log('마이페이지내용불러옴');
 
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+    },
+  });
   useEffect(() => {
     if (location.loaded === true) getAddressFromLatLng();
     setAd(myLocation?.location || '인증된 지역이 없습니다');
@@ -63,6 +73,7 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
             onClick={() => {
               dispatch(updateUserInfo({ key: 'address', value: ad }));
               onClickToggleModal();
+              mutate();
             }}
           >
             예

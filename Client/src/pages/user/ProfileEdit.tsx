@@ -1,9 +1,7 @@
 import Avatar from 'component/mypage/Avatar';
 import Modal from 'component/ui/editModal';
-import { handleScroll } from 'component/ui/ScrollTop';
 import useAPI from 'hooks/uesAPI';
 import { FixmemberInfo, useFixInfo } from 'hooks/useFixInfo';
-import useGeolocation from 'hooks/useGeoLocation';
 import React, { useCallback } from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +9,8 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
 import styled from 'styled-components';
 import { notifi } from 'utils/notifi';
-
+import { AiOutlineEdit } from 'react-icons/ai';
+import { Colors, FontSize } from 'component/style/variables';
 function ProfileEditPage() {
   const api = useAPI();
 
@@ -33,8 +32,8 @@ function ProfileEditPage() {
   const [password, setPassword] = useState<FixmemberInfo['password']>(0);
 
   const dispatch = useAppDispatch();
-  console.log(nickname);
-  //바로 수정
+
+  //바로 수정하는 훅
   const { mutate } = useFixInfo({
     nickname,
     location: userInfo?.location,
@@ -49,69 +48,75 @@ function ProfileEditPage() {
   const handleBlurNickname = () => {
     dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
   };
+  console.log(userInfo);
 
   return (
-    <Layout>
-      <>
-        <ProfileEditBox>
-          <SubTitle>회원정보 수정</SubTitle>
-          <Avatar />
-          <p className="miniTitle">닉네임</p>
-          <div className="input">
-            <input
-              placeholder="수정할 닉네임을 작성하세요(15자이하)"
-              disabled={false}
-              type="nickname"
-              value={nickname}
-              onChange={handleChangeNickname}
-              onBlur={handleBlurNickname}
-              maxLength={15}
-              className="nickname"
-            />
-            <button
-              className="check"
-              onClick={() => {
-                notifi(dispatch, '사용가능한 닉네임 입니다.');
-                console.log('nickname check');
-              }}
-            >
-              중복확인
-            </button>
-          </div>
-
-          <p className="miniTitle">도시설정</p>
-          <div className="input">
-            <input
-              placeholder="도시를 설정하기 위해 여기를 클릭"
-              value={userInfo.location || ''}
-              disabled={false}
-              onClick={() => {
-                onClickToggleModal();
-              }}
-              readOnly
-            />
-          </div>
-
-          <Button
+    <>
+      <SubTitle>
+        회원정보 수정
+        <AiOutlineEdit />
+        <div className="color">닉네임을 수정 할 수 있습니다.</div>
+      </SubTitle>
+      <Layout>
+        {/* <ProfileEditBox> */}
+        <Avatar />
+        <p className="miniTitle">닉네임</p>
+        <div className="input">
+          <input
+            placeholder="수정할 닉네임을 작성하세요(15자이하)"
+            disabled={false}
+            type="nickname"
+            value={nickname}
+            onChange={handleChangeNickname}
+            onBlur={handleBlurNickname}
+            maxLength={15}
+            className="nickname"
+          />
+          <button
+            className="check"
             onClick={() => {
-              const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
-              if (!isconfirm) return;
-              mutate();
-              navigate('/board/mypage');
+              notifi(dispatch, '사용가능한 닉네임 입니다.');
+              console.log('nickname check');
             }}
-            className="Button"
           >
-            저장
-          </Button>
-          {isOpenModal && (
-            <>
-              <Modal onClickToggleModal={onClickToggleModal} />
-            </>
-          )}
-        </ProfileEditBox>
-      </>
-      {/* ) : ('잘못된 요청')}  */}
-    </Layout>
+            중복확인
+          </button>
+        </div>
+
+        <p className="miniTitle">도시설정</p>
+        <div className="input">
+          <input
+            placeholder="도시를 설정하기 위해 여기를 클릭"
+            value={userInfo?.location || ''}
+            disabled={false}
+            onClick={() => {
+              onClickToggleModal();
+            }}
+            readOnly
+          />
+        </div>
+
+        <Button
+          onClick={() => {
+            const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
+            if (!isconfirm) return;
+            mutate();
+            navigate('/board/mypage');
+          }}
+          className="Button"
+        >
+          저장
+        </Button>
+        {isOpenModal && (
+          <>
+            <Modal onClickToggleModal={onClickToggleModal} />
+          </>
+        )}
+        {/* </ProfileEditBox> */}
+
+        {/* ) : ('잘못된 요청')}  */}
+      </Layout>
+    </>
   );
 }
 
@@ -119,8 +124,8 @@ const Layout = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  font-size: 1.3rem;
-  text-align: center;
+  /* font-size: 1.3rem;*/
+
   width: 100%;
   .username {
     padding-top: 2rem;
@@ -137,38 +142,9 @@ const Layout = styled.div`
     padding-top: 2rem;
     padding-bottom: 0.5rem;
     font-size: 15px;
-    color: white;
+    color: ${Colors.text_black};
     display: flex;
   }
-`;
-
-const SubTitle = styled.p`
-  font-size: 30px;
-  color: white;
-  margin-bottom: 35px;
-  width: 50%;
-`;
-
-const Button = styled.button`
-  font-size: 1rem;
-  color: black;
-  background-color: white;
-  border-radius: 5px;
-  width: 40%;
-`;
-
-const ProfileEditBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  top: 22%;
-  padding: 1.2rem;
-  background-color: #52a3e9;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  border-radius: 12px;
-  margin-top: 120px;
-  align-items: center;
   .check {
     border: 3px solid blue;
     width: 60px;
@@ -216,5 +192,27 @@ const ProfileEditBox = styled.div`
     padding-left: 5px;
   }
 `;
+
+const SubTitle = styled.p`
+  font-size: 30px;
+  color: black;
+  margin-bottom: 35px;
+  text-align: start;
+  width: 90%;
+  .color {
+    color: ${Colors.text_grey};
+    font-size: ${FontSize.md};
+  }
+`;
+
+const Button = styled.button`
+  font-size: 1rem;
+  color: ${Colors.text_black};
+  background-color: white;
+  border-radius: 5px;
+  width: 40%;
+`;
+
+const ProfileEditBox = styled.div``;
 
 export default ProfileEditPage;
