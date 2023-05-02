@@ -32,7 +32,7 @@ export default function QuestionDetails() {
   // useEffect(() => {
   //   getAnswerData(data.questionId, 'questions').catch(console.error);
   // });
-  console.log(detail);
+  // console.log(detail);
 
   return (
     <>

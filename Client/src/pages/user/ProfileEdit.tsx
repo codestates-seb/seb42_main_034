@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { updateUserInfo } from "redux/userInfoSlice";
 import styled from "styled-components";
-import { notifi } from "utils/notifi";
 
 
 function ProfileEditPage() {
@@ -70,8 +69,8 @@ function ProfileEditPage() {
         {/* {userInfo.name ? ( */}
             <>
                 <ProfileEditBox>
-                    <SubTitle>회원정보 수정</SubTitle>
-                    <Avatar/>
+                    <SubTitle>회원정보</SubTitle>
+                    {/* <Avatar/> */}
                     <p className="miniTitle">닉네임</p>
                     <div className="input">
                         <input 
@@ -84,7 +83,7 @@ function ProfileEditPage() {
                             maxLength={15}
                             className="nickname"
                         />
-                        <button 
+                        {/* <button 
                         className="check"
                         onClick={() => {
                             notifi(dispatch, '사용가능한 닉네임 입니다.');
@@ -92,7 +91,7 @@ function ProfileEditPage() {
                         }}
                         >
                         중복확인
-                        </button>
+                        </button> */}
                     </div>
 
           <p className="miniTitle">도시설정</p>
@@ -193,9 +192,9 @@ const ProfileEditBox = styled.div`
     border-radius: 12px;
     margin-top: 120px;
     align-items: center;
+    display: flex;
 
-  .check {
-    border: 3px solid blue;
+  /* .check {
     width: 60px;
     font-size: 12px;
     padding-top: 4px;
@@ -203,11 +202,12 @@ const ProfileEditBox = styled.div`
     border-radius: 5px;
     color: #016241;
     cursor: pointer;
+    margin-left: auto;
     :hover {
       background-color: grey;
       color: #eaeaea;
     }
-  }
+  } */
 
   .nickname {
     width: 160px;
