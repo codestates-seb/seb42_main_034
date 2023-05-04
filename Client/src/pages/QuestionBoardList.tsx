@@ -56,7 +56,7 @@ export default function QuestionBoardList() {
     //
   }, [filter]);
   return (
-    <Flex direction="column" width="100%" height="900px">
+    <Flex direction="column" width="100%">
       <div>{category}</div>
       <Section>
         {section.map((filter, idx) => (

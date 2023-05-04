@@ -6,7 +6,7 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import { MoveBtn } from 'pages/QuestionBoardList';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
@@ -55,10 +55,13 @@ export default function AnswerList({
     // onAnswer(answer);
   }, [answer, isLike]);
   //대댓글을 달면 answer가 다시 get되어야한다
-  const handlePost = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    createReply(answer.answerId, 'questions', comment).then((res) => getAnswer());
-  };
+  const handlePost = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      createReply(answer.answerId, 'questions', comment).then((res) => getAnswer());
+    },
+    [answer],
+  );
   console.log(answer);
 
   return (
@@ -132,7 +135,7 @@ export default function AnswerList({
         <div>
           <div>
             {answer.comments &&
-              answer.comments.map((comment, idx) => <Comment key={idx} comment={comment} getAnswer={getAnswer} />)}
+              answer.comments.map((comment, idx) => <Comment comment={comment} getAnswer={getAnswer} />)}
           </div>
           <form onSubmit={handlePost}>
             <ReplyInput type="comment" placeholder="댓글을 입력해주세요" setState={setComment} />

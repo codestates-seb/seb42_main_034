@@ -51,6 +51,7 @@ export default function Searchbar({
       });
     }
   }, []);
+  console.log(querystring);
 
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,7 +71,7 @@ export default function Searchbar({
       <SearchInput type="text" value={searchData} onChange={searchInputHandler} />
       {search[0] === '?tag' && (
         <Tag>
-          ddd
+          {querystring}
           <TagBtn
             children="x"
             onClick={() => {
@@ -124,7 +125,7 @@ const Tag = styled.div`
   border: 1px solid ${Colors.main_01};
   position: absolute;
   top: 1.1em;
-  left: 9em;
+  left: 10em;
   padding: 0.3em;
   background: ${Colors.main_02};
   border-radius: 0.3em;

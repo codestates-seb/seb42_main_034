@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { notifi } from 'utils/notifi';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { Colors, FontSize } from 'component/style/variables';
+import { Flex } from 'component/style/cssTemplete';
 function ProfileEditPage() {
   const api = useAPI();
 
@@ -29,26 +30,60 @@ function ProfileEditPage() {
 
   const [nickname, setNickname] = useState(userInfo.nickname);
   const navigate = useNavigate();
-  const [password, setPassword] = useState<FixmemberInfo['password']>(0);
-
+  const [password, setPassword] = useState('');
+  const [isPassword, setIsPassword] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [nicknameMessage, setNicknameMessage] = useState<string>('');
+  const [isNickname, setIsNickname] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   //바로 수정하는 훅
   const { mutate } = useFixInfo({
     nickname,
     location: userInfo?.location,
-    password,
+    // password,
   });
-
-  //닉네임
-  const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
+  const handleSubmit = () => {
+    if (isPassword === false) {
+      notifi(dispatch, '회원가입 양식을 획인 해주세요.');
+    } else {
+      const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
+      if (!isconfirm) return;
+      mutate();
+      navigate('/board/mypage');
+    }
   };
+  const handleChangePassword = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+    const passwordCurrent = event.target.value;
+    setPassword(passwordCurrent);
+
+    if (!passwordRegex.test(passwordCurrent)) {
+      //   notifi(dispatch, '1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.');
+      setPasswordMessage('1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.');
+      setIsPassword(false);
+    } else {
+      setPasswordMessage('올바른 비밀번호 형식입니다.');
+      setIsPassword(true);
+    }
+  }, []);
+  //닉네임
+  const handleChangeNickname = useCallback<(event: React.ChangeEvent<HTMLInputElement>) => void>((event) => {
+    setNickname(event.target.value);
+    if (event.target.value.length < 2 || event.target.value.length > 10) {
+      //   notifi(dispatch, '2글자 이상 10글자 미만으로 입력해주세요.');
+      setNicknameMessage('2글자 이상 10글자 미만으로 입력해주세요.');
+      setIsNickname(false);
+    } else {
+      setNicknameMessage('');
+      setIsNickname(true);
+    }
+  }, []);
 
   const handleBlurNickname = () => {
     dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
   };
-  console.log(userInfo);
+  console.log(password);
 
   return (
     <>
@@ -60,7 +95,7 @@ function ProfileEditPage() {
       <Layout>
         {/* <ProfileEditBox> */}
         <Avatar />
-        <p className="miniTitle">닉네임</p>
+        <div className="miniTitle">닉네임</div>
         <div className="input">
           <input
             placeholder="수정할 닉네임을 작성하세요(15자이하)"
@@ -72,6 +107,7 @@ function ProfileEditPage() {
             maxLength={15}
             className="nickname"
           />
+
           <button
             className="check"
             onClick={() => {
@@ -82,8 +118,8 @@ function ProfileEditPage() {
             중복확인
           </button>
         </div>
-
-        <p className="miniTitle">도시설정</p>
+        <div>{nicknameMessage}</div>
+        <div className="miniTitle">도시설정</div>
         <div className="input">
           <input
             placeholder="도시를 설정하기 위해 여기를 클릭"
@@ -94,17 +130,10 @@ function ProfileEditPage() {
             }}
             readOnly
           />
-        </div>
-
-        <Button
-          onClick={() => {
-            const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
-            if (!isconfirm) return;
-            mutate();
-            navigate('/board/mypage');
-          }}
-          className="Button"
-        >
+        </div>{' '}
+        <input placeholder="변경할 비밀번호를 입력해주세요" onChange={handleChangePassword} type="password" />
+        <div>{passwordMessage}</div>
+        <Button onClick={handleSubmit} className="Button">
           저장
         </Button>
         {isOpenModal && (
@@ -113,7 +142,6 @@ function ProfileEditPage() {
           </>
         )}
         {/* </ProfileEditBox> */}
-
         {/* ) : ('잘못된 요청')}  */}
       </Layout>
     </>

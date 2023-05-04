@@ -1,6 +1,6 @@
 import { getFilterData, useGetData, useLike } from 'api/data';
 import { MoveBtn } from 'pages/QuestionBoardList';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
@@ -44,7 +44,7 @@ export default function Answer({
   const { setLike, seletedQuestion } = useLike();
   const { memberId } = useAppSelector((state) => state.loginInfo);
   //위치검증
-  const location = useAppSelector((state) => state.persistReducer.userInfo.data);
+  const location = useAppSelector((state) => state.persistReducer.userInfo);
   const region = getFilterData();
   console.log(region);
 
@@ -59,44 +59,49 @@ export default function Answer({
   const getAnswer = async () => {
     const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
     setAnswer(response.data.data);
+    console.log(response);
   };
-  const deleteAnswer = (answerId: number | string) => {
-    deleteAnswerData('questions', answerId)
-      .then((res) => {
-        getAnswerData(questionId, 'questions', setAnswer).catch(console.error);
-      })
-      .catch(console.error);
-  };
+  const deleteAnswer = useCallback(
+    (answerId: number | string) => {
+      deleteAnswerData('questions', answerId)
+        .then((res) => {
+          getAnswerData(questionId, 'questions', setAnswer).catch(console.error);
+        })
+        .catch(console.error);
+    },
+    [answer],
+  );
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (location?.location && region === location?.location) {
-      await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
-    } else {
-      alert('현지인만 작성 가능합니다');
-    }
+    // if (location?.location && region === location?.location) {
+    await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
+    //  else {
+    // alert('현지인만 작성 가능합니다');
+    // }
 
     getAnswer().catch(console.error);
   };
-  const handleLike = (isLike: boolean, answerId: number, setState: (value: React.SetStateAction<boolean>) => void) => {
-    if (!isLike) {
-      //해당 answer만 바꾸기
-      setLike(answerId).then((res) => {
+  const handleLike = useCallback(
+    (isLike: boolean, answerId: number, setState: (value: React.SetStateAction<boolean>) => void) => {
+      if (isLike === false) {
+        //해당 answer만 바꾸기
+        setLike(answerId).then((res) => {
+          //성공했을때 상태바꿈
+          setState(!isLike);
+          getAnswer().catch(console.error);
+          console.log(res);
+        });
+      } else {
         setAnswer(
-          answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt + 1 } : answer)),
+          answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt - 1 } : answer)),
+          //좋아요상태 넣기
         );
         //성공했을때 상태바꿈
         setState(!isLike);
-        console.log('tjdrhd');
-      });
-    } else {
-      setAnswer(
-        answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt - 1 } : answer)),
-        //좋아요상태 넣기
-      );
-      //성공했을때 상태바꿈
-      setState(!isLike);
-    }
-  };
+      }
+    },
+    [answer],
+  );
   //채택
   const setChecked = (answerId: number) => {
     seletedQuestion(answerId);

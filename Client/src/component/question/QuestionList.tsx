@@ -92,6 +92,7 @@ export default function QuestionList({ filter }: { filter: string }) {
   );
 }
 const MainBoard = styled.ul`
-  flex: 1 1 auto;
+  min-height: 900px;
+  height: 100%;
   padding-left: 0px;
 `;

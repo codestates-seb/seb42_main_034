@@ -7,7 +7,7 @@ import { notifi } from 'utils/notifi';
 export interface FixmemberInfo {
   nickname: string;
   location: string;
-  password: number;
+  // password: string;
   // address: string;
   // avatarUrl: string;
 }

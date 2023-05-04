@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import dayjs from 'dayjs';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import TextInput from './ui/Input';
@@ -16,18 +16,21 @@ export default function Comment({ comment, getAnswer }: { comment: Comment; getA
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [modify, setModify] = useState<string>(comment.content);
   const { patchReply, deleteReply } = useReply();
-  const handlePatch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    patchReply(comment.commentId, 'questions', modify)
-      .then((res) => {
-        console.log(res);
-        setIsEdit(!isEdit);
-        getAnswer();
-      })
-      .catch((error) => console.log('댓글실패', error));
-  };
+  const handlePatch = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      patchReply(comment.commentId, 'questions', modify)
+        .then((res) => {
+          console.log(res);
+          setIsEdit(!isEdit);
+          getAnswer();
+        })
+        .catch((error) => console.log('댓글실패', error));
+    },
+    [comment],
+  );
   return (
-    <BackGround items="center">
+    <BackGround items="center" key={comment.commentId}>
       <Arrow />
 
       {isEdit ? (

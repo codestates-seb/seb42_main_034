@@ -201,7 +201,7 @@ export const useLike = () => {
     if (isLike) {
       await api.post(`/blog/unlike/${blogId}`);
     } else {
-      await api.post(`/blog/like/${blogId}`);
+      await api.post(`/blogs/like/${blogId}`);
     }
   };
   const blogUnLikes = async (blogId: number | string | undefined) => {

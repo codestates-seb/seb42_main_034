@@ -1,6 +1,7 @@
 import { ReturnData } from 'api/data';
 
 import React from 'react';
+import { PageProps } from 'redux/boardDetails';
 import styled from 'styled-components';
 import { Flex } from './style/cssTemplete';
 import { FontSize } from './style/variables';
@@ -10,7 +11,7 @@ export default function Page({
   pages,
   onPage,
 }: {
-  pages: Partial<ReturnData>;
+  pages: PageProps;
   onPage: React.Dispatch<
     React.SetStateAction<{
       page: number;
@@ -21,19 +22,20 @@ export default function Page({
   >;
 }) {
   const { page, totalElements, totalPages, size } = pages;
+  console.log(pages);
 
   const handleLeftPage = () => {
     if (page === 1) return;
     else {
-      onPage({ ...page, page: page - 1 });
+      onPage({ ...pages, page: page - 1 });
     }
   };
   const total: number = Math.ceil(totalElements / size);
-
+  console.log(page, totalPages);
   const handleRightPage = () => {
-    if (page === 1 || page === total) return;
+    if (page === totalPages) return;
     else {
-      onPage({ ...page, page: page + 1 });
+      onPage({ ...pages, page: page + 1 });
     }
   };
   return (
@@ -41,14 +43,17 @@ export default function Page({
       <Ul>
         <StyledBtn children="<" onClick={handleLeftPage} />
 
-        {total > 0 ? (
-          Array(total)
+        {totalPages > 0 ? (
+          Array(totalPages)
             .fill('d')
             .map((page, idx) => (
               <li
                 key={idx}
                 onClick={() => {
-                  if (total) onPage({ ...page, page: idx + 1 });
+                  // if (totalPages === idx + 1 || page === idx + 1) return;
+                  // else {
+                  onPage({ ...pages, page: idx + 1 });
+                  // }
                 }}
               >
                 <StyledBtn children={idx + 1} />
@@ -69,6 +74,7 @@ const Ul = styled.ul`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding-left: 0;
 `;
 const StyledBtn = styled(Button)`
   border: none;

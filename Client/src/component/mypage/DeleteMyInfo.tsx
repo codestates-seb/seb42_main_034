@@ -30,6 +30,7 @@ export default function DeleteMyInfo() {
           dispatch(logout());
           dispatch(deleteUserInfo());
           navigate(`/`);
+          console.log(res);
         });
       }
     });
