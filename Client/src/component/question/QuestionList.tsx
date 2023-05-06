@@ -111,7 +111,6 @@ const MainBoard = styled.ul`
 `;
 const BoardTap = styled.div`
   display: flex;
-
   div {
     margin-left: 0.9em;
   }

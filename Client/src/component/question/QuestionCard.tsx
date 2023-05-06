@@ -48,7 +48,6 @@ const Card = styled.li`
   border-radius: 1rem;
   padding: 1rem;
   border-bottom: 1px solid lightgray;
-
   ${HoverAction}
   &:hover {
     background: lightgray;
@@ -56,7 +55,6 @@ const Card = styled.li`
   .title {
     font-weight: bold;
     font-size: ${FontSize.lg};
-
     @media (max-width: 760px) {
       font-size: ${FontSize.md};
     }

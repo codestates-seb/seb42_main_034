@@ -115,7 +115,6 @@ const Dialog = styled.dialog`
   border-radius: 4px;
   background-color: skyblue;
   z-index: 9999;
-
   h1 {
     font-size: 1.5rem;
     padding-bottom: 15px;

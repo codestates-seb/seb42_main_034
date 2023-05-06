@@ -20,7 +20,6 @@ const Loginform = ({ modal, setModal }: Pick<Props, 'modal' | 'setModal'>) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postLogin } = useAuthAPI();
-  console.log(email, password, vaildEmail, vaildPW);
 
   const { mutate, data: userData } = useMutation({
     mutationKey: ['loginInfo'],

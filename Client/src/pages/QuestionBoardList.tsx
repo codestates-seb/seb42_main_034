@@ -88,13 +88,7 @@ export default function QuestionBoardList() {
       </Section>
 
       <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
-      <Flex>
-        <div>태그</div>
-        <div>제목</div>
-        <div>작성자</div>
-        <div>조회수</div>
-        <div>작성일</div>
-      </Flex>
+
       <QuestionList filter={filter} />
     </Flex>
   );
