@@ -65,7 +65,6 @@ public class Blog extends Auditable {
     @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BlogTag> blogTags = new ArrayList<>();
 
-
     // 양방향
     public void setBlogAnswer(BlogAnswer bloganswer) {
         this.blogAnswers.add(bloganswer);

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class AnswerDto {
@@ -40,7 +41,7 @@ public class AnswerDto {
     public static class Response{
 
         private Long memberId;
-
+        private String nickName;
         private Long questionId;
 
         private Long answerId;
@@ -50,6 +51,7 @@ public class AnswerDto {
         private int likeCnt;
 
         private boolean isChecked;
+        private String createdAt;
 
 //        private String location;
 
