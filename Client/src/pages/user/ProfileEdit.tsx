@@ -2,7 +2,7 @@ import Avatar from 'component/mypage/Avatar';
 import Modal from 'component/ui/editModal';
 import useAPI from 'hooks/uesAPI';
 import { FixmemberInfo, useFixInfo } from 'hooks/useFixInfo';
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -12,6 +12,8 @@ import { notifi } from 'utils/notifi';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { Colors, FontSize } from 'component/style/variables';
 import { Flex } from 'component/style/cssTemplete';
+import { uploadToS3 } from 'api/imageUpload';
+import { useImageUpload } from 'hooks/useImageUpload';
 function ProfileEditPage() {
   const api = useAPI();
 
@@ -35,7 +37,26 @@ function ProfileEditPage() {
   const [passwordMessage, setPasswordMessage] = useState('');
   const [nicknameMessage, setNicknameMessage] = useState<string>('');
   const [isNickname, setIsNickname] = useState<boolean>(false);
+  //멤버정보이미지로 백엔드와 협의 후 변경
+  // const [image, setImage] = useState<FileList>();
+  // const [srcImage, setSrcImage] = useState<string>('');
+  const { image, srcImage, isImageEdit, handleImageUpload, setIsImageEdit } = useImageUpload();
   const dispatch = useAppDispatch();
+  const imageRef = useRef<HTMLInputElement>();
+  // const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log(e.target.files)
+  //  //중요
+  //   if (e.target.files === null) return;
+  //   if (e.target.files?.length > 0) {
+
+  //     const url = await uploadToS3(e.target.files[0]);
+
+  //    setSrcImage(url);
+  //    //이미지 객체 저장
+  //    setImage(e.target.files)
+  //   }
+  // };
+  console.log('src확인', srcImage);
 
   //바로 수정하는 훅
   const { mutate } = useFixInfo({
@@ -49,8 +70,10 @@ function ProfileEditPage() {
     } else {
       const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
       if (!isconfirm) return;
+      // setImage()
       mutate();
-      navigate('/board/mypage');
+      setIsImageEdit(false);
+      navigate(-1);
     }
   };
   const handleChangePassword = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +106,6 @@ function ProfileEditPage() {
   const handleBlurNickname = () => {
     dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
   };
-  console.log(password);
 
   return (
     <>
@@ -93,6 +115,9 @@ function ProfileEditPage() {
         <div className="color">닉네임을 수정 할 수 있습니다.</div>
       </SubTitle>
       <Layout>
+        <label htmlFor="file">프로필 이미지 등록</label>
+        {isImageEdit && <img alt="" src={srcImage} />}
+        <input type="file" accept=".png, .jpeg, .jpg" onChange={handleImageUpload} />
         {/* <ProfileEditBox> */}
         <Avatar />
         <div className="miniTitle">닉네임</div>

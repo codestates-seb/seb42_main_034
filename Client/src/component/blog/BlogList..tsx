@@ -1,16 +1,12 @@
-import { changeUrl } from 'api/changeUrl';
 import { BlogReturnData, ReturnData, useSearch } from 'api/data';
 import Searchbar from 'component/board/Searchbar';
 import Page from 'component/Page';
 import useAPI from 'hooks/uesAPI';
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { BlogData, ListData } from 'redux/boardDetails';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { BlogData } from 'redux/boardDetails';
 import styled from 'styled-components';
 import BlogCard from './BlogCard';
-interface Category {
-  category: string;
-}
 
 export default function BlogList({ filter }: { filter: string }) {
   const [city, setCity] = useState<BlogData[] | []>([]);
@@ -70,8 +66,9 @@ export default function BlogList({ filter }: { filter: string }) {
 }
 const MainBoard = styled.ul`
   flex: 1 1 auto;
-  grid-template-columns: repeat(3, 30%);
-  grid-auto-rows: 15rem;
+  display: grid;
+  grid-template-columns: repeat(3, 33.3%);
+  grid-auto-rows: 30rem;
   gap: 0.5em;
   padding-left: 0px;
 `;

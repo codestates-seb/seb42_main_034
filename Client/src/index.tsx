@@ -70,7 +70,7 @@ const router = createBrowserRouter([
           //   element: <SignIn />,
           // },
           {
-            path: '/board/mypage',
+            path: '/board/mypage/:id',
             element: <MyPage />,
           },
           {

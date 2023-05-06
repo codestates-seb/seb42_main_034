@@ -33,8 +33,8 @@ export default function BoardDetail({ section, detail }: { section: string; deta
       <Item>
         <Flex justify="start">
           {' '}
-          {detail.tags.map((tag) => (
-            <Tag text={tag} region={region} section={section} />
+          {detail.tags.map((tag, idx) => (
+            <Tag key={idx} text={tag} region={region} section={section} />
           ))}
         </Flex>
         <Title className="title">{detail.title}</Title>

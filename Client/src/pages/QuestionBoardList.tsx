@@ -9,14 +9,13 @@ import { Colors, FontSize } from 'component/style/variables';
 import QuestionList from '../component/question/QuestionList';
 export const section: string[] = ['questions', 'blogs'];
 export const StyledCategoryBtn = styled(Button)<{ selected?: boolean }>`
-  background: none;
   font-size: ${FontSize.h3};
   margin: 0.7rem;
   border: none;
-  border-bottom: ${(props) => props.selected && `7px solid ${Colors.button_blue}`};
+  background: ${(props) => (props.selected ? Colors.button_blue : 'none')};
   margin-top: 0;
   margin-right: 0.6rem;
-  color: ${(props) => props.selected && Colors.button_blue};
+  color: ${(props) => props.selected && Colors.text_white};
   ${HoverAction}
 `;
 export const Section = styled(Relative)`
@@ -89,7 +88,13 @@ export default function QuestionBoardList() {
       </Section>
 
       <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
-
+      <Flex>
+        <div>태그</div>
+        <div>제목</div>
+        <div>작성자</div>
+        <div>조회수</div>
+        <div>작성일</div>
+      </Flex>
       <QuestionList filter={filter} />
     </Flex>
   );

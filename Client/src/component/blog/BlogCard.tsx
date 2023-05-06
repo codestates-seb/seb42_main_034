@@ -34,7 +34,6 @@ const Card = styled.li`
   justify-content: space-between;
   align-items: center;
   padding: 0.9rem;
-  height: 5rem;
   border-radius: 1rem;
   padding: 1rem;
   &:hover {

@@ -65,21 +65,28 @@ export default function Answer({
     (answerId: number | string) => {
       deleteAnswerData('questions', answerId)
         .then((res) => {
+          console.log('질문댓글성공');
+
           getAnswerData(questionId, 'questions', setAnswer).catch(console.error);
         })
-        .catch(console.error);
+        .catch((error) => {
+          console.log('질문댓글에러');
+        });
     },
     [answer],
   );
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // if (location?.location && region === location?.location) {
-    await api.post(`/questions/answer/${questionId}`, { content, memberId }).catch(console.error);
+    await api
+      .post(`/questions/answer/${questionId}`, { content, memberId })
+      .then((res) => {
+        getAnswer().catch(console.error);
+      })
+      .catch(console.error);
     //  else {
     // alert('현지인만 작성 가능합니다');
     // }
-
-    getAnswer().catch(console.error);
   };
   const handleLike = useCallback(
     (isLike: boolean, answerId: number, setState: (value: React.SetStateAction<boolean>) => void) => {

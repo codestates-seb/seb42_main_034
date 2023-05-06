@@ -2,6 +2,7 @@ import { changeUrl } from 'api/changeUrl';
 import { ReturnData, useSearch } from 'api/data';
 import Searchbar from 'component/board/Searchbar';
 import Page from 'component/Page';
+import { Flex } from 'component/style/cssTemplete';
 import useAPI from 'hooks/uesAPI';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -86,7 +87,19 @@ export default function QuestionList({ filter }: { filter: string }) {
         onPage={setPageNation}
         querystring={searchData}
       />
-      <MainBoard>{city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}</MainBoard>
+      <MainBoard>
+        <Contentbar>
+          <div>태그</div>
+          <div>제목</div>
+
+          <BoardTap>
+            <div>작성자</div>
+            <div>조회수</div>
+            <div>작성일</div>
+          </BoardTap>
+        </Contentbar>
+        {city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}
+      </MainBoard>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </>
   );
@@ -95,4 +108,16 @@ const MainBoard = styled.ul`
   min-height: 900px;
   height: 100%;
   padding-left: 0px;
+`;
+const BoardTap = styled.div`
+  display: flex;
+
+  div {
+    margin-left: 0.9em;
+  }
+`;
+const Contentbar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4.3em;
 `;
