@@ -56,10 +56,12 @@ public interface AnswerMapper {
     default AnswerDto.Response answerToAnswerResponse(Answer answer, List<AnswerCommentDto.Response> comments){
         AnswerDto.Response answerResponseDto = new AnswerDto.Response();
         answerResponseDto.setMemberId(answer.getMember().getId());
+        answerResponseDto.setNickName(answer.getMember().getNickname());
         answerResponseDto.setAnswerId(answer.getId());
         answerResponseDto.setChecked(answer.isChecked());
         answerResponseDto.setContent(answer.getContent());
         answerResponseDto.setComments(comments);
+        answerResponseDto.setCreatedAt(answer.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         return answerResponseDto;
     }
 

@@ -2,6 +2,7 @@ package com.project.tripAdvisor.blog.mapper;
 
 import com.project.tripAdvisor.blog.dto.BlogDto;
 import com.project.tripAdvisor.blog.entity.Blog;
+import com.project.tripAdvisor.blog.entity.BlogLike;
 import com.project.tripAdvisor.member.Member;
 import com.project.tripAdvisor.member.MemberDto;
 import org.mapstruct.Mapper;
@@ -48,7 +49,7 @@ public interface BlogMapper {
         String image = blog.getImage_path();
         Long memberId = blog.getMember().getId();
 
-        BlogDto.Response response = new BlogDto.Response( blogId, title, content,tags, image,writer, viewCnt, likeCnt, createdAt, modifiedAt,memberId );
+        BlogDto.Response response = new BlogDto.Response( blogId, title, content,tags, image,writer, viewCnt, likeCnt, createdAt, modifiedAt,memberId);
 
         return response;
     }

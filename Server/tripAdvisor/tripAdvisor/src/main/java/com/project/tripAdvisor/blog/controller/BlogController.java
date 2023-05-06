@@ -3,8 +3,10 @@ package com.project.tripAdvisor.blog.controller;
 import com.project.tripAdvisor.auth.handler.MemberAuthenticationFailureHandler;
 import com.project.tripAdvisor.blog.dto.BlogDto;
 import com.project.tripAdvisor.blog.entity.Blog;
+import com.project.tripAdvisor.blog.entity.BlogLike;
 import com.project.tripAdvisor.blog.mapper.BlogAnswerMapper;
 import com.project.tripAdvisor.blog.mapper.BlogMapper;
+import com.project.tripAdvisor.blog.repository.BlogLikeRepository;
 import com.project.tripAdvisor.blog.repository.BlogRepository;
 import com.project.tripAdvisor.blog.service.BlogService;
 import com.project.tripAdvisor.member.Member;
@@ -25,6 +27,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -41,8 +44,9 @@ public class BlogController {
     private final BlogMapper mapper;
     private final BlogAnswerMapper answerMapper;
     private final MemberFindService memberFindService;
+    private final BlogLikeRepository blogLikeRepository;
 
-    public BlogController(BlogService blogService, MemberService memberService, TagService tagService, BlogRepository blogRepository, BlogMapper mapper, BlogAnswerMapper answerMapper, MemberFindService memberFindService) {
+    public BlogController(BlogService blogService, MemberService memberService, TagService tagService, BlogRepository blogRepository, BlogMapper mapper, BlogAnswerMapper answerMapper, MemberFindService memberFindService, BlogLikeRepository blogLikeRepository) {
         this.blogService = blogService;
         this.memberService = memberService;
         this.tagService = tagService;
@@ -50,6 +54,7 @@ public class BlogController {
         this.mapper = mapper;
         this.answerMapper = answerMapper;
         this.memberFindService = memberFindService;
+        this.blogLikeRepository = blogLikeRepository;
     }
 
     //블로그 포스팅 등록
@@ -61,9 +66,12 @@ public class BlogController {
 
     @PostMapping
     public ResponseEntity postBlog(Principal principal, @Valid @RequestBody BlogDto.Request requestBody) {
-
+        /**
+         * 권한 처리 잘되는지만 테스트하면 끗-
+         */
         Blog blog = mapper.blogRequestToBlog(requestBody);
         Member member = memberFindService.findMyProfile(principal.getName());
+        blogService.checkAuthorized(blog,member);
         blog.setMember(member);
         // 검증된 member 찾아서 넣기
 //        addMemberToBlog(requestBody, blog);
@@ -132,6 +140,7 @@ public class BlogController {
     public ResponseEntity getBlog(@PathVariable("blog-id") @Positive Long blogId){
 //        Blog blog = blogService.findVerifyBlog(blogId);
         Blog blog = blogService.viewBlog(blogId);
+
         BlogDto.Response response = mapper.blogToBlogResponse(blog);
 
         return new ResponseEntity<>(
@@ -139,11 +148,11 @@ public class BlogController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity searchBlog(@RequestParam String keyword,
+    public ResponseEntity searchBlog(@RequestParam String searchText,
                                      @RequestParam(defaultValue = "none")String type,
                                      @Positive @RequestParam int page) {
 
-        Page<Blog> pageBlog = blogService.searchBlog(page - 1, keyword, type);
+        Page<Blog> pageBlog = blogService.searchBlog(page - 1, searchText, type);
         List<Blog> blogList = pageBlog.getContent();
 
         List<BlogDto.searchResponse> searchResponses = mapper.blogToSearchResponses(blogList);
