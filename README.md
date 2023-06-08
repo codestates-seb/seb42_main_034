@@ -52,7 +52,7 @@
 |이정연<br>(팀장)|박형빈<br>(부팀장)|황금비|이수민|
 |:---:|:---:|:---:|:---:|
 | <img alt="이정연" src="https://github.com/codestates-seb/seb42_main_034/assets/116021867/bdfba60a-cb2c-4474-b7e0-ba57a54e9292" height="200" width="200"> | <img alt="박형빈" src="https://github.com/codestates-seb/seb42_main_034/assets/116021867/115a550e-1b76-4416-a218-152884c7fbd4" height="200" width="200">| <img alt="황금비" src="https://github.com/codestates-seb/seb42_main_034/assets/116021867/57df45ea-f061-4529-aaf5-b03f685e4d4a" height="200" width="200"> | <img alt="이수민" src="https://github.com/codestates-seb/seb42_main_034/assets/116021867/fb30666c-8c88-452b-90d4-09150cd7d2f0" height="200" width="200">
-|</br>유저 CRUD</br>CI/CD 구축</br>마이페이지</br>데이터베이스 관리</br>Spring Security</br>AWS 배포</br>토큰을 이용한 인증</br>예외처리</br></br>|</br>DB에 이미지 저장</br>위치API 도입</br>블로그게시판 구현</br>키워드 검색 기능 구현</br></br>|</br>질문게시판 구현</br>질문게시판 내 댓글구현</br>질문게시판 내 대댓글 구현</br></br>|</br>블로그게시판 구현</br>블로그 게시판 내 댓글구현</br>블로그 게시판 내 대댓글 구현</br></br>|
+|</br>유저 CRUD</br>CI/CD 구축</br>마이페이지</br>데이터베이스 관리</br>Spring Security</br>AWS 배포</br>토큰을 이용한 인증</br>예외처리</br></br>|</br>DB에 이미지 저장</br>위치API 도입</br>블로그게시판 구현</br>키워드 검색 기능 구현</br></br>|</br>질문게시판 구현</br>질문게시판 내 댓글</br>질문게시판 내 대댓글</br></br>|</br>블로그게시판 구현</br>블로그 게시판 내 댓글</br>블로그 게시판 내 대댓글</br></br>|
 |[JungYeon222](https://github.com/JungYeon222)|[So2Jln](https://github.com/So2Jln)|||
 ---
 ### Front-end
