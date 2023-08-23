@@ -59,7 +59,7 @@
 |조수진<br> (Front Leader)|김용석|
 |:---:|:---:|
 | <img alt="조수진" src="https://github.com/codestates-seb/seb42_main_034/assets/116021867/b2d5b639-2c76-4ffb-b435-03ceb52fde3a" height="200" width="200"> | <img alt="김용석" src="https://github.com/codestates-seb/seb42_main_034/assets/116021867/1bbdaab6-8000-4bb2-8d20-6199996f9d4f" height="200" width="200">
-|</br>메인페이지</br>질문 게시판</br>블로그 게시판</br>기타 반응형 작업</br></br>|</br>로그인 등 인증처리</br>회원가입 페이지</br>마이페이지</br>위치인증</br></br>
+|</br>메인페이지</br>질문 게시판</br>블로그 게시판</br>기타 반응형 작업</br>이미지업로드|</br>로그인 등 인증처리</br>회원가입 페이지</br>마이페이지</br>위치인증</br></br>
 |[sujinnnnnnnn](https://github.com/sujinnnnnnnn)|[myongdol](https://github.com/myongdol)|
 ---
 
