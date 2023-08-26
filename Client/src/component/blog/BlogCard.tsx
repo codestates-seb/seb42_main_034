@@ -34,7 +34,10 @@ const Card = styled.li`
   justify-content: space-between;
   align-items: center;
   padding: 0.9rem;
+<<<<<<< HEAD
+=======
   height: 5rem;
+>>>>>>> 37682c730dc9e4063a6a06607d0e03b8398c2d87
   border-radius: 1rem;
   padding: 1rem;
   &:hover {

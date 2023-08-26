@@ -25,7 +25,6 @@ export default function ModifyQuestion() {
   const handlePatch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await putBoardData('questions', data.detail.questionId, { title, content, tags, image: null });
-
     navigate(-1);
   };
   console.log(tags);

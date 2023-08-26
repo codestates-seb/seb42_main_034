@@ -1,3 +1,6 @@
+import { Button } from 'component/ui/Button';
+import { Props } from 'component/ui/Modal';
+import { MoveBtn } from 'pages/QuestionBoardList';
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -5,9 +8,11 @@ import styled from 'styled-components';
 import { SignUpForm } from '../../component/SignUp/SignUpForm';
 import { useAppSelector } from '../../redux/hooks';
 
-
-
-export default function SignUp() {
+export default function SignUp({
+  modal,
+  setModal,
+  setsiginInModal,
+}: Pick<Props, 'modal' | 'setModal'> & { setsiginInModal: React.Dispatch<React.SetStateAction<boolean>> }) {
   const { isLogin } = useAppSelector((state) => state.loginInfo);
   const navigate = useNavigate();
 
@@ -15,23 +20,26 @@ export default function SignUp() {
     isLogin && navigate('/');
   }, []);
 
-
-
   return (
     <MainContainer>
-      <FormWrapper>
       <Title>회원가입</Title>
-        <SignUpForm/>
-      </FormWrapper>
+      <SignUpForm setModal={setModal} modal={modal} setsiginInModal={setsiginInModal} />
+      <div>이미 회원이신가요?</div>
+      <MoveBtn
+        onClick={() => {
+          setModal(!modal);
+          setsiginInModal((prev) => !prev);
+        }}
+      >
+        로그인 하러가기
+      </MoveBtn>
     </MainContainer>
   );
 }
 
-
-
 const MainContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,11 +47,10 @@ const MainContainer = styled.div`
 `;
 
 const Title = styled.h2`
-    margin: 0 0 30px;
-    padding: 0;
-    color: #fff;
-    text-align: center; 
-`
+  padding: 0;
+  color: #fff;
+  text-align: center;
+`;
 
 const FormWrapper = styled.div`
   position: absolute;
@@ -51,9 +58,9 @@ const FormWrapper = styled.div`
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  padding:40px;
+  padding: 40px;
   background: rgba(31, 113, 243, 0.5);
-  box-shadow: 0 15px 25px rgba(31, 113, 243, .6);
+  box-shadow: 0 15px 25px rgba(31, 113, 243, 0.6);
   border-radius: 8px;
   height: 60%;
-`
+`;

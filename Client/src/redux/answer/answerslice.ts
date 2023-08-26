@@ -7,30 +7,36 @@ export interface AnswerData {
   likeCnt: number;
   memberId: number;
   comments: [];
-  createdAt:string;
+  createdAt: string;
 }
+//로딩이 됐을 때 채택상태가 디스패치 함수와 함께 실행 돼서 추적 되어야함
 export interface AllAnswer {
-  answers: AnswerData[] | [];
+  data: AnswerData[] | [];
 }
-const initialState = {
-  isLike: false,
+const initialState: AllAnswer = {
+  data: [],
 };
 const answerslice = createSlice({
   name: 'answer',
   initialState,
   reducers: {
-    // getAnswerData: (state, { payload: { answers } }: PayloadAction<{ answers: AllAnswer }>) => {
-    //   state = answers;
-    //   return state;
-    // },
+    getAnswersData: (state, { payload: { answers } }: PayloadAction<{ answers: AnswerData[] }>) => {
+      state.data = answers;
+      console.log(state, answers);
+
+      return state;
+    },
     // postAnswerData: (state, { payload: { answers } }: PayloadAction<{ answers: AnswerData[] }>) => {
     //   state = { ...state, answers };
     // },
-    getAnswerLike: (state, { payload: { isLike } }: PayloadAction<{ isLike: boolean }>) => {
-      isLike = !isLike;
+    getAnswerLike: (state, { payload: { answer } }: PayloadAction<{ answer: AnswerData[] }>) => {
+      // state.answers?.map((el) => (el.checked ? { ...el, checked: true } : el));
+      console.log(state);
+
+      // state.answers = mapAnswer;
     },
   },
 });
 
-export const { getAnswerLike } = answerslice.actions;
+export const { getAnswerLike, getAnswersData } = answerslice.actions;
 export default answerslice.reducer;

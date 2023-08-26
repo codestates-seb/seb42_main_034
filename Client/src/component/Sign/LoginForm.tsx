@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
@@ -9,12 +9,18 @@ import LoginInput from './LoginInput';
 import { useAuthAPI } from '../../api/auth';
 import { notifi } from '../../utils/notifi';
 import LoginButton from './LoginButton';
+import { Props } from 'component/ui/Modal';
+import { useAppSelector } from 'redux/hooks';
+import Swal from 'sweetalert2';
 
-const Loginform = () => {
+const Loginform = ({ modal, setModal }: Pick<Props, 'modal' | 'setModal'>) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [vaildEmail, setVaildEmail] = useState(true);
   const [vaildPW, setVaildPW] = useState(true);
+
+  const [emailMessage, setEmailMessage] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postLogin } = useAuthAPI();
@@ -29,45 +35,50 @@ const Loginform = () => {
     onSuccess: (res) => {
       const {
         data,
-
         headers: { authorization, refresh },
       } = res;
       dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));
-      notifi(dispatch, `${data.nickname}님 환영합니다.`);
-      navigate(-1);
-      console.log(res.headers.refresh);
 
-      // setTimeout(() => {
-      //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
-      // }, 1000 * 60 * 29);
+      setModal(!modal);
+      notifi(dispatch, `환영합니다.`);
     },
-    onError: (res) => {
-      console.log('login failed: ', res);
+    onError: (res: any) => {
+      // console.log('login failed: ', res.response.data);
       alert('아이디 혹은 비밀번호를 확인해주세요');
     },
   });
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email === '') setVaildEmail(false);
-    else setVaildEmail(true);
-    if (password === '') setVaildPW(false);
-    else setVaildPW(true);
-    if (email === '' || password === '') return;
-    mutate();
+    setVaildEmail(true);
+    setVaildPW(true);
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(email)) {
+      setVaildEmail(false);
+      setEmailMessage('이메일 형식으로 작성해주세요');
+    }
+    if (email.trim().length === 0) {
+      setVaildEmail(false);
+      setEmailMessage('아이디를 입력해주세요');
+    }
+    if (password.trim().length === 0) {
+      setVaildPW(false);
+      setEmailMessage('비밀번호를 입력해주세요');
+    } else {
+      mutate();
+    }
   };
 
   return (
     <LoginFormWrapper onSubmit={handleSubmit}>
       <EmailWrapper>
         <LoginInput label="ID" state={email} setState={setEmail} />
-        {vaildEmail ? '' : '아이디를 입력 해주세요.'}
+        {vaildEmail ? '' : emailMessage}
       </EmailWrapper>
       <PWWrapper>
         <LoginInput label="PW" type="password" state={password} setState={setPassword} />
-        {vaildPW ? '' : '비밀번호를 입력 해주세요.'}
+        {vaildPW ? '' : passwordMessage}
       </PWWrapper>
-
       <StyledLoginButton fontSize="small" backgroundColor="grey">
         <span></span>
         <span></span>
@@ -92,7 +103,7 @@ const LoginFormWrapper = styled.form`
   width: 100%;
   min-width: 22rem;
   display: grid;
-  height: 200px;
+  height: 100%;
 `;
 
 const btnAnim1 = keyframes`

@@ -35,6 +35,7 @@ export default function Searchbar({
   const data = useLocation();
   console.log(data);
   const navigate = useNavigate();
+  const search = useLocation().search.split('=');
   const { searchTag, SearchText } = useSearch();
   const searchInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchData(changeUrl(e.target.value));
@@ -50,6 +51,7 @@ export default function Searchbar({
       });
     }
   }, []);
+  console.log(querystring);
 
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,9 +65,22 @@ export default function Searchbar({
       })
       .catch(console.error);
   };
+  //없애면 전체검색
   return (
     <SearchWrapper onSubmit={searchHandler}>
       <SearchInput type="text" value={searchData} onChange={searchInputHandler} />
+      {search[0] === '?tag' && (
+        <Tag>
+          {querystring}
+          <TagBtn
+            children="x"
+            onClick={() => {
+              navigate(`/board/boardlist/questions/${category}`);
+              setSearchData('');
+            }}
+          ></TagBtn>
+        </Tag>
+      )}
       <Relative height="1rem" pb="0.4rem">
         <SearchBtn children={<SearchBar svg={<ResizedIcon />} />} />
       </Relative>
@@ -93,6 +108,7 @@ const SearchBar = styled(Icon)`
 `;
 const SearchWrapper = styled.form`
   display: flex;
+  position: relative;
   justify-content: center;
   @media (max-width: 768px) {
     display: none;
@@ -104,4 +120,18 @@ const SearchBtn = styled(Button)`
   position: absolute;
   top: 0.6em;
   right: 1em;
+`;
+const Tag = styled.div`
+  border: 1px solid ${Colors.main_01};
+  position: absolute;
+  top: 1.1em;
+  left: 10em;
+  padding: 0.3em;
+  background: ${Colors.main_02};
+  border-radius: 0.3em;
+`;
+const TagBtn = styled(Button)`
+  border: none;
+  background: none;
+  font-size: 1rem;
 `;

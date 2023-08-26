@@ -5,7 +5,11 @@ export interface loginProps {
   username: string;
   password: string;
 }
-
+export interface SignupProps {
+  nickname: string;
+  email: string;
+  password: string;
+}
 export interface IAccessToken {
   authorization: string;
 }
@@ -30,10 +34,13 @@ export const useAuthAPI = () => {
   const postLogin = async (payload: loginProps) => {
     return await axiosInstanceAuth.post<userInfo>('/trip/login', payload);
   };
+  const postSignUp = async (payload: SignupProps) => {
+    console.log(payload);
 
-  const getAccessTokenRefresh = async () => await api.get<IAccessTokenRefresh>('/reissue');
+    return await axiosInstanceAuth.post('/members', payload);
+  };
 
   const deleteLogout = async () => await api.delete('/logout');
 
-  return { getAccessTokenRefresh, postLogin, deleteLogout };
+  return { postLogin, postSignUp, deleteLogout };
 };

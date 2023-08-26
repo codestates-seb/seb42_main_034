@@ -9,14 +9,13 @@ import { Colors, FontSize } from 'component/style/variables';
 import QuestionList from '../component/question/QuestionList';
 export const section: string[] = ['questions', 'blogs'];
 export const StyledCategoryBtn = styled(Button)<{ selected?: boolean }>`
-  background: none;
   font-size: ${FontSize.h3};
   margin: 0.7rem;
   border: none;
-  border-bottom: ${(props) => props.selected && `7px solid ${Colors.button_blue}`};
+  background: ${(props) => (props.selected ? Colors.button_blue : 'none')};
   margin-top: 0;
   margin-right: 0.6rem;
-  color: ${(props) => props.selected && Colors.button_blue};
+  color: ${(props) => props.selected && Colors.text_white};
   ${HoverAction}
 `;
 export const Section = styled(Relative)`
@@ -56,7 +55,7 @@ export default function QuestionBoardList() {
     //
   }, [filter]);
   return (
-    <Flex direction="column" width="100%" height="900px">
+    <Flex direction="column" width="100%">
       <div>{category}</div>
       <Section>
         {section.map((filter, idx) => (

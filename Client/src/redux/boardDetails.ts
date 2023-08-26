@@ -10,6 +10,7 @@ export interface ListData {
   modifiedAt: string | null;
   viewCnt: number;
   likeCnt: number;
+  isChecked?: boolean;
 }
 export interface PageProps {
   totalElements: number;
@@ -26,7 +27,7 @@ export interface BlogData {
   viewCnt: number;
   writer: string;
   content?: string;
-  isChecked?:boolean;
+  isChecked?: boolean;
 }
 const initialState: ReturnData = {
   data: [],
@@ -46,11 +47,15 @@ const boardDetailSlice = createSlice({
     setBoardDetails: (state, { payload: { data } }: PayloadAction<{ data: ListData[] }>) => {
       return { ...state, data };
     },
-    setIsChecked :(state, { payload: { isChecked } }: PayloadAction<{ isChecked: ListData[] }>) => {
-      return { ...state, isChecked };
+    setIsChecked: (
+      state,
+      { payload: { isChecked, questionId } }: PayloadAction<{ isChecked: boolean; questionId: number }>,
+    ) => {
+      //해당되는것만 변경
+      state.data = state.data.map((data) => (data.questionId === questionId ? { ...data, isChecked } : data));
     },
   },
 });
 
-export const { setBoardDetails } = boardDetailSlice.actions;
+export const { setBoardDetails, setIsChecked } = boardDetailSlice.actions;
 export default boardDetailSlice.reducer;

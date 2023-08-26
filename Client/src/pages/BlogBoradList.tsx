@@ -14,9 +14,8 @@ export default function BlogBoardList() {
   const navigate = useNavigate();
   const { category } = useParams();
   const picture = useLocation().state;
-  const { isLogin } = useAppSelector((state) => state.loginInfo);
-  const location = useAppSelector((state) => state.persistReducer.userInfo.data);
-  console.log(location);
+  const { memberId } = useAppSelector((state) => state.loginInfo);
+  const location = useAppSelector((state) => state.persistReducer.userInfo);
 
   const handleClick = (section: string) => {
     setFilter(section);
@@ -28,14 +27,15 @@ export default function BlogBoardList() {
       navigate(`/board/blogpost/${category}`);
     } else {
       alert('현지인만 작성가능합니다. 현지인 인증을 해주세요');
+      navigate(`/board/mypage/${memberId}`);
     }
   };
   // console.log(filter);
   useEffect(() => {
-    //
+    //;
   }, [filter]);
   return (
-    <Flex direction="column" width="100%" height="900px">
+    <Flex direction="column" width="100%">
       <div>{category}</div>
       <Section>
         {section.map((filter, idx) => (

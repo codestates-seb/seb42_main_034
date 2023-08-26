@@ -103,7 +103,6 @@ export default function BlogPost() {
   );
 }
 const ResizeEditor = styled(QuillEditor)`
-  width: 20rem;
-
   background: white;
+  margin-bottom: 3%;
 `;

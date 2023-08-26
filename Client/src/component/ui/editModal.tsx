@@ -2,10 +2,11 @@ import useGeolocation from 'hooks/useGeoLocation';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import Geocode from 'react-geocode';
 import styled from 'styled-components';
-import { useAppDispatch } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { updateUserInfo } from 'redux/userInfoSlice';
 import useAPI from 'hooks/uesAPI';
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMypageAPI } from 'api/mypage';
 interface ModalDefaultType {
   onClickToggleModal: () => void;
 }
@@ -14,12 +15,23 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
   const location = useGeolocation();
   const dispatch = useAppDispatch();
   const api = useAPI();
-
+  const { getMyInfo } = useMypageAPI();
+  const myLocation = useAppSelector((state) => state.persistReducer.userInfo);
+  const { memberId } = useAppSelector((state) => state.loginInfo);
+  const queryClient = useQueryClient();
   const { latitude, longitude }: any = location.coordinates;
   const [ad, setAd] = useState('');
+  //지역 바로 반영
+  const { mutate } = useMutation(() => getMyInfo(memberId), {
+    onSuccess: () => {
+      console.log('마이페이지내용불러옴');
 
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+    },
+  });
   useEffect(() => {
     if (location.loaded === true) getAddressFromLatLng();
+    setAd(myLocation?.location || '인증된 지역이 없습니다');
   }, [location]);
 
   const GEOCODER_KEY: any = process.env.REACT_APP_GEOCODER_KEY;
@@ -28,54 +40,56 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
   Geocode.enableDebug();
 
   const getAddressFromLatLng = () => {
-    Geocode.fromLatLng(latitude, longitude).then(
-      (response) => {
-        const address = response.results[4].formatted_address;
-        const location = { latitude, longitude };
-        setAd(address.slice(5));
-        api.post(`/location?latitude=${latitude}&longitude=${longitude}`);
- 
-      },
-      (error) => {
-        console.log(error);
-        alert('위치 정보를 불러올 수 없습니다.');
-      },
-    );
+    // Geocode.fromLatLng(latitude, longitude).then(
+    //   (response) => {
+    //     // const address = response.results[4].formatted_address;
+    //      const location = { latitude, longitude };
+    //     // setAd(address.slice(5));
+    //     api.post(`/location?latitude=${latitude}&longitude=${longitude}`).then((res) => {
+    //       console.log(res);
+    //     });
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //     alert('위치 정보를 불러올 수 없습니다.');
+    //   },
+    // );
+    api.post(`/location?latitude=${latitude}&longitude=${longitude}`).catch((error) => {
+      console.log(error);
+      alert('위치 정보를 불러올 수 없습니다.');
+    });
   };
-
-
-
+  console.log(ad);
 
   return (
     <Layout>
       <Dialog>
         {children}
         <h1>현재 계신 위치로 도시가 설정 됩니다. 동의 하시겠습니까?</h1>
-        <div className='currentplace'>
-      {location.loaded ? ad : '현재 위치를 확인 중입니다.'}
-        </div>
-    <div className='btn'>
-      <Button
-      className='btn1'
-      onClick={() => {
-        dispatch(updateUserInfo({  key: 'address', value: ad}));
-        onClickToggleModal();
-      }}
-      >
-        Y
-      </Button>
+        <div className="currentplace">{ad}</div>
+        <div className="btn">
+          <Button
+            className="btn1"
+            onClick={() => {
+              dispatch(updateUserInfo({ key: 'address', value: ad }));
+              onClickToggleModal();
+              mutate();
+            }}
+          >
+            예
+          </Button>
 
-      <Button
-      className='btn2'
-      onClick={() => {
-        if(onClickToggleModal) {
-          onClickToggleModal();
-        }
-      }}
-      >
-        N
-      </Button>
-      </div>
+          <Button
+            className="btn2"
+            onClick={() => {
+              if (onClickToggleModal) {
+                onClickToggleModal();
+              }
+            }}
+          >
+            아니오
+          </Button>
+        </div>
       </Dialog>
     </Layout>
   );
@@ -101,7 +115,6 @@ const Dialog = styled.dialog`
   border-radius: 4px;
   background-color: skyblue;
   z-index: 9999;
-
   h1 {
     font-size: 1.5rem;
     padding-bottom: 15px;

@@ -1,149 +1,186 @@
-import Avatar from "component/mypage/Avatar";
-import Modal from "component/ui/editModal";
-import { handleScroll } from "component/ui/ScrollTop";
-import useAPI from "hooks/uesAPI";
-import { useFixInfo } from "hooks/useFixInfo";
-import useGeolocation from "hooks/useGeoLocation";
-import React, { useCallback } from "react";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { updateUserInfo } from "redux/userInfoSlice";
-import styled from "styled-components";
-
-
+import Avatar from 'component/mypage/Avatar';
+import Modal from 'component/ui/editModal';
+import useAPI from 'hooks/uesAPI';
+import { FixmemberInfo, useFixInfo } from 'hooks/useFixInfo';
+import React, { useCallback, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { updateUserInfo } from 'redux/userInfoSlice';
+import styled from 'styled-components';
+import { notifi } from 'utils/notifi';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { Colors, FontSize } from 'component/style/variables';
+import { Flex } from 'component/style/cssTemplete';
+import { uploadToS3 } from 'api/imageUpload';
+import { useImageUpload } from 'hooks/useImageUpload';
 function ProfileEditPage() {
+  const api = useAPI();
 
-    const api =useAPI();
-
-    //위치정보 수정
-    const [isOpenModal, setOpenModal] = useState<boolean>(false);
-    const onClickToggleModal = useCallback(() => {
-        setOpenModal(!isOpenModal);
-    }, [isOpenModal])
-    const userInfo = useAppSelector((state) => state.persistReducer.userInfo);
-
-    const location = useGeolocation().coordinates || {
-        latitude: 0,
-        longitude: 0,
-    };
-
+  //위치정보 수정
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const onClickToggleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+  const userInfo = useAppSelector((state) => state.persistReducer.userInfo);
+  //   const location = useGeolocation().coordinates || {
+  //     latitude: 0,
+  //     longitude: 0,
+  //   };
 
   //유저이미지
-  const { address, avatarUrl } = userInfo;
-  const [nickname, setNickname] = useState(userInfo.name);
+
+  const [nickname, setNickname] = useState(userInfo.nickname);
   const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+  const [isPassword, setIsPassword] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [nicknameMessage, setNicknameMessage] = useState<string>('');
+  const [isNickname, setIsNickname] = useState<boolean>(false);
+  //멤버정보이미지로 백엔드와 협의 후 변경
+  // const [image, setImage] = useState<FileList>();
+  // const [srcImage, setSrcImage] = useState<string>('');
+  const { image, srcImage, isImageEdit, handleImageUpload, setIsImageEdit } = useImageUpload();
   const dispatch = useAppDispatch();
+  const imageRef = useRef<HTMLInputElement>();
+  // const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log(e.target.files)
+  //  //중요
+  //   if (e.target.files === null) return;
+  //   if (e.target.files?.length > 0) {
 
-    const {mutate} = useFixInfo({
-        nickname,
-        location,
-        // address: address,
-        // avatarUrl,
-    })
+  //     const url = await uploadToS3(e.target.files[0]);
 
-    const changeNickName = () => {
-        api.post('/members', )
+  //    setSrcImage(url);
+  //    //이미지 객체 저장
+  //    setImage(e.target.files)
+  //   }
+  // };
+  console.log('src확인', srcImage);
+
+  //바로 수정하는 훅
+  const { mutate } = useFixInfo({
+    nickname,
+    location: userInfo?.location,
+    password,
+    avatarUrl: srcImage,
+  });
+  const handleSubmit = () => {
+    if (isPassword === false) {
+      notifi(dispatch, '회원가입 양식을 획인 해주세요.');
+    } else {
+      const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
+      if (!isconfirm) return;
+      // setImage()
+      mutate();
+      setIsImageEdit(false);
+      navigate(-1);
     }
+  };
+  const handleChangePassword = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+    const passwordCurrent = event.target.value;
+    setPassword(passwordCurrent);
 
-    //닉네임
-    const handleChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNickname(e.target.value);
-
+    if (!passwordRegex.test(passwordCurrent)) {
+      //   notifi(dispatch, '1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.');
+      setPasswordMessage('1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.');
+      setIsPassword(false);
+    } else {
+      setPasswordMessage('올바른 비밀번호 형식입니다.');
+      setIsPassword(true);
     }
-
-    const handleBlurNickname = () => {
-        dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
-      }
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+  }, []);
+  //닉네임
+  const handleChangeNickname = useCallback<(event: React.ChangeEvent<HTMLInputElement>) => void>((event) => {
+    setNickname(event.target.value);
+    if (event.target.value.length < 2 || event.target.value.length > 10) {
+      //   notifi(dispatch, '2글자 이상 10글자 미만으로 입력해주세요.');
+      setNicknameMessage('2글자 이상 10글자 미만으로 입력해주세요.');
+      setIsNickname(false);
+    } else {
+      setNicknameMessage('');
+      setIsNickname(true);
+    }
   }, []);
 
-    return (
-        <Layout>
+  const handleBlurNickname = () => {
+    dispatch(updateUserInfo({ key: 'nickName', value: nickname }));
+  };
 
-        {/* {userInfo.name ? ( */}
-            <>
-                <ProfileEditBox>
-                    <SubTitle>회원정보</SubTitle>
-                    {/* <Avatar/> */}
-                    <p className="miniTitle">닉네임</p>
-                    <div className="input">
-                        <input 
-                            placeholder="수정할 닉네임을 작성하세요(15자이하)"
-                            disabled={false}
-                            type="nickname"
-                            value={nickname}
-                            onChange={handleChangeNickname}
-                            onBlur={handleBlurNickname}
-                            maxLength={15}
-                            className="nickname"
-                        />
-                        {/* <button 
-                        className="check"
-                        onClick={() => {
-                            notifi(dispatch, '사용가능한 닉네임 입니다.');
-                            console.log('nickname check')
-                        }}
-                        >
-                        중복확인
-                        </button> */}
-                    </div>
+  return (
+    <>
+      <SubTitle>
+        회원정보 수정
+        <AiOutlineEdit />
+        <div className="color">닉네임을 수정 할 수 있습니다.</div>
+      </SubTitle>
+      <Layout>
+        <label htmlFor="file">프로필 이미지 등록</label>
+        {isImageEdit && <img alt="" src={srcImage} />}
+        <input type="file" accept=".png, .jpeg, .jpg" onChange={handleImageUpload} />
+        {/* <ProfileEditBox> */}
+        <Avatar />
+        <div className="miniTitle">닉네임</div>
+        <div className="input">
+          <input
+            placeholder="수정할 닉네임을 작성하세요(15자이하)"
+            disabled={false}
+            type="nickname"
+            value={nickname}
+            onChange={handleChangeNickname}
+            onBlur={handleBlurNickname}
+            maxLength={15}
+            className="nickname"
+          />
 
-          <p className="miniTitle">도시설정</p>
-          <div className="input">
-            <input
-              placeholder="도시를 설정하기 위해 여기를 클릭"
-              value={address || ''}
-              disabled={false}
-              onClick={() => {
-                onClickToggleModal();
-              }}
-              readOnly
-            />
-          </div>
-
-                    <Button
-                        onClick={() => {
-                            const isconfirm = window.confirm('수정을 완료 하시겠습니까?');
-                            if(!isconfirm) return;
-                            mutate();
-                            changeNickName();
-                            navigate('/board/mypage')
-                        }}
-                        className="Button"
-                        
-                    >
-                        저장
-                    </Button>
-                            {isOpenModal && 
-                            <>
-                            <Modal onClickToggleModal={onClickToggleModal} />
-                            </>
-                            }
-                </ProfileEditBox>
-            </>
+          <button
+            className="check"
+            onClick={() => {
+              notifi(dispatch, '사용가능한 닉네임 입니다.');
+              console.log('nickname check');
+            }}
+          >
+            중복확인
+          </button>
+        </div>
+        <div>{nicknameMessage}</div>
+        <div className="miniTitle">도시설정</div>
+        <div className="input">
+          <input
+            placeholder="도시를 설정하기 위해 여기를 클릭"
+            value={userInfo?.location || ''}
+            disabled={false}
+            onClick={() => {
+              onClickToggleModal();
+            }}
+            readOnly
+          />
+        </div>{' '}
+        <input placeholder="변경할 비밀번호를 입력해주세요" onChange={handleChangePassword} type="password" />
+        <div>{passwordMessage}</div>
+        <Button onClick={handleSubmit} className="Button">
+          저장
+        </Button>
+        {isOpenModal && (
+          <>
+            <Modal onClickToggleModal={onClickToggleModal} />
+          </>
+        )}
+        {/* </ProfileEditBox> */}
         {/* ) : ('잘못된 요청')}  */}
-
-
-        </Layout>
-    )
-};
-
-
+      </Layout>
+    </>
+  );
+}
 
 const Layout = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  font-size: 1.3rem;
-  text-align: center;
-  width: 100%;
+  /* font-size: 1.3rem;*/
 
+  width: 100%;
   .username {
     padding-top: 2rem;
     padding-bottom: 0.5rem;
@@ -155,46 +192,15 @@ const Layout = styled.div`
     border-radius: 5px;
     border: 1px solid grey;
   }
-
   .miniTitle {
     padding-top: 2rem;
     padding-bottom: 0.5rem;
     font-size: 15px;
-    color: white;
+    color: ${Colors.text_black};
     display: flex;
   }
-`;
-
-const SubTitle = styled.p`
-  font-size: 30px;
-  color: white;
-  margin-bottom: 35px;
-  width: 50%;
-`;
-
-const Button = styled.button`
-    font-size: 1rem;
-    color: black;
-    background-color: white;
-    border-radius: 5px;
-    width: 40%;
-`
-
-const ProfileEditBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    top: 22%;
-    padding: 1.2rem;
-    background-color: #52a3e9;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    border-radius: 12px;
-    margin-top: 120px;
-    align-items: center;
-    display: flex;
-
-  /* .check {
+  .check {
+    border: 3px solid blue;
     width: 60px;
     font-size: 12px;
     padding-top: 4px;
@@ -202,17 +208,14 @@ const ProfileEditBox = styled.div`
     border-radius: 5px;
     color: #016241;
     cursor: pointer;
-    margin-left: auto;
     :hover {
       background-color: grey;
       color: #eaeaea;
     }
-  } */
-
+  }
   .nickname {
     width: 160px;
   }
-
   .image {
     box-sizing: border-box;
     width: 200px;
@@ -224,20 +227,17 @@ const ProfileEditBox = styled.div`
       border: 3px solid white;
     }
   }
-
   .Button {
     margin-top: 2.5rem;
     width: 230px;
     font-size: 16px;
     background-color: skyblue;
   }
-
   .input {
     display: flex;
     text-align: center;
     align-items: center;
   }
-
   .editicon {
     width: 20px;
     height: 20px;
@@ -246,5 +246,27 @@ const ProfileEditBox = styled.div`
     padding-left: 5px;
   }
 `;
+
+const SubTitle = styled.p`
+  font-size: 30px;
+  color: black;
+  margin-bottom: 35px;
+  text-align: start;
+  width: 90%;
+  .color {
+    color: ${Colors.text_grey};
+    font-size: ${FontSize.md};
+  }
+`;
+
+const Button = styled.button`
+  font-size: 1rem;
+  color: ${Colors.text_black};
+  background-color: white;
+  border-radius: 5px;
+  width: 40%;
+`;
+
+const ProfileEditBox = styled.div``;
 
 export default ProfileEditPage;

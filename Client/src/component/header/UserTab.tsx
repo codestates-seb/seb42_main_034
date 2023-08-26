@@ -13,6 +13,8 @@ import { setUserInfo } from 'redux/userInfoReducer';
 import { deleteUserInfo, initialState } from 'redux/userInfoSlice';
 import Modal from 'component/ui/Modal';
 import SignIn from 'pages/user/SignIn';
+import SignUp from 'pages/user/SignUp';
+import { SignUpForm } from 'component/SignUp/SignUpForm';
 const MenuTabBtn = styled(Button)`
   border: none;
   background: none;
@@ -22,10 +24,12 @@ const MenuTabBtn = styled(Button)`
 export default function UserTab() {
   //상태넣을자리
   //로그인 상태에 따라서 로그인 ,회원가입 or 로그아웃,마이페이지
-  const { isLogin } = useAppSelector((state) => state.loginInfo);
+  const { isLogin, memberId } = useAppSelector((state) => state.loginInfo);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isSignUpModalActive, setIsSignUpModalActive] = useState(false);
+  const [isSignInModalActive, setIsSignInModalActive] = useState(false);
   const handleClick = (route: string) => {
     navigate(route);
   };
@@ -46,18 +50,49 @@ export default function UserTab() {
     <>
       {isLogin || (
         <div>
+          {isSignUpModalActive && (
+            <Modal
+              modal={isSignUpModalActive}
+              setModal={setIsSignUpModalActive}
+              width="300"
+              height="400"
+              children={
+                <SignUp
+                  setModal={setIsSignUpModalActive}
+                  modal={isSignUpModalActive}
+                  setsiginInModal={setIsSignInModalActive}
+                />
+              }
+            />
+          )}
+          {isSignInModalActive && (
+            <Modal
+              modal={isSignInModalActive}
+              setModal={setIsSignInModalActive}
+              width="300"
+              height="400"
+              children={
+                <SignIn
+                  setModal={setIsSignInModalActive}
+                  modal={isSignInModalActive}
+                  setsignupModal={setIsSignUpModalActive}
+                />
+              }
+            />
+          )}
           <MenuTabBtn
             children="로그인"
             onClick={() => {
-              handleClick('/board/signin');
-              setIsOpen(!isOpen);
+              // handleClick('/board/signin');
+              setIsSignInModalActive(!isSignInModalActive);
             }}
             className=""
           />
           <MenuTabBtn
             children="회원가입"
             onClick={() => {
-              handleClick('/board/signup');
+              // handleClick('/board/signup');
+              setIsSignUpModalActive(!isSignUpModalActive);
             }}
             className=""
           />
@@ -66,7 +101,7 @@ export default function UserTab() {
       {isLogin && (
         <MediaUserTab>
           <MenuTabBtn children="로그아웃" onClick={handleLogOut} className="" />
-          <MenuTabBtn children="마이페이지" onClick={() => handleClick('/board/mypage')} className="" />
+          <MenuTabBtn children="마이페이지" onClick={() => handleClick(`/board/mypage/${memberId}`)} className="" />
         </MediaUserTab>
       )}
     </>

@@ -3,7 +3,7 @@ import Page from 'component/Page';
 import TextInput from 'component/ui/Input';
 import useAPI from 'hooks/uesAPI';
 import { MoveBtn } from 'pages/QuestionBoardList';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AllAnswer, AnswerData } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
@@ -38,13 +38,13 @@ export default function BlogAnswer({ blogId }: { blogId: number | string | undef
     setAnswer(response.data.answers);
   };
 
-  const deleteAnswer = (answerId: number | string) => {
+  const deleteAnswer = useCallback((answerId: number | string) => {
     deleteAnswerData('blogs', answerId)
       .then((res) => {
         getAnswerData(blogId, 'blogs', setAnswer).catch(console.error);
       })
       .catch(console.error);
-  };
+  }, []);
 
   useEffect(() => {
     getAnswer().catch(console.error);

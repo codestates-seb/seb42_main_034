@@ -10,6 +10,7 @@ const useAPI = () => {
   const dispatch = useDispatch();
   // const { postLogin } = useAuthAPI();
   const { accessToken, refresh } = useAppSelector((state) => state.loginInfo);
+  console.log(accessToken);
 
   const config = {
     baseURL: BASE_URL,
@@ -18,12 +19,13 @@ const useAPI = () => {
   };
 
   const axiosWithAccessToken = axios.create(config);
-  axiosWithAccessToken.interceptors.request.use((success) => {
-    return success;
-  });
+  // axiosWithAccessToken.interceptors.request.use((success) => {
+  //   return success;
+  // });
   axiosWithAccessToken.interceptors.response.use(
     (seccess) => {
       //요청이 다 성공으로 가지고있음
+      console.log(seccess);
       return seccess;
     },
     (err) => {

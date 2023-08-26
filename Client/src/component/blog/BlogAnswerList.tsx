@@ -88,8 +88,7 @@ export default function BlogAnswerList({
       {isComment && (
         <div>
           <div>
-            {answer.comments &&
-              answer.comments.map((comment, idx) => <Comment key={idx} comment={comment} getAnswer={getAnswer} />)}
+            {answer.comments && answer.comments.map((comment) => <Comment comment={comment} getAnswer={getAnswer} />)}
           </div>
           <form onSubmit={handlePost}>
             <TextInput type="comment" placeholder="댓글을 입력해주세요" setState={setComment} />

@@ -201,7 +201,7 @@ export const useLike = () => {
     if (isLike) {
       await api.post(`/blog/unlike/${blogId}`);
     } else {
-      await api.post(`/blog/like/${blogId}`);
+      await api.post(`/blogs/like/${blogId}`);
     }
   };
   const blogUnLikes = async (blogId: number | string | undefined) => {
@@ -212,8 +212,17 @@ export const useLike = () => {
 //검색 API
 export const useSearch = () => {
   const api = useAPI();
-  const searchTag = async (text: string | undefined, section: string | undefined, page: number) => {
-    await api.get(`/tags/${section}?tagName=${text}&page=${page}`);
+  const searchTag = async (
+    text: string | undefined,
+    section: string | undefined,
+    page: number,
+    setCity: React.Dispatch<React.SetStateAction<any>>,
+    onPage: React.Dispatch<React.SetStateAction<PageProps>>,
+  ) => {
+    await api.get(`/tags/${section === 'questions' ? 'question' : 'blog'}?tagName=${text}&page=${page}`).then((res) => {
+      console.log(res);
+    });
+    console.log(section);
   };
   const SearchText = async (
     section: string,

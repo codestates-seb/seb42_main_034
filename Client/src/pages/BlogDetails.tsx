@@ -1,9 +1,13 @@
 import React from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import { BoardData, useGetData } from 'api/data';
 import { useQuery } from '@tanstack/react-query';
+
 import { useAppSelector } from 'redux/hooks';
+
 import Answer from 'component/question/Answer';
+
 import { Flex } from 'component/style/cssTemplete';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import BlogAnswer from '../component/blog/BlogAnswer';
@@ -24,7 +28,6 @@ export default function BlogDetails() {
     error,
     data: detail,
   } = useQuery(['region', data] as const, async () => await getBoardData(blogId, 'blogs'), {
-
     staleTime: 1000 * 15,
   });
 
@@ -51,7 +54,6 @@ export default function BlogDetails() {
         <>
           <BoardDetail section="blogs" detail={detail} />
           <BlogAnswer blogId={blogId} />
-
         </>
       )}
     </>
