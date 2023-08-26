@@ -7,9 +7,9 @@ import { notifi } from 'utils/notifi';
 export interface FixmemberInfo {
   nickname: string;
   location: string;
-  // password: string;
+  password: string;
   // address: string;
-  // avatarUrl: string;
+  avatarUrl: string;
 }
 
 export const useFixInfo = (content: FixmemberInfo) => {
@@ -19,6 +19,8 @@ export const useFixInfo = (content: FixmemberInfo) => {
 
   const { mutate } = useMutation(() => patchFixMemberInfo(content), {
     onSuccess: () => {
+      console.log(content);
+
       queryClient.invalidateQueries({ queryKey: ['me'] });
       notifi(dispatch, '정보가 수정 되었습니다.');
     },

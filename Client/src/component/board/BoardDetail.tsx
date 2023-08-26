@@ -1,20 +1,25 @@
-import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { BoardData, getFilterData, queryKeys, useGetData, useLike } from 'api/data';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { BoardData, getFilterData, queryKeys, useLike } from 'api/data';
 import { Colors, FontSize } from 'component/style/variables';
-import useAPI from 'hooks/uesAPI';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineDislike } from 'react-icons/ai';
 import { AiOutlineLike } from 'react-icons/ai';
 import { Button } from 'component/ui/Button';
 import { Flex, HoverAction } from 'component/style/cssTemplete';
 import Tag from './Tags';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { getAnswerLike, getAnswersData } from 'redux/answer/answerslice';
 export default function BoardDetail({ section, detail }: { section: string; detail: BoardData }) {
   const { blogLikes } = useLike();
   const queryClient = useQueryClient();
   // const { region } = useParams();
   const search = useLocation().search.split('=');
+  const isSelected = useAppSelector((state) => state.answer.data);
+  console.log(isSelected);
+  const dispatch = useAppDispatch();
+
   const region = getFilterData();
   const [isLike, setIsLike] = useState(false);
   const { mutate } = useMutation(blogLikes, {
@@ -27,16 +32,25 @@ export default function BoardDetail({ section, detail }: { section: string; deta
     mutate({ blogId: detail.blogId, isLike });
     setIsLike(!isLike);
   };
-  console.log(detail);
+  console.log(isSelected.some((el) => el.checked));
+
+  useEffect(() => {
+    //채택확인
+    dispatch(getAnswersData({ answers: isSelected }));
+  }, []);
   return (
     <>
       <Item>
-        <Flex justify="start">
-          {' '}
-          {detail.tags.map((tag, idx) => (
-            <Tag key={idx} text={tag} region={region} section={section} />
-          ))}
+        <Flex justify="space-between">
+          <div>
+            {' '}
+            {detail.tags.map((tag, idx) => (
+              <Tag key={idx} text={tag} region={region} section={section} />
+            ))}
+          </div>
+          {isSelected.some((el) => el.checked) && <div>채택완료!</div>}
         </Flex>
+
         <Title className="title">{detail.title}</Title>
         <Flex justify="space-between" items="center">
           <div>작성자 : {detail.writer}</div>

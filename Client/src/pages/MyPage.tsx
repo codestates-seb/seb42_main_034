@@ -13,11 +13,13 @@ import { useState } from 'react';
 import PostList from 'component/mypage/getPostlist';
 import BlogsList from 'component/mypage/getBlogslist';
 import DeleteMyInfo from 'component/mypage/DeleteMyInfo';
+import Profile from 'component/ui/Profile';
+import Avatar from 'component/mypage/Avatar';
 
 export default function MyPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { memberId, isLogin } = useAppSelector((state) => state.loginInfo);
+  const { memberId, isLogin, avatarUrl } = useAppSelector((state) => state.loginInfo);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
 
@@ -37,12 +39,13 @@ export default function MyPage() {
     if (isLogin === false) {
       navigate(`/`);
     }
-  }, [isLogin]);
+  }, [isLogin, avatarUrl]);
 
   const [activeTab, setActiveTab] = useState<number>(0);
   const handleTabClick = (index: number) => {
     setActiveTab(index);
   };
+  console.log(avatarUrl);
 
   const renderTabs = () => {
     return (
@@ -80,12 +83,7 @@ export default function MyPage() {
       <MainContainer>
         My Page
         <ProfileContainer>
-          <img
-            className="profileimage"
-            // src={data?.avatarUrl}
-            src="https://cdn.discordapp.com/attachments/1049217694601330710/1089858376487411893/2023-03-20_125506.png"
-            alt="프로필 이미지 입니다."
-          ></img>
+          {<Profile avatarUrl={avatarUrl} height="7rem" width="7rem" />}
 
           <UserInfoContainer>
             <p>닉네임: {data?.nickname ?? '로그인 정보를 불러오지 못했습니다.'}</p>

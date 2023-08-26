@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import AnswerList from '../board/AnswerList';
 import { Flex } from '../style/cssTemplete';
 import TextInput from '../ui/Input';
-import { AnswerData, getAnswerLike } from 'redux/answer/answerslice';
+import { AnswerData, getAnswerLike, getAnswersData } from 'redux/answer/answerslice';
 import useAPI from 'hooks/uesAPI';
 import Page from '../Page';
 import { useParams } from 'react-router-dom';
@@ -20,14 +20,7 @@ export interface answerReturn {
   writer: string;
   createdAt: string;
 }
-const initialData: answerReturn = {
-  questionId: 0,
-  content: '',
-  title: '',
-  tag: '',
-  writer: '',
-  createdAt: '',
-};
+
 export default function Answer({
   questionId,
   writerId,
@@ -59,6 +52,7 @@ export default function Answer({
   const getAnswer = async () => {
     const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
     setAnswer(response.data.data);
+    dispatch(getAnswersData({ answers: response.data.data }));
     console.log(response);
   };
   const deleteAnswer = useCallback(
@@ -88,6 +82,9 @@ export default function Answer({
     // alert('현지인만 작성 가능합니다');
     // }
   };
+  // const isChecked = answer.some((el) => el.checked);
+  // console.log(isChecked);
+
   const handleLike = useCallback(
     (isLike: boolean, answerId: number, setState: (value: React.SetStateAction<boolean>) => void) => {
       if (isLike === false) {
@@ -111,10 +108,11 @@ export default function Answer({
   );
   //채택
   const setChecked = (answerId: number) => {
-    seletedQuestion(answerId);
+    seletedQuestion(answerId).then((res) => dispatch(getAnswerLike({ answer })));
   };
   useEffect(() => {
     getAnswer().catch(console.error);
+    dispatch(getAnswerLike({ answer }));
   }, []); //
 
   return (
@@ -130,7 +128,7 @@ export default function Answer({
         </>
       )}
 
-      <h3>답변내용 ( 답변 수 : {answer.length} )</h3>
+      <h3>답변내용 ( 답변 수 : {answer?.length} )</h3>
       {answer &&
         answer.map((answer) => (
           <AnswerList

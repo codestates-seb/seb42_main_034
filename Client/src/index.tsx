@@ -61,10 +61,7 @@ const router = createBrowserRouter([
             path: '/board/questionsdetails/:id',
             element: <QuestionDetails />,
           },
-          // {
-          //   path: '/board/signup',
-          //   element: <SignUp />,
-          // },
+
           // {
           //   path: '/board/signin',
           //   element: <SignIn />,

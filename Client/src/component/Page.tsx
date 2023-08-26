@@ -33,7 +33,7 @@ export default function Page({
   const total: number = Math.ceil(totalElements / size);
   console.log(page, totalPages);
   const handleRightPage = () => {
-    if (page === totalPages) return;
+    if (page === totalPages || totalPages === 0) return;
     else {
       onPage({ ...pages, page: page + 1 });
     }

@@ -62,7 +62,8 @@ function ProfileEditPage() {
   const { mutate } = useFixInfo({
     nickname,
     location: userInfo?.location,
-    // password,
+    password,
+    avatarUrl: srcImage,
   });
   const handleSubmit = () => {
     if (isPassword === false) {

@@ -7,12 +7,13 @@ import { AiFillHeart } from 'react-icons/ai';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import React, { useCallback, useEffect, useState } from 'react';
-import { AnswerData } from 'redux/answer/answerslice';
+import { AnswerData, getAnswerLike } from 'redux/answer/answerslice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
 import Comment from 'component/Comment';
 import { Colors } from 'component/style/variables';
+import { setIsChecked } from 'redux/boardDetails';
 
 export interface answerReturn {
   questionId: number | string;
@@ -49,7 +50,7 @@ export default function AnswerList({
   const [isLike, setIsLike] = useState(false);
   const [comment, setComment] = useState('');
   const [isComment, setIsComment] = useState(false);
-  const { setLike, seletedQuestion } = useLike();
+  const { seletedQuestion } = useLike();
   const { createReply } = useReply();
   useEffect(() => {
     // onAnswer(answer);
@@ -109,7 +110,11 @@ export default function AnswerList({
                           <MdOutlineTaskAlt />
                         </div>
                       }
-                      onClick={() => seletedQuestion(answer.answerId)}
+                      onClick={() => {
+                        seletedQuestion(answer.answerId).then((res) => {
+                          getAnswer();
+                        });
+                      }}
                     ></MoveBtn>
                   )}{' '}
                 </div>

@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import useAPI from 'hooks/uesAPI';
 import { Props } from 'component/ui/Modal';
+import { useAuthAPI } from 'api/auth';
+import { useMutation } from '@tanstack/react-query';
 
 export const SignUpForm = ({
   modal,
@@ -27,7 +29,7 @@ export const SignUpForm = ({
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPwCheck, setIsPwCheck] = useState(false);
-  const navigate = useNavigate();
+  const { postSignUp } = useAuthAPI();
   const dispatch = useDispatch();
   const api = useAPI();
 
@@ -101,30 +103,68 @@ export const SignUpForm = ({
     },
     [password],
   );
+  const { mutate, data: userData } = useMutation({
+    mutationKey: ['signinInfo'],
+    mutationFn: () =>
+      postSignUp({
+        nickname,
+        email,
+        password,
+      }),
+    onSuccess: (res) => {
+      // const {
+      //   data,
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      //   headers: { authorization, refresh },
+      // } = res;
+      // dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));
+
+      // setModal(!modal);
+      // notifi(dispatch, `환영합니다.`);
+      // console.log(res.data);
+      // console.log(res);
+
+      // setTimeout(() => {
+      //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
+      // }, 1000 * 60 * 29);
+      Swal.fire('Congratulation!', '가입이 완료되었습니다.');
+      setModal(!modal);
+      setsiginInModal((prev) => !prev);
+      console.log(res);
+    },
+    onError: (res: any) => {
+      console.log('signup failed: ', res.response.data.fieldErrors[0].reason);
+      const errorMessage = res.response.data.fieldErrors[0].reason;
+      Swal.fire('', res.response.data.fieldErrors[0].reason);
+    },
+  });
+  console.log(isNickname, isEmail, isPassword, isPwCheck);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isNickname === false || isEmail === false || isPassword === false || isPwCheck === false) {
-      Swal.fire('', '양식을 다시 확인해주세요');
+      Swal.fire('', '양식을 다시 확인해주세요ss');
       // notifi(dispatch, '회원가입 양식을 획인 해주세요.')
     } else {
-      await api
-        .post(`/members`, {
-          email,
-          nickname,
-          password,
-        })
-        .then(() => {
-          Swal.fire('Congratulation!', '가입이 완료되었습니다.');
-          setModal(!modal);
-          setsiginInModal((prev) => !prev);
-        })
-        .catch((error) => {
-          console.log(error);
-          Swal.fire('', '가입이 완료되어 있는 이메일 입니다.');
-          setIsEmail(false);
-          setEmailMessage('가입이 완료되어 있는 이메일 입니다.');
-        });
+      // await api
+      //   .post(`/members`, {
+      //     email,
+      //     nickname,
+      //     password,
+      //   })
+      //   .then((res) => {
+      //     Swal.fire('Congratulation!', '가입이 완료되었습니다.');
+      //     setModal(!modal);
+      //     setsiginInModal((prev) => !prev);
+      //     console.log(res);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     Swal.fire('', '가입이 완료되어 있는 이메일 입니다.');
+      //     setIsEmail(false);
+      //     setEmailMessage('가입이 완료되어 있는 이메일 입니다.');
+      //   });
+      mutate();
     }
   };
 

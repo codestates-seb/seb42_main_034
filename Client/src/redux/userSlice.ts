@@ -9,6 +9,7 @@ interface InitProps {
   refresh?: string;
   address?: string;
   email?: string;
+  avatarUrl?: string;
 }
 
 const initialState: InitProps = {
@@ -20,6 +21,7 @@ const initialState: InitProps = {
   refresh: '',
   address: '',
   email: '',
+  avatarUrl: '',
 };
 
 const loginInfoSlice = createSlice({

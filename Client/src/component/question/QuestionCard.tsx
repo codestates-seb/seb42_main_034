@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ListData } from 'redux/boardDetails';
 import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
+import { GrFormView } from 'react-icons/gr';
 import { Colors, FontSize } from 'component/style/variables';
 import dayjs from 'dayjs';
 
@@ -28,7 +29,7 @@ export default function QuestionCard({ city }: { city: ListData }) {
           <Avatar src={`/image/user.png`} />
         </Flex>
         <ViewIcon>
-          <Profile />
+          <GrFormView />
           <div className="count"> {city.viewCnt}</div>
         </ViewIcon>
         <div>{dayjs(city.createdAt).format('YYYY-MM-DD')}</div>
