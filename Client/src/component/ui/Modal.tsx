@@ -1,8 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
-import { Button } from './Button';
-import { LayoutProps } from './Layout';
-import { AiFillCloseCircle } from 'react-icons/ai';
+import { FontSize } from 'component/style/variables';
 export interface Props {
   width: string;
   height: string;
@@ -30,21 +28,23 @@ const ModalBackground = styled.div<{ width: string; height: string }>`
   position: fixed;
   display: flex;
   flex-direction: column;
-  left: calc(50vw - ${(props) => props.width}px / 2);
-  top: calc(50vh - ${(props) => props.height}px / 2);
+  transform: translate(-50%, 0);
+  left: 50%;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
+  justify-content: center;
+  align-items: center;
   padding: 8px;
   background: rgba(31, 113, 243, 0.75);
   box-shadow: 0 15px 25px rgba(31, 113, 243, 0.6);
   border-radius: 8px;
-  z-index: 2000;
+  z-index: 1000;
   padding: 3.8em;
   .exit-wrapper {
     position: absolute;
     top: 4px;
     right: 4px;
-    font-size: 32px;
+    font-size: ${FontSize.sm}px;
     width: 32px;
     height: 32px;
     line-height: 26px;

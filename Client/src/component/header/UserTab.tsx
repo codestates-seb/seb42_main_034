@@ -54,8 +54,8 @@ export default function UserTab() {
             <Modal
               modal={isSignUpModalActive}
               setModal={setIsSignUpModalActive}
-              width="350"
-              height="500"
+              width="300"
+              height="400"
               children={
                 <SignUp
                   setModal={setIsSignUpModalActive}
@@ -69,8 +69,8 @@ export default function UserTab() {
             <Modal
               modal={isSignInModalActive}
               setModal={setIsSignInModalActive}
-              width="350"
-              height="500"
+              width="300"
+              height="400"
               children={
                 <SignIn
                   setModal={setIsSignInModalActive}

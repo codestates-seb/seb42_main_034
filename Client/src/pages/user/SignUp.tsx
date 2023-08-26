@@ -1,5 +1,6 @@
 import { Button } from 'component/ui/Button';
 import { Props } from 'component/ui/Modal';
+import { MoveBtn } from 'pages/QuestionBoardList';
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -24,21 +25,21 @@ export default function SignUp({
       <Title>회원가입</Title>
       <SignUpForm setModal={setModal} modal={modal} setsiginInModal={setsiginInModal} />
       <div>이미 회원이신가요?</div>
-      <Button
+      <MoveBtn
         onClick={() => {
           setModal(!modal);
           setsiginInModal((prev) => !prev);
         }}
       >
         로그인 하러가기
-      </Button>
+      </MoveBtn>
     </MainContainer>
   );
 }
 
 const MainContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,7 +47,6 @@ const MainContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  margin: 0 0 30px;
   padding: 0;
   color: #fff;
   text-align: center;

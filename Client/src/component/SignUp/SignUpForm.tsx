@@ -1,7 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Nbutton from 'component/ui/NButton';
-// import { notifi } from '../../utils/notifi';
 import styled from 'styled-components';
 import React from 'react';
 import { keyframes } from 'styled-components';
@@ -42,11 +40,9 @@ export const SignUpForm = ({
 
     if (!emailRegex.test(emailCurrent)) {
       setEmailMessage('이메일 형식이 올바르지 않습니다.');
-      // notifi(dispatch, '이메일 형식이 올바르지 않습니다.');
       setIsEmail(false);
     } else {
       setEmailMessage('올바른 이메일 형식입니다.');
-      // notifi(dispatch, '올바른 이메일 형식입니다.');
       setIsEmail(true);
     }
   }, []);
@@ -56,7 +52,6 @@ export const SignUpForm = ({
     setNickname(event.target.value);
     if (event.target.value.length < 2 || event.target.value.length > 10) {
       setNicknameMessage('2글자 이상 10글자 미만으로 입력해주세요.');
-      // notifi(dispatch, '올바르지 않은 닉네임 형식입니다.');
       setIsNickname(false);
     } else {
       setNicknameMessage('');
@@ -67,7 +62,6 @@ export const SignUpForm = ({
   // 닉네임 중복확인
   const handleCheckNickname = () => {
     Swal.fire('', '사용 가능한 닉네임입니다.');
-    // notifi(dispatch, '사용 가능한 닉네임입니다.')
   };
 
   // 비밀번호 유효성 검사
@@ -78,7 +72,6 @@ export const SignUpForm = ({
 
     if (!passwordRegex.test(passwordCurrent)) {
       setPasswordMessage('1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.');
-      // notifi(dispatch, '올바르지 않은 비밀번호 조합입니다')
       setIsPassword(false);
     } else {
       setPasswordMessage('올바른 비밀번호 형식입니다.');
@@ -97,7 +90,6 @@ export const SignUpForm = ({
         setIsPwCheck(true);
       } else {
         setPwCheckMessage('비밀번호가 다릅니다.');
-        // notifi(dispatch, '비밀번호가 일치 하지않습니다')
         setIsPwCheck(false);
       }
     },
@@ -112,21 +104,6 @@ export const SignUpForm = ({
         password,
       }),
     onSuccess: (res) => {
-      // const {
-      //   data,
-
-      //   headers: { authorization, refresh },
-      // } = res;
-      // dispatch(login({ ...data, accessToken: authorization, isLogin: true, refresh }));
-
-      // setModal(!modal);
-      // notifi(dispatch, `환영합니다.`);
-      // console.log(res.data);
-      // console.log(res);
-
-      // setTimeout(() => {
-      //   dispatch(login({ accessToken: 'Bearer ', isLogin: true }));
-      // }, 1000 * 60 * 29);
       Swal.fire('Congratulation!', '가입이 완료되었습니다.');
       setModal(!modal);
       setsiginInModal((prev) => !prev);
@@ -144,59 +121,30 @@ export const SignUpForm = ({
     event.preventDefault();
     if (isNickname === false || isEmail === false || isPassword === false || isPwCheck === false) {
       Swal.fire('', '양식을 다시 확인해주세요ss');
-      // notifi(dispatch, '회원가입 양식을 획인 해주세요.')
     } else {
-      // await api
-      //   .post(`/members`, {
-      //     email,
-      //     nickname,
-      //     password,
-      //   })
-      //   .then((res) => {
-      //     Swal.fire('Congratulation!', '가입이 완료되었습니다.');
-      //     setModal(!modal);
-      //     setsiginInModal((prev) => !prev);
-      //     console.log(res);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     Swal.fire('', '가입이 완료되어 있는 이메일 입니다.');
-      //     setIsEmail(false);
-      //     setEmailMessage('가입이 완료되어 있는 이메일 입니다.');
-      //   });
       mutate();
     }
   };
 
   return (
     <MainFormContainer onSubmit={handleSubmit}>
-      {/* <FormWrapper> */}
-      {/* <IDContainer> */}
       <Wrapper>
         <StyledIdLabel htmlFor="nickname">이메일</StyledIdLabel>
       </Wrapper>
       <StyledInput type="text" id="email" onChange={handleChangeEmail}></StyledInput>
       {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
-      {/* </IDContainer>
-      <IDContainer> */}
       <Wrapper>
         <StyledIdLabel htmlFor="nickname">닉네임</StyledIdLabel>
         <CheckBtn onClick={handleCheckNickname}>중복확인</CheckBtn>
       </Wrapper>
       <StyledInput type="text" id="nickname" onChange={handleChangeNickname}></StyledInput>
       {nickname.length > 0 && <span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</span>}
-      {/* </IDContainer> */}
-      {/* <PWContainer> */}
       <StyledIdLabel htmlFor="pw">비밀번호</StyledIdLabel>
       <StyledInput type="password" id="pw" onChange={handleChangePassword}></StyledInput>
       {password.length > 0 && <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>}
-      {/* </PWContainer> */}
-      {/* <PWContainer> */}
       <StyledIdLabel htmlFor="pw-check">비밀번호 확인</StyledIdLabel>
       <StyledInput type="password" id="pw-check" onChange={handleChangePwCheck}></StyledInput>
       {pwcheck.length > 0 && <span className={`message ${isPwCheck ? 'success' : 'error'}`}>{pwCheckMessage}</span>}
-      {/* </PWContainer> */}
-      {/* </FormWrapper> */}
       <SubmitButton id="join" type="submit">
         <span></span>
         <span></span>
@@ -208,68 +156,7 @@ export const SignUpForm = ({
   );
 };
 
-const MainFormContainer = styled.form`
-  /* width: 100%;
-  min-width: 22rem;
-  display: grid;
-  height: 200px; */
-  /* display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-height: 500px; */
-`;
-
-const FormWrapper = styled.div`
-  position: relative;
-`;
-
-const IDContainer = styled.div`
-  /* width: 100%;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-bottom: 20px; */
-  .message {
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 24px;
-    letter-spacing: -1px;
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    &.success {
-      color: black;
-    }
-    &.error {
-      color: #ff2727;
-    }
-  }
-`;
-
-const PWContainer = styled.div`
-  /* width: 100%;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-bottom: 20px; */
-  .message {
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 24px;
-    letter-spacing: -1px;
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    &.success {
-      color: black;
-    }
-    &.error {
-      color: #ff2727;
-    }
-  }
-`;
+const MainFormContainer = styled.form``;
 
 const StyledIdLabel = styled.label`
   font-size: 16px;
@@ -286,11 +173,11 @@ const Wrapper = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 10px 0;
+  padding: 5px 0;
   font-size: 16px;
   color: #fff;
   border: none;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
@@ -298,11 +185,8 @@ const StyledInput = styled.input`
   &:valid ~ label {
     top: -20px;
     left: 0;
-    /* color: #03e9f4; */
-    /* font-size: 12px; */
   }
 `;
-
 const CheckBtn = styled.div`
   background-color: white;
   border: none;
@@ -370,7 +254,7 @@ const SubmitButton = styled(Nbutton)`
   cursor: pointer;
   transition: 0.5s;
   border-radius: 10px;
-  padding: 12px 40px;
+  padding: 12px 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   &:hover {
     background: #0583c6;
