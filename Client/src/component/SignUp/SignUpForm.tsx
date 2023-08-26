@@ -66,12 +66,14 @@ export const SignUpForm = ({
 
   // 비밀번호 유효성 검사
   const handleChangePassword = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[₩~!@#$%^&*()_+,.<>/?:'])(?=.*[0-9]).{8,15}$/;
     const passwordCurrent = event.target.value;
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('1자 이상의 숫자와 1자 이상의 영문자 조합으로 8자리 이상 입력해주세요.');
+      setPasswordMessage(
+        "1자 이상의 숫자와 1자 이상의 영문자, 특수문자(₩~!@#$%^&*()_+,.<>/?:') 조합으로 8자리 이상 입력해주세요.",
+      );
       setIsPassword(false);
     } else {
       setPasswordMessage('올바른 비밀번호 형식입니다.');
