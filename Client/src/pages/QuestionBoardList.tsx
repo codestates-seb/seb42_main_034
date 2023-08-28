@@ -56,7 +56,7 @@ export default function QuestionBoardList() {
   }, [filter]);
   return (
     <Flex direction="column" width="100%">
-      <div>{category}</div>
+      <City>{category}</City>
       <Section>
         {section.map((filter, idx) => (
           <StyledCategoryBtn
@@ -70,7 +70,7 @@ export default function QuestionBoardList() {
                 </CategoryFilter>
               ) : (
                 <CategoryFilter>
-                  질문 <FaMicroblog />
+                  질문하기 <FaMicroblog />
                 </CategoryFilter>
               )
             }
@@ -79,16 +79,19 @@ export default function QuestionBoardList() {
             }}
           />
         ))}
+      </Section>
+      <PostBtnContainer>
+        {' '}
         <PostBtn
           children="글 작성하기"
           onClick={() => {
             navigate(`/board/questionspost/${category}`);
           }}
         />
-      </Section>
+      </PostBtnContainer>
 
       <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
-
+      <DescriptionFont>음식점, 명소등 마음껏 질문해주세요</DescriptionFont>
       <QuestionList filter={filter} />
     </Flex>
   );
@@ -102,4 +105,11 @@ const PostBtn = styled(MoveBtn)`
   @media (max-width: 762px) {
     display: none;
   }
+`;
+const City = styled.div`
+  text-align: center;
+  font-size: ${FontSize.lg};
+`;
+const PostBtnContainer = styled.div`
+  position: relative;
 `;

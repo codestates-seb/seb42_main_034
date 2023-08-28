@@ -29,29 +29,6 @@ export default function QuestionList({ filter }: { filter: string }) {
   // let section = '';
   const section = decodeURIComponent(category);
   useEffect(() => {
-    // if (category === '서울') {
-    //   section = 'seoul';
-    // } else if (category === '경상') {
-    //   section = 'kyungsang';
-    // } else if (category === '강원') {
-    //   section = 'gangwon';
-    // } else if (category === '충청') {
-    //   section = 'chungcheong';
-    // } else if (category === '부산') {
-    //   section = 'busan';
-    // } else if (category === '제주') {
-    //   section = 'jeju';
-    // } else if (category === '인천') {
-    //   section = 'incheon';
-    // } else if (category === '울산') {
-    //   section = 'ulsan';
-    // } else if (category === '전라') {
-    //   section = 'Jeolla';
-    // } else if (category === '경기') {
-    //   section = 'gyeonggi';
-    // }
-    console.log(city);
-
     if (searchData && search[0] === '?search') {
       //서치데이터 쿼리스트링 있으면 서치데이터 검색
       console.log('서치데이터', changeUrl(searchData));
@@ -87,36 +64,26 @@ export default function QuestionList({ filter }: { filter: string }) {
         onPage={setPageNation}
         querystring={searchData}
       />
-      <MainBoard>
-        <Contentbar>
-          <div>태그</div>
-          <div>제목</div>
-
-          <BoardTap>
-            <div>작성자</div>
-            <div>조회수</div>
-            <div>작성일</div>
-          </BoardTap>
-        </Contentbar>
-        {city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}
-      </MainBoard>
-      {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
+      {/* <MainBoard> */}
+      <Contentbar>{city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}</Contentbar>
+      {/* </MainBoard> */}
     </>
   );
 }
-const MainBoard = styled.ul`
-  min-height: 900px;
-  height: 100%;
-  padding-left: 0px;
-`;
+// const MainBoard = styled.ul`
+//   min-height: 900px;
+//   height: 100%;
+//   padding-left: 0px;
+// `;
 const BoardTap = styled.div`
   display: flex;
   div {
     margin-left: 0.9em;
   }
 `;
-const Contentbar = styled.div`
+const Contentbar = styled.ul`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  padding: 0 4.3em;
+  padding: 0 5em;
 `;

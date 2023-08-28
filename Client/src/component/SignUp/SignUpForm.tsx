@@ -109,12 +109,18 @@ export const SignUpForm = ({
       Swal.fire('Congratulation!', '가입이 완료되었습니다.');
       setModal(!modal);
       setsiginInModal((prev) => !prev);
-      console.log(res);
+      console.log('성공');
     },
     onError: (res: any) => {
-      console.log('signup failed: ', res.response.data.fieldErrors[0].reason);
-      const errorMessage = res.response.data.fieldErrors[0].reason;
-      Swal.fire('', res.response.data.fieldErrors[0].reason);
+      const errorMessage1 = res.response.data.fieldErrors[0].reason;
+      const errorMessage2 = res.response.data.message;
+      console.log('signup failed: ', res);
+      if (errorMessage1) {
+        Swal.fire('', errorMessage1);
+      } else {
+        Swal.fire('', errorMessage2);
+        console.log('가긴한거니?');
+      }
     },
   });
   console.log(isNickname, isEmail, isPassword, isPwCheck);

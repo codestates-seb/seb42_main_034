@@ -4,7 +4,7 @@ import { css } from 'styled-components';
 export enum FontSize {
   sm = '10px',
   md = '12px',
-  lg = '20px',
+  lg = '15px',
   h1 = '33px',
   h2 = '29px',
   h3 = '26px',
