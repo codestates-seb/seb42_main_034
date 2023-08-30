@@ -66,7 +66,7 @@ const Layout = styled.div`
   }
   padding: 0.6rem 4em;
   border-radius: 0.7rem;
-  max-width: 90%;
+  max-width: 80%;
   @media (min-width: 1400px) {
     max-width: 70%;
   }

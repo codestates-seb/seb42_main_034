@@ -5,11 +5,7 @@ import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
 import { GrFormView } from 'react-icons/gr';
 import { Colors, FontSize } from 'component/style/variables';
-import dayjs from 'dayjs';
-
-import { getFilterData } from 'api/data';
-import Profile from 'component/ui/Profile';
-
+import { elapsedTime } from 'libs/date';
 export default function QuestionCard({ city }: { city: ListData }) {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -23,7 +19,10 @@ export default function QuestionCard({ city }: { city: ListData }) {
             {city.writer}
             <Avatar src={`/image/user.png`} />
           </Topline>
-          · <Topline>{dayjs(city.createdAt).format('YYYY-MM-DD')}</Topline>
+          ·{' '}
+          <Topline>
+            <div>{elapsedTime(city.createdAt)}</div>
+          </Topline>
         </Flex>
         <div className="title">{city.title}</div>
         {(city &&

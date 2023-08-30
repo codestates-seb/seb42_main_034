@@ -50,7 +50,7 @@ export default function Searchbar({
         console.log(res);
       });
     }
-  }, [querystring]);
+  }, []);
   console.log(querystring);
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -83,10 +83,10 @@ export default function Searchbar({
       ) : (
         <TagBox>
           {' '}
-          <SearchInput type="text" value={searchData} onChange={searchInputHandler} />
+          <SearchInput type="text" value={searchData} placeholder="입력해주세요" onChange={searchInputHandler} />
         </TagBox>
       )}
-      <Tags />
+
       <Relative height="1rem" pb="0.4rem">
         <SearchBtn children={<SearchBar svg={<ResizedIcon />} />} />
       </Relative>
@@ -98,7 +98,7 @@ const TagBox = styled.div`
   align-items: center;
   flex-wrap: wrap;
   min-height: 50px;
-  margin: 10px;
+  width: 60%;
   padding: 0 10px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 10px;

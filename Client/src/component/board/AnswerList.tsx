@@ -12,8 +12,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
 import Comment from 'component/Comment';
-import { Colors } from 'component/style/variables';
-import { setIsChecked } from 'redux/boardDetails';
+import { elapsedTime } from 'libs/date';
 
 export interface answerReturn {
   questionId: number | string;
@@ -89,6 +88,7 @@ export default function AnswerList({
             ) : (
               <>
                 <div>{answer.content}</div>
+                <div>{elapsedTime(answer.createdAt)}</div>
                 <div>
                   {answer.memberId === memberId && (
                     <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />
