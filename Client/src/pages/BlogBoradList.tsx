@@ -1,5 +1,5 @@
 import { Flex } from 'component/style/cssTemplete';
-import { CategoryFilter, DescriptionFont, MoveBtn, Section, section, StyledCategoryBtn } from 'pages/QuestionBoardList';
+import { CategoryFilter, DescriptionFont, Section, section, StyledCategoryBtn } from 'pages/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,13 +13,10 @@ export default function BlogBoardList() {
   const [filter, setFilter] = useState('');
   const navigate = useNavigate();
   const { category } = useParams();
-  const picture = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const location = useAppSelector((state) => state.persistReducer.userInfo);
-
   const handleClick = (section: string) => {
     setFilter(section);
-
     navigate(`/board/boardlist/${section}/${category}`);
   };
   const handlePostClick = () => {
@@ -30,7 +27,6 @@ export default function BlogBoardList() {
       navigate(`/board/mypage/${memberId}`);
     }
   };
-  // console.log(filter);
   useEffect(() => {
     //;
   }, [filter]);
@@ -60,14 +56,11 @@ export default function BlogBoardList() {
           />
         ))}
         {/* 검증된 사람들만 글 작성 가능 */}
-
-        <PostBtn children="글 작성하기" onClick={handlePostClick} />
       </Section>
-
+      <PostBtn children="글 작성하기" onClick={handlePostClick} />
       <DescriptionFont>
         현지인들이 추천하는 여행지에 대한 게시물과 블로그를 작성할 수 있는 게시판입니다.(현지인인증시만 작성가능)
       </DescriptionFont>
-
       <BlogList filter={filter} />
     </Flex>
   );

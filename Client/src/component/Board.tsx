@@ -64,7 +64,7 @@ const Layout = styled.div`
     background: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
   }
-  padding: 0.6rem;
+  padding: 0.6rem 4em;
   border-radius: 0.7rem;
   max-width: 90%;
   @media (min-width: 1400px) {

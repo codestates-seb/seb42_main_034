@@ -1,4 +1,4 @@
-import { getFilterData, useGetData, useLike } from 'api/data';
+import useAddTodoMutation, { getFilterData, useGetData, useLike } from 'api/data';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -11,6 +11,7 @@ import { AnswerData, getAnswerLike, getAnswersData } from 'redux/answer/answersl
 import useAPI from 'hooks/uesAPI';
 import Page from '../Page';
 import { useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface answerReturn {
   questionId: number | string;
@@ -33,13 +34,14 @@ export default function Answer({
   const { deleteAnswerData, getAnswerData } = useGetData(); // data.ts에서 정리할것
   const dispatch = useAppDispatch();
   const api = useAPI();
+  const queryClient = useQueryClient();
   // const { region } = useParams();
   const { setLike, seletedQuestion } = useLike();
   const { memberId } = useAppSelector((state) => state.loginInfo);
   //위치검증
   const location = useAppSelector((state) => state.persistReducer.userInfo);
   const region = getFilterData();
-  console.log(region);
+  const { mutateAsync } = useAddTodoMutation();
 
   const [answer, setAnswer] = useState<AnswerData[] | []>([]);
   const { putAnswerData } = useGetData();
@@ -49,6 +51,7 @@ export default function Answer({
     totalPages: 0,
     size: 15,
   });
+
   const getAnswer = async () => {
     const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
     setAnswer(response.data.data);
@@ -84,17 +87,15 @@ export default function Answer({
   };
   // const isChecked = answer.some((el) => el.checked);
   // console.log(isChecked);
+  const queryKey = 'deleteBulletinPostLike';
 
   const handleLike = useCallback(
     (isLike: boolean, answerId: number, setState: (value: React.SetStateAction<boolean>) => void) => {
       if (isLike === false) {
         //해당 answer만 바꾸기
-        setLike(answerId).then((res) => {
-          //성공했을때 상태바꿈
-          setState(!isLike);
-          getAnswer().catch(console.error);
-          console.log(res);
-        });
+
+        setState(!isLike);
+        mutateAsync(answerId);
       } else {
         setAnswer(
           answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt - 1 } : answer)),
@@ -112,7 +113,7 @@ export default function Answer({
   };
   useEffect(() => {
     getAnswer().catch(console.error);
-    dispatch(getAnswerLike({ answer }));
+    // dispatch(getAnswerLike({ answer }));
   }, []); //
 
   return (

@@ -29,14 +29,17 @@ export default function QuestionList({ filter }: { filter: string }) {
   // let section = '';
   const section = decodeURIComponent(category);
   useEffect(() => {
+    //서치데이터 쿼리스트링 있으면 서치데이터 검색
+    //1.검색결과일때
     if (searchData && search[0] === '?search') {
-      //서치데이터 쿼리스트링 있으면 서치데이터 검색
+      console.log(search[0]);
+
       console.log('서치데이터', changeUrl(searchData));
       SearchText('questions', changeUrl(searchData), pageNation.page, setCity, setPageNation);
-    } else if (searchData) {
+    } else if (searchData && search[0] === '?tag') {
+      //2.태그눌러서이동한결과일때
       searchTag(searchData, 'questions', pageNation.page, setCity, setPageNation);
-    }
-    {
+    } else {
       const getData = async () => {
         const response: ReturnData = await api
           .get('questions', {
@@ -54,7 +57,7 @@ export default function QuestionList({ filter }: { filter: string }) {
 
       getData().catch(console.error);
     }
-  }, [filter, pageNation.page]);
+  }, [filter, pageNation.page, searchData]);
   return (
     <>
       <Searchbar
@@ -64,17 +67,11 @@ export default function QuestionList({ filter }: { filter: string }) {
         onPage={setPageNation}
         querystring={searchData}
       />
-      {/* <MainBoard> */}
       <Contentbar>{city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}</Contentbar>
-      {/* </MainBoard> */}
+      {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </>
   );
 }
-// const MainBoard = styled.ul`
-//   min-height: 900px;
-//   height: 100%;
-//   padding-left: 0px;
-// `;
 const BoardTap = styled.div`
   display: flex;
   div {
@@ -85,5 +82,4 @@ const Contentbar = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 5em;
 `;

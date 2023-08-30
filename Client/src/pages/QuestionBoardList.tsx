@@ -14,6 +14,7 @@ export const StyledCategoryBtn = styled(Button)<{ selected?: boolean }>`
   border: none;
   background: ${(props) => (props.selected ? Colors.button_blue : 'none')};
   margin-top: 0;
+  border-radius: 0.4rem;
   margin-right: 0.6rem;
   color: ${(props) => props.selected && Colors.text_white};
   ${HoverAction}
@@ -80,6 +81,9 @@ export default function QuestionBoardList() {
           />
         ))}
       </Section>
+
+      <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
+      <DescriptionFont>음식점, 명소등 마음껏 질문해주세요</DescriptionFont>
       <PostBtnContainer>
         {' '}
         <PostBtn
@@ -89,19 +93,15 @@ export default function QuestionBoardList() {
           }}
         />
       </PostBtnContainer>
-
-      <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
-      <DescriptionFont>음식점, 명소등 마음껏 질문해주세요</DescriptionFont>
       <QuestionList filter={filter} />
     </Flex>
   );
 }
 
 const PostBtn = styled(MoveBtn)`
-  top: 1em;
-  right: 3em;
-  width: 8rem;
-  position: absolute;
+  width: 7rem;
+  height: 2.5rem;
+  border-radius: 0.4rem;
   @media (max-width: 762px) {
     display: none;
   }
@@ -111,5 +111,5 @@ const City = styled.div`
   font-size: ${FontSize.lg};
 `;
 const PostBtnContainer = styled.div`
-  position: relative;
+  text-align: end;
 `;

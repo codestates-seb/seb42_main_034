@@ -51,7 +51,6 @@ const Card = styled.li`
   list-style: none;
   display: flex;
   justify-content: space-between;
-  padding: 0.9rem;
   height: 5rem;
   border-radius: 1rem;
   padding: 1rem;

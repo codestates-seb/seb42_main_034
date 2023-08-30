@@ -1,9 +1,10 @@
 import { changeUrl } from 'api/changeUrl';
-import { useGetData, useSearch } from 'api/data';
+import { useSearch } from 'api/data';
 import { Relative } from 'component/style/cssTemplete';
 import { Colors } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
 import { Icon } from 'component/ui/Icon';
+import Tags from 'component/ui/tags';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BlogData, ListData, PageProps } from 'redux/boardDetails';
@@ -31,7 +32,6 @@ export default function Searchbar({
   querystring?: string;
 }) {
   const [searchData, setSearchData] = useState(querystring || '');
-  const { getData } = useGetData();
   const data = useLocation();
   console.log(data);
   const navigate = useNavigate();
@@ -50,13 +50,11 @@ export default function Searchbar({
         console.log(res);
       });
     }
-  }, []);
+  }, [querystring]);
   console.log(querystring);
-
   const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //페이지함수 넣어야하는지 말아야하는지 모르겠음
-
     SearchText(section, decodeURIComponent(searchData), page.page, onCity, onPage)
       .then((res) => {
         // onCity(res.data.data);
@@ -68,31 +66,53 @@ export default function Searchbar({
   //없애면 전체검색
   return (
     <SearchWrapper onSubmit={searchHandler}>
-      <SearchInput type="text" value={searchData} onChange={searchInputHandler} />
-      {search[0] === '?tag' && (
-        <Tag>
-          {querystring}
-          <TagBtn
-            children="x"
-            onClick={() => {
-              navigate(`/board/boardlist/questions/${category}`);
-              setSearchData('');
-            }}
-          ></TagBtn>
-        </Tag>
+      {search[0] === '?tag' ? (
+        <TagBox>
+          <SearchInput type="text" value="" onChange={searchInputHandler} />
+          <Tag>
+            {querystring}
+            <TagBtn
+              children="x"
+              onClick={() => {
+                navigate(`/board/boardlist/questions/${category}`);
+                setSearchData('');
+              }}
+            ></TagBtn>
+          </Tag>
+        </TagBox>
+      ) : (
+        <TagBox>
+          {' '}
+          <SearchInput type="text" value={searchData} onChange={searchInputHandler} />
+        </TagBox>
       )}
+      <Tags />
       <Relative height="1rem" pb="0.4rem">
         <SearchBtn children={<SearchBar svg={<ResizedIcon />} />} />
       </Relative>
     </SearchWrapper>
   );
 }
+const TagBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 50px;
+  margin: 10px;
+  padding: 0 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  &:focus-within {
+    border-color: ${Colors.main_01};
+  }
+`;
 const SearchInput = styled.input`
   font-size: var(--font-size-md);
   padding: 10px;
   width: 60%;
   border-radius: 0.4rem;
-  border: 2px solid ${Colors.main_02};
+  border: none;
+  outline: none;
   height: 12%;
   margin: 1em;
 `;
