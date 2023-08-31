@@ -7,7 +7,7 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: ${ScreenSize.middle_height};
+  /* min-height: ${ScreenSize.middle_height}; */
   max-height: ${ScreenSize.middle_height};
   overflow-y: scroll;
   overflow-x: hidden;

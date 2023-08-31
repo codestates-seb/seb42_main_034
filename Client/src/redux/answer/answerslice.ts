@@ -8,6 +8,7 @@ export interface AnswerData {
   memberId: number;
   comments: [];
   createdAt: string;
+  nickName: string;
 }
 //로딩이 됐을 때 채택상태가 디스패치 함수와 함께 실행 돼서 추적 되어야함
 export interface AllAnswer {

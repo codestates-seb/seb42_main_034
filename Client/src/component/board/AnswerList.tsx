@@ -1,5 +1,4 @@
 import { useGetData, useLike, useReply } from 'api/data';
-
 import { Flex } from 'component/style/cssTemplete';
 import TextInput from 'component/ui/Input';
 import { AiOutlineHeart } from 'react-icons/ai';
@@ -7,20 +6,23 @@ import { AiFillHeart } from 'react-icons/ai';
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import React, { useCallback, useEffect, useState } from 'react';
-import { AnswerData, getAnswerLike } from 'redux/answer/answerslice';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { AnswerData } from 'redux/answer/answerslice';
+import { useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
 import Comment from 'component/Comment';
 import { elapsedTime } from 'libs/date';
+import { FontSize } from 'component/style/variables';
 
 export interface answerReturn {
   questionId: number | string;
   content: string;
   title: string;
   tag: string;
-  writer: string;
+  nickName: string;
   createdAt: string;
+  likeCnt: number;
+  checked: boolean;
 }
 
 export default function AnswerList({
@@ -51,6 +53,7 @@ export default function AnswerList({
   const [isComment, setIsComment] = useState(false);
   const { seletedQuestion } = useLike();
   const { createReply } = useReply();
+
   useEffect(() => {
     // onAnswer(answer);
   }, [answer, isLike]);
@@ -68,7 +71,7 @@ export default function AnswerList({
     <AnswerWrapper>
       <AnswerContainer>
         <AnswerItem>
-          <AnswerTop justify="space-between">
+          <AnswerTop>
             {isEdit ? (
               <form>
                 <TextInput value={answer.content} setState={setContent} type="answer" />
@@ -87,37 +90,51 @@ export default function AnswerList({
               </form>
             ) : (
               <>
-                <div>{answer.content}</div>
-                <div>{elapsedTime(answer.createdAt)}</div>
-                <div>
-                  {answer.memberId === memberId && (
-                    <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />
-                  )}
-                  {answer.memberId === memberId && (
-                    <MoveBtn
-                      children="수정"
-                      onClick={() => {
-                        setIsEdit(!isEdit);
-                      }}
-                    />
-                  )}
-                  {/**로그인상태 해결하고 적용 */}
-                  {answer.checked || (
-                    <MoveBtn
-                      children={
-                        <div>
-                          채택하기
-                          <MdOutlineTaskAlt />
-                        </div>
-                      }
-                      onClick={() => {
-                        seletedQuestion(answer.answerId).then((res) => {
-                          getAnswer();
-                        });
-                      }}
-                    ></MoveBtn>
-                  )}{' '}
-                </div>
+                <Flex justify="space-between" width="100%">
+                  <Flex>
+                    <Avatar src={`/image/user.png`} />
+                    <div className="innerContent">
+                      <div className="content">
+                        <span>{answer.nickName}</span>
+
+                        <span className="createAt">{elapsedTime(answer.createdAt)}</span>
+                      </div>
+
+                      <div>{answer.content}</div>
+                    </div>
+                  </Flex>
+
+                  <div>
+                    {answer.memberId === memberId && (
+                      <MoveBtn children="삭제" onClick={() => onDelete(answer.answerId)} />
+                    )}
+                    {answer.memberId === memberId && (
+                      <MoveBtn
+                        children="수정"
+                        onClick={() => {
+                          setIsEdit(!isEdit);
+                        }}
+                      />
+                    )}
+                    {/**로그인상태 해결하고 적용 */}
+                    {answer.checked ||
+                      (memberId === writerId && (
+                        <MoveBtn
+                          children={
+                            <div>
+                              채택하기
+                              <MdOutlineTaskAlt />
+                            </div>
+                          }
+                          onClick={() => {
+                            seletedQuestion(answer.answerId).then((res) => {
+                              getAnswer();
+                            });
+                          }}
+                        ></MoveBtn>
+                      ))}{' '}
+                  </div>
+                </Flex>
               </>
             )}
           </AnswerTop>
@@ -142,11 +159,11 @@ export default function AnswerList({
             {answer.comments &&
               answer.comments.map((comment, idx) => <Comment comment={comment} getAnswer={getAnswer} />)}
           </div>
-          <form onSubmit={handlePost}>
+          <ReplyForm onSubmit={handlePost}>
             <ReplyInput type="comment" placeholder="댓글을 입력해주세요" setState={setComment} />
 
             <MoveBtn children="작성" />
-          </form>
+          </ReplyForm>
         </div>
       )}
     </AnswerWrapper>
@@ -186,6 +203,20 @@ const StyledBtn = styled(Button)`
 `;
 const AnswerTop = styled(Flex)`
   padding-left: 1.5em;
+  .content {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .createAt {
+    color: grey;
+    font-size: ${FontSize.md};
+  }
+  .innerContent {
+    font-weight: bold;
+    margin-left: 0.5rem;
+  }
 `;
 const ReplyInput = styled(TextInput)`
   height: 6em;
@@ -194,4 +225,11 @@ const ReplyInput = styled(TextInput)`
 `;
 const ReplyForm = styled.form`
   text-align: center;
+  width: 100%;
+`;
+const Avatar = styled.img`
+  border-radius: 100%;
+  border: 1px solid black;
+  width: 3rem;
+  height: 3rem;
 `;
