@@ -122,7 +122,7 @@ export default function Answer({
           <>
             <StyledForm onSubmit={submitHandler}>
               <StyledInput type="text" placeholder="댓글을 입력해주세요" setState={setComment} />
-              <MoveBtn children="작성" />
+              <SubmitBtn children="작성" />
               {/* 추후에 위치정보도 함께 첨부  */}
             </StyledForm>
           </>
@@ -163,6 +163,9 @@ const StyledInput = styled(TextInput)`
   height: 7rem;
   width: 100%;
   border-radius: 0.7rem;
+  &:focus-within {
+    border-color: ${Colors.main_01};
+  }
 `;
 const AnswerWrapper = styled.div`
   margin-top: 50px;
@@ -171,4 +174,10 @@ const AnswerWrapper = styled.div`
 `;
 const AnswerCount = styled.h3`
   color: ${Colors.main_03};
+`;
+const SubmitBtn = styled(MoveBtn)`
+    width: 10rem;
+    height: 3rem;
+    margin-right: 0;
+}
 `;

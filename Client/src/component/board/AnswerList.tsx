@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import { Button } from 'component/ui/Button';
 import Comment from 'component/Comment';
 import { elapsedTime } from 'libs/date';
-import { FontSize } from 'component/style/variables';
+import { Colors, FontSize } from 'component/style/variables';
 
 export interface answerReturn {
   questionId: number | string;
@@ -222,6 +222,10 @@ const ReplyInput = styled(TextInput)`
   height: 6em;
   width: 60%;
   margin-top: 0.4em;
+  border-radius: 0.7rem;
+  &:focus-within {
+    border-color: ${Colors.main_01};
+  }
 `;
 const ReplyForm = styled.form`
   text-align: center;

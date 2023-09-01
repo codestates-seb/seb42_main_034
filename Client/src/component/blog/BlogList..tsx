@@ -65,10 +65,10 @@ export default function BlogList({ filter }: { filter: string }) {
   );
 }
 const MainBoard = styled.ul`
-  flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(3, 33.3%);
   grid-auto-rows: 30rem;
   gap: 0.5em;
   padding-left: 0px;
+  min-height: 700px;
 `;

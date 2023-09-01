@@ -81,5 +81,5 @@ const BoardTap = styled.div`
 const Contentbar = styled.ul`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  min-height: 700px;
 `;

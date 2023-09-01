@@ -1,5 +1,5 @@
 import { Flex } from 'component/style/cssTemplete';
-import { CategoryFilter, DescriptionFont, Section, section, StyledCategoryBtn } from 'pages/QuestionBoardList';
+import { CategoryFilter, DescriptionFont, Section, StyledCategoryBtn } from 'pages/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,8 +9,9 @@ import { FaMicroblog } from 'react-icons/fa';
 import { useAppSelector } from 'redux/hooks';
 import { Button } from 'component/ui/Button';
 import { Colors } from 'component/style/variables';
+import CategotyFilter from 'component/board/CategotyFilter';
 export default function BlogBoardList() {
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState('blogs');
   const navigate = useNavigate();
   const { category } = useParams();
   const { memberId } = useAppSelector((state) => state.loginInfo);
@@ -33,30 +34,7 @@ export default function BlogBoardList() {
   return (
     <Flex direction="column" width="100%">
       <div>{category}</div>
-      <Section>
-        {section.map((filter, idx) => (
-          <StyledCategoryBtn
-            key={idx}
-            selected={filter === 'blogs' && true}
-            children={
-              filter === 'blogs' ? (
-                <CategoryFilter>
-                  블로그
-                  <AiOutlineBulb />
-                </CategoryFilter>
-              ) : (
-                <CategoryFilter>
-                  질문 <FaMicroblog />
-                </CategoryFilter>
-              )
-            }
-            onClick={() => {
-              handleClick(filter);
-            }}
-          />
-        ))}
-        {/* 검증된 사람들만 글 작성 가능 */}
-      </Section>
+      <CategotyFilter onClick={handleClick} filter={filter} />
       <PostBtn children="글 작성하기" onClick={handlePostClick} />
       <DescriptionFont>
         현지인들이 추천하는 여행지에 대한 게시물과 블로그를 작성할 수 있는 게시판입니다.(현지인인증시만 작성가능)

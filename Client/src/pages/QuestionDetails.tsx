@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import BoardDetail from '../component/board/BoardDetail';
 import { FaArrowLeft } from 'react-icons/fa';
-import { BoardData, useGetData } from 'api/data';
+import { BoardData, getFilterData, useGetData } from 'api/data';
 import { useQuery } from '@tanstack/react-query';
 
 import { useAppSelector } from 'redux/hooks';
@@ -13,11 +13,13 @@ import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
 import { FontSize } from 'component/style/variables';
 import { Button } from 'component/ui/Button';
+import BackBtn from 'component/ui/BackBtn';
 
 export default function QuestionDetails() {
   const data: BoardData = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
   const { deleteBoardData } = useGetData();
+  const region = getFilterData();
   const { id } = useParams() as { id: string };
   const questionId = Number(id);
   const navigate = useNavigate();
@@ -33,18 +35,10 @@ export default function QuestionDetails() {
   return (
     <>
       {' '}
-      <BackButton
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        <FaArrowLeft />
-      </BackButton>
+      <BackBtn />
       <Question>
-        <div>
-          <BulbIcon src={`/image/bulb.png`} />
-          <span>질문</span>
-        </div>
+        <BulbIcon src={`/image/bulb.png`} />
+        <span> {`질문 > ${region}`}</span>
       </Question>
       {detail && detail.memberId === memberId && (
         <Flex justify="end" width="90%" gap="2rem">
@@ -87,8 +81,9 @@ const Question = styled.h2`
   border: 2px dotted skyblue;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  width: 50%;
-  justify-content: center;
+  text-align: start;
+  width: 100%;
+  justify-content: start;
 `;
 const BackButton = styled(Button)`
   ${HoverAction}

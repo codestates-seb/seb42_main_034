@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AiOutlineBulb } from 'react-icons/ai';
-import { FaMicroblog } from 'react-icons/fa';
 import { Flex, HoverAction, Relative } from 'component/style/cssTemplete';
 import { Button } from 'component/ui/Button';
 import styled from 'styled-components';
 import { Colors, FontSize } from 'component/style/variables';
 import QuestionList from '../component/question/QuestionList';
-export const section: string[] = ['questions', 'blogs'];
+import CategotyFilter from 'component/board/CategotyFilter';
+
 export const StyledCategoryBtn = styled(Button)<{ selected?: boolean }>`
   font-size: ${FontSize.h3};
   margin: 0.7rem;
@@ -23,6 +22,7 @@ export const Section = styled(Relative)`
   display: flex;
   justify-content: center;
 `;
+
 export const DescriptionFont = styled.div`
   padding: 0.3em;
   color: ${Colors.text_grey};
@@ -57,31 +57,12 @@ export default function QuestionBoardList() {
   }, [filter]);
   return (
     <Flex direction="column" width="100%">
-      <City>{category}</City>
-      <Section>
-        {section.map((filter, idx) => (
-          <StyledCategoryBtn
-            selected={filter === 'questions' && true}
-            key={idx}
-            children={
-              filter === 'blogs' ? (
-                <CategoryFilter>
-                  블로그
-                  <AiOutlineBulb />
-                </CategoryFilter>
-              ) : (
-                <CategoryFilter>
-                  질문하기 <FaMicroblog />
-                </CategoryFilter>
-              )
-            }
-            onClick={() => {
-              handleClick(filter);
-            }}
-          />
-        ))}
-      </Section>
+      <City>
+        {category}
+        <House src={`/image/home.gif`} />
+      </City>
 
+      <CategotyFilter onClick={handleClick} filter={filter} />
       <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
       <DescriptionFont>음식점, 명소등 마음껏 질문해주세요</DescriptionFont>
       <PostBtnContainer>
@@ -108,8 +89,14 @@ const PostBtn = styled(MoveBtn)`
 `;
 const City = styled.div`
   text-align: center;
-  font-size: ${FontSize.lg};
+  font-size: ${FontSize.h3};
+  border-bottom: 2px solid skyblue;
+  margin-bottom: 2rem;
 `;
 const PostBtnContainer = styled.div`
   text-align: end;
+`;
+const House = styled.img`
+  width: 2rem;
+  height: 2rem;
 `;
