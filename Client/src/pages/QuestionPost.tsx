@@ -85,12 +85,15 @@ export default function QuestionPost() {
     <>
       <Section>
         <BackBtn />
-        <span className="title">질문등록</span>
-        <img src={`/image/pencil.png`} /> - {region}
+        <Flex items="self-start" gap="0.7rem">
+          {' '}
+          <span>질문등록</span>
+          <img src={`/image/pencil.png`} /> <span>- {region}</span>
+        </Flex>
       </Section>
       <PostWrapper onSubmit={submitHandler}>
         {' '}
-        <span>제목</span>
+        <span className="title">제목</span>
         <Input type="text" value={title} onChange={titleHandler} placeholder="질문할 제목을 입력해 주세요" />
         <ResizeEditor
           setImage={setImage}
@@ -114,11 +117,12 @@ const PostWrapper = styled.form`
   height: 100vh;
   justify-content: center;
   flex-direction: column;
-  padding: 10rem;
+  padding: 5rem;
   width: 100%;
   .title {
     width: 100%;
     font-weight: bold;
+    margin-top: 0.2rem;
   }
 `;
 
@@ -141,7 +145,7 @@ const TagInput = styled.input`
   margin-top: 0.9rem;
   height: 3rem;
   border-radius: 0.2rem;
-  width: 90%;
+  width: 100%;
 
   border: 1px solid ${Colors.border_001};
 `;

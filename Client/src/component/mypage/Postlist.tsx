@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useQuery } from '@tanstack/react-query';
 import { useMypageAPI } from 'api/mypage';
 import { useAppSelector } from 'redux/hooks';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAPI from 'hooks/uesAPI';
 import Page from 'component/Page';
+import { ReturnData } from 'api/data';
+
 interface Post {
   content: string;
   title: string;
-  blogId: number;
+  questionId: number;
 }
-const BlogsList = () => {
+interface PostData {
+  data: ReturnData;
+}
+const PostList = () => {
   const { memberId } = useAppSelector((state) => state.loginInfo);
-  const { getMyInfo } = useMypageAPI();
-  const api = useAPI();
   const navigate = useNavigate();
+  const api = useAPI();
   const [post, setPost] = useState<Post[] | []>([]);
   const [pageNation, setPageNation] = useState({
     page: 1,
@@ -25,7 +28,7 @@ const BlogsList = () => {
   });
   const getPost = async () => {
     await api
-      .get(`/members/me/blogsTitle?page=${pageNation.page}&size=10`)
+      .get(`/members/me/questionsTitle?page=${pageNation.page}&size=10`)
       .then((res) => res.data)
       .then((resp) => {
         setPost(resp.data);
@@ -37,24 +40,25 @@ const BlogsList = () => {
   };
   useEffect(() => {
     getPost();
-  }, [pageNation.page]);
-
-  const handleBlogClick = (blogId: any) => {
-    navigate(`/board/blogsdetails/${blogId}`);
+  }, [memberId, pageNation.page]);
+  const handlePostClick = (postId: any) => {
+    navigate(`/board/questionsdetails/${postId}`);
   };
   return (
     <MainContainer>
-      {post.map((p) => (
-        <Divide key={p.blogId} onClick={() => handleBlogClick(p.blogId)}>
-          <p>{p.title ?? '작성한 질문이 없습니다'}</p>
-        </Divide>
-      ))}
+      <List>
+        {post.map((p) => (
+          <Divide key={p.questionId} onClick={() => handlePostClick(p.questionId)}>
+            <p>{p.title ?? '작성한 질문이 없습니다'}</p>
+          </Divide>
+        ))}
+      </List>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </MainContainer>
   );
 };
 const MainContainer = styled.div`
-  width: 50%;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -63,7 +67,11 @@ const MainContainer = styled.div`
   background-color: white;
   cursor: pointer;
 `;
-const Divide = styled.div`
+const List = styled.ul`
+  height: 500px;
+  width: 100%;
+`;
+const Divide = styled.li`
   padding: 3px 0;
   width: 100%;
   border-bottom: 3px solid skyblue;
@@ -71,4 +79,4 @@ const Divide = styled.div`
   display: flex;
   justify-content: center;
 `;
-export default BlogsList;
+export default PostList;

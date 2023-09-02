@@ -6,7 +6,7 @@ import { setUserInfo } from '../redux/userInfoSlice';
 import { useAppDispatch } from '../redux/hooks';
 import { FixmemberInfo } from 'hooks/useFixInfo';
 
-interface Member {
+export interface Member {
   [key: string]: any;
   memberId: number;
   nickName: string;
@@ -15,7 +15,7 @@ interface Member {
     latitude: string;
     longitude: string;
   };
-  address: string;
+  email: string;
   totalCount: number;
   avatarUrl: string;
   key: string;

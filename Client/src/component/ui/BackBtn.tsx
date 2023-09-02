@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from './Button';
 import { FaArrowLeft } from 'react-icons/fa';
+import { FontSize } from 'component/style/variables';
 export default function BackBtn() {
   const navigate = useNavigate();
   return (
@@ -23,4 +24,5 @@ const BackButton = styled(Button)`
   background: none;
   width: 100%;
   text-align: start;
+  font-size: ${FontSize.h3};
 `;

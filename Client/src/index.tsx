@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import Error from './pages/Error';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';

@@ -112,7 +112,7 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
         modules={modules}
         formats={['image']}
         theme="snow"
-        style={{ height, width, marginBottom: '6%', maxWidth: '900px' }} // style
+        style={{ height, width, marginBottom: '6%' }} // style
         {...quillOptions}
       />
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Flex, HoverAction, Relative } from 'component/style/cssTemplete';
 import { Button } from 'component/ui/Button';
@@ -7,6 +7,7 @@ import { Colors, FontSize } from 'component/style/variables';
 import QuestionList from '../component/question/QuestionList';
 import CategotyFilter from 'component/board/CategotyFilter';
 
+const QuestionCarousel = lazy(() => import('component/question/QuestionCarousel'));
 export const StyledCategoryBtn = styled(Button)<{ selected?: boolean }>`
   font-size: ${FontSize.h3};
   margin: 0.7rem;
@@ -42,6 +43,7 @@ export const MoveBtn = styled(Button)<{ width?: string; height?: string; display
   ${HoverAction}
   margin: 1rem;
   border-radius: 1rem;
+  color: ${Colors.text_white};
 `;
 export default function QuestionBoardList() {
   const navigate = useNavigate();
@@ -56,26 +58,32 @@ export default function QuestionBoardList() {
     //
   }, [filter]);
   return (
-    <Flex direction="column" width="100%">
-      <City>
-        {category}
-        <House src={`/image/home.gif`} />
-      </City>
+    <>
+      {' '}
+      <Suspense fallback={<div>로딩중..</div>}>
+        <QuestionCarousel />
+      </Suspense>
+      <Flex direction="column" width="100%">
+        <City>
+          {category}
+          <House src={`/image/home.gif`} />
+        </City>
 
-      <CategotyFilter onClick={handleClick} filter={filter} />
-      <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
-      <DescriptionFont>음식점, 명소등 마음껏 질문해주세요</DescriptionFont>
-      <PostBtnContainer>
-        {' '}
-        <PostBtn
-          children="글 작성하기"
-          onClick={() => {
-            navigate(`/board/questionspost/${category}`);
-          }}
-        />
-      </PostBtnContainer>
-      <QuestionList filter={filter} />
-    </Flex>
+        <CategotyFilter onClick={handleClick} filter={filter} />
+        <DescriptionFont>질문을 작성하고 목록을 확인할수있는 곳 입니다</DescriptionFont>
+        <DescriptionFont>음식점, 명소등 마음껏 질문해주세요</DescriptionFont>
+        <PostBtnContainer>
+          {' '}
+          <PostBtn
+            children="글 작성하기"
+            onClick={() => {
+              navigate(`/board/questionspost/${category}`);
+            }}
+          />
+        </PostBtnContainer>
+        <QuestionList filter={filter} />
+      </Flex>
+    </>
   );
 }
 
