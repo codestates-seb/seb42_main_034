@@ -17,6 +17,7 @@ import { useImageUpload } from 'hooks/useImageUpload';
 import EditNickNameInput from 'component/mypage/ProFileEdit/EditNickNameInput';
 import EditImage from 'component/mypage/ProFileEdit/EditImage';
 import { Button } from 'component/ui/Button';
+import { MoveBtn } from 'pages/QuestionBoardList';
 function ProfileEditPage() {
   const api = useAPI();
 
@@ -129,19 +130,19 @@ function ProfileEditPage() {
           onNameMessage={setNicknameMessage}
           nameMessage={nicknameMessage}
         />
-        <div className="miniTitle  ">도시설정</div>
-        <div>
-          <input
-            className="input"
-            placeholder="도시를 설정하기 위해 여기를 클릭"
-            value={userInfo?.location || ''}
-            disabled={false}
-            onClick={() => {
-              onClickToggleModal();
-            }}
-            readOnly
-          />
-        </div>{' '}
+
+        <div className="miniTitle">도시설정 ⬇ 설정을 위해 아래를 클릭해주세요</div>
+        <input
+          className="input"
+          placeholder="도시를 설정하기 위해 여기를 클릭"
+          value={userInfo?.location || ''}
+          disabled={false}
+          onClick={() => {
+            onClickToggleModal();
+          }}
+          readOnly
+        />
+        <div className="miniTitle">비밀번호 변경</div>
         <input placeholder="변경할 비밀번호를 입력해주세요" onChange={handleChangePassword} type="password" />
         <div>{passwordMessage}</div>
         <SubmitButton onClick={handleSubmit} className="Button">
@@ -164,26 +165,28 @@ const Layout = styled.div`
   align-items: center;
   flex-direction: column;
   /* font-size: 1.3rem;*/
-
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   width: 100%;
+  padding: 2rem;
+  border-radius: 0.5rem;
   .username {
     padding-top: 2rem;
     padding-bottom: 0.5rem;
   }
   input {
-    width: 70%;
+    width: 100%;
     height: 2rem;
     margin-top: 10;
-    padding: 5px;
+    padding: 0.5rem;
     border-radius: 1.2rem;
     border: 1px solid grey;
+    margin-top: 1rem;
   }
   .miniTitle {
-    padding-top: 2rem;
-    padding-bottom: 0.5rem;
-    font-size: 15px;
-    color: ${Colors.text_black};
-    display: flex;
+    font-weight: bold;
+    text-align: start;
+    margin-top: 0.5rem;
+    width: 100%;
   }
   .check {
     border: 3px solid blue;
@@ -231,14 +234,17 @@ const SubTitle = styled.p`
   color: black;
   margin-bottom: 35px;
   text-align: start;
-  width: 90%;
+  background: #e7f8ff;
+  border-radius: 0.5rem;
+  padding: 0.5rem 2rem;
+  width: 100%;
   .color {
     color: ${Colors.text_grey};
     font-size: ${FontSize.md};
   }
 `;
 
-const SubmitButton = styled(Button)`
+const SubmitButton = styled(MoveBtn)`
   height: 2rem;
   width: 7rem;
 `;

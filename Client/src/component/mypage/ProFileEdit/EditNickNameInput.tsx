@@ -15,14 +15,14 @@ interface NickNameEditProps {
 export default function EditNickNameInput({ onName, name, onBlurName, onNameMessage, nameMessage }: NickNameEditProps) {
   const dispatch = useAppDispatch();
   return (
-    <div>
+    <NicknameContainer>
       <div>
         <div className="miniTitle">닉네임</div>
-        <div>
+        <div className="nameBottom">
           <NickNameInput
             placeholder="수정할 닉네임을 작성하세요(15자이하)"
             disabled={false}
-            type="nickname"
+            type="nickname "
             value={name}
             onChange={onName}
             onBlur={onBlurName}
@@ -32,7 +32,6 @@ export default function EditNickNameInput({ onName, name, onBlurName, onNameMess
           <ConfirmBtn
             onClick={() => {
               notifi(dispatch, '사용가능한 닉네임 입니다.');
-              console.log('nickname check');
             }}
           >
             중복확인
@@ -41,8 +40,17 @@ export default function EditNickNameInput({ onName, name, onBlurName, onNameMess
       </div>
 
       <div>{nameMessage}</div>
-    </div>
+    </NicknameContainer>
   );
 }
+const NicknameContainer = styled.div`
+  width: 100%;
+  .nameBottom {
+    display: flex;
+    align-items: baseline;
+  }
+`;
 const NickNameInput = styled.input``;
-const ConfirmBtn = styled(MoveBtn)``;
+const ConfirmBtn = styled(MoveBtn)`
+  margin: 0.5rem;
+`;
