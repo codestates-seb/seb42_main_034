@@ -6,6 +6,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import useAPI from 'hooks/uesAPI';
 import Page from 'component/Page';
 import { ReturnData } from 'api/data';
+import { Colors } from 'component/style/variables';
+import { Divide } from './ListStyle';
 
 interface Post {
   content: string;
@@ -71,12 +73,5 @@ const List = styled.ul`
   height: 500px;
   width: 100%;
 `;
-const Divide = styled.li`
-  padding: 3px 0;
-  width: 100%;
-  border-bottom: 3px solid skyblue;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`;
+
 export default PostList;

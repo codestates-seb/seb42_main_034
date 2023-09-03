@@ -47,7 +47,6 @@ const PostBtn = styled(Button)`
   top: 1em;
   right: 3em;
   width: 8rem;
-  border: none;
   height: 3rem;
   border-radius: 0.2em;
   background: ${Colors.button_blue};

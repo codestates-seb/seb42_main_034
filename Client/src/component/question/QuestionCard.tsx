@@ -56,13 +56,9 @@ const Card = styled.li`
   border-bottom: 1px solid lightgray;
   ${HoverAction}
   &:hover {
-    background: grey;
+    background: #fafafa;
   }
-  td {
-    &:hover {
-      border-color: grey;
-    }
-  }
+
   .user {
     display: flex;
     align-items: center;
@@ -72,7 +68,8 @@ const Card = styled.li`
     font-weight: bold;
     font-size: ${FontSize.lg};
     @media (max-width: 760px) {
-      font-size: ${FontSize.md}
+      font-size: ${FontSize.md};
+    }
   }
   .sidecontent {
     font-size: ${FontSize.md};

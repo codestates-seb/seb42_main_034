@@ -125,8 +125,6 @@ const Title = styled.div`
   }
 `;
 const LikeButton = styled(Button)`
-  border: none;
-  background: none;
   ${HoverAction}
   span {
     display: block;
@@ -137,8 +135,6 @@ const LikeButton = styled(Button)`
   }
 `;
 const UnLikeButton = styled(Button)`
-  border: none;
-  background: none;
   width: 3em;
   ${HoverAction}
   span {

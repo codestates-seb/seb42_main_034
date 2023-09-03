@@ -1,4 +1,5 @@
 import { useMypageAPI } from 'api/mypage';
+import { Colors } from 'component/style/variables';
 import Nbutton from 'component/ui/NButton';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import React from 'react';
@@ -39,4 +40,9 @@ export default function DeleteMyInfo() {
   return <Withdrawal onClick={handleDelete}>회원탈퇴</Withdrawal>;
 }
 
-const Withdrawal = styled(MoveBtn)``;
+const Withdrawal = styled(MoveBtn)`
+  height: 3rem;
+  width: 7rem;
+  font-size: 1rem;
+  background: ${Colors.text_grey};
+`;

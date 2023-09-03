@@ -135,8 +135,6 @@ const SearchWrapper = styled.form`
   }
 `;
 const SearchBtn = styled(Button)`
-  background: none;
-  border: none;
   position: absolute;
   top: 0.6em;
   right: 1em;
@@ -151,7 +149,5 @@ const Tag = styled.div`
   border-radius: 0.3em;
 `;
 const TagBtn = styled(Button)`
-  border: none;
-  background: none;
   font-size: 1rem;
 `;

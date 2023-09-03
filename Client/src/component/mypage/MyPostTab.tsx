@@ -18,7 +18,6 @@ export default function MyPostTab({
     onActiveIdx(index);
     setSelectedTab(index);
   };
-  console.log(activeIdx === selectedTab);
 
   return (
     <TabStyled
@@ -39,7 +38,7 @@ const TabStyled = styled(MoveBtn)<{ isSelected: boolean }>`
   display: inline-block;
   height: 2.5rem;
   font-size: 14px;
-  color: ${(props) => (props.isSelected ? 'black' : 'white')}
+  color: ${(props) => props.isSelected && 'black'};
   text-decoration: none;
   overflow: hidden;
   margin-top: 20px;

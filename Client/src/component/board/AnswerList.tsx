@@ -191,15 +191,9 @@ const AnswerContent = styled.div`
   align-items: center;
 `;
 const StyledBtn = styled(Button)`
-  background: none;
-  border: none;
-  cursor: pointer;
   display: flex;
   transition: 200ms ease-in;
   gap: 0.2em;
-  &:hover {
-    transform: scale(1.1);
-  }
 `;
 const AnswerTop = styled(Flex)`
   padding-left: 1.5em;

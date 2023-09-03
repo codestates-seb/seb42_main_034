@@ -41,6 +41,7 @@ export const MoveBtn = styled(Button)<{ width?: string; height?: string; display
   height: ${(props) => props.height};
   font-size: ${FontSize.sm};
   ${HoverAction}
+  border: none;
   margin: 1rem;
   border-radius: 1rem;
   color: ${Colors.text_white};

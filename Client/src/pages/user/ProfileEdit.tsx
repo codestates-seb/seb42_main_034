@@ -14,6 +14,9 @@ import { Colors, FontSize } from 'component/style/variables';
 import { Flex } from 'component/style/cssTemplete';
 import { uploadToS3 } from 'api/imageUpload';
 import { useImageUpload } from 'hooks/useImageUpload';
+import EditNickNameInput from 'component/mypage/ProFileEdit/EditNickNameInput';
+import EditImage from 'component/mypage/ProFileEdit/EditImage';
+import { Button } from 'component/ui/Button';
 function ProfileEditPage() {
   const api = useAPI();
 
@@ -30,9 +33,9 @@ function ProfileEditPage() {
 
   //유저이미지
 
-  const [nickname, setNickname] = useState(userInfo.nickname);
+  const [nickname, setNickname] = useState<string>(userInfo.nickname);
   const navigate = useNavigate();
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState<string>('');
   const [isPassword, setIsPassword] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState('');
   const [nicknameMessage, setNicknameMessage] = useState<string>('');
@@ -116,38 +119,20 @@ function ProfileEditPage() {
         <div className="color">닉네임을 수정 할 수 있습니다.</div>
       </SubTitle>
       <Layout>
-        <label htmlFor="file">프로필 이미지 등록</label>
-        {isImageEdit && <img alt="" src={srcImage} />}
-        <input type="file" accept=".png, .jpeg, .jpg" onChange={handleImageUpload} />
+        <EditImage isEdit={isImageEdit} image={srcImage} onImage={handleImageUpload} />
         {/* <ProfileEditBox> */}
-        <Avatar />
-        <div className="miniTitle">닉네임</div>
-        <div className="input">
+        {/* <Avatar /> */}
+        <EditNickNameInput
+          onName={handleChangeNickname}
+          name={nickname}
+          onBlurName={handleBlurNickname}
+          onNameMessage={setNicknameMessage}
+          nameMessage={nicknameMessage}
+        />
+        <div className="miniTitle  ">도시설정</div>
+        <div>
           <input
-            placeholder="수정할 닉네임을 작성하세요(15자이하)"
-            disabled={false}
-            type="nickname"
-            value={nickname}
-            onChange={handleChangeNickname}
-            onBlur={handleBlurNickname}
-            maxLength={15}
-            className="nickname"
-          />
-
-          <button
-            className="check"
-            onClick={() => {
-              notifi(dispatch, '사용가능한 닉네임 입니다.');
-              console.log('nickname check');
-            }}
-          >
-            중복확인
-          </button>
-        </div>
-        <div>{nicknameMessage}</div>
-        <div className="miniTitle">도시설정</div>
-        <div className="input">
-          <input
+            className="input"
             placeholder="도시를 설정하기 위해 여기를 클릭"
             value={userInfo?.location || ''}
             disabled={false}
@@ -159,9 +144,9 @@ function ProfileEditPage() {
         </div>{' '}
         <input placeholder="변경할 비밀번호를 입력해주세요" onChange={handleChangePassword} type="password" />
         <div>{passwordMessage}</div>
-        <Button onClick={handleSubmit} className="Button">
+        <SubmitButton onClick={handleSubmit} className="Button">
           저장
-        </Button>
+        </SubmitButton>
         {isOpenModal && (
           <>
             <Modal onClickToggleModal={onClickToggleModal} />
@@ -186,10 +171,11 @@ const Layout = styled.div`
     padding-bottom: 0.5rem;
   }
   input {
-    width: 220px;
+    width: 70%;
+    height: 2rem;
     margin-top: 10;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 1.2rem;
     border: 1px solid grey;
   }
   .miniTitle {
@@ -213,9 +199,7 @@ const Layout = styled.div`
       color: #eaeaea;
     }
   }
-  .nickname {
-    width: 160px;
-  }
+
   .image {
     box-sizing: border-box;
     width: 200px;
@@ -227,12 +211,7 @@ const Layout = styled.div`
       border: 3px solid white;
     }
   }
-  .Button {
-    margin-top: 2.5rem;
-    width: 230px;
-    font-size: 16px;
-    background-color: skyblue;
-  }
+
   .input {
     display: flex;
     text-align: center;
@@ -259,12 +238,9 @@ const SubTitle = styled.p`
   }
 `;
 
-const Button = styled.button`
-  font-size: 1rem;
-  color: ${Colors.text_black};
-  background-color: white;
-  border-radius: 5px;
-  width: 40%;
+const SubmitButton = styled(Button)`
+  height: 2rem;
+  width: 7rem;
 `;
 
 const ProfileEditBox = styled.div``;

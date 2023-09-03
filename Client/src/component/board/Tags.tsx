@@ -39,13 +39,11 @@ export default function Tag({ section, text, region }: { section: string; text: 
   return <StyledTagBtn onClick={handleSearch} ref={textRef} children={`#${text}`} />;
 }
 const StyledTagBtn = styled(Button)`
-  border: none;
-  background: none;
   color: ${Colors.main_01};
   font-size: ${FontSize.h3};
   font-weight: bold;
   &:hover {
-    border-bottom: 2px solid ${Colors.main_01};
+    border-bottom: 2 px solid ${Colors.main_01};
     cursor: pointer;
   }
 `;

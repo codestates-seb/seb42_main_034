@@ -6,6 +6,8 @@ import { useAppSelector } from 'redux/hooks';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAPI from 'hooks/uesAPI';
 import Page from 'component/Page';
+import { Flex } from 'component/style/cssTemplete';
+import { Divide } from './ListStyle';
 interface Post {
   content: string;
   title: string;
@@ -45,11 +47,13 @@ const BlogsList = () => {
   return (
     <MainContainer>
       <List>
-        {post.map((p) => (
-          <Divide key={p.blogId} onClick={() => handleBlogClick(p.blogId)}>
-            <p>{p.title ?? '작성한 질문이 없습니다'}</p>
-          </Divide>
-        ))}
+        {post.length > 0 ? (
+          post.map((p) => <Divide key={p.blogId} onClick={() => handleBlogClick(p.blogId)}></Divide>)
+        ) : (
+          <Flex width="100%" justify="center">
+            작성한 블로그가 없습니다
+          </Flex>
+        )}
       </List>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </MainContainer>
@@ -69,12 +73,5 @@ const List = styled.ul`
   height: 500px;
   width: 100%;
 `;
-const Divide = styled.li`
-  padding: 3px 0;
-  width: 100%;
-  border-bottom: 3px solid skyblue;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`;
+
 export default BlogsList;

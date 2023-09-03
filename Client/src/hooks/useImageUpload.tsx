@@ -12,6 +12,7 @@ export const useImageUpload = () => {
     if (e.target.files === null) return;
     if (e.target.files?.length > 0) {
       const url = await uploadToS3(e.target.files[0]);
+      console.log(e.target.files);
 
       setSrcImage(url);
       //이미지 객체 저장

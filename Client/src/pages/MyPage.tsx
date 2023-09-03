@@ -21,11 +21,12 @@ import PostList from 'component/mypage/Postlist';
 import { Button } from 'component/ui/Button';
 import { MoveBtn } from './QuestionBoardList';
 import { Flex } from 'component/style/cssTemplete';
+import { Colors } from 'component/style/variables';
 
 export default function MyPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const postTab: string[] = ['내 질문글', '내 블로그글', '내 댓글'];
+  const postTab: string[] = ['💡내 질문 글', ' 📰내 블로그 글', '💬 내 댓글'];
   const { memberId, isLogin, avatarUrl } = useAppSelector((state) => state.loginInfo);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
@@ -97,7 +98,7 @@ export default function MyPage() {
             ))}
         </TabContainer>
         {renderTabContent()}
-        <Flex>
+        <Flex justify="end" items="center">
           <LogOuttbutton
             onClick={() => {
               const confirm = window.confirm('로그아웃을 하시겠습니까?');
@@ -161,11 +162,14 @@ const TabContainer = styled.div`
 `;
 
 const LogOuttbutton = styled(MoveBtn)`
-  margin-top: 2rem;
+  height: 3rem;
+  width: 7rem;
+  font-size: 1rem;
+  background: orangered;
   &:hover {
     background: #0583c6;
     color: #fff;
     border-radius: 5px;
-    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+    box-shadow: 0 0 5px #c60505, 0 0 25px #c60505, 0 0 50px #c60505 0 0 100px #0583c6;
   }
 `;

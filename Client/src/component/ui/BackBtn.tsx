@@ -20,8 +20,6 @@ export default function BackBtn() {
 
 const BackButton = styled(Button)`
   ${HoverAction}
-  border: none;
-  background: none;
   width: 100%;
   text-align: start;
   font-size: ${FontSize.h3};

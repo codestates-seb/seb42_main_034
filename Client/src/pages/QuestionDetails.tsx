@@ -85,10 +85,3 @@ const Question = styled.h2`
   width: 100%;
   justify-content: start;
 `;
-const BackButton = styled(Button)`
-  ${HoverAction}
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: start;
-`;
