@@ -1,5 +1,5 @@
 import { Flex } from 'component/style/cssTemplete';
-import { CategoryFilter, DescriptionFont, Section, StyledCategoryBtn } from 'pages/QuestionBoardList';
+import { CategoryFilter, DescriptionFont, MoveBtn, Section, StyledCategoryBtn } from 'pages/QuestionBoardList';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -35,22 +35,24 @@ export default function BlogBoardList() {
     <Flex direction="column" width="100%">
       <div>{category}</div>
       <CategotyFilter onClick={handleClick} filter={filter} />
-      <PostBtn children="글 작성하기" onClick={handlePostClick} />
-      <DescriptionFont>
-        현지인들이 추천하는 여행지에 대한 게시물과 블로그를 작성할 수 있는 게시판입니다.(현지인인증시만 작성가능)
-      </DescriptionFont>
+      <Flex justify="space-between" items="center">
+        <DescriptionFont>
+          현지인들이 추천하는 여행지에 대한 게시물과 블로그를 작성할 수 있는 게시판입니다.
+          <div>(현지인인증시만 작성가능)</div>
+        </DescriptionFont>
+        <PostBtn children="글 작성하기" onClick={handlePostClick} />
+      </Flex>
+
       <BlogList filter={filter} />
     </Flex>
   );
 }
-const PostBtn = styled(Button)`
-  top: 1em;
-  right: 3em;
-  width: 8rem;
-  height: 3rem;
-  border-radius: 0.2em;
+const PostBtn = styled(MoveBtn)`
+  width: 7rem;
+  height: 2.5rem;
+  border-radius: 0.4rem;
+
   background: ${Colors.button_blue};
-  position: absolute;
   &:hover {
     background: ${Colors.button_clicked};
   }

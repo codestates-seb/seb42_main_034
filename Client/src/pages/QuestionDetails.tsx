@@ -42,13 +42,13 @@ export default function QuestionDetails() {
       </Question>
       {detail && detail.memberId === memberId && (
         <Flex justify="end" width="90%" gap="2rem">
-          <MoveBtn
+          <QuestionEditBtn
             children="수정"
             onClick={() => {
               navigate(`/board/modifyquestion/${questionId}`, { state: { detail } });
             }}
           />
-          <MoveBtn
+          <QuestionDelteBtn
             children="삭제"
             onClick={() => {
               deleteBoardData(questionId, memberId, 'questions')
@@ -84,4 +84,17 @@ const Question = styled.h2`
   text-align: start;
   width: 100%;
   justify-content: start;
+`;
+const QuestionEditBtn = styled(MoveBtn)`
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  font-size: medium;
+`;
+const QuestionDelteBtn = styled(MoveBtn)`
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  font-size: medium;
+  background: orangered;
 `;

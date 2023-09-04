@@ -28,6 +28,8 @@ export interface BlogData {
   writer: string;
   content?: string;
   isChecked?: boolean;
+  commentCnt: number;
+  likeCnt: number;
 }
 const initialState: ReturnData = {
   data: [],

@@ -1,23 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BoardData, getFilterData, queryKeys, useLike } from 'api/data';
+import Tag from 'component/board/Tags';
+import { Flex, HoverAction } from 'component/style/cssTemplete';
 import { Colors, FontSize } from 'component/style/variables';
+import { Button } from 'component/ui/Button';
+import { elapsedTime } from 'libs/date';
 import React, { useEffect, useState } from 'react';
+import { getAnswersData } from 'redux/answer/answerslice';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import styled from 'styled-components';
+import { GrFormView } from 'react-icons/gr';
 import { AiOutlineDislike } from 'react-icons/ai';
 import { AiOutlineLike } from 'react-icons/ai';
-import { Button } from 'component/ui/Button';
-import { Flex, HoverAction } from 'component/style/cssTemplete';
-import Tag from './Tags';
-import { useLocation } from 'react-router-dom';
-import { GrFormView } from 'react-icons/gr';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { getAnswerLike, getAnswersData } from 'redux/answer/answerslice';
-import { elapsedTime } from 'libs/date';
-export default function BoardDetail({ section, detail }: { section: string; detail: BoardData }) {
+export default function BlogBoard({ section, detail }: { section: string; detail: BoardData }) {
   const { blogLikes } = useLike();
   const queryClient = useQueryClient();
   // const { region } = useParams();
-  const search = useLocation().search.split('=');
+
   const isSelected = useAppSelector((state) => state.answer.data);
   //내 프로필 url
   const { avatarUrl } = useAppSelector((state) => state.loginInfo);
@@ -55,7 +54,7 @@ export default function BoardDetail({ section, detail }: { section: string; deta
         </Flex>
 
         <Title className="title">
-          <span className="question">Q . </span>
+          <span className="question"> </span>
           <span>{detail.title}</span>
         </Title>
         <Flex justify="space-between" items="center">
@@ -73,10 +72,18 @@ export default function BoardDetail({ section, detail }: { section: string; deta
           </div>
         </Flex>
       </Item>
-
       <OverFlow>
         <pre className="flex" dangerouslySetInnerHTML={{ __html: detail.content }} />
       </OverFlow>
+      <Flex>
+        {detail.likeCnt}
+        <LikeButton onClick={handleLikes}>
+          <AiOutlineLike />
+        </LikeButton>
+        <UnLikeButton onClick={handleLikes}>
+          <AiOutlineDislike />
+        </UnLikeButton>
+      </Flex>
     </>
   );
 }
@@ -113,7 +120,27 @@ const Title = styled.div`
     color: ${Colors.main_01};
   }
 `;
-
+const LikeButton = styled(Button)`
+  ${HoverAction}
+  span {
+    display: block;
+  }
+  span > svg {
+    width: 1rem;
+    height: 2rem;
+  }
+`;
+const UnLikeButton = styled(Button)`
+  width: 3em;
+  ${HoverAction}
+  span {
+    display: block;
+  }
+  span > svg {
+    width: 1rem;
+    height: 2rem;
+  }
+`;
 const OverFlow = styled.div`
   overflow: auto;
   width: 90%;

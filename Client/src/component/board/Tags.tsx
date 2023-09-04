@@ -42,8 +42,12 @@ const StyledTagBtn = styled(Button)`
   color: ${Colors.main_01};
   font-size: ${FontSize.h3};
   font-weight: bold;
+  background: none;
+  border: 3px solid ${Colors.main_01};
+  border-radius: 0.7rem;
+  padding: 0.4rem;
+  cursor: pointer;
   &:hover {
-    border-bottom: 2 px solid ${Colors.main_01};
-    cursor: pointer;
+    border-bottom: 2px solid ${Colors.main_01};
   }
 `;
