@@ -7,6 +7,7 @@ import com.project.tripAdvisor.question.dto.AnswerCommentDto;
 import com.project.tripAdvisor.question.dto.AnswerDto;
 import com.project.tripAdvisor.question.entity.Answer;
 import com.project.tripAdvisor.question.entity.AnswerComment;
+import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.mapper.AnswerCommentMapper;
 import com.project.tripAdvisor.question.mapper.AnswerMapper;
 import com.project.tripAdvisor.question.service.AnswerService;
@@ -59,9 +60,10 @@ public class AnswerController {
     public ResponseEntity postAnswer(Principal principal,
                                      @PathVariable("question-id") @Positive Long questionId,
                                      @RequestBody AnswerDto.Post requestbody) {
-
+        Question question = questionService.findVerifiedQuestion(questionId);
         Answer answer = answerMapper.answerPostToAnswer(requestbody);
         Member member =memberFindService.findMyProfile(principal.getName());
+        answerService.checkAuthorized(question,member);
         answer.setMember(member);
         answerService.createAnswer(answer, questionId);
 
@@ -152,31 +154,15 @@ public class AnswerController {
     }
 
     /**
-     * 박형빈
+     * 채택
      */
 
-//    @PostMapping("/check/{answer-id}")
-//    public ResponseEntity checkAnswer(@PathVariable("answer-id")@Positive Long answerId,
-//                                      Principal principal)
-//    {
-//        Member member = memberFindService.findMyProfile(principal.getName());
-//        Answer answer = answerService.findVerifiedAnswer(answerId);
-//        /**
-//         * 이부분도 서비스단에서 repo를 이용해 찾게끔 수정하셔야 할듯 합니다.
-//         */
-//        Question question = answer.getQuestion();
-//        /**
-//         * 채택 요청을 한 MemberId와 해당 answer를 보유한 question의 MemberId와 비교하여 권한 체크
-//         * 추후 서비스단에서 하도록 처리해주세요 전체 로직 볼 수 있게 그냥 임의로 적은 코드입니다.
-//         */
-//        if(!Objects.equals(answer.getQuestion().getMember().getId(), member.getId()))
-//        {
-//            return new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED));
-//        }
-//
-//        answer.setChecked(true);
-//        question.setChecked(true);
-//
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("/select/{answer-id}")
+    public ResponseEntity selectAnswer(@PathVariable("answer-id")@Positive Long answerId,
+                                      Principal principal) {
+        Member member = memberFindService.findMyProfile(principal.getName());
+        answerService.selectAnswer(answerId, member.getId());
+
+        return ResponseEntity.ok().build();
+    }
 }

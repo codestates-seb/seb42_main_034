@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { GrFormView } from 'react-icons/gr';
 import { Colors, FontSize } from 'component/style/variables';
 import { elapsedTime } from 'libs/date';
+import { StyledTag } from 'component/style/ui/tagStyle';
 export default function QuestionCard({ city }: { city: ListData }) {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -82,16 +83,7 @@ const Topline = styled.div`
   font-size: ${FontSize.md};
   margin: 0.2rem;
 `;
-const StyledTag = styled.div`
-  color: ${Colors.main_02};
-  font-weight: bold;
-  font-size: ${FontSize.sm};
-  box-shadow: 3px 3px 3px -2px rgba(0, 0, 0, 0.29);
-  border-radius: 0.2rem;
-  padding: 0.4rem;
-  width: fit-content;
-  text-align: center;
-`;
+
 const Avatar = styled.img`
   border-radius: 100%;
   border: 1px solid black;

@@ -176,8 +176,7 @@ const AnswerCount = styled.h3`
   color: ${Colors.main_03};
 `;
 const SubmitBtn = styled(MoveBtn)`
-    width: 10rem;
-    height: 3rem;
-    margin-right: 0;
-}
+  width: 10rem;
+  height: 3rem;
+  margin-right: 0;
 `;

@@ -189,13 +189,20 @@ public class BlogService {
         return blogRepository.findAllByMemberId(id, pageRequest);
     }
 
-//    public LikeType getLikeStatus(Long memberId, Long blogId) {
-//        Optional<BlogLike> optionalBlogLike = blogikeRepository.findByMemberIdAndBlogId(memberId, blogId);
+    @Transactional
+    public void checkAuthorized(Blog blog,Member member){
+        if(!blog.getCategory().equals(member.getLocation())){
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        }
+    }
+
+//    public boolean getLikeStatus(Long memberId, Long blogId) {
+//        Optional<BlogLike> optionalBlogLike = blogLikeRepository.findByMemberAndBlog(memberId, blogId);
 //
 //        if (optionalBlogLike.isPresent()) {
-//            return optionalBlogLike.get().getLikeType();
+//            return optionalBlogLike.get().isLikeType();
 //        } else {
-//            return null;
+//            return false;
 //        }
 //    }
 }

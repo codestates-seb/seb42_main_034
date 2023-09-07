@@ -11,6 +11,7 @@ import com.project.tripAdvisor.question.entity.Question;
 import com.project.tripAdvisor.question.repository.AnswerCommentRepository;
 import com.project.tripAdvisor.question.repository.AnswerLikeRepository;
 import com.project.tripAdvisor.question.repository.AnswerRepository;
+import com.project.tripAdvisor.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -28,16 +29,18 @@ public class AnswerService {
     private final AnswerLikeRepository answerLikeRepository;
     private final MemberService memberService;
     private final QuestionService questionService;
+    private final QuestionRepository questionRepository;
 
     public AnswerService(AnswerRepository answerRepository, AnswerCommentRepository answerCommentRepository,
                          MemberService memberService, QuestionService questionService,
-                         AnswerLikeRepository answerLikeRepository) {
+                         AnswerLikeRepository answerLikeRepository, QuestionRepository questionRepository) {
 
         this.answerRepository = answerRepository;
         this.answerCommentRepository = answerCommentRepository;
         this.memberService = memberService;
         this.questionService = questionService;
         this.answerLikeRepository = answerLikeRepository;
+        this.questionRepository = questionRepository;
     }
 
     /** 댓글(답변) 생성 **/
@@ -216,5 +219,25 @@ public class AnswerService {
     public void findAuthorization(AnswerComment answerComment, Long memberId) {
         if(!Objects.equals(answerComment.getMember().getId(), memberId))
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+    }
+    @Transactional
+    public void selectAnswer(Long answerId,Long memberId){
+        Answer answer = findVerifiedAnswer(answerId);
+        if(answer.getQuestion().getMember().getId()!=memberId)
+        {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+        }
+        answer.setChecked(true);
+        Question question = answer.getQuestion();
+        question.setChecked(true);
+    }
+
+    @Transactional
+    public void checkAuthorized(Question question, Member member){
+        if(question.isChecked()==false){
+            if(question.getMember().getId()!=member.getId()&&!question.getCategory().equals(member.getLocation())){
+                throw new BusinessLogicException(ExceptionCode.MEMBER_UNAUTHORIZED);
+            }
+        }
     }
 }

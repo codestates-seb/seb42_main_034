@@ -72,6 +72,8 @@
     "@types/react-slick": "^0.23.10",
     "@types/redux-logger": "^3.0.9",
     "@types/redux-persist": "^4.3.1",
+    "@types/react-slick": "^0.23.10",
+    "@types/redux-logger": "^3.0.9",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.55.0",

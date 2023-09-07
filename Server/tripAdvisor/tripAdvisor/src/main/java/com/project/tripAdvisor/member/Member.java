@@ -41,6 +41,8 @@ public class Member extends Auditable implements Principal {
     //    @Column(nullable = false)
     private String location;
 
+    private String avatarUrl;
+
 
     //USER의 권한 정보 테이블과 매핑되는 정보
     @ElementCollection(fetch = FetchType.EAGER)
