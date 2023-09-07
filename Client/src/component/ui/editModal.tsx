@@ -22,7 +22,7 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
   const { latitude, longitude }: any = location.coordinates;
   const [ad, setAd] = useState('');
   //지역 바로 반영
-  const { mutate } = useMutation(() => getMyInfo(memberId), {
+  const { mutate } = useMutation(getMyInfo, {
     onSuccess: () => {
       console.log('마이페이지내용불러옴');
 
@@ -40,20 +40,6 @@ function Modal({ onClickToggleModal, children }: PropsWithChildren<ModalDefaultT
   Geocode.enableDebug();
 
   const getAddressFromLatLng = () => {
-    // Geocode.fromLatLng(latitude, longitude).then(
-    //   (response) => {
-    //     // const address = response.results[4].formatted_address;
-    //      const location = { latitude, longitude };
-    //     // setAd(address.slice(5));
-    //     api.post(`/location?latitude=${latitude}&longitude=${longitude}`).then((res) => {
-    //       console.log(res);
-    //     });
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //     alert('위치 정보를 불러올 수 없습니다.');
-    //   },
-    // );
     api.post(`/location?latitude=${latitude}&longitude=${longitude}`).catch((error) => {
       console.log(error);
       alert('위치 정보를 불러올 수 없습니다.');

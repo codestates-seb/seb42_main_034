@@ -6,13 +6,15 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Layout } from './component/ui/Layout';
-
+import { useMypageAPI } from 'api/mypage';
+import { useAppSelector } from 'redux/hooks';
 const FixOutletHeight = styled.div<{ landingPage?: string }>`
   min-height: 100%;
 `;
 export default function App() {
   const [showButton, setShowButton] = useState(false);
-  const { pathname } = useLocation();
+  const { isLogin } = useAppSelector((state) => state.loginInfo);
+  const { getMyInfo } = useMypageAPI();
   const handleScroll = () => {
     window.scrollTo({
       top: 0,
@@ -22,7 +24,8 @@ export default function App() {
   };
   useEffect(() => {
     handleScroll();
-  }, [pathname]);
+    getMyInfo();
+  }, [isLogin]);
   return (
     <Layout>
       <FixOutletHeight>

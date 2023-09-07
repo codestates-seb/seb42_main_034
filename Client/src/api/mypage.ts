@@ -46,7 +46,7 @@ export const useMypageAPI = () => {
 
   const getMemberInfo = async (id: string | undefined) => await api.get(`/members/me`).then((res) => res.data);
 
-  const getMyInfo = async (id: string | undefined) =>
+  const getMyInfo = async () =>
     await api.get<Member>(`/members/me`).then((res) => {
       dispatch(setUserInfo(res.data.data));
 

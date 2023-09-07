@@ -13,10 +13,7 @@ export default function Board() {
 
   return (
     <>
-      <RegionTab>
-        {' '}
-        <Link to="/home">지역선택 </Link>
-      </RegionTab>
+      <RegionTab> </RegionTab>
       <Layout>
         <Outlet />
       </Layout>

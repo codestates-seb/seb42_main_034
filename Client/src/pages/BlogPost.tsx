@@ -46,7 +46,8 @@ export default function BlogPost() {
     setContent(value);
   };
 
-  const submitHandler = () => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (title.trim() === '') {
       alert('제목을 입력하세요.');
       return;

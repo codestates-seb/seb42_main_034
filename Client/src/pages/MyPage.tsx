@@ -34,7 +34,7 @@ export default function MyPage() {
   const { getMyInfo } = useMypageAPI();
   const { data } = useQuery({
     queryKey: ['me'],
-    queryFn: () => getMyInfo(memberId),
+    queryFn: getMyInfo,
     retry: false,
   });
   console.log(data);

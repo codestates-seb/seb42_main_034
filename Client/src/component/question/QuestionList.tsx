@@ -15,7 +15,7 @@ interface RouteParams {
 export default function QuestionList({ filter }: { filter: string }) {
   const [city, setCity] = useState<ListData[] | []>([]);
   const { category } = useParams() as { category: string };
-
+  const [isLoding, setIsLoading] = useState(false);
   const api = useAPI();
   const search = useLocation().search.split('=');
   const searchData = decodeURIComponent(search[search.length - 1]);
@@ -31,6 +31,7 @@ export default function QuestionList({ filter }: { filter: string }) {
   useEffect(() => {
     //서치데이터 쿼리스트링 있으면 서치데이터 검색
     //1.검색결과일때
+    setIsLoading(true);
     if (searchData && search[0] === '?search') {
       console.log(search[0]);
 
@@ -50,7 +51,7 @@ export default function QuestionList({ filter }: { filter: string }) {
             },
           })
           .then((res) => res.data);
-
+        setIsLoading(false);
         setCity(response.data);
         setPageNation(response.pageInfo);
       };
@@ -67,7 +68,17 @@ export default function QuestionList({ filter }: { filter: string }) {
         onPage={setPageNation}
         querystring={searchData}
       />
-      <Contentbar>{city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}</Contentbar>
+      <Contentbar>
+        <>
+          {' '}
+          {isLoding && (
+            <LoadingDiv>
+              <LoadingTag src={`/image/loading.gif`} />
+            </LoadingDiv>
+          )}
+        </>
+        {city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}
+      </Contentbar>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </>
   );
@@ -82,4 +93,11 @@ const Contentbar = styled.ul`
   display: flex;
   flex-direction: column;
   min-height: 700px;
+`;
+const LoadingTag = styled.img`
+  width: 4rem;
+  height: 4rem;
+`;
+const LoadingDiv = styled.div`
+  text-align: center;
 `;

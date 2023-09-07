@@ -86,13 +86,16 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
     }),
     [],
   );
-
+  const insertMap = () => {
+    const mapContent = `<div><img src="MAP_IMAGE_URL" alt="Map"></div>`; // Replace MAP_IMAGE_URL with the actual URL of your Kakao Map image
+    quillRef.current.dangerouslyPasteHTML(quillRef.current.getLength(), mapContent);
+  };
   const quillOptions = {
     // configure the options for react-quill
     // disable HTML tags by setting "sanitize" to false
     // and "stripTags" to true
-    sanitize: false,
-    stripTags: true,
+    // sanitize: false,
+    // stripTags: true,
   };
   const getTextWithoutTags = (html: string) => {
     const regex = /(<([^>]+)>)/gi;
@@ -115,6 +118,9 @@ const QuillEditor = memo(({ quillRef, htmlContent, setHtmlContent, width, height
         style={{ height, width, marginBottom: '6%' }} // style
         {...quillOptions}
       />
+      <button onClick={insertMap} id="insertMapButton">
+        Insert Map
+      </button>
     </>
   );
 });

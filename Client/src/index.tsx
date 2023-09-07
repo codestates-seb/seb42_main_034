@@ -27,6 +27,7 @@ import QuestionPost from 'pages/QuestionPost';
 import Board from 'pages/Board';
 
 const queryClient = new QueryClient();
+
 const router = createBrowserRouter([
   {
     path: '/',

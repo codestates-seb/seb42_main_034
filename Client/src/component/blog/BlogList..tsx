@@ -57,7 +57,7 @@ export default function BlogList({ filter }: { filter: string }) {
       {' '}
       <Searchbar section="blogs" onCity={setCity} page={pageNation} onPage={setPageNation} querystring={searchData} />
       <MainBoard>
-        {city.length > 0 ? (
+        {city && city.length > 0 ? (
           category && city.map((city) => <BlogCard city={city} key={city.blogId} region={category} />)
         ) : (
           <div className="nonePost">게시물이 없습니다😂. 첫 블로그를 작성해보시겠어요?</div>
