@@ -44,7 +44,7 @@ jobs:
         run: |
           aws s3 sync \
             --region ap-northeast-2 \
-            build s3://mainproproject34 \
+            build s3://jungyeon222 \
             --delete
         working-directory: ./Client
   #----------------------------------------------------------------------------------------
