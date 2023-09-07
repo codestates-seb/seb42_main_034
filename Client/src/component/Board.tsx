@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Colors, FontSize, ScreenSize } from './style/variables';
 import { Absolute, BoxShadow } from './style/cssTemplete';
 import Slick from 'component/slider/Slider';
-import ScrollTop from 'component/ui/ScrollTop';
+
 const item = [
   {
     items:
@@ -20,18 +20,14 @@ export default function Board() {
 
   return (
     <>
-      <div>{category}</div>
-      <StyledSlick slidesToShow={1} speed={8000}>
+      <StyledSlick slidesToShow={1}>
         {/**캐러셀 리스트에만 보이게 하는곳 리팩토링 추후에필수로 하기 */}
-        {category &&
-          item.map((el, idx) => (
-            <BackImg url={el.items} key={idx}>
-              <Absolute top={0} left={0}>
-                어서오세요
-              </Absolute>
-            </BackImg>
-          ))}
+        {category && item.map((el, idx) => <BackImg src={el.items} key={idx}></BackImg>)}
       </StyledSlick>
+      <div>{category}</div>
+      {/* <StyledSlick slidesToShow={1} speed={8000}>
+        
+      </StyledSlick> */}
       <Layout>
         <Outlet />
         {/* <ScrollTop /> */}
@@ -64,17 +60,16 @@ const Layout = styled.div`
     background: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
   }
-  padding: 0.6rem;
+  padding: 0.6rem 4em;
   border-radius: 0.7rem;
-  max-width: 90%;
+  max-width: 80%;
   @media (min-width: 1400px) {
     max-width: 70%;
   }
   margin: auto;
   background: ${Colors.board_color} ${BoxShadow};
 `;
-const BackImg = styled.div<{ url: string }>`
-  background-image: ${(props) => props.url && `url(${props.url})`};
+const BackImg = styled.img`
   background-size: 80%;
   background-position: center;
   background-repeat: no-repeat;
@@ -84,7 +79,6 @@ const BackImg = styled.div<{ url: string }>`
 `;
 const StyledSlick = styled(Slick)`
   margin-bottom: 2rem;
-  width: 100%;
 `;
 const Caresel = styled.div`
   color: ${Colors.button_blue};

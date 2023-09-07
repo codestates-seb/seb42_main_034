@@ -15,7 +15,7 @@ interface RouteParams {
 export default function QuestionList({ filter }: { filter: string }) {
   const [city, setCity] = useState<ListData[] | []>([]);
   const { category } = useParams() as { category: string };
-
+  const [isLoding, setIsLoading] = useState(false);
   const api = useAPI();
   const search = useLocation().search.split('=');
   const searchData = decodeURIComponent(search[search.length - 1]);
@@ -29,37 +29,18 @@ export default function QuestionList({ filter }: { filter: string }) {
   // let section = '';
   const section = decodeURIComponent(category);
   useEffect(() => {
-    // if (category === '서울') {
-    //   section = 'seoul';
-    // } else if (category === '경상') {
-    //   section = 'kyungsang';
-    // } else if (category === '강원') {
-    //   section = 'gangwon';
-    // } else if (category === '충청') {
-    //   section = 'chungcheong';
-    // } else if (category === '부산') {
-    //   section = 'busan';
-    // } else if (category === '제주') {
-    //   section = 'jeju';
-    // } else if (category === '인천') {
-    //   section = 'incheon';
-    // } else if (category === '울산') {
-    //   section = 'ulsan';
-    // } else if (category === '전라') {
-    //   section = 'Jeolla';
-    // } else if (category === '경기') {
-    //   section = 'gyeonggi';
-    // }
-    console.log(city);
-
+    //서치데이터 쿼리스트링 있으면 서치데이터 검색
+    //1.검색결과일때
+    setIsLoading(true);
     if (searchData && search[0] === '?search') {
-      //서치데이터 쿼리스트링 있으면 서치데이터 검색
+      console.log(search[0]);
+
       console.log('서치데이터', changeUrl(searchData));
       SearchText('questions', changeUrl(searchData), pageNation.page, setCity, setPageNation);
-    } else if (searchData) {
+    } else if (searchData && search[0] === '?tag') {
+      //2.태그눌러서이동한결과일때
       searchTag(searchData, 'questions', pageNation.page, setCity, setPageNation);
-    }
-    {
+    } else {
       const getData = async () => {
         const response: ReturnData = await api
           .get('questions', {
@@ -70,14 +51,14 @@ export default function QuestionList({ filter }: { filter: string }) {
             },
           })
           .then((res) => res.data);
-
+        setIsLoading(false);
         setCity(response.data);
         setPageNation(response.pageInfo);
       };
 
       getData().catch(console.error);
     }
-  }, [filter, pageNation.page]);
+  }, [filter, pageNation.page, searchData]);
   return (
     <>
       <Searchbar
@@ -87,36 +68,36 @@ export default function QuestionList({ filter }: { filter: string }) {
         onPage={setPageNation}
         querystring={searchData}
       />
-      <MainBoard>
-        <Contentbar>
-          <div>태그</div>
-          <div>제목</div>
-
-          <BoardTap>
-            <div>작성자</div>
-            <div>조회수</div>
-            <div>작성일</div>
-          </BoardTap>
-        </Contentbar>
+      <Contentbar>
+        <>
+          {' '}
+          {isLoding && (
+            <LoadingDiv>
+              <LoadingTag src={`/image/loading.gif`} />
+            </LoadingDiv>
+          )}
+        </>
         {city && city.map((city) => <QuestionCard city={city} key={city.questionId} />)}
-      </MainBoard>
+      </Contentbar>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
     </>
   );
 }
-const MainBoard = styled.ul`
-  min-height: 900px;
-  height: 100%;
-  padding-left: 0px;
-`;
 const BoardTap = styled.div`
   display: flex;
   div {
     margin-left: 0.9em;
   }
 `;
-const Contentbar = styled.div`
+const Contentbar = styled.ul`
   display: flex;
-  justify-content: space-between;
-  padding: 0 4.3em;
+  flex-direction: column;
+  min-height: 700px;
+`;
+const LoadingTag = styled.img`
+  width: 4rem;
+  height: 4rem;
+`;
+const LoadingDiv = styled.div`
+  text-align: center;
 `;

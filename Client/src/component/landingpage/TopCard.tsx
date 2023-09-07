@@ -53,16 +53,17 @@ const Hover = styled.div`
     25px 25px 0px 0px #e1eeff, 17px 20px 14px 11px rgba(0, 0, 0, 0);
 `;
 const StyledBtn = styled(Button)`
-  position: absolute;
-  top: 26em;
-  left: 25em;
-  width: 10em;
-  height: 3em;
-  font-size: ${FontSize.md};
+  width: 11rem;
+  height: 3rem;
+  margin-bottom: 2rem;
+  font-size: ${FontSize.lg};
   background: ${Colors.button_blue};
   border: none;
-  padding: 2rem;
+  cursor: pointer;
   border-radius: 3rem;
+  position: absolute;
+  bottom: 0.2em;
+  right: 4em;
   span {
     position: absolute;
     top: 1em;

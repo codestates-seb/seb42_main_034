@@ -1,4 +1,4 @@
-import { getFilterData, useGetData, useLike } from 'api/data';
+import useAddTodoMutation, { getFilterData, useGetData, useLike } from 'api/data';
 import { MoveBtn } from 'pages/QuestionBoardList';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -11,6 +11,8 @@ import { AnswerData, getAnswerLike, getAnswersData } from 'redux/answer/answersl
 import useAPI from 'hooks/uesAPI';
 import Page from '../Page';
 import { useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { Colors } from 'component/style/variables';
 
 export interface answerReturn {
   questionId: number | string;
@@ -33,13 +35,14 @@ export default function Answer({
   const { deleteAnswerData, getAnswerData } = useGetData(); // data.ts에서 정리할것
   const dispatch = useAppDispatch();
   const api = useAPI();
+  const queryClient = useQueryClient();
   // const { region } = useParams();
   const { setLike, seletedQuestion } = useLike();
   const { memberId } = useAppSelector((state) => state.loginInfo);
   //위치검증
   const location = useAppSelector((state) => state.persistReducer.userInfo);
   const region = getFilterData();
-  console.log(region);
+  const { mutateAsync } = useAddTodoMutation();
 
   const [answer, setAnswer] = useState<AnswerData[] | []>([]);
   const { putAnswerData } = useGetData();
@@ -49,6 +52,8 @@ export default function Answer({
     totalPages: 0,
     size: 15,
   });
+  console.log(answer);
+
   const getAnswer = async () => {
     const response = await api.get(`questions/answer/${questionId}?page=1&sortedBy=hot`);
     setAnswer(response.data.data);
@@ -82,19 +87,14 @@ export default function Answer({
     // alert('현지인만 작성 가능합니다');
     // }
   };
-  // const isChecked = answer.some((el) => el.checked);
-  // console.log(isChecked);
 
   const handleLike = useCallback(
     (isLike: boolean, answerId: number, setState: (value: React.SetStateAction<boolean>) => void) => {
       if (isLike === false) {
         //해당 answer만 바꾸기
-        setLike(answerId).then((res) => {
-          //성공했을때 상태바꿈
-          setState(!isLike);
-          getAnswer().catch(console.error);
-          console.log(res);
-        });
+
+        setState(!isLike);
+        mutateAsync(answerId);
       } else {
         setAnswer(
           answer.map((answer) => (answer.answerId === answerId ? { ...answer, likeCnt: answer.likeCnt - 1 } : answer)),
@@ -112,52 +112,71 @@ export default function Answer({
   };
   useEffect(() => {
     getAnswer().catch(console.error);
-    dispatch(getAnswerLike({ answer }));
+    // dispatch(getAnswerLike({ answer }));
   }, []); //
 
   return (
-    <AnswerWrapper>
-      {answer && (
-        <>
-          <p>댓글 작성</p>
-          <StyledForm onSubmit={submitHandler}>
-            <StyledInput type="text" placeholder="댓글을 입력해주세요" setState={setComment} />
-            <MoveBtn children="작성" />
-            {/* 추후에 위치정보도 함께 첨부  */}
-          </StyledForm>
-        </>
-      )}
+    <>
+      <AnswerWrapper>
+        {answer && (
+          <>
+            <StyledForm onSubmit={submitHandler}>
+              <StyledInput type="text" placeholder="댓글을 입력해주세요" setState={setComment} />
+              <SubmitBtn children="작성" />
+              {/* 추후에 위치정보도 함께 첨부  */}
+            </StyledForm>
+          </>
+        )}
 
-      <h3>답변내용 ( 답변 수 : {answer?.length} )</h3>
-      {answer &&
-        answer.map((answer) => (
-          <AnswerList
-            key={answer.answerId}
-            questionId={questionId}
-            answer={answer}
-            onAnswer={setAnswer}
-            onDelete={deleteAnswer}
-            writerId={writerId}
-            onLike={handleLike}
-            getAnswer={getAnswer}
-          />
-        ))}
+        {answer && answer.length > 0 ? (
+          <AnswerCount> 💬{answer.length}개의 답변 </AnswerCount>
+        ) : (
+          <AnswerCount>💬답변이 없습니다</AnswerCount>
+        )}
+
+        {answer &&
+          answer.map((answer) => (
+            <AnswerList
+              key={answer.answerId}
+              questionId={questionId}
+              answer={answer}
+              onAnswer={setAnswer}
+              onDelete={deleteAnswer}
+              writerId={writerId}
+              onLike={handleLike}
+              getAnswer={getAnswer}
+            />
+          ))}
+      </AnswerWrapper>
       {pageNation && <Page pages={pageNation} onPage={setPageNation} />}
-    </AnswerWrapper>
+    </>
   );
 }
 
 const StyledForm = styled.form`
   width: 100%;
   display: flex;
-  justify-content: center;
+  align-items: end;
+  flex-direction: column;
 `;
 const StyledInput = styled(TextInput)`
-  height: 5rem;
-  width: 50%;
-  border-radius: 0.3rem;
+  height: 7rem;
+  width: 100%;
+  border-radius: 0.7rem;
+  &:focus-within {
+    border-color: ${Colors.main_01};
+  }
 `;
 const AnswerWrapper = styled.div`
   margin-top: 50px;
-  width: 80%;
+  width: 100%;
+  min-height: 30rem;
+`;
+const AnswerCount = styled.h3`
+  color: ${Colors.main_03};
+`;
+const SubmitBtn = styled(MoveBtn)`
+  width: 10rem;
+  height: 3rem;
+  margin-right: 0;
 `;

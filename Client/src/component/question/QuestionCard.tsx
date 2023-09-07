@@ -5,54 +5,66 @@ import { Flex, HoverAction } from 'component/style/cssTemplete';
 import styled from 'styled-components';
 import { GrFormView } from 'react-icons/gr';
 import { Colors, FontSize } from 'component/style/variables';
-import dayjs from 'dayjs';
-
-import { getFilterData } from 'api/data';
-import Profile from 'component/ui/Profile';
-
+import { elapsedTime } from 'libs/date';
+import { StyledTag } from 'component/style/ui/tagStyle';
 export default function QuestionCard({ city }: { city: ListData }) {
   const navigate = useNavigate();
-  const region = getFilterData();
   const handleClick = () => {
     navigate(`/board/questionsdetails/${city.questionId}`, { state: city });
   };
   return (
     <Card onClick={handleClick}>
-      <MaxWidthTag>
-        {(city && city.tags.map((tag, idx) => <StyledTag key={idx}> {`#${tag}`}</StyledTag>)) || '여행'}
-      </MaxWidthTag>
-      <div className="title">{city.title}</div>
-
-      <Flex gap="1em" className="sidecontent" items="center">
-        <Flex items="center" gap="5px">
-          <div>{city.writer}</div>
-          <Avatar src={`/image/user.png`} />
+      <Flex direction="column" gap="0.4rem">
+        <Flex items="center" gap="0.2rem">
+          <Topline className="user">
+            {city.writer}
+            <Avatar src={`/image/user.png`} />
+          </Topline>
+          ·{' '}
+          <Topline>
+            <div>{elapsedTime(city.createdAt)}</div>
+          </Topline>
         </Flex>
-        <ViewIcon>
-          <GrFormView />
-          <div className="count"> {city.viewCnt}</div>
-        </ViewIcon>
-        <div>{dayjs(city.createdAt).format('YYYY-MM-DD')}</div>
+        <div className="title">{city.title}</div>
+        {(city &&
+          city.tags.map((tag, idx) => (
+            <StyledTag key={idx}>
+              {' '}
+              <span>{`#${tag}`}</span>
+            </StyledTag>
+          ))) ||
+          '여행'}
       </Flex>
+
+      {/* <Flex items="center" gap="5px"> */}
+
+      {/* </Flex> */}
+      <ViewIcon>
+        <GrFormView />
+        <div className="count"> {city.viewCnt}</div>
+      </ViewIcon>
     </Card>
   );
 }
 
 const Card = styled.li`
-  margin: 2rem;
   list-style: none;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0.9rem;
-  height: 2rem;
+  height: 5rem;
   border-radius: 1rem;
   padding: 1rem;
   border-bottom: 1px solid lightgray;
   ${HoverAction}
   &:hover {
-    background: lightgray;
+    background: #fafafa;
   }
+
+  .user {
+    display: flex;
+    align-items: center;
+  }
+
   .title {
     font-weight: bold;
     font-size: ${FontSize.lg};
@@ -67,37 +79,25 @@ const Card = styled.li`
     }
   }
 `;
-const MaxWidthTag = styled.div`
-  max-width: 12%;
-  min-width: 12%;
-  div {
-    font-size: ${FontSize.md};
-  }
+const Topline = styled.div`
+  font-size: ${FontSize.md};
+  margin: 0.2rem;
 `;
-const StyledTag = styled.span`
-  color: ${Colors.main_02};
-  font-weight: bold;
-  font-size: ${FontSize.lg};
-  box-shadow: 3px 3px 3px -2px rgba(0, 0, 0, 0.29);
-  border-radius: 0.2rem;
-  width: 100%;
-  padding: 0.4rem;
-  text-align: center;
-`;
+
 const Avatar = styled.img`
   border-radius: 100%;
   border: 1px solid black;
-  width: 2rem;
-  height: 2rem;
+  width: 1rem;
+  height: 1rem;
 `;
 
 const ViewIcon = styled.div`
   display: flex;
-  align-items: center;
+  align-items: end;
   .view {
     font-size: 2rem;
   }
   .count {
-    font-size: 1rem;
+    font-size: ${FontSize.md};
   }
 `;

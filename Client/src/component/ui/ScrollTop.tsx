@@ -5,7 +5,6 @@ import { BsArrowUpCircle } from 'react-icons/bs';
 import styled from 'styled-components';
 import { Button } from './Button';
 const ScrollTop1 = styled(Button)`
-  border: none;
   ${HoverAction}
   height: 2rem;
   font-size: ${FontSize.md};
@@ -13,7 +12,6 @@ const ScrollTop1 = styled(Button)`
   width: 100%;
   padding-left: 0.6rem;
   padding-right: 1rem;
-  background: none;
   bottom: 8rem;
   border-radius: 4rem;
 `;

@@ -10,52 +10,34 @@ import { FiEdit } from 'react-icons/fi';
 import Nbutton from 'component/ui/NButton';
 import { logout } from 'redux/userSlice';
 import { useState } from 'react';
-import PostList from 'component/mypage/getPostlist';
-import BlogsList from 'component/mypage/getBlogslist';
+
+import BlogsList from 'component/mypage/Blogslist';
 import DeleteMyInfo from 'component/mypage/DeleteMyInfo';
 import Profile from 'component/ui/Profile';
 import Avatar from 'component/mypage/Avatar';
+import UserInfo from 'component/mypage/UserInfo';
+import MyPostTab from 'component/mypage/MyPostTab';
+import PostList from 'component/mypage/Postlist';
+import { Button } from 'component/ui/Button';
+import { MoveBtn } from './QuestionBoardList';
+import { Flex } from 'component/style/cssTemplete';
+import { Colors } from 'component/style/variables';
 
 export default function MyPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const postTab: string[] = ['💡내 질문 글', ' 📰내 블로그 글', '💬 내 댓글'];
   const { memberId, isLogin, avatarUrl } = useAppSelector((state) => state.loginInfo);
   const { deleteLogout } = useAuthAPI();
   const { mutate: mutateLogout } = useMutation(deleteLogout);
-
-  const linkEditPage = () => {
-    navigate('/board/mypage/edit');
-  };
+  const [activeTab, setActiveTab] = useState<number>(0);
   const { getMyInfo } = useMypageAPI();
-
   const { data } = useQuery({
     queryKey: ['me'],
-    queryFn: () => getMyInfo(memberId),
+    queryFn: getMyInfo,
     retry: false,
   });
   console.log(data);
-
-  useEffect(() => {
-    if (isLogin === false) {
-      navigate(`/`);
-    }
-  }, [isLogin, avatarUrl]);
-
-  const [activeTab, setActiveTab] = useState<number>(0);
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-  };
-  console.log(avatarUrl);
-
-  const renderTabs = () => {
-    return (
-      <>
-        <TabStyled onClick={() => handleTabClick(0)}>작성한 질문</TabStyled>
-        <TabStyled onClick={() => handleTabClick(1)}>작성한 블로그 글</TabStyled>
-        <TabStyled onClick={() => handleTabClick(2)}>작성한 댓글</TabStyled>
-      </>
-    );
-  };
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
@@ -77,42 +59,59 @@ export default function MyPage() {
         return null;
     }
   };
+  useEffect(() => {
+    if (isLogin === false) {
+      navigate(`/`);
+    }
+  }, [isLogin, avatarUrl]);
+
+  console.log(activeTab);
+
+  // const renderTabs = () => {
+  //   return (
+  //     <>
+  //       <TabStyled onClick={() => handleTabClick(0)}>작성한 질문</TabStyled>
+  //       <TabStyled onClick={() => handleTabClick(1)}>작성한 블로그 글</TabStyled>
+  //       <TabStyled onClick={() => handleTabClick(2)}>작성한 댓글</TabStyled>
+  //     </>
+  //   );
+  // };
+
+  console.log();
 
   return (
     <>
       <MainContainer>
-        My Page
+        <MyPageSection>
+          <img src={`/image/home.png`} />
+          <span>My Page</span>
+        </MyPageSection>
         <ProfileContainer>
           {<Profile avatarUrl={avatarUrl} height="7rem" width="7rem" />}
 
-          <UserInfoContainer>
-            <p>닉네임: {data?.nickname ?? '로그인 정보를 불러오지 못했습니다.'}</p>
-            <p>
-              도시 : {data?.location ?? '도시가 설정되어 있지 않습니다.'}
-              {data?.address}
-            </p>
-            <div className="editprofile">
-              <p className="editbtn" onClick={linkEditPage}>
-                프로필 수정하기 및 도시인증 하기
-              </p>
-              <FiEdit className="editbtnImg" onClick={linkEditPage} />
-            </div>
-          </UserInfoContainer>
+          {data && <UserInfo data={data} />}
         </ProfileContainer>
-        <TabContainer>{renderTabs()}</TabContainer>
+        <TabContainer>
+          {data &&
+            postTab.map((post, idx) => (
+              <MyPostTab text={post} activeIdx={activeTab} clickIdx={idx} key={idx} onActiveIdx={setActiveTab} />
+            ))}
+        </TabContainer>
         {renderTabContent()}
-        <LogOuttbutton
-          onClick={() => {
-            const confirm = window.confirm('로그아웃을 하시겠습니까?');
-            if (!confirm) return;
-            mutateLogout();
-            dispatch(logout());
-            navigate('/board/signin');
-          }}
-        >
-          로그아웃
-        </LogOuttbutton>
-        <DeleteMyInfo />
+        <Flex justify="end" items="center">
+          <LogOuttbutton
+            onClick={() => {
+              const confirm = window.confirm('로그아웃을 하시겠습니까?');
+              if (!confirm) return;
+              mutateLogout();
+              dispatch(logout());
+              navigate('/board/signin');
+            }}
+          >
+            로그아웃
+          </LogOuttbutton>
+          <DeleteMyInfo />
+        </Flex>
       </MainContainer>
     </>
   );
@@ -120,15 +119,19 @@ export default function MyPage() {
 
 const MainContainer = styled.div`
   display: flex;
-  align-items: center;
+
   flex-direction: column;
-  min-width: 90%;
+  min-width: 100%;
+`;
+const MyPageSection = styled.h2`
+  display: flex;
+  gap: 0.2rem;
 `;
 const ProfileContainer = styled.div`
-  width: 90%;
   padding: 1.2rem;
   background-color: white;
-  border: solid 1px blue;
+  display: flex;
+  justify-content: start;
 
   .profileimage {
     width: 100px;
@@ -149,21 +152,6 @@ const ProfileContainer = styled.div`
     padding-top: 20px;
   }
 `;
-const UserInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: 2rem;
-  border: solid 1px black;
-  .click {
-    padding-left: 8px;
-    cursor: pointer;
-  }
-  .editprofile {
-    display: flex;
-    color: skyblue;
-  }
-`;
 
 const TabContainer = styled.div`
   width: 100%;
@@ -173,36 +161,15 @@ const TabContainer = styled.div`
   max-width: 800px;
 `;
 
-const TabStyled = styled.button`
-  width: 200px;
-  height: 2.5rem;
-  position: relative;
-  display: inline-block;
-  height: 2.5rem;
-  font-size: 14px;
-  color: #333;
-  text-decoration: none;
-  overflow: hidden;
-  margin-top: 20px;
-  cursor: pointer;
-  transition: 0.5s;
-  border-radius: 10px;
-  padding: 12px 40px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+const LogOuttbutton = styled(MoveBtn)`
+  height: 3rem;
+  width: 7rem;
+  font-size: 1rem;
+  background: orangered;
   &:hover {
     background: #0583c6;
     color: #fff;
     border-radius: 5px;
-    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
-  }
-`;
-
-const LogOuttbutton = styled(Nbutton)`
-  margin-top: 300px;
-  &:hover {
-    background: #0583c6;
-    color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #0583c6, 0 0 25px #0583c6, 0 0 50px #0583c6, 0 0 100px #0583c6;
+    box-shadow: 0 0 5px #c60505, 0 0 25px #c60505, 0 0 50px #c60505 0 0 100px #0583c6;
   }
 `;

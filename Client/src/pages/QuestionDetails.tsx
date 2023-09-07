@@ -1,25 +1,28 @@
 import React from 'react';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import BoardDetail from '../component/board/BoardDetail';
-
-import { BoardData, CRUDdata, getFilterData, useGetData } from 'api/data';
+import { FaArrowLeft } from 'react-icons/fa';
+import { BoardData, getFilterData, useGetData } from 'api/data';
 import { useQuery } from '@tanstack/react-query';
 
 import { useAppSelector } from 'redux/hooks';
 
 import Answer from 'component/question/Answer';
 import { MoveBtn } from './QuestionBoardList';
-import { Flex } from 'component/style/cssTemplete';
+import { Flex, HoverAction } from 'component/style/cssTemplete';
+import styled from 'styled-components';
+import { FontSize } from 'component/style/variables';
+import { Button } from 'component/ui/Button';
+import BackBtn from 'component/ui/BackBtn';
 
 export default function QuestionDetails() {
   const data: BoardData = useLocation().state;
   const { memberId } = useAppSelector((state) => state.loginInfo);
-  const navigate = useNavigate();
   const { deleteBoardData } = useGetData();
+  const region = getFilterData();
   const { id } = useParams() as { id: string };
   const questionId = Number(id);
-  console.log();
-
+  const navigate = useNavigate();
   const { getBoardData, getAnswerData } = useGetData();
   const {
     isLoading,
@@ -28,22 +31,24 @@ export default function QuestionDetails() {
   } = useQuery(['region', data] as const, async () => await getBoardData(questionId, 'questions'), {
     staleTime: 1000 * 15,
   });
-  // useEffect(() => {
-  //   getAnswerData(data.questionId, 'questions').catch(console.error);
-  // });
-  console.log(detail);
 
   return (
     <>
+      {' '}
+      <BackBtn />
+      <Question>
+        <BulbIcon src={`/image/bulb.png`} />
+        <span> {`질문 > ${region}`}</span>
+      </Question>
       {detail && detail.memberId === memberId && (
         <Flex justify="end" width="90%" gap="2rem">
-          <MoveBtn
+          <QuestionEditBtn
             children="수정"
             onClick={() => {
               navigate(`/board/modifyquestion/${questionId}`, { state: { detail } });
             }}
           />
-          <MoveBtn
+          <QuestionDelteBtn
             children="삭제"
             onClick={() => {
               deleteBoardData(questionId, memberId, 'questions')
@@ -55,7 +60,6 @@ export default function QuestionDetails() {
           />
         </Flex>
       )}
-      <div>질문 </div>
       {isLoading && <div>로딩중..</div>}
       {detail && (
         <>
@@ -66,3 +70,31 @@ export default function QuestionDetails() {
     </>
   );
 }
+const BulbIcon = styled.img`
+  width: 2rem;
+  height: 2rem;
+`;
+const Question = styled.h2`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px dotted skyblue;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  text-align: start;
+  width: 100%;
+  justify-content: start;
+`;
+const QuestionEditBtn = styled(MoveBtn)`
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  font-size: medium;
+`;
+const QuestionDelteBtn = styled(MoveBtn)`
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.6rem;
+  font-size: medium;
+  background: orangered;
+`;

@@ -6,7 +6,7 @@ import { setUserInfo } from '../redux/userInfoSlice';
 import { useAppDispatch } from '../redux/hooks';
 import { FixmemberInfo } from 'hooks/useFixInfo';
 
-interface Member {
+export interface Member {
   [key: string]: any;
   memberId: number;
   nickName: string;
@@ -15,7 +15,7 @@ interface Member {
     latitude: string;
     longitude: string;
   };
-  address: string;
+  email: string;
   totalCount: number;
   avatarUrl: string;
   key: string;
@@ -46,7 +46,7 @@ export const useMypageAPI = () => {
 
   const getMemberInfo = async (id: string | undefined) => await api.get(`/members/me`).then((res) => res.data);
 
-  const getMyInfo = async (id: string | undefined) =>
+  const getMyInfo = async () =>
     await api.get<Member>(`/members/me`).then((res) => {
       dispatch(setUserInfo(res.data.data));
 

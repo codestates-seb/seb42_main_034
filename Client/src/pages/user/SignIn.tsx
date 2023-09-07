@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LoginForm from '../../component/Sign/LoginForm';
 import SignLink from 'component/SignUp/SignLink';
 import { Props } from 'component/ui/Modal';
@@ -20,7 +20,7 @@ const SignIn = ({
 
   useEffect(() => {
     isLogin && navigate(-1);
-  }, []);
+  }, [isLogin]);
 
   return (
     <>

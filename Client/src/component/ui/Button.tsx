@@ -1,4 +1,5 @@
 import React, { DOMAttributes } from 'react';
+import styled from 'styled-components';
 
 export type ButtonType = 'button' | 'submit' | 'reset';
 
@@ -15,8 +16,16 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
 }
 export const Button: React.FC<IButtonProps> = ({ className, children, isDisabled, typeButton, onClick, ...rest }) => {
   return (
-    <button className={className} disabled={isDisabled} type={typeButton} onClick={onClick} {...rest}>
+    <CommonBtn className={className} disabled={isDisabled} type={typeButton} onClick={onClick} {...rest}>
       {children}
-    </button>
+    </CommonBtn>
   );
 };
+const CommonBtn = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;

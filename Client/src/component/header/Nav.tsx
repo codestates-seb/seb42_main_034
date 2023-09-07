@@ -24,7 +24,14 @@ export default function Nav({ className }: Props) {
       <Link to="/home">
         <LogoStyle />
       </Link>
+      <RegionSelectTab to="/home">지역선택탭으로 가기</RegionSelectTab>
       <UserTab />
     </div>
   );
 }
+const RegionSelectTab = styled(Link)`
+  color: ${Colors.main_02};
+  background: white;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+`;

@@ -4,7 +4,7 @@ import React from 'react';
 import { PageProps } from 'redux/boardDetails';
 import styled from 'styled-components';
 import { Flex } from './style/cssTemplete';
-import { FontSize } from './style/variables';
+import { Colors, FontSize } from './style/variables';
 import { Button } from './ui/Button';
 
 export default function Page({
@@ -79,4 +79,15 @@ const Ul = styled.ul`
 const StyledBtn = styled(Button)`
   border: none;
   font-size: ${FontSize.sm};
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: 200ms ease-in;
+  background: none;
+  border-radius: 0.2rem;
+  border: 2px solid ${Colors.main_01};
+  &:hover {
+    transform: scale(1.1);
+    border: 2px solid black;
+  }
 `;

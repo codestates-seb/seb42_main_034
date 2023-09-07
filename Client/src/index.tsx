@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import Error from './pages/Error';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
 import QuestionDetails from './pages/QuestionDetails';
 import SignUp from './pages/user/SignUp';
-import Board from './component/Board';
+
 import MyPage from './pages/MyPage';
 import BlogPost from 'pages/BlogPost';
 import LandingPage from './pages/LandingPage';
@@ -24,8 +24,10 @@ import BlogBoardList from './pages/BlogBoradList';
 import ModifyBlog from 'pages/ModifyBlog';
 import ProfileEditPage from 'pages/user/ProfileEdit';
 import QuestionPost from 'pages/QuestionPost';
+import Board from 'pages/Board';
 
 const queryClient = new QueryClient();
+
 const router = createBrowserRouter([
   {
     path: '/',

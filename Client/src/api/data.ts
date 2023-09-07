@@ -248,9 +248,9 @@ export const queryKeys = {
   getData: (todoId: string) => ['todos', todoId] as const,
 };
 export default function useAddTodoMutation() {
-  const { blogLikes, blogUnLikes } = useLike();
+  const { blogLikes, blogUnLikes, setLike } = useLike();
   const queryClient = useQueryClient();
-  return useMutation(blogLikes, {
+  const { mutateAsync } = useMutation(setLike, {
     onSuccess: () => {
       queryClient.invalidateQueries(queryKeys.data); // mutation을 성공하면 todo list를 불러오는 useQuery를 무효화 시킨다.
     },
@@ -258,6 +258,7 @@ export default function useAddTodoMutation() {
       console.error(error);
     },
   });
+  return { mutateAsync };
 }
 
 //대댓글

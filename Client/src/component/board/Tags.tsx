@@ -1,4 +1,5 @@
 import { getFilterData, useSearch } from 'api/data';
+import { Colors, FontSize } from 'component/style/variables';
 import React, { useState, KeyboardEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -38,10 +39,15 @@ export default function Tag({ section, text, region }: { section: string; text: 
   return <StyledTagBtn onClick={handleSearch} ref={textRef} children={`#${text}`} />;
 }
 const StyledTagBtn = styled(Button)`
-  border: none;
+  color: ${Colors.main_01};
+  font-size: ${FontSize.h3};
+  font-weight: bold;
   background: none;
+  border: 3px solid ${Colors.main_01};
+  border-radius: 0.7rem;
+  padding: 0.4rem;
+  cursor: pointer;
   &:hover {
-    border-bottom: 1px solid black;
-    cursor: pointer;
+    border-bottom: 2px solid ${Colors.main_01};
   }
 `;

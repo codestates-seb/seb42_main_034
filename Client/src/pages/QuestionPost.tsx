@@ -7,25 +7,11 @@ import { useAppSelector } from 'redux/hooks';
 import { MoveBtn } from './QuestionBoardList';
 import QuillEditor from 'component/ui/QuillEditor';
 import ReactQuill from 'react-quill';
-const PostWrapper = styled.form`
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10rem;
-`;
+import { Colors } from 'component/style/variables';
+import { getFilterData } from 'api/data';
+import { Flex } from 'component/style/cssTemplete';
+import BackBtn from 'component/ui/BackBtn';
 
-const Input = styled.input`
-  display: flex;
-  width: 40rem;
-  height: 25px;
-  border: 1px solid var(--main-001);
-  border-radius: 5px;
-  :focus {
-    outline: 2px solid var(--main-002);
-  }
-`;
 //dd
 export default function QuestionPost() {
   const [title, setTitle] = useState<string>('');
@@ -33,6 +19,7 @@ export default function QuestionPost() {
   const [image, setImage] = useState<string>('');
   const [tags, setTags] = useState<string[]>([]);
   const api = useAPI();
+  const region = getFilterData();
   const { category } = useParams() as { category: string };
   const quillRef = useRef<ReactQuill>(null);
   const navigate = useNavigate();
@@ -96,8 +83,18 @@ export default function QuestionPost() {
 
   return (
     <>
+      <Section>
+        <BackBtn />
+        <Flex items="self-start" gap="0.7rem">
+          {' '}
+          <span>질문등록</span>
+          <img src={`/image/pencil.png`} /> <span>- {region}</span>
+        </Flex>
+      </Section>
       <PostWrapper onSubmit={submitHandler}>
-        <Input type="text" value={title} onChange={titleHandler} placeholder="제목" />
+        {' '}
+        <span className="title">제목</span>
+        <Input type="text" value={title} onChange={titleHandler} placeholder="질문할 제목을 입력해 주세요" />
         <ResizeEditor
           setImage={setImage}
           width="100%"
@@ -106,14 +103,64 @@ export default function QuestionPost() {
           htmlContent={content}
           setHtmlContent={setContent}
         />
-        <input value={tags} onChange={handleEnter} placeholder="태그(중복선택시 쉼표(,)로 나눠주세요)" />
-        <MoveBtn>작성</MoveBtn>
+        <span className="title">태그</span>
+        <TagInput value={tags} onChange={handleEnter} placeholder="태그(중복선택시 쉼표(,)로 나눠주세요)" />
+        <SubmitBtn>작성</SubmitBtn>
         <Outlet />
       </PostWrapper>
     </>
   );
 }
+const PostWrapper = styled.form`
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5rem;
+  width: 100%;
+  .title {
+    width: 100%;
+    font-weight: bold;
+    margin-top: 0.2rem;
+  }
+`;
+
+const Input = styled.input`
+  display: flex;
+  width: 100%;
+  height: 3rem;
+  border: 1px solid ${Colors.border_001};
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  :focus {
+    outline: 2px solid var(--main-002);
+  }
+`;
 const ResizeEditor = styled(QuillEditor)`
   width: 20rem;
   background: white;
+`;
+const TagInput = styled.input`
+  margin-top: 0.9rem;
+  height: 3rem;
+  border-radius: 0.2rem;
+  width: 100%;
+
+  border: 1px solid ${Colors.border_001};
+`;
+const SubmitBtn = styled(MoveBtn)`
+  background: rgb(98, 163, 244);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 200ms ease-in 0s;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  width: 10rem;
+  height: 3rem;
+  color: white;
+`;
+const Section = styled.h2`
+  text-align: start;
+  width: 100%;
 `;

@@ -46,8 +46,6 @@ export default function Filter({
 }
 
 const RegionButton = styled(Button)<{ url: string }>`
-  background: none;
-  border: none;
   margin: 1em;
   position: relative;
   border-radius: 1rem;
